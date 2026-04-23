@@ -39,12 +39,14 @@ namespace UmbracoCms.CodeFirst
         private readonly ILocalizationService localizationService;
         private readonly IMediaService mediaService;
         private readonly IMemberTypeService memberTypeService;
+#if !NET10_0_OR_GREATER
         private readonly IMacroService macroService;
+#endif
         private readonly IUserService userService;
         private readonly PropertyEditorCollection propertyEditorCollection;
         private readonly Assembly assembly;
         private readonly NodeHelpers nodeHelper;
-        private readonly MemberGroupService memberGroupService;
+        private readonly UmbracoCms.Plugins.MemberGroups.Services.MemberGroupService memberGroupService;
         #endregion
 
         #region Message Texts
@@ -73,30 +75,33 @@ namespace UmbracoCms.CodeFirst
             ILocalizationService localizationService,
             IMediaService mediaService,
             IMemberTypeService memberTypeService,
+#if !NET10_0_OR_GREATER
             IMacroService macroService,
+#endif
             IUserService userService,
             PropertyEditorCollection propertyEditorCollection,
             Microsoft.Extensions.Logging.ILogger<CodeFirstEngine> logger,
             string assembly = "")
         {
             this.assembly = string.IsNullOrEmpty(assembly) ? Assembly.GetCallingAssembly() : Assembly.Load(assembly);
-            // TODO: MemberGroupService needs MembershipHelper equivalent - wire up IMemberManager from Umbraco 13+
-            // this.memberGroupService = new MemberGroupService(...);
+            this.memberGroupService = new UmbracoCms.Plugins.MemberGroups.Services.MemberGroupService();
             this.nodeHelper = new NodeHelpers(
                 auditService, contentService, contentTypeService, localizationService,
-                null /* domainService - inject if needed */, logger);
+                null, logger);
             this.propertyEditorCollection = propertyEditorCollection;
             this.contentService = contentService;
             this.contentTypeService = contentTypeService;
             this.localizationService = localizationService;
             this.mediaService = mediaService;
             this.memberTypeService = memberTypeService;
+#if !NET10_0_OR_GREATER
             this.macroService = macroService;
+#endif
             this.fileService = fileService;
             this.dataTypeService = dataTypeService;
             this.userService = userService;
             this.auditService = auditService;
-            this.umbracoDatabase = null; // TODO: inject NPoco.IDatabase via ICoreScopeProvider scope
+            this.umbracoDatabase = null;
         }
 #pragma warning restore CS0618
         #endregion
@@ -660,6 +665,7 @@ namespace UmbracoCms.CodeFirst
         #region Macros
         public virtual string Macros()
         {
+#if !NET10_0_OR_GREATER
             List<Interfaces.IMacro> types = assembly.GetInherited<Interfaces.IMacro>().ToList();
             if (types.Count > 0)
             {
@@ -671,6 +677,9 @@ namespace UmbracoCms.CodeFirst
                 return string.Format(COMPLETED, Constants.Macros.OBJECT_TYPE);
             }
             return string.Format(NOTHING_TO_COMPLETE, Constants.Macros.OBJECT_TYPE);
+#else
+            return "Macros are not supported in Umbraco 17+";
+#endif
         }
         #endregion
 

@@ -1,0 +1,65 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFrameworks>net8.0;net10.0</TargetFrameworks>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<PackageId>SplatDev.Umbraco.EntityFramework</PackageId>
+		<Version>2.0.0</Version>
+		<Authors>SplatDev</Authors>
+		<Description>Entity Framework Core integration for Umbraco 13 (net8.0) and Umbraco 17 (net10.0)</Description>
+		<PackageTags>umbraco umbraco-marketplace entityframework ef-core</PackageTags>
+		<Company>SplatDev Ltda</Company>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<PackageProjectUrl>https://github.com/SplatDev-Ltda/SplatDev.Umbraco.Core</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/SplatDev-Ltda/SplatDev.Umbraco.Core</RepositoryUrl>
+		<RepositoryType>git</RepositoryType>
+	</PropertyGroup>
+
+	<ItemGroup Condition="'$(TargetFramework)' == 'net8.0'">
+		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.20" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.20">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="Microsoft.EntityFrameworkCore.DynamicLinq" Version="8.6.8" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.20" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.20">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="EFCoreSecondLevelCacheInterceptor" Version="5.3.2" />
+		<PackageReference Include="EFCoreSecondLevelCacheInterceptor.MemoryCache" Version="5.3.2" />
+		<PackageReference Include="Umbraco.Cms.Core" Version="13.12.0" />
+		<PackageReference Include="Umbraco.Cms.Infrastructure" Version="13.12.0" />
+		<PackageReference Include="Umbraco.Cms.Web.BackOffice" Version="13.12.0" />
+		<PackageReference Include="Umbraco.Cms.Web.Common" Version="13.12.0" />
+		<PackageReference Include="Umbraco.Cms.Web.Website" Version="13.12.0" />
+	</ItemGroup>
+
+	<ItemGroup Condition="'$(TargetFramework)' == 'net10.0'">
+		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.7" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.7">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="Microsoft.EntityFrameworkCore.DynamicLinq" Version="10.0.7" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="10.0.7" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="10.0.7">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="EFCoreSecondLevelCacheInterceptor" Version="5.3.2" />
+		<PackageReference Include="EFCoreSecondLevelCacheInterceptor.MemoryCache" Version="5.3.2" />
+		<PackageReference Include="Umbraco.Cms.Core" Version="17.3.4" />
+		<PackageReference Include="Umbraco.Cms.Infrastructure" Version="17.3.4" />
+		<PackageReference Include="Umbraco.Cms.Api.Management" Version="17.3.4" />
+		<PackageReference Include="Umbraco.Cms.Web.Common" Version="17.3.4" />
+		<PackageReference Include="Umbraco.Cms.Web.Website" Version="17.3.4" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\SplatDev.Umbraco.Pagination\SplatDev.Umbraco.Pagination.csproj" />
+	</ItemGroup>
+
+</Project>

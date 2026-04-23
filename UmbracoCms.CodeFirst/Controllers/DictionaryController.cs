@@ -16,7 +16,7 @@ namespace UmbracoCms.CodeFirst.Controllers
     public class DictionaryController
     {
         private readonly ILocalizationService _localizationService;
-        private readonly DictionaryService _languageDictionaryService;
+        private readonly UmbracoCms.CodeFirst.Services.DictionaryService _languageDictionaryService;
 
         public DictionaryController(ILocalizationService localizationService, ILogger<DictionaryController> logger)
         {

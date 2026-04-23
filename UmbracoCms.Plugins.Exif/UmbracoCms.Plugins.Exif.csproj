@@ -6,6 +6,16 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <AssemblyName>UmbracoCms.Plugins.Exif</AssemblyName>
     <RootNamespace>UmbracoCms.Plugins.Exif</RootNamespace>
+    <PackageId>UmbracoCms.Plugins.Exif</PackageId>
+    <Version>1.0.0</Version>
+    <Authors>SplatDev</Authors>
+    <Company>SplatDev Ltda</Company>
+    <Description>EXIF metadata extractor for Umbraco media — reads camera, GPS, and image EXIF data using MetadataExtractor.</Description>
+    <PackageTags>umbraco;umbraco-marketplace;plugin;splatdev</PackageTags>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/SplatDev-Ltda/SplatDev.Umbraco.Core</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/SplatDev-Ltda/SplatDev.Umbraco.Core</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
   </PropertyGroup>
 
   <ItemGroup>

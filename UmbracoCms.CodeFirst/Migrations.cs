@@ -1,18 +1,24 @@
+#pragma warning disable CS0618
+#if !NET10_0_OR_GREATER
+using Microsoft.Extensions.Logging;
+using Umbraco.Cms.Core.Composing;
+using Umbraco.Cms.Core.DependencyInjection;
+using Umbraco.Cms.Core.Migrations;
+using Umbraco.Cms.Core.Scoping;
+using Umbraco.Cms.Core.Services;
+using Umbraco.Cms.Infrastructure.Migrations;
+using Umbraco.Cms.Infrastructure.Migrations.Upgrade;
+#endif
+
 namespace UmbracoCms.CodeFirst
 {
-    using Microsoft.Extensions.Logging;
-
-    using Umbraco.Cms.Core.Composing;
-    using Umbraco.Cms.Core.Services;
-    using Umbraco.Cms.Infrastructure.Migrations;
-    using Umbraco.Cms.Infrastructure.Migrations.Upgrade;
-    using Umbraco.Cms.Infrastructure.Scoping;
-
+    [System.Obsolete("CodeFirst migrations are deprecated. Use Yaml2Schema.")]
     public class Migrations
     {
-
     }
 
+#if !NET10_0_OR_GREATER
+    [System.Obsolete("CodeFirst is deprecated. Use Yaml2Schema.")]
     public class MigrationUpgradeComponentComposer : ComponentComposer<MigrationUpgradeComponent>
     {
         public override void Compose(IUmbracoBuilder builder)
@@ -21,6 +27,7 @@ namespace UmbracoCms.CodeFirst
         }
     }
 
+    [System.Obsolete("CodeFirst is deprecated. Use Yaml2Schema.")]
     public class MigrationUpgradeComponent : IComponent
     {
         private readonly ICoreScopeProvider scopeProvider;
@@ -45,7 +52,6 @@ namespace UmbracoCms.CodeFirst
             var plan = new MigrationPlan("pluginApiKeys");
             plan.From(string.Empty)
                 .To<InitialMigration>("state-0");
-            //.To<NoAppIdMigration>("state-1");
 
             var upgrader = new Upgrader(plan);
             upgrader.Execute(migrationPlanExecutor, scopeProvider, keyValueService);
@@ -53,4 +59,6 @@ namespace UmbracoCms.CodeFirst
 
         public void Terminate() { }
     }
+#endif
 }
+#pragma warning restore CS0618

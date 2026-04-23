@@ -6,6 +6,16 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <AssemblyName>UmbracoCms.Plugins.SvgViewer</AssemblyName>
     <RootNamespace>UmbracoCms.Plugins.SvgViewer</RootNamespace>
+    <PackageId>UmbracoCms.Plugins.SvgViewer</PackageId>
+    <Version>1.0.0</Version>
+    <Authors>SplatDev</Authors>
+    <Company>SplatDev Ltda</Company>
+    <Description>SVG file viewer plugin for Umbraco — renders inline SVG files from the Umbraco media library safely.</Description>
+    <PackageTags>umbraco;umbraco-marketplace;plugin;splatdev</PackageTags>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/SplatDev-Ltda/SplatDev.Umbraco.Core</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/SplatDev-Ltda/SplatDev.Umbraco.Core</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
   </PropertyGroup>
 
   <ItemGroup>

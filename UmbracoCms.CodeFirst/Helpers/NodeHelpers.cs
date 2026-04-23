@@ -12,6 +12,7 @@ namespace UmbracoCms.CodeFirst.Helpers
     using UmbracoCms.CodeFirst.Models;
     using Umbraco.Cms.Core.PropertyEditors;
     using Umbraco.Cms.Core.Models.PublishedContent;
+    using Umbraco.Cms.Core.Web;
 
     /// <summary>
     /// CMS Helper is a helper for various funcionalities of the site

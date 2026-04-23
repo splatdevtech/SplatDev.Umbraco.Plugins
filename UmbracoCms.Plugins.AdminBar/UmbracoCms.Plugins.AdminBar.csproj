@@ -9,6 +9,11 @@
     <Description>Fixed admin bar injected at the top of the page for logged-in backoffice users. Provides Edit Page, Preview and Publish shortcuts. Supports Umbraco 13 (net8.0) and Umbraco 17 (net10.0).</Description>
     <PackageTags>umbraco umbraco-marketplace admin-bar toolbar preview publish</PackageTags>
     <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
+    <Company>SplatDev Ltda</Company>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/SplatDev-Ltda/SplatDev.Umbraco.Core</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/SplatDev-Ltda/SplatDev.Umbraco.Core</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
   </PropertyGroup>
 
   <ItemGroup>

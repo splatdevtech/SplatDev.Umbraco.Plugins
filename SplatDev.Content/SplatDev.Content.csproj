@@ -10,6 +10,9 @@
     <Company>SplatDev Ltda</Company>
     <Description>Content helper utilities including CSV, Excel import, HTML, encryption, and QR generation</Description>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/SplatDev-Ltda/SplatDev.Umbraco.Core</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/SplatDev-Ltda/SplatDev.Umbraco.Core</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="EPPlus" Version="7.6.1" />
