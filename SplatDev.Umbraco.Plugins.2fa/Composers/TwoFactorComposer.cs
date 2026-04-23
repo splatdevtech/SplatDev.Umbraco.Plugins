@@ -3,10 +3,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Umbraco.Cms.Core.Composing;
 using Umbraco.Cms.Core.DependencyInjection;
-using UmbracoCms.Plugins.TwoFactor.Models;
-using UmbracoCms.Plugins.TwoFactor.Services;
+using SplatDev.Umbraco.Plugins.TwoFactor.Models;
+using SplatDev.Umbraco.Plugins.TwoFactor.Services;
 
-namespace UmbracoCms.Plugins.TwoFactor.Composers;
+namespace SplatDev.Umbraco.Plugins.TwoFactor.Composers;
 
 public class TwoFactorComposer : IComposer
 {

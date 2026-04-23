@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Umbraco.Cms.Web.Common.Controllers;
-using UmbracoCms.Plugins.TwoFactor.Services;
+using SplatDev.Umbraco.Plugins.TwoFactor.Services;
 
-namespace UmbracoCms.Plugins.TwoFactor.Controllers;
+namespace SplatDev.Umbraco.Plugins.TwoFactor.Controllers;
 
 [Route("umbraco/api/twofactor/[action]")]
 public class TwoFactorApiController : UmbracoApiController

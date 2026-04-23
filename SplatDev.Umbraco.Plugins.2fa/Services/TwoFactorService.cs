@@ -1,9 +1,9 @@
 using System.Security.Cryptography;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using UmbracoCms.Plugins.TwoFactor.Models;
+using SplatDev.Umbraco.Plugins.TwoFactor.Models;
 
-namespace UmbracoCms.Plugins.TwoFactor.Services;
+namespace SplatDev.Umbraco.Plugins.TwoFactor.Services;
 
 public class TwoFactorService : ITwoFactorService
 {

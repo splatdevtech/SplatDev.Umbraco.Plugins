@@ -20,7 +20,7 @@ public class ViewsTests
 
         // Navigate: bin/Debug/net8.0 -> Tests root -> Umbraco Projects/
         var repoRoot = Path.GetFullPath(Path.Combine(assemblyDir, "..", "..", "..", ".."));
-        return Path.Combine(repoRoot, $"UmbracoCms.Themes.{themeName}", "Views");
+        return Path.Combine(repoRoot, $"SplatDev.Umbraco.Themes.{themeName}", "Views");
     }
 
     // ── Base theme views ──────────────────────────────────────────────────────

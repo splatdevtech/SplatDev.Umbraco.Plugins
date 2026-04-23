@@ -1,6 +1,6 @@
-using UmbracoCms.Plugins.TwoFactor.Models;
+using SplatDev.Umbraco.Plugins.TwoFactor.Models;
 
-namespace UmbracoCms.Plugins.TwoFactor.Services;
+namespace SplatDev.Umbraco.Plugins.TwoFactor.Services;
 
 public interface ITwoFactorService
 {

@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
-using UmbracoCms.Plugins.TwoFactor.Services;
+using SplatDev.Umbraco.Plugins.TwoFactor.Services;
 
-namespace UmbracoCms.Plugins.TwoFactor.ViewComponents;
+namespace SplatDev.Umbraco.Plugins.TwoFactor.ViewComponents;
 
 public class TwoFactorViewComponent : ViewComponent
 {

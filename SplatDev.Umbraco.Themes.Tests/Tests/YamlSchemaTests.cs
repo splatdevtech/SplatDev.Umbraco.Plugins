@@ -66,8 +66,8 @@ public class YamlSchemaTests
     [Fact]
     public void BaseTheme_YamlFile_IsValid()
     {
-        var assembly = typeof(UmbracoCms.Themes.Base.Composers.BaseThemeComposer).Assembly;
-        var yaml = LoadEmbeddedYaml(assembly, "UmbracoCms.Themes.Base.Config.umbraco.yml");
+        var assembly = typeof(SplatDev.Umbraco.Themes.Base.Composers.BaseThemeComposer).Assembly;
+        var yaml = LoadEmbeddedYaml(assembly, "SplatDev.Umbraco.Themes.Base.Config.umbraco.yml");
 
         yaml.Should().NotBeNullOrWhiteSpace();
         var root = ParseYaml(yaml);
@@ -77,8 +77,8 @@ public class YamlSchemaTests
     [Fact]
     public void BlogTheme_YamlFile_IsValid()
     {
-        var assembly = typeof(UmbracoCms.Themes.Blog.Composers.BlogThemeComposer).Assembly;
-        var yaml = LoadEmbeddedYaml(assembly, "UmbracoCms.Themes.Blog.Config.umbraco.yml");
+        var assembly = typeof(SplatDev.Umbraco.Themes.Blog.Composers.BlogThemeComposer).Assembly;
+        var yaml = LoadEmbeddedYaml(assembly, "SplatDev.Umbraco.Themes.Blog.Config.umbraco.yml");
 
         yaml.Should().NotBeNullOrWhiteSpace();
         var root = ParseYaml(yaml);
@@ -88,8 +88,8 @@ public class YamlSchemaTests
     [Fact]
     public void CommerceTheme_YamlFile_IsValid()
     {
-        var assembly = typeof(UmbracoCms.Themes.Commerce.Composers.CommerceThemeComposer).Assembly;
-        var yaml = LoadEmbeddedYaml(assembly, "UmbracoCms.Themes.Commerce.Config.umbraco.yml");
+        var assembly = typeof(SplatDev.Umbraco.Themes.Commerce.Composers.CommerceThemeComposer).Assembly;
+        var yaml = LoadEmbeddedYaml(assembly, "SplatDev.Umbraco.Themes.Commerce.Config.umbraco.yml");
 
         yaml.Should().NotBeNullOrWhiteSpace();
         var root = ParseYaml(yaml);
@@ -99,8 +99,8 @@ public class YamlSchemaTests
     [Fact]
     public void ConferenceTheme_YamlFile_IsValid()
     {
-        var assembly = typeof(UmbracoCms.Themes.Conference.Composers.ConferenceThemeComposer).Assembly;
-        var yaml = LoadEmbeddedYaml(assembly, "UmbracoCms.Themes.Conference.Config.umbraco.yml");
+        var assembly = typeof(SplatDev.Umbraco.Themes.Conference.Composers.ConferenceThemeComposer).Assembly;
+        var yaml = LoadEmbeddedYaml(assembly, "SplatDev.Umbraco.Themes.Conference.Config.umbraco.yml");
 
         yaml.Should().NotBeNullOrWhiteSpace();
         var root = ParseYaml(yaml);
@@ -110,8 +110,8 @@ public class YamlSchemaTests
     [Fact]
     public void ForumTheme_YamlFile_IsValid()
     {
-        var assembly = typeof(UmbracoCms.Themes.Forum.Composers.ForumThemeComposer).Assembly;
-        var yaml = LoadEmbeddedYaml(assembly, "UmbracoCms.Themes.Forum.Config.umbraco.yml");
+        var assembly = typeof(SplatDev.Umbraco.Themes.Forum.Composers.ForumThemeComposer).Assembly;
+        var yaml = LoadEmbeddedYaml(assembly, "SplatDev.Umbraco.Themes.Forum.Config.umbraco.yml");
 
         yaml.Should().NotBeNullOrWhiteSpace();
         var root = ParseYaml(yaml);
@@ -121,8 +121,8 @@ public class YamlSchemaTests
     [Fact]
     public void LandingTheme_YamlFile_IsValid()
     {
-        var assembly = typeof(UmbracoCms.Themes.Landing.Composers.LandingThemeComposer).Assembly;
-        var yaml = LoadEmbeddedYaml(assembly, "UmbracoCms.Themes.Landing.Config.umbraco.yml");
+        var assembly = typeof(SplatDev.Umbraco.Themes.Landing.Composers.LandingThemeComposer).Assembly;
+        var yaml = LoadEmbeddedYaml(assembly, "SplatDev.Umbraco.Themes.Landing.Config.umbraco.yml");
 
         yaml.Should().NotBeNullOrWhiteSpace();
         var root = ParseYaml(yaml);
@@ -134,8 +134,8 @@ public class YamlSchemaTests
     [Fact]
     public void BaseTheme_YamlFile_HasDataTypesSection()
     {
-        var assembly = typeof(UmbracoCms.Themes.Base.Composers.BaseThemeComposer).Assembly;
-        var root = ParseYaml(LoadEmbeddedYaml(assembly, "UmbracoCms.Themes.Base.Config.umbraco.yml"));
+        var assembly = typeof(SplatDev.Umbraco.Themes.Base.Composers.BaseThemeComposer).Assembly;
+        var root = ParseYaml(LoadEmbeddedYaml(assembly, "SplatDev.Umbraco.Themes.Base.Config.umbraco.yml"));
 
         root.Should().ContainKey("dataTypes");
         (root["dataTypes"] as List<object>).Should().NotBeNullOrEmpty();
@@ -144,8 +144,8 @@ public class YamlSchemaTests
     [Fact]
     public void BaseTheme_YamlFile_HasDocumentTypesSection()
     {
-        var assembly = typeof(UmbracoCms.Themes.Base.Composers.BaseThemeComposer).Assembly;
-        var root = ParseYaml(LoadEmbeddedYaml(assembly, "UmbracoCms.Themes.Base.Config.umbraco.yml"));
+        var assembly = typeof(SplatDev.Umbraco.Themes.Base.Composers.BaseThemeComposer).Assembly;
+        var root = ParseYaml(LoadEmbeddedYaml(assembly, "SplatDev.Umbraco.Themes.Base.Config.umbraco.yml"));
 
         root.Should().ContainKey("documentTypes");
         (root["documentTypes"] as List<object>).Should().NotBeNullOrEmpty();
@@ -154,8 +154,8 @@ public class YamlSchemaTests
     [Fact]
     public void BaseTheme_YamlFile_HasTemplatesSection()
     {
-        var assembly = typeof(UmbracoCms.Themes.Base.Composers.BaseThemeComposer).Assembly;
-        var root = ParseYaml(LoadEmbeddedYaml(assembly, "UmbracoCms.Themes.Base.Config.umbraco.yml"));
+        var assembly = typeof(SplatDev.Umbraco.Themes.Base.Composers.BaseThemeComposer).Assembly;
+        var root = ParseYaml(LoadEmbeddedYaml(assembly, "SplatDev.Umbraco.Themes.Base.Config.umbraco.yml"));
 
         root.Should().ContainKey("templates");
         (root["templates"] as List<object>).Should().NotBeNullOrEmpty();
@@ -164,8 +164,8 @@ public class YamlSchemaTests
     [Fact]
     public void BlogTheme_YamlFile_HasDataTypesSection()
     {
-        var assembly = typeof(UmbracoCms.Themes.Blog.Composers.BlogThemeComposer).Assembly;
-        var root = ParseYaml(LoadEmbeddedYaml(assembly, "UmbracoCms.Themes.Blog.Config.umbraco.yml"));
+        var assembly = typeof(SplatDev.Umbraco.Themes.Blog.Composers.BlogThemeComposer).Assembly;
+        var root = ParseYaml(LoadEmbeddedYaml(assembly, "SplatDev.Umbraco.Themes.Blog.Config.umbraco.yml"));
 
         root.Should().ContainKey("dataTypes");
         (root["dataTypes"] as List<object>).Should().NotBeNullOrEmpty();
@@ -174,8 +174,8 @@ public class YamlSchemaTests
     [Fact]
     public void CommerceTheme_YamlFile_HasDataTypesSection()
     {
-        var assembly = typeof(UmbracoCms.Themes.Commerce.Composers.CommerceThemeComposer).Assembly;
-        var root = ParseYaml(LoadEmbeddedYaml(assembly, "UmbracoCms.Themes.Commerce.Config.umbraco.yml"));
+        var assembly = typeof(SplatDev.Umbraco.Themes.Commerce.Composers.CommerceThemeComposer).Assembly;
+        var root = ParseYaml(LoadEmbeddedYaml(assembly, "SplatDev.Umbraco.Themes.Commerce.Config.umbraco.yml"));
 
         root.Should().ContainKey("dataTypes");
         (root["dataTypes"] as List<object>).Should().NotBeNullOrEmpty();
@@ -184,8 +184,8 @@ public class YamlSchemaTests
     [Fact]
     public void LandingTheme_YamlFile_HasDocumentTypesSection()
     {
-        var assembly = typeof(UmbracoCms.Themes.Landing.Composers.LandingThemeComposer).Assembly;
-        var root = ParseYaml(LoadEmbeddedYaml(assembly, "UmbracoCms.Themes.Landing.Config.umbraco.yml"));
+        var assembly = typeof(SplatDev.Umbraco.Themes.Landing.Composers.LandingThemeComposer).Assembly;
+        var root = ParseYaml(LoadEmbeddedYaml(assembly, "SplatDev.Umbraco.Themes.Landing.Config.umbraco.yml"));
 
         root.Should().ContainKey("documentTypes");
         (root["documentTypes"] as List<object>).Should().NotBeNullOrEmpty();
@@ -196,8 +196,8 @@ public class YamlSchemaTests
     [Fact]
     public void BaseTheme_YamlFile_HasRequiredDocumentTypes()
     {
-        var assembly = typeof(UmbracoCms.Themes.Base.Composers.BaseThemeComposer).Assembly;
-        var root = ParseYaml(LoadEmbeddedYaml(assembly, "UmbracoCms.Themes.Base.Config.umbraco.yml"));
+        var assembly = typeof(SplatDev.Umbraco.Themes.Base.Composers.BaseThemeComposer).Assembly;
+        var root = ParseYaml(LoadEmbeddedYaml(assembly, "SplatDev.Umbraco.Themes.Base.Config.umbraco.yml"));
 
         var aliases = GetDocumentTypeAliases(root);
         aliases.Should().Contain("siteRoot", because: "Base theme requires a siteRoot document type");
@@ -209,8 +209,8 @@ public class YamlSchemaTests
     [Fact]
     public void BlogTheme_YamlFile_HasRequiredDocumentTypes()
     {
-        var assembly = typeof(UmbracoCms.Themes.Blog.Composers.BlogThemeComposer).Assembly;
-        var root = ParseYaml(LoadEmbeddedYaml(assembly, "UmbracoCms.Themes.Blog.Config.umbraco.yml"));
+        var assembly = typeof(SplatDev.Umbraco.Themes.Blog.Composers.BlogThemeComposer).Assembly;
+        var root = ParseYaml(LoadEmbeddedYaml(assembly, "SplatDev.Umbraco.Themes.Blog.Config.umbraco.yml"));
 
         var aliases = GetDocumentTypeAliases(root);
         aliases.Should().Contain("blogPost", because: "Blog theme requires a blogPost document type");
@@ -223,8 +223,8 @@ public class YamlSchemaTests
     [Fact]
     public void CommerceTheme_YamlFile_HasRequiredDocumentTypes()
     {
-        var assembly = typeof(UmbracoCms.Themes.Commerce.Composers.CommerceThemeComposer).Assembly;
-        var root = ParseYaml(LoadEmbeddedYaml(assembly, "UmbracoCms.Themes.Commerce.Config.umbraco.yml"));
+        var assembly = typeof(SplatDev.Umbraco.Themes.Commerce.Composers.CommerceThemeComposer).Assembly;
+        var root = ParseYaml(LoadEmbeddedYaml(assembly, "SplatDev.Umbraco.Themes.Commerce.Config.umbraco.yml"));
 
         var aliases = GetDocumentTypeAliases(root);
         aliases.Should().Contain("shopRoot", because: "Commerce theme requires a shopRoot document type");
@@ -236,8 +236,8 @@ public class YamlSchemaTests
     [Fact]
     public void LandingTheme_YamlFile_HasRequiredDocumentTypes()
     {
-        var assembly = typeof(UmbracoCms.Themes.Landing.Composers.LandingThemeComposer).Assembly;
-        var root = ParseYaml(LoadEmbeddedYaml(assembly, "UmbracoCms.Themes.Landing.Config.umbraco.yml"));
+        var assembly = typeof(SplatDev.Umbraco.Themes.Landing.Composers.LandingThemeComposer).Assembly;
+        var root = ParseYaml(LoadEmbeddedYaml(assembly, "SplatDev.Umbraco.Themes.Landing.Config.umbraco.yml"));
 
         var aliases = GetDocumentTypeAliases(root);
         aliases.Should().Contain("landingPage", because: "Landing theme requires a landingPage document type");
@@ -248,8 +248,8 @@ public class YamlSchemaTests
     [Fact]
     public void BaseTheme_YamlFile_DataTypes_HaveAliasAndEditorUiAlias()
     {
-        var assembly = typeof(UmbracoCms.Themes.Base.Composers.BaseThemeComposer).Assembly;
-        var root = ParseYaml(LoadEmbeddedYaml(assembly, "UmbracoCms.Themes.Base.Config.umbraco.yml"));
+        var assembly = typeof(SplatDev.Umbraco.Themes.Base.Composers.BaseThemeComposer).Assembly;
+        var root = ParseYaml(LoadEmbeddedYaml(assembly, "SplatDev.Umbraco.Themes.Base.Config.umbraco.yml"));
 
         var dataTypes = root["dataTypes"] as List<object>;
         dataTypes.Should().NotBeNull();
@@ -266,8 +266,8 @@ public class YamlSchemaTests
     [Fact]
     public void BaseTheme_YamlFile_ContainsCommonDataTypes()
     {
-        var assembly = typeof(UmbracoCms.Themes.Base.Composers.BaseThemeComposer).Assembly;
-        var root = ParseYaml(LoadEmbeddedYaml(assembly, "UmbracoCms.Themes.Base.Config.umbraco.yml"));
+        var assembly = typeof(SplatDev.Umbraco.Themes.Base.Composers.BaseThemeComposer).Assembly;
+        var root = ParseYaml(LoadEmbeddedYaml(assembly, "SplatDev.Umbraco.Themes.Base.Config.umbraco.yml"));
 
         var dataTypes = root["dataTypes"] as List<object>;
         var aliases = dataTypes!
@@ -287,8 +287,8 @@ public class YamlSchemaTests
     [Fact]
     public void BaseTheme_YamlFile_Templates_HaveAliasAndFilePath()
     {
-        var assembly = typeof(UmbracoCms.Themes.Base.Composers.BaseThemeComposer).Assembly;
-        var root = ParseYaml(LoadEmbeddedYaml(assembly, "UmbracoCms.Themes.Base.Config.umbraco.yml"));
+        var assembly = typeof(SplatDev.Umbraco.Themes.Base.Composers.BaseThemeComposer).Assembly;
+        var root = ParseYaml(LoadEmbeddedYaml(assembly, "SplatDev.Umbraco.Themes.Base.Config.umbraco.yml"));
 
         var templates = root["templates"] as List<object>;
         templates.Should().NotBeNull();
@@ -304,8 +304,8 @@ public class YamlSchemaTests
     [Fact]
     public void BlogTheme_YamlFile_Templates_ContainBlogPostAndBlogListing()
     {
-        var assembly = typeof(UmbracoCms.Themes.Blog.Composers.BlogThemeComposer).Assembly;
-        var root = ParseYaml(LoadEmbeddedYaml(assembly, "UmbracoCms.Themes.Blog.Config.umbraco.yml"));
+        var assembly = typeof(SplatDev.Umbraco.Themes.Blog.Composers.BlogThemeComposer).Assembly;
+        var root = ParseYaml(LoadEmbeddedYaml(assembly, "SplatDev.Umbraco.Themes.Blog.Config.umbraco.yml"));
 
         var templates = root["templates"] as List<object>;
         var aliases = templates!
@@ -321,8 +321,8 @@ public class YamlSchemaTests
     [Fact]
     public void ConferenceTheme_YamlFile_HasRequiredDocumentTypes()
     {
-        var assembly = typeof(UmbracoCms.Themes.Conference.Composers.ConferenceThemeComposer).Assembly;
-        var root = ParseYaml(LoadEmbeddedYaml(assembly, "UmbracoCms.Themes.Conference.Config.umbraco.yml"));
+        var assembly = typeof(SplatDev.Umbraco.Themes.Conference.Composers.ConferenceThemeComposer).Assembly;
+        var root = ParseYaml(LoadEmbeddedYaml(assembly, "SplatDev.Umbraco.Themes.Conference.Config.umbraco.yml"));
 
         var aliases = GetDocumentTypeAliases(root);
         aliases.Should().Contain("conferenceRoot", because: "Conference theme requires a conferenceRoot document type");
@@ -333,8 +333,8 @@ public class YamlSchemaTests
     [Fact]
     public void ForumTheme_YamlFile_HasRequiredDocumentTypes()
     {
-        var assembly = typeof(UmbracoCms.Themes.Forum.Composers.ForumThemeComposer).Assembly;
-        var root = ParseYaml(LoadEmbeddedYaml(assembly, "UmbracoCms.Themes.Forum.Config.umbraco.yml"));
+        var assembly = typeof(SplatDev.Umbraco.Themes.Forum.Composers.ForumThemeComposer).Assembly;
+        var root = ParseYaml(LoadEmbeddedYaml(assembly, "SplatDev.Umbraco.Themes.Forum.Config.umbraco.yml"));
 
         var aliases = GetDocumentTypeAliases(root);
         aliases.Should().Contain("forumRoot", because: "Forum theme requires a forumRoot document type");
@@ -345,8 +345,8 @@ public class YamlSchemaTests
     [Fact]
     public void CommerceTheme_YamlFile_Templates_ContainShopListingAndProduct()
     {
-        var assembly = typeof(UmbracoCms.Themes.Commerce.Composers.CommerceThemeComposer).Assembly;
-        var root = ParseYaml(LoadEmbeddedYaml(assembly, "UmbracoCms.Themes.Commerce.Config.umbraco.yml"));
+        var assembly = typeof(SplatDev.Umbraco.Themes.Commerce.Composers.CommerceThemeComposer).Assembly;
+        var root = ParseYaml(LoadEmbeddedYaml(assembly, "SplatDev.Umbraco.Themes.Commerce.Config.umbraco.yml"));
 
         var templates = root["templates"] as List<object>;
         var aliases = templates!

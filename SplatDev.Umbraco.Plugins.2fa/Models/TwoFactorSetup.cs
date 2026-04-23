@@ -1,4 +1,4 @@
-namespace UmbracoCms.Plugins.TwoFactor.Models;
+namespace SplatDev.Umbraco.Plugins.TwoFactor.Models;
 
 public class TwoFactorSetup
 {

@@ -21,7 +21,7 @@ public class CssTests
 
         // Navigate: bin/Debug/net8.0 -> Tests root -> Umbraco Projects/
         var repoRoot = Path.GetFullPath(Path.Combine(assemblyDir, "..", "..", "..", ".."));
-        return Path.Combine(repoRoot, $"UmbracoCms.Themes.{themeName}", "wwwroot", "css");
+        return Path.Combine(repoRoot, $"SplatDev.Umbraco.Themes.{themeName}", "wwwroot", "css");
     }
 
     // ── wwwroot/css directory existence ───────────────────────────────────────
@@ -143,7 +143,7 @@ public class CssTests
     {
         var assemblyDir = Path.GetDirectoryName(typeof(CssTests).Assembly.Location)!;
         var repoRoot = Path.GetFullPath(Path.Combine(assemblyDir, "..", "..", "..", ".."));
-        var layoutPath = Path.Combine(repoRoot, "UmbracoCms.Themes.Base", "Views", "Shared", "_Layout.cshtml");
+        var layoutPath = Path.Combine(repoRoot, "SplatDev.Umbraco.Themes.Base", "Views", "Shared", "_Layout.cshtml");
 
         if (!File.Exists(layoutPath))
             return;
@@ -206,7 +206,7 @@ public class CssTests
     {
         var assemblyDir = Path.GetDirectoryName(typeof(CssTests).Assembly.Location)!;
         var repoRoot = Path.GetFullPath(Path.Combine(assemblyDir, "..", "..", "..", ".."));
-        var wwwroot = Path.Combine(repoRoot, $"UmbracoCms.Themes.{themeName}", "wwwroot");
+        var wwwroot = Path.Combine(repoRoot, $"SplatDev.Umbraco.Themes.{themeName}", "wwwroot");
 
         Directory.Exists(wwwroot).Should().BeTrue(
             because: $"'{themeName}' theme must have a wwwroot/ directory for static assets");

@@ -1,11 +1,11 @@
 #pragma warning disable CS0618
-namespace UmbracoCms.Plugins.MemberGroups.Helpers
+namespace SplatDev.Umbraco.Plugins.MemberGroups.Helpers
 {
     [System.Obsolete("Stub for backwards compatibility. Use Yaml2Schema.")]
     public static class MemberGroupHelpers { }
 }
 
-namespace UmbracoCms.Plugins.MemberGroups.Interfaces
+namespace SplatDev.Umbraco.Plugins.MemberGroups.Interfaces
 {
     [System.Obsolete("Stub for backwards compatibility. Use Yaml2Schema.")]
     public interface IMemberGroupDefinition
@@ -15,7 +15,7 @@ namespace UmbracoCms.Plugins.MemberGroups.Interfaces
     }
 }
 
-namespace UmbracoCms.Plugins.MemberGroups.Services
+namespace SplatDev.Umbraco.Plugins.MemberGroups.Services
 {
     [System.Obsolete("Stub for backwards compatibility. Use Yaml2Schema.")]
     public class MemberGroupService
@@ -24,7 +24,7 @@ namespace UmbracoCms.Plugins.MemberGroups.Services
     }
 }
 
-namespace UmbracoCms.Plugins.MemberGroups.Users
+namespace SplatDev.Umbraco.Plugins.MemberGroups.Users
 {
     [System.Obsolete("Stub for backwards compatibility. Use Yaml2Schema.")]
     public class MemberGroupUser { }

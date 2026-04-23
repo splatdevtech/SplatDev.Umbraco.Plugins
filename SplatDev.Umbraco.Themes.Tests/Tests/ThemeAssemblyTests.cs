@@ -14,8 +14,8 @@ public class ThemeAssemblyTests
     [Fact]
     public void BaseTheme_Assembly_HasComposerClass()
     {
-        var assembly = typeof(UmbracoCms.Themes.Base.Composers.BaseThemeComposer).Assembly;
-        var composerType = assembly.GetType("UmbracoCms.Themes.Base.Composers.BaseThemeComposer");
+        var assembly = typeof(SplatDev.Umbraco.Themes.Base.Composers.BaseThemeComposer).Assembly;
+        var composerType = assembly.GetType("SplatDev.Umbraco.Themes.Base.Composers.BaseThemeComposer");
 
         composerType.Should().NotBeNull();
         composerType!.GetInterfaces().Should().Contain(typeof(IComposer),
@@ -25,8 +25,8 @@ public class ThemeAssemblyTests
     [Fact]
     public void BlogTheme_Assembly_HasComposerClass()
     {
-        var assembly = typeof(UmbracoCms.Themes.Blog.Composers.BlogThemeComposer).Assembly;
-        var composerType = assembly.GetType("UmbracoCms.Themes.Blog.Composers.BlogThemeComposer");
+        var assembly = typeof(SplatDev.Umbraco.Themes.Blog.Composers.BlogThemeComposer).Assembly;
+        var composerType = assembly.GetType("SplatDev.Umbraco.Themes.Blog.Composers.BlogThemeComposer");
 
         composerType.Should().NotBeNull();
         composerType!.GetInterfaces().Should().Contain(typeof(IComposer),
@@ -36,8 +36,8 @@ public class ThemeAssemblyTests
     [Fact]
     public void CommerceTheme_Assembly_HasComposerClass()
     {
-        var assembly = typeof(UmbracoCms.Themes.Commerce.Composers.CommerceThemeComposer).Assembly;
-        var composerType = assembly.GetType("UmbracoCms.Themes.Commerce.Composers.CommerceThemeComposer");
+        var assembly = typeof(SplatDev.Umbraco.Themes.Commerce.Composers.CommerceThemeComposer).Assembly;
+        var composerType = assembly.GetType("SplatDev.Umbraco.Themes.Commerce.Composers.CommerceThemeComposer");
 
         composerType.Should().NotBeNull();
         composerType!.GetInterfaces().Should().Contain(typeof(IComposer),
@@ -47,8 +47,8 @@ public class ThemeAssemblyTests
     [Fact]
     public void ConferenceTheme_Assembly_HasComposerClass()
     {
-        var assembly = typeof(UmbracoCms.Themes.Conference.Composers.ConferenceThemeComposer).Assembly;
-        var composerType = assembly.GetType("UmbracoCms.Themes.Conference.Composers.ConferenceThemeComposer");
+        var assembly = typeof(SplatDev.Umbraco.Themes.Conference.Composers.ConferenceThemeComposer).Assembly;
+        var composerType = assembly.GetType("SplatDev.Umbraco.Themes.Conference.Composers.ConferenceThemeComposer");
 
         composerType.Should().NotBeNull();
         composerType!.GetInterfaces().Should().Contain(typeof(IComposer),
@@ -58,8 +58,8 @@ public class ThemeAssemblyTests
     [Fact]
     public void ForumTheme_Assembly_HasComposerClass()
     {
-        var assembly = typeof(UmbracoCms.Themes.Forum.Composers.ForumThemeComposer).Assembly;
-        var composerType = assembly.GetType("UmbracoCms.Themes.Forum.Composers.ForumThemeComposer");
+        var assembly = typeof(SplatDev.Umbraco.Themes.Forum.Composers.ForumThemeComposer).Assembly;
+        var composerType = assembly.GetType("SplatDev.Umbraco.Themes.Forum.Composers.ForumThemeComposer");
 
         composerType.Should().NotBeNull();
         composerType!.GetInterfaces().Should().Contain(typeof(IComposer),
@@ -69,8 +69,8 @@ public class ThemeAssemblyTests
     [Fact]
     public void LandingTheme_Assembly_HasComposerClass()
     {
-        var assembly = typeof(UmbracoCms.Themes.Landing.Composers.LandingThemeComposer).Assembly;
-        var composerType = assembly.GetType("UmbracoCms.Themes.Landing.Composers.LandingThemeComposer");
+        var assembly = typeof(SplatDev.Umbraco.Themes.Landing.Composers.LandingThemeComposer).Assembly;
+        var composerType = assembly.GetType("SplatDev.Umbraco.Themes.Landing.Composers.LandingThemeComposer");
 
         composerType.Should().NotBeNull();
         composerType!.GetInterfaces().Should().Contain(typeof(IComposer),
@@ -83,12 +83,12 @@ public class ThemeAssemblyTests
         // Corporate theme is resolved via AppDomain since it may be a stub assembly.
         var assembly = AppDomain.CurrentDomain
             .GetAssemblies()
-            .FirstOrDefault(a => a.GetName().Name == "UmbracoCms.Themes.Corporate");
+            .FirstOrDefault(a => a.GetName().Name == "SplatDev.Umbraco.Themes.Corporate");
 
         assembly.Should().NotBeNull(
-            because: "UmbracoCms.Themes.Corporate should be loaded as a project reference");
+            because: "SplatDev.Umbraco.Themes.Corporate should be loaded as a project reference");
 
-        var composerType = assembly!.GetType("UmbracoCms.Themes.Corporate.Composers.CorporateThemeComposer");
+        var composerType = assembly!.GetType("SplatDev.Umbraco.Themes.Corporate.Composers.CorporateThemeComposer");
 
         composerType.Should().NotBeNull(
             because: "CorporateThemeComposer should exist in the Corporate theme assembly");
@@ -103,12 +103,12 @@ public class ThemeAssemblyTests
         // Hotel theme is resolved via AppDomain since it may be a stub assembly.
         var assembly = AppDomain.CurrentDomain
             .GetAssemblies()
-            .FirstOrDefault(a => a.GetName().Name == "UmbracoCms.Themes.Hotel");
+            .FirstOrDefault(a => a.GetName().Name == "SplatDev.Umbraco.Themes.Hotel");
 
         assembly.Should().NotBeNull(
-            because: "UmbracoCms.Themes.Hotel should be loaded as a project reference");
+            because: "SplatDev.Umbraco.Themes.Hotel should be loaded as a project reference");
 
-        var composerType = assembly!.GetType("UmbracoCms.Themes.Hotel.Composers.HotelThemeComposer");
+        var composerType = assembly!.GetType("SplatDev.Umbraco.Themes.Hotel.Composers.HotelThemeComposer");
 
         composerType.Should().NotBeNull(
             because: "HotelThemeComposer should exist in the Hotel theme assembly");
@@ -123,12 +123,12 @@ public class ThemeAssemblyTests
         // Portfolio theme is resolved via AppDomain since it may be a stub assembly.
         var assembly = AppDomain.CurrentDomain
             .GetAssemblies()
-            .FirstOrDefault(a => a.GetName().Name == "UmbracoCms.Themes.Portfolio");
+            .FirstOrDefault(a => a.GetName().Name == "SplatDev.Umbraco.Themes.Portfolio");
 
         assembly.Should().NotBeNull(
-            because: "UmbracoCms.Themes.Portfolio should be loaded as a project reference");
+            because: "SplatDev.Umbraco.Themes.Portfolio should be loaded as a project reference");
 
-        var composerType = assembly!.GetType("UmbracoCms.Themes.Portfolio.Composers.PortfolioThemeComposer");
+        var composerType = assembly!.GetType("SplatDev.Umbraco.Themes.Portfolio.Composers.PortfolioThemeComposer");
 
         composerType.Should().NotBeNull(
             because: "PortfolioThemeComposer should exist in the Portfolio theme assembly");
@@ -144,15 +144,15 @@ public class ThemeAssemblyTests
     /// as a public, non-abstract, non-generic class.
     /// </summary>
     [Theory]
-    [InlineData("UmbracoCms.Themes.Base.Composers.BaseThemeComposer",  "UmbracoCms.Themes.Base")]
-    [InlineData("UmbracoCms.Themes.Blog.Composers.BlogThemeComposer",  "UmbracoCms.Themes.Blog")]
-    [InlineData("UmbracoCms.Themes.Commerce.Composers.CommerceThemeComposer",  "UmbracoCms.Themes.Commerce")]
-    [InlineData("UmbracoCms.Themes.Conference.Composers.ConferenceThemeComposer",  "UmbracoCms.Themes.Conference")]
-    [InlineData("UmbracoCms.Themes.Corporate.Composers.CorporateThemeComposer",  "UmbracoCms.Themes.Corporate")]
-    [InlineData("UmbracoCms.Themes.Forum.Composers.ForumThemeComposer",  "UmbracoCms.Themes.Forum")]
-    [InlineData("UmbracoCms.Themes.Hotel.Composers.HotelThemeComposer",  "UmbracoCms.Themes.Hotel")]
-    [InlineData("UmbracoCms.Themes.Landing.Composers.LandingThemeComposer",  "UmbracoCms.Themes.Landing")]
-    [InlineData("UmbracoCms.Themes.Portfolio.Composers.PortfolioThemeComposer",  "UmbracoCms.Themes.Portfolio")]
+    [InlineData("SplatDev.Umbraco.Themes.Base.Composers.BaseThemeComposer",  "SplatDev.Umbraco.Themes.Base")]
+    [InlineData("SplatDev.Umbraco.Themes.Blog.Composers.BlogThemeComposer",  "SplatDev.Umbraco.Themes.Blog")]
+    [InlineData("SplatDev.Umbraco.Themes.Commerce.Composers.CommerceThemeComposer",  "SplatDev.Umbraco.Themes.Commerce")]
+    [InlineData("SplatDev.Umbraco.Themes.Conference.Composers.ConferenceThemeComposer",  "SplatDev.Umbraco.Themes.Conference")]
+    [InlineData("SplatDev.Umbraco.Themes.Corporate.Composers.CorporateThemeComposer",  "SplatDev.Umbraco.Themes.Corporate")]
+    [InlineData("SplatDev.Umbraco.Themes.Forum.Composers.ForumThemeComposer",  "SplatDev.Umbraco.Themes.Forum")]
+    [InlineData("SplatDev.Umbraco.Themes.Hotel.Composers.HotelThemeComposer",  "SplatDev.Umbraco.Themes.Hotel")]
+    [InlineData("SplatDev.Umbraco.Themes.Landing.Composers.LandingThemeComposer",  "SplatDev.Umbraco.Themes.Landing")]
+    [InlineData("SplatDev.Umbraco.Themes.Portfolio.Composers.PortfolioThemeComposer",  "SplatDev.Umbraco.Themes.Portfolio")]
     public void AllThemes_HaveComposerClasses(string composerTypeName, string assemblyName)
     {
         // Load the assembly by its simple name – it is already in the AppDomain because
@@ -179,15 +179,15 @@ public class ThemeAssemblyTests
     /// Verifies that each theme assembly contains an embedded umbraco.yml resource.
     /// </summary>
     [Theory]
-    [InlineData("UmbracoCms.Themes.Base",       "UmbracoCms.Themes.Base.Config.umbraco.yml")]
-    [InlineData("UmbracoCms.Themes.Blog",       "UmbracoCms.Themes.Blog.Config.umbraco.yml")]
-    [InlineData("UmbracoCms.Themes.Commerce",   "UmbracoCms.Themes.Commerce.Config.umbraco.yml")]
-    [InlineData("UmbracoCms.Themes.Conference", "UmbracoCms.Themes.Conference.Config.umbraco.yml")]
-    [InlineData("UmbracoCms.Themes.Corporate",  "UmbracoCms.Themes.Corporate.Config.umbraco.yml")]
-    [InlineData("UmbracoCms.Themes.Forum",      "UmbracoCms.Themes.Forum.Config.umbraco.yml")]
-    [InlineData("UmbracoCms.Themes.Hotel",      "UmbracoCms.Themes.Hotel.Config.umbraco.yml")]
-    [InlineData("UmbracoCms.Themes.Landing",    "UmbracoCms.Themes.Landing.Config.umbraco.yml")]
-    [InlineData("UmbracoCms.Themes.Portfolio",  "UmbracoCms.Themes.Portfolio.Config.umbraco.yml")]
+    [InlineData("SplatDev.Umbraco.Themes.Base",       "SplatDev.Umbraco.Themes.Base.Config.umbraco.yml")]
+    [InlineData("SplatDev.Umbraco.Themes.Blog",       "SplatDev.Umbraco.Themes.Blog.Config.umbraco.yml")]
+    [InlineData("SplatDev.Umbraco.Themes.Commerce",   "SplatDev.Umbraco.Themes.Commerce.Config.umbraco.yml")]
+    [InlineData("SplatDev.Umbraco.Themes.Conference", "SplatDev.Umbraco.Themes.Conference.Config.umbraco.yml")]
+    [InlineData("SplatDev.Umbraco.Themes.Corporate",  "SplatDev.Umbraco.Themes.Corporate.Config.umbraco.yml")]
+    [InlineData("SplatDev.Umbraco.Themes.Forum",      "SplatDev.Umbraco.Themes.Forum.Config.umbraco.yml")]
+    [InlineData("SplatDev.Umbraco.Themes.Hotel",      "SplatDev.Umbraco.Themes.Hotel.Config.umbraco.yml")]
+    [InlineData("SplatDev.Umbraco.Themes.Landing",    "SplatDev.Umbraco.Themes.Landing.Config.umbraco.yml")]
+    [InlineData("SplatDev.Umbraco.Themes.Portfolio",  "SplatDev.Umbraco.Themes.Portfolio.Config.umbraco.yml")]
     public void AllThemes_HaveEmbeddedYaml(string assemblyName, string resourceName)
     {
         var assembly = AppDomain.CurrentDomain
@@ -209,15 +209,15 @@ public class ThemeAssemblyTests
     /// Verifies that each embedded YAML resource is non-empty (at least 100 bytes).
     /// </summary>
     [Theory]
-    [InlineData("UmbracoCms.Themes.Base",       "UmbracoCms.Themes.Base.Config.umbraco.yml")]
-    [InlineData("UmbracoCms.Themes.Blog",       "UmbracoCms.Themes.Blog.Config.umbraco.yml")]
-    [InlineData("UmbracoCms.Themes.Commerce",   "UmbracoCms.Themes.Commerce.Config.umbraco.yml")]
-    [InlineData("UmbracoCms.Themes.Conference", "UmbracoCms.Themes.Conference.Config.umbraco.yml")]
-    [InlineData("UmbracoCms.Themes.Corporate",  "UmbracoCms.Themes.Corporate.Config.umbraco.yml")]
-    [InlineData("UmbracoCms.Themes.Forum",      "UmbracoCms.Themes.Forum.Config.umbraco.yml")]
-    [InlineData("UmbracoCms.Themes.Hotel",      "UmbracoCms.Themes.Hotel.Config.umbraco.yml")]
-    [InlineData("UmbracoCms.Themes.Landing",    "UmbracoCms.Themes.Landing.Config.umbraco.yml")]
-    [InlineData("UmbracoCms.Themes.Portfolio",  "UmbracoCms.Themes.Portfolio.Config.umbraco.yml")]
+    [InlineData("SplatDev.Umbraco.Themes.Base",       "SplatDev.Umbraco.Themes.Base.Config.umbraco.yml")]
+    [InlineData("SplatDev.Umbraco.Themes.Blog",       "SplatDev.Umbraco.Themes.Blog.Config.umbraco.yml")]
+    [InlineData("SplatDev.Umbraco.Themes.Commerce",   "SplatDev.Umbraco.Themes.Commerce.Config.umbraco.yml")]
+    [InlineData("SplatDev.Umbraco.Themes.Conference", "SplatDev.Umbraco.Themes.Conference.Config.umbraco.yml")]
+    [InlineData("SplatDev.Umbraco.Themes.Corporate",  "SplatDev.Umbraco.Themes.Corporate.Config.umbraco.yml")]
+    [InlineData("SplatDev.Umbraco.Themes.Forum",      "SplatDev.Umbraco.Themes.Forum.Config.umbraco.yml")]
+    [InlineData("SplatDev.Umbraco.Themes.Hotel",      "SplatDev.Umbraco.Themes.Hotel.Config.umbraco.yml")]
+    [InlineData("SplatDev.Umbraco.Themes.Landing",    "SplatDev.Umbraco.Themes.Landing.Config.umbraco.yml")]
+    [InlineData("SplatDev.Umbraco.Themes.Portfolio",  "SplatDev.Umbraco.Themes.Portfolio.Config.umbraco.yml")]
     public void AllThemes_EmbeddedYaml_IsNonEmpty(string assemblyName, string resourceName)
     {
         var assembly = AppDomain.CurrentDomain
@@ -241,15 +241,15 @@ public class ThemeAssemblyTests
     /// Verifies that each theme assembly has the expected assembly name.
     /// </summary>
     [Theory]
-    [InlineData("UmbracoCms.Themes.Base")]
-    [InlineData("UmbracoCms.Themes.Blog")]
-    [InlineData("UmbracoCms.Themes.Commerce")]
-    [InlineData("UmbracoCms.Themes.Conference")]
-    [InlineData("UmbracoCms.Themes.Corporate")]
-    [InlineData("UmbracoCms.Themes.Forum")]
-    [InlineData("UmbracoCms.Themes.Hotel")]
-    [InlineData("UmbracoCms.Themes.Landing")]
-    [InlineData("UmbracoCms.Themes.Portfolio")]
+    [InlineData("SplatDev.Umbraco.Themes.Base")]
+    [InlineData("SplatDev.Umbraco.Themes.Blog")]
+    [InlineData("SplatDev.Umbraco.Themes.Commerce")]
+    [InlineData("SplatDev.Umbraco.Themes.Conference")]
+    [InlineData("SplatDev.Umbraco.Themes.Corporate")]
+    [InlineData("SplatDev.Umbraco.Themes.Forum")]
+    [InlineData("SplatDev.Umbraco.Themes.Hotel")]
+    [InlineData("SplatDev.Umbraco.Themes.Landing")]
+    [InlineData("SplatDev.Umbraco.Themes.Portfolio")]
     public void AllThemes_HaveExpectedAssemblyName(string expectedAssemblyName)
     {
         var assembly = AppDomain.CurrentDomain
@@ -269,15 +269,15 @@ public class ThemeAssemblyTests
     /// namespace: {AssemblyName}.Composers.
     /// </summary>
     [Theory]
-    [InlineData("UmbracoCms.Themes.Base")]
-    [InlineData("UmbracoCms.Themes.Blog")]
-    [InlineData("UmbracoCms.Themes.Commerce")]
-    [InlineData("UmbracoCms.Themes.Conference")]
-    [InlineData("UmbracoCms.Themes.Corporate")]
-    [InlineData("UmbracoCms.Themes.Forum")]
-    [InlineData("UmbracoCms.Themes.Hotel")]
-    [InlineData("UmbracoCms.Themes.Landing")]
-    [InlineData("UmbracoCms.Themes.Portfolio")]
+    [InlineData("SplatDev.Umbraco.Themes.Base")]
+    [InlineData("SplatDev.Umbraco.Themes.Blog")]
+    [InlineData("SplatDev.Umbraco.Themes.Commerce")]
+    [InlineData("SplatDev.Umbraco.Themes.Conference")]
+    [InlineData("SplatDev.Umbraco.Themes.Corporate")]
+    [InlineData("SplatDev.Umbraco.Themes.Forum")]
+    [InlineData("SplatDev.Umbraco.Themes.Hotel")]
+    [InlineData("SplatDev.Umbraco.Themes.Landing")]
+    [InlineData("SplatDev.Umbraco.Themes.Portfolio")]
     public void AllThemes_ComposerClasses_AreInComposersNamespace(string assemblyName)
     {
         var assembly = AppDomain.CurrentDomain
