@@ -1,0 +1,15 @@
+{
+  "javascript": ["/App_Plugins/Surveys/angular/surveys.controller.js"],
+  "css": [],
+  "propertyEditors": [],
+  "gridEditors": [],
+  "dashboards": [
+    {
+      "alias": "Surveys.Dashboard",
+      "view": "/App_Plugins/Surveys/angular/surveys.html",
+      "sections": ["settings"],
+      "tab": "Surveys",
+      "access": [{"grant": "admin"}]
+    }
+  ]
+}

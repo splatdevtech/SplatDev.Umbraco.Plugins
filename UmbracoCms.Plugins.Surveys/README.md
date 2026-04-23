@@ -1,0 +1,64 @@
+# UmbracoCms.Plugins.Surveys
+
+A full-featured survey builder plugin for Umbraco 13 and Umbraco 17.
+
+## Features
+
+- Create surveys with multiple question types: Multiple Choice, Free Text, and Rating
+- Publish/unpublish surveys with optional expiry dates
+- Collect respondent email addresses (optional)
+- View aggregated results per question and option
+- U17 backoffice dashboard (Lit 3 web component)
+- U13 backoffice dashboard (AngularJS)
+- Razor view component for embedding surveys in Umbraco templates
+- EF Core with SQL Server (schema: `surveys`)
+
+## Targets
+
+| Framework | Umbraco | EF Core |
+|-----------|---------|---------|
+| net8.0    | 13.12.0 | 8.0.20  |
+| net10.0   | 17.3.4  | 10.0.7  |
+
+## API Endpoints
+
+| Method | URL | Description |
+|--------|-----|-------------|
+| GET    | `/umbraco/api/surveys/getall` | List all surveys |
+| GET    | `/umbraco/api/surveys/get?id={id}` | Get survey with questions |
+| POST   | `/umbraco/api/surveys/create` | Create a new survey |
+| PUT    | `/umbraco/api/surveys/update?id={id}` | Update a survey |
+| DELETE | `/umbraco/api/surveys/delete?id={id}` | Delete a survey |
+| POST   | `/umbraco/api/surveys/submit?surveyId={id}` | Submit a response |
+| GET    | `/umbraco/api/surveys/results?surveyId={id}` | Get aggregated results |
+
+## Usage in Templates
+
+```cshtml
+@await Component.InvokeAsync("Survey", new { surveyId = 1 })
+```
+
+## Building the Client
+
+```bash
+cd client
+npm install
+npm run build
+```
+
+The built file will be placed in `App_Plugins/Surveys/dist/`.
+
+## Database Schema
+
+Tables created in the `surveys` schema:
+- `Surveys` - Survey definitions
+- `SurveyQuestions` - Questions per survey
+- `SurveyOptions` - Answer options for MultipleChoice/Rating questions
+- `SurveyResponses` - Individual response submissions
+- `SurveyAnswers` - Per-question answers within a response
+
+Run EF Core migrations to create the tables:
+```bash
+dotnet ef migrations add InitialCreate
+dotnet ef database update
+```

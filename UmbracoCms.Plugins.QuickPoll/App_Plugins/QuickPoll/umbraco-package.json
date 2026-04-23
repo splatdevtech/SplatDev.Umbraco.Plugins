@@ -1,0 +1,25 @@
+{
+  "$schema": "../../umbraco-package-schema.json",
+  "name": "Quick Poll",
+  "version": "1.0.0",
+  "extensions": [
+    {
+      "type": "dashboard",
+      "alias": "UmbracoCms.QuickPoll.Dashboard",
+      "name": "Quick Poll Dashboard",
+      "element": "/App_Plugins/QuickPoll/dist/quick-poll-dashboard.element.js",
+      "elementName": "quick-poll-dashboard",
+      "weight": 100,
+      "meta": {
+        "label": "Quick Poll",
+        "pathname": "quick-poll"
+      },
+      "conditions": [
+        {
+          "alias": "Umb.Condition.SectionAlias",
+          "match": "Umb.Section.Settings"
+        }
+      ]
+    }
+  ]
+}

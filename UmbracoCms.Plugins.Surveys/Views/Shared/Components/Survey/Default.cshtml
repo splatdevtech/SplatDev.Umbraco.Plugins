@@ -1,0 +1,109 @@
+@using UmbracoCms.Plugins.Surveys.Models
+@model Survey?
+
+@if (Model is null)
+{
+    <p>Survey not found.</p>
+}
+else if (!Model.IsPublished)
+{
+    <p>This survey is not currently available.</p>
+}
+else if (Model.ExpiresAt.HasValue && Model.ExpiresAt.Value < DateTime.UtcNow)
+{
+    <p>This survey has expired.</p>
+}
+else
+{
+    <div class="survey-container" data-survey-id="@Model.Id">
+        <h2 class="survey-title">@Model.Title</h2>
+        @if (!string.IsNullOrWhiteSpace(Model.Description))
+        {
+            <p class="survey-description">@Model.Description</p>
+        }
+
+        <form method="post" action="/umbraco/api/surveys/submit?surveyId=@Model.Id" class="survey-form">
+            @Html.AntiForgeryToken()
+
+            <div class="form-group">
+                <label for="respondentEmail">Email (optional)</label>
+                <input type="email" id="respondentEmail" name="RespondentEmail" class="form-control" placeholder="your@email.com" />
+            </div>
+
+            @foreach (var question in Model.Questions.OrderBy(q => q.SortOrder))
+            {
+                <div class="survey-question" data-question-id="@question.Id">
+                    <label class="question-text">
+                        @question.QuestionText
+                        @if (question.IsRequired)
+                        {
+                            <span class="required" aria-label="required">*</span>
+                        }
+                    </label>
+
+                    @if (question.QuestionType == QuestionType.FreeText)
+                    {
+                        <textarea name="Answers[@question.Id].AnswerText"
+                                  class="form-control"
+                                  rows="3"
+                                  @(question.IsRequired ? "required" : "")></textarea>
+                        <input type="hidden" name="Answers[@question.Id].QuestionId" value="@question.Id" />
+                    }
+                    else if (question.QuestionType == QuestionType.MultipleChoice)
+                    {
+                        <input type="hidden" name="Answers[@question.Id].QuestionId" value="@question.Id" />
+                        @foreach (var option in question.Options.OrderBy(o => o.SortOrder))
+                        {
+                            <div class="form-check">
+                                <input class="form-check-input"
+                                       type="radio"
+                                       name="Answers[@question.Id].SelectedOptionId"
+                                       id="option_@option.Id"
+                                       value="@option.Id"
+                                       @(question.IsRequired ? "required" : "") />
+                                <label class="form-check-label" for="option_@option.Id">
+                                    @option.OptionText
+                                </label>
+                            </div>
+                        }
+                    }
+                    else if (question.QuestionType == QuestionType.Rating)
+                    {
+                        <input type="hidden" name="Answers[@question.Id].QuestionId" value="@question.Id" />
+                        <div class="rating-group">
+                            @for (int i = 1; i <= 5; i++)
+                            {
+                                var optionId = question.Options.OrderBy(o => o.SortOrder).ElementAtOrDefault(i - 1)?.Id ?? i;
+                                <label class="rating-label">
+                                    <input type="radio"
+                                           name="Answers[@question.Id].SelectedOptionId"
+                                           value="@optionId"
+                                           @(question.IsRequired ? "required" : "") />
+                                    @i
+                                </label>
+                            }
+                        </div>
+                    }
+                </div>
+            }
+
+            <button type="submit" class="btn btn-primary survey-submit">Submit Survey</button>
+        </form>
+    </div>
+
+    <style>
+        .survey-container { max-width: 680px; margin: 0 auto; padding: 24px; }
+        .survey-title { font-size: 1.5rem; font-weight: 700; margin-bottom: 8px; }
+        .survey-description { color: #6b7280; margin-bottom: 24px; }
+        .survey-question { margin-bottom: 24px; padding: 16px; background: #f9fafb; border-radius: 6px; }
+        .question-text { display: block; font-weight: 600; margin-bottom: 12px; }
+        .required { color: #dc2626; margin-left: 4px; }
+        .form-control { width: 100%; padding: 8px 12px; border: 1px solid #d1d5db; border-radius: 4px; font-size: 0.95rem; }
+        .form-check { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+        .rating-group { display: flex; gap: 16px; }
+        .rating-label { display: flex; flex-direction: column; align-items: center; cursor: pointer; }
+        .btn-primary { background: #1a56db; color: white; border: none; padding: 10px 24px; border-radius: 4px; cursor: pointer; font-size: 1rem; }
+        .btn-primary:hover { background: #1e429f; }
+        .form-group { margin-bottom: 16px; }
+    </style>
+}

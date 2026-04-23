@@ -1,0 +1,15 @@
+{
+  "javascript": ["/App_Plugins/QuickPoll/angular/quick-poll.controller.js"],
+  "css": [],
+  "propertyEditors": [],
+  "gridEditors": [],
+  "dashboards": [
+    {
+      "alias": "QuickPoll.Dashboard",
+      "view": "/App_Plugins/QuickPoll/angular/quick-poll.html",
+      "sections": ["settings"],
+      "tab": "Quick Poll",
+      "access": [{"grant": "admin"}]
+    }
+  ]
+}

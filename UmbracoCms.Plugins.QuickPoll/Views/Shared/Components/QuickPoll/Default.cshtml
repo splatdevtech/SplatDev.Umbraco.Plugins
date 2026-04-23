@@ -1,0 +1,77 @@
+@using UmbracoCms.Plugins.QuickPoll.ViewComponents
+@using UmbracoCms.Plugins.QuickPoll.Services
+@model QuickPollViewModel
+
+@if (Model.Poll is null)
+{
+    <div class="quickpoll-container">
+        <p>No active poll available.</p>
+    </div>
+}
+else
+{
+    var poll = Model.Poll;
+    var results = Model.Results;
+    var totalVotes = results?.TotalVotes ?? 0;
+
+    <div class="quickpoll-container" data-poll-id="@poll.Id">
+        <h3 class="poll-question">@poll.Question</h3>
+
+        @if (!poll.IsActive || (poll.ExpiresAt.HasValue && poll.ExpiresAt.Value < DateTime.UtcNow))
+        {
+            <p class="poll-closed">This poll is closed.</p>
+        }
+
+        @if (totalVotes > 0 && results is not null)
+        {
+            <div class="poll-results">
+                @foreach (var option in results.Options)
+                {
+                    <div class="result-row">
+                        <span class="option-text">@option.OptionText</span>
+                        <div class="result-bar-wrap">
+                            <div class="result-bar" style="width: @option.Percentage.ToString("F0")%"></div>
+                        </div>
+                        <span class="result-pct">@option.Percentage.ToString("F1")% (@option.VoteCount)</span>
+                    </div>
+                }
+                <p class="total-votes">@totalVotes vote@(totalVotes != 1 ? "s" : "") total</p>
+            </div>
+        }
+
+        @if (poll.IsActive && (!poll.ExpiresAt.HasValue || poll.ExpiresAt.Value > DateTime.UtcNow))
+        {
+            <form method="post" action="/umbraco/api/quickpoll/vote" class="poll-form">
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="PollId" value="@poll.Id" />
+
+                @foreach (var option in poll.Options.OrderBy(o => o.SortOrder))
+                {
+                    <label class="poll-option">
+                        <input type="radio" name="OptionId" value="@option.Id" required />
+                        <span>@option.OptionText</span>
+                    </label>
+                }
+
+                <button type="submit" class="btn-vote">Cast Vote</button>
+            </form>
+        }
+    </div>
+
+    <style>
+        .quickpoll-container { padding: 16px; border: 1px solid #e5e7eb; border-radius: 8px; max-width: 480px; }
+        .poll-question { font-size: 1.1rem; font-weight: 700; margin: 0 0 16px; }
+        .poll-closed { color: #6b7280; font-style: italic; }
+        .poll-option { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; cursor: pointer; }
+        .poll-option input[type=radio] { width: 16px; height: 16px; }
+        .btn-vote { background: #1a56db; color: white; border: none; padding: 8px 20px; border-radius: 4px; cursor: pointer; font-size: 0.95rem; margin-top: 8px; }
+        .btn-vote:hover { background: #1e429f; }
+        .poll-results { margin-bottom: 16px; }
+        .result-row { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+        .option-text { width: 120px; font-size: 0.9rem; }
+        .result-bar-wrap { flex: 1; height: 16px; background: #e5e7eb; border-radius: 8px; overflow: hidden; }
+        .result-bar { height: 100%; background: #1a56db; border-radius: 8px; transition: width 0.3s; }
+        .result-pct { width: 80px; font-size: 0.85rem; color: #374151; text-align: right; }
+        .total-votes { font-size: 0.8rem; color: #9ca3af; margin-top: 8px; }
+    </style>
+}

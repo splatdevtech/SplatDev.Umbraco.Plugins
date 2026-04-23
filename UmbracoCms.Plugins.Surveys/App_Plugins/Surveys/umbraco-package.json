@@ -1,0 +1,25 @@
+{
+  "$schema": "../../umbraco-package-schema.json",
+  "name": "Surveys",
+  "version": "1.0.0",
+  "extensions": [
+    {
+      "type": "dashboard",
+      "alias": "UmbracoCms.Surveys.Dashboard",
+      "name": "Surveys Dashboard",
+      "element": "/App_Plugins/Surveys/dist/surveys-dashboard.element.js",
+      "elementName": "surveys-dashboard",
+      "weight": 100,
+      "meta": {
+        "label": "Surveys",
+        "pathname": "surveys"
+      },
+      "conditions": [
+        {
+          "alias": "Umb.Condition.SectionAlias",
+          "match": "Umb.Section.Settings"
+        }
+      ]
+    }
+  ]
+}

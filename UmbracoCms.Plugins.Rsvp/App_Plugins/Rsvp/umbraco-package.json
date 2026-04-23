@@ -1,0 +1,25 @@
+{
+  "$schema": "../../umbraco-package-schema.json",
+  "name": "RSVP",
+  "version": "1.0.0",
+  "extensions": [
+    {
+      "type": "dashboard",
+      "alias": "UmbracoCms.Rsvp.Dashboard",
+      "name": "RSVP Dashboard",
+      "element": "/App_Plugins/Rsvp/dist/rsvp-dashboard.element.js",
+      "elementName": "rsvp-dashboard",
+      "weight": 100,
+      "meta": {
+        "label": "RSVP",
+        "pathname": "rsvp"
+      },
+      "conditions": [
+        {
+          "alias": "Umb.Condition.SectionAlias",
+          "match": "Umb.Section.Settings"
+        }
+      ]
+    }
+  ]
+}

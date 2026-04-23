@@ -1,0 +1,137 @@
+@using UmbracoCms.Plugins.Rsvp.Models
+@model RsvpEvent?
+
+@if (Model is null)
+{
+    <p>Event not found.</p>
+}
+else
+{
+    var confirmedCount = Model.Attendees.Count(a => a.Status == AttendeeStatus.Confirmed);
+    var waitlistCount = Model.Attendees.Count(a => a.Status == AttendeeStatus.Waitlisted);
+    var isOpen = Model.IsPublished
+        && (!Model.RegistrationDeadline.HasValue || Model.RegistrationDeadline.Value > DateTime.UtcNow);
+    var isFull = Model.MaxCapacity.HasValue && confirmedCount >= Model.MaxCapacity.Value;
+
+    <div class="rsvp-container" data-event-id="@Model.Id">
+        <div class="event-details">
+            <h2 class="event-title">@Model.Title</h2>
+
+            @if (!string.IsNullOrWhiteSpace(Model.Description))
+            {
+                <p class="event-description">@Model.Description</p>
+            }
+
+            <div class="event-meta">
+                <div class="meta-item">
+                    <span class="meta-label">Date</span>
+                    <span class="meta-value">@Model.EventDate.ToString("dddd, MMMM d, yyyy h:mm tt")</span>
+                </div>
+
+                @if (!string.IsNullOrWhiteSpace(Model.Location))
+                {
+                    <div class="meta-item">
+                        <span class="meta-label">Location</span>
+                        <span class="meta-value">@Model.Location</span>
+                    </div>
+                }
+
+                @if (Model.MaxCapacity.HasValue)
+                {
+                    <div class="meta-item">
+                        <span class="meta-label">Capacity</span>
+                        <span class="meta-value">@confirmedCount / @Model.MaxCapacity confirmed</span>
+                    </div>
+                }
+
+                @if (waitlistCount > 0)
+                {
+                    <div class="meta-item">
+                        <span class="meta-label">Waitlist</span>
+                        <span class="meta-value">@waitlistCount person@(waitlistCount != 1 ? "s" : "")</span>
+                    </div>
+                }
+
+                @if (Model.RegistrationDeadline.HasValue)
+                {
+                    <div class="meta-item">
+                        <span class="meta-label">Register By</span>
+                        <span class="meta-value">@Model.RegistrationDeadline.Value.ToString("MMMM d, yyyy")</span>
+                    </div>
+                }
+            </div>
+        </div>
+
+        @if (!isOpen)
+        {
+            <div class="rsvp-closed">
+                <p>Registration is currently closed.</p>
+            </div>
+        }
+        else
+        {
+            <div class="rsvp-form-wrap">
+                <h3>Register for this Event</h3>
+
+                @if (isFull)
+                {
+                    <p class="waitlist-notice">This event is at capacity. You will be added to the waitlist.</p>
+                }
+
+                <form method="post" action="/umbraco/api/rsvp/register" class="rsvp-form">
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" name="EventId" value="@Model.Id" />
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="firstName">First Name *</label>
+                            <input type="text" id="firstName" name="FirstName" class="form-control" required maxlength="100" />
+                        </div>
+                        <div class="form-group">
+                            <label for="lastName">Last Name *</label>
+                            <input type="text" id="lastName" name="LastName" class="form-control" required maxlength="100" />
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="email">Email Address *</label>
+                            <input type="email" id="email" name="Email" class="form-control" required maxlength="200" />
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone (optional)</label>
+                            <input type="tel" id="phone" name="Phone" class="form-control" maxlength="30" />
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">
+                        @(isFull ? "Join Waitlist" : "Register Now")
+                    </button>
+                </form>
+            </div>
+        }
+    </div>
+
+    <style>
+        .rsvp-container { max-width: 680px; margin: 0 auto; }
+        .event-details { padding: 24px; background: #f9fafb; border-radius: 8px; margin-bottom: 24px; }
+        .event-title { font-size: 1.5rem; font-weight: 700; margin: 0 0 12px; }
+        .event-description { color: #4b5563; margin-bottom: 16px; }
+        .event-meta { display: grid; gap: 8px; }
+        .meta-item { display: flex; gap: 12px; }
+        .meta-label { font-weight: 600; min-width: 100px; color: #374151; }
+        .meta-value { color: #4b5563; }
+        .rsvp-form-wrap { padding: 24px; border: 1px solid #e5e7eb; border-radius: 8px; }
+        .rsvp-form-wrap h3 { margin: 0 0 16px; font-size: 1.1rem; font-weight: 700; }
+        .waitlist-notice { background: #fef3c7; border: 1px solid #f59e0b; border-radius: 4px; padding: 8px 12px; margin-bottom: 16px; color: #92400e; }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+        .form-group { display: flex; flex-direction: column; gap: 4px; }
+        label { font-size: 0.875rem; font-weight: 500; color: #374151; }
+        .form-control { padding: 8px 12px; border: 1px solid #d1d5db; border-radius: 4px; font-size: 0.95rem; }
+        .form-control:focus { outline: none; border-color: #1a56db; box-shadow: 0 0 0 2px rgba(26,86,219,.15); }
+        .btn-primary { background: #1a56db; color: white; border: none; padding: 10px 24px; border-radius: 4px; cursor: pointer; font-size: 1rem; margin-top: 8px; }
+        .btn-primary:hover { background: #1e429f; }
+        .rsvp-closed { text-align: center; padding: 16px; background: #f3f4f6; border-radius: 6px; color: #6b7280; }
+        @@media (max-width: 480px) { .form-row { grid-template-columns: 1fr; } }
+    </style>
+}

@@ -1,0 +1,15 @@
+{
+  "javascript": ["/App_Plugins/Rsvp/angular/rsvp.controller.js"],
+  "css": [],
+  "propertyEditors": [],
+  "gridEditors": [],
+  "dashboards": [
+    {
+      "alias": "Rsvp.Dashboard",
+      "view": "/App_Plugins/Rsvp/angular/rsvp.html",
+      "sections": ["settings"],
+      "tab": "RSVP",
+      "access": [{"grant": "admin"}]
+    }
+  ]
+}
