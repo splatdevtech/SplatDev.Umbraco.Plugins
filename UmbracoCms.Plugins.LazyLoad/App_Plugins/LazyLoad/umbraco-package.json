@@ -1,0 +1,24 @@
+{
+  "$schema": "../../umbraco-package-schema.json",
+  "name": "LazyLoad",
+  "version": "2.0.0",
+  "extensions": [
+    {
+      "type": "dashboard",
+      "alias": "LazyLoad.Dashboard",
+      "name": "Lazy Load",
+      "element": "/App_Plugins/LazyLoad/dashboard.js",
+      "weight": 100,
+      "meta": {
+        "label": "Lazy Load",
+        "pathname": "lazy-load"
+      },
+      "conditions": [
+        {
+          "alias": "Umb.Condition.SectionAlias",
+          "match": "Umb.Section.Settings"
+        }
+      ]
+    }
+  ]
+}

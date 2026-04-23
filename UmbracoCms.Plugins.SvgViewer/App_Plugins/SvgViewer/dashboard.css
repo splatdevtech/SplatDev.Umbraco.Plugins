@@ -1,0 +1,36 @@
+.svg-viewer-plugin .svg-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-top: 16px;
+}
+
+.svg-viewer-plugin .svg-card {
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 12px;
+    width: 180px;
+    text-align: center;
+    background: #fff;
+}
+
+.svg-viewer-plugin .svg-preview {
+    width: 140px;
+    height: 140px;
+    margin: 0 auto 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.svg-viewer-plugin .svg-preview svg {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.svg-viewer-plugin .svg-meta {
+    font-size: 12px;
+    color: #555;
+    word-break: break-all;
+}

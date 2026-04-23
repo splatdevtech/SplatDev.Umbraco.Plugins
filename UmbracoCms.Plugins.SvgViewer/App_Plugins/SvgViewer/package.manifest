@@ -1,0 +1,19 @@
+{
+  "name": "SVG Viewer",
+  "version": "1.0.0",
+  "allowPackageTelemetry": false,
+  "dashboards": [
+    {
+      "alias": "svgViewerDashboard",
+      "view": "/App_Plugins/SvgViewer/dashboard.html",
+      "sections": [ "settings" ],
+      "weight": -10
+    }
+  ],
+  "javascript": [
+    "/App_Plugins/SvgViewer/dashboard.controller.js"
+  ],
+  "css": [
+    "/App_Plugins/SvgViewer/dashboard.css"
+  ]
+}

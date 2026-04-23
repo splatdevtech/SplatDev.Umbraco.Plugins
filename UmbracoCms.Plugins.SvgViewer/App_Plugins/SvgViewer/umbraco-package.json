@@ -1,0 +1,25 @@
+{
+  "$schema": "../../umbraco-package-schema.json",
+  "name": "SVG Viewer",
+  "version": "1.0.0",
+  "allowPackageTelemetry": false,
+  "extensions": [
+    {
+      "type": "dashboard",
+      "alias": "svgViewer.dashboard",
+      "name": "SVG Viewer Dashboard",
+      "element": "/App_Plugins/SvgViewer/svg-viewer-dashboard.js",
+      "weight": -10,
+      "meta": {
+        "label": "SVG Viewer",
+        "pathname": "svg-viewer"
+      },
+      "conditions": [
+        {
+          "alias": "Umb.Condition.SectionAlias",
+          "match": "Umb.Section.Settings"
+        }
+      ]
+    }
+  ]
+}

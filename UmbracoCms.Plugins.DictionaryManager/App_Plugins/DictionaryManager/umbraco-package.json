@@ -1,0 +1,46 @@
+{
+  "$schema": "../../umbraco-package-schema.json",
+  "name": "DictionaryManager",
+  "version": "2.0.0",
+  "extensions": [
+    {
+      "type": "dashboard",
+      "alias": "UmbracoCms.DictionaryManager.Dashboard",
+      "name": "Dictionary Manager Dashboard",
+      "element": "/App_Plugins/DictionaryManager/dist/dictionarymanager-dashboard.element.js",
+      "elementName": "dictionarymanager-dashboard",
+      "weight": 100,
+      "meta": {
+        "label": "Dictionary Manager",
+        "pathname": "dictionary-manager"
+      },
+      "conditions": [
+        {
+          "alias": "Umb.Condition.SectionAlias",
+          "match": "Umb.Section.Settings"
+        }
+      ]
+    },
+    {
+      "type": "localization",
+      "alias": "UmbracoCms.DictionaryManager.Localization.En",
+      "name": "DictionaryManager — English",
+      "meta": {
+        "culture": "en",
+        "localizations": {
+          "section": {
+            "dictionarymanager_heading": "Dictionary Manager",
+            "dictionarymanager_description": "Import, export and manage Umbraco dictionary items",
+            "dictionarymanager_import": "Import",
+            "dictionarymanager_export": "Export",
+            "dictionarymanager_create": "Create",
+            "dictionarymanager_delete": "Delete",
+            "dictionarymanager_key": "Key",
+            "dictionarymanager_value": "Value",
+            "dictionarymanager_language": "Language"
+          }
+        }
+      }
+    }
+  ]
+}

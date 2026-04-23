@@ -1,0 +1,57 @@
+<div ng-controller="DropzoneController as vm" class="umb-dashboard dropzone-plugin">
+  <umb-load-indicator ng-if="vm.loading"></umb-load-indicator>
+
+  <div class="umb-box" ng-if="!vm.loading">
+    <div class="umb-box-header">
+      <h2>Dropzone — File Upload</h2>
+    </div>
+    <div class="umb-box-content">
+
+      <div
+        class="drop-area"
+        ng-class="{ 'drop-area--active': vm.dragging }"
+        ngf-drop
+        ngf-select
+        ngf-change="vm.onFilesSelected($files)"
+        ngf-drag-over-class="'drop-area--active'"
+        ngf-accept="'image/*,application/pdf'"
+        ngf-multiple="true">
+        <p>Drag &amp; drop files here, or <strong>click to select</strong></p>
+      </div>
+
+      <div class="control-group" style="margin-top:12px;">
+        <label>Parent Media ID (optional)</label>
+        <input type="number" ng-model="vm.parentMediaId" placeholder="-1 for root" class="input-small" />
+      </div>
+
+      <div ng-if="vm.queue.length" style="margin-top:12px;">
+        <h4>Upload Queue</h4>
+        <div ng-repeat="item in vm.queue" class="upload-item">
+          <span>{{item.file.name}}</span>
+          <uui-loader-bar ng-if="item.uploading"></uui-loader-bar>
+          <span class="label label-success" ng-if="item.done">Uploaded</span>
+          <span class="label label-danger" ng-if="item.error">{{item.error}}</span>
+        </div>
+        <button class="btn btn-primary" ng-click="vm.uploadAll()">Upload All</button>
+      </div>
+
+      <div ng-if="vm.mediaItems.length" style="margin-top:24px;">
+        <h4>Media Items</h4>
+        <table class="table table-striped">
+          <thead>
+            <tr><th>Name</th><th>Type</th><th>Key</th><th></th></tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="m in vm.mediaItems">
+              <td>{{m.name}}</td>
+              <td>{{m.contentType}}</td>
+              <td><small>{{m.key}}</small></td>
+              <td><button class="btn btn-mini btn-danger" ng-click="vm.deleteItem(m.key)">Delete</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </div>
+</div>

@@ -1,0 +1,35 @@
+<div ng-controller="SvgViewerController as vm" class="umb-dashboard svg-viewer-plugin">
+  <umb-load-indicator ng-if="vm.loading"></umb-load-indicator>
+
+  <div class="umb-box" ng-if="!vm.loading">
+    <div class="umb-box-header">
+      <h2>SVG Viewer</h2>
+    </div>
+    <div class="umb-box-content">
+
+      <div class="control-group">
+        <label>Lookup by Media Key</label>
+        <div class="input-append">
+          <input type="text" ng-model="vm.mediaKey" placeholder="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" class="input-xlarge" />
+          <button class="btn btn-primary" ng-click="vm.loadSingle()">Load</button>
+        </div>
+      </div>
+
+      <button class="btn btn-default" ng-click="vm.loadAll()" style="margin-bottom:16px;">Load All SVGs</button>
+
+      <div class="alert alert-danger" ng-if="vm.error">{{vm.error}}</div>
+
+      <div class="svg-grid" ng-if="vm.items.length">
+        <div class="svg-card" ng-repeat="item in vm.items">
+          <div class="svg-preview" ng-bind-html="vm.trustSvg(item.sanitizedContent)"></div>
+          <div class="svg-meta">
+            <strong>{{item.fileName}}</strong>
+            <span ng-if="item.width && item.height"> — {{item.width}}×{{item.height}}</span>
+            <br /><small>{{item.mediaKey}}</small>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

@@ -1,0 +1,4 @@
+<div>
+  <textarea ng-model="model.value" maxlength="{{model.config.maxChars}}" class="umb-editor"></textarea>
+  <span ng-if="model.config.showCountdown">{{model.config.maxChars - (model.value || '').length}} characters remaining</span>
+</div>

@@ -1,0 +1,25 @@
+{
+  "$schema": "../../umbraco-package-schema.json",
+  "name": "Dropzone",
+  "version": "1.0.0",
+  "allowPackageTelemetry": false,
+  "extensions": [
+    {
+      "type": "dashboard",
+      "alias": "dropzone.dashboard",
+      "name": "Dropzone File Upload Dashboard",
+      "element": "/App_Plugins/Dropzone/dropzone-dashboard.js",
+      "weight": -10,
+      "meta": {
+        "label": "Dropzone",
+        "pathname": "dropzone"
+      },
+      "conditions": [
+        {
+          "alias": "Umb.Condition.SectionAlias",
+          "match": "Umb.Section.Settings"
+        }
+      ]
+    }
+  ]
+}

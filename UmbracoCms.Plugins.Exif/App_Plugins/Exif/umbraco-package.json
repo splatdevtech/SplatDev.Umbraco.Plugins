@@ -1,0 +1,25 @@
+{
+  "$schema": "../../umbraco-package-schema.json",
+  "name": "EXIF Viewer",
+  "version": "1.0.0",
+  "allowPackageTelemetry": false,
+  "extensions": [
+    {
+      "type": "dashboard",
+      "alias": "exif.dashboard",
+      "name": "EXIF Metadata Dashboard",
+      "element": "/App_Plugins/Exif/exif-dashboard.js",
+      "weight": -10,
+      "meta": {
+        "label": "EXIF Viewer",
+        "pathname": "exif-viewer"
+      },
+      "conditions": [
+        {
+          "alias": "Umb.Condition.SectionAlias",
+          "match": "Umb.Section.Settings"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "javascript": ["/App_Plugins/AdminBar/angular/adminbar.controller.js"],
+  "css": [],
+  "propertyEditors": [],
+  "gridEditors": [],
+  "dashboards": [
+    {
+      "alias": "AdminBar.Dashboard",
+      "view": "/App_Plugins/AdminBar/angular/adminbar.html",
+      "sections": ["settings"],
+      "tab": "Admin Bar",
+      "access": [{"grant": "admin"}]
+    }
+  ]
+}

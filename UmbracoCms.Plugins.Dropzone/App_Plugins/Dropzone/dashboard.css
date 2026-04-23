@@ -1,0 +1,19 @@
+.dropzone-plugin .drop-area {
+    border: 2px dashed #ccc;
+    border-radius: 6px;
+    padding: 40px;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+}
+.dropzone-plugin .drop-area--active,
+.dropzone-plugin .drop-area:hover {
+    border-color: #1ab394;
+    background: #f0faf7;
+}
+.dropzone-plugin .upload-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 4px 0;
+}

@@ -1,0 +1,17 @@
+{
+  "propertyEditors": [
+    {
+      "alias": "UmbracoCms.CharLimit",
+      "name": "Character Limit",
+      "editor": {
+        "view": "/App_Plugins/CharLimit/view.html"
+      },
+      "prevalues": {
+        "fields": [
+          { "label": "Max Characters", "key": "maxChars", "view": "number" },
+          { "label": "Show Countdown", "key": "showCountdown", "view": "boolean" }
+        ]
+      }
+    }
+  ]
+}

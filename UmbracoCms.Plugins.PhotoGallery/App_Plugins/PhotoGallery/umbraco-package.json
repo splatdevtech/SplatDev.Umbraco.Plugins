@@ -1,0 +1,24 @@
+{
+  "$schema": "../../umbraco-package-schema.json",
+  "name": "PhotoGallery",
+  "version": "2.0.0",
+  "extensions": [
+    {
+      "type": "dashboard",
+      "alias": "PhotoGallery.Dashboard",
+      "name": "Photo Gallery",
+      "element": "/App_Plugins/PhotoGallery/dashboard.js",
+      "weight": 100,
+      "meta": {
+        "label": "Photo Gallery",
+        "pathname": "photo-gallery"
+      },
+      "conditions": [
+        {
+          "alias": "Umb.Condition.SectionAlias",
+          "match": "Umb.Section.Settings"
+        }
+      ]
+    }
+  ]
+}

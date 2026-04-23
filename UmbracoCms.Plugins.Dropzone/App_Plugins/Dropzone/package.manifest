@@ -1,0 +1,19 @@
+{
+  "name": "Dropzone",
+  "version": "1.0.0",
+  "allowPackageTelemetry": false,
+  "dashboards": [
+    {
+      "alias": "dropzoneDashboard",
+      "view": "/App_Plugins/Dropzone/dashboard.html",
+      "sections": [ "settings" ],
+      "weight": -10
+    }
+  ],
+  "javascript": [
+    "/App_Plugins/Dropzone/dashboard.controller.js"
+  ],
+  "css": [
+    "/App_Plugins/Dropzone/dashboard.css"
+  ]
+}

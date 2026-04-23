@@ -1,0 +1,24 @@
+{
+  "$schema": "../../umbraco-package-schema.json",
+  "name": "Slider",
+  "version": "2.0.0",
+  "extensions": [
+    {
+      "type": "dashboard",
+      "alias": "Slider.Dashboard",
+      "name": "Slider",
+      "element": "/App_Plugins/Slider/dashboard.js",
+      "weight": 100,
+      "meta": {
+        "label": "Slider",
+        "pathname": "slider"
+      },
+      "conditions": [
+        {
+          "alias": "Umb.Condition.SectionAlias",
+          "match": "Umb.Section.Settings"
+        }
+      ]
+    }
+  ]
+}

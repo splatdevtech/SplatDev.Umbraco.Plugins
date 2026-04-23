@@ -1,0 +1,42 @@
+{
+  "$schema": "../../umbraco-package-schema.json",
+  "name": "AdminBar",
+  "version": "2.0.0",
+  "extensions": [
+    {
+      "type": "dashboard",
+      "alias": "UmbracoCms.AdminBar.Dashboard",
+      "name": "Admin Bar Dashboard",
+      "element": "/App_Plugins/AdminBar/dist/adminbar-dashboard.element.js",
+      "elementName": "adminbar-dashboard",
+      "weight": 100,
+      "meta": {
+        "label": "Admin Bar",
+        "pathname": "admin-bar"
+      },
+      "conditions": [
+        {
+          "alias": "Umb.Condition.SectionAlias",
+          "match": "Umb.Section.Settings"
+        }
+      ]
+    },
+    {
+      "type": "localization",
+      "alias": "UmbracoCms.AdminBar.Localization.En",
+      "name": "AdminBar — English",
+      "meta": {
+        "culture": "en",
+        "localizations": {
+          "section": {
+            "adminbar_heading": "Admin Bar",
+            "adminbar_description": "Front-end admin bar for backoffice users",
+            "adminbar_editPage": "Edit Page",
+            "adminbar_preview": "Preview",
+            "adminbar_publish": "Publish"
+          }
+        }
+      }
+    }
+  ]
+}

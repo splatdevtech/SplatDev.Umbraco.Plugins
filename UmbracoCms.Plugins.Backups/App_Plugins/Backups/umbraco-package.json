@@ -1,0 +1,42 @@
+{
+  "$schema": "../../umbraco-package-schema.json",
+  "name": "Backups",
+  "version": "2.0.0",
+  "extensions": [
+    {
+      "type": "dashboard",
+      "alias": "UmbracoCms.Backups.Dashboard",
+      "name": "Backups Dashboard",
+      "element": "/App_Plugins/Backups/dist/backups-dashboard.element.js",
+      "elementName": "backups-dashboard",
+      "weight": 100,
+      "meta": {
+        "label": "Backups",
+        "pathname": "backups"
+      },
+      "conditions": [
+        {
+          "alias": "Umb.Condition.SectionAlias",
+          "match": "Umb.Section.Settings"
+        }
+      ]
+    },
+    {
+      "type": "localization",
+      "alias": "UmbracoCms.Backups.Localization.En",
+      "name": "Backups — English",
+      "meta": {
+        "culture": "en",
+        "localizations": {
+          "section": {
+            "backups_heading": "Backups",
+            "backups_description": "Create and manage quick backups from the backoffice",
+            "backups_create": "Create Backup",
+            "backups_delete": "Delete",
+            "backups_includeMedia": "Include Media"
+          }
+        }
+      }
+    }
+  ]
+}

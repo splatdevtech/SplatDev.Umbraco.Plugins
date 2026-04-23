@@ -1,0 +1,16 @@
+{
+  "dashboards": [
+    {
+      "alias": "sliderDashboard",
+      "view": "/App_Plugins/Slider/dashboard.html",
+      "sections": ["settings"],
+      "access": [{ "deny": "translator" }]
+    }
+  ],
+  "javascript": [
+    "/App_Plugins/Slider/slider.controller.js"
+  ],
+  "css": [
+    "/App_Plugins/Slider/slider.css"
+  ]
+}

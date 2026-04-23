@@ -1,0 +1,15 @@
+{
+  "javascript": ["/App_Plugins/Backups/angular/backups.controller.js"],
+  "css": [],
+  "propertyEditors": [],
+  "gridEditors": [],
+  "dashboards": [
+    {
+      "alias": "Backups.Dashboard",
+      "view": "/App_Plugins/Backups/angular/backups.html",
+      "sections": ["settings"],
+      "tab": "Backups",
+      "access": [{"grant": "admin"}]
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "$schema": "../../umbraco-package-schema.json",
+  "name": "CharLimit",
+  "version": "2.0.0",
+  "extensions": [
+    {
+      "type": "propertyEditorSchema",
+      "alias": "UmbracoCms.CharLimit",
+      "name": "Character Limit",
+      "meta": {
+        "defaultPropertyEditorUiAlias": "Umb.PropertyEditorUi.TextBox"
+      }
+    },
+    {
+      "type": "dashboard",
+      "alias": "CharLimit.Dashboard",
+      "name": "Character Limit",
+      "element": "/App_Plugins/CharLimit/dashboard.js",
+      "weight": 100,
+      "meta": {
+        "label": "Character Limit",
+        "pathname": "char-limit"
+      },
+      "conditions": [
+        {
+          "alias": "Umb.Condition.SectionAlias",
+          "match": "Umb.Section.Settings"
+        }
+      ]
+    }
+  ]
+}

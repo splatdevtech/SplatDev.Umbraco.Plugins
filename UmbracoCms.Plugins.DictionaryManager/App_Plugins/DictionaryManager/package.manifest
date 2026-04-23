@@ -1,0 +1,15 @@
+{
+  "javascript": ["/App_Plugins/DictionaryManager/angular/dictionarymanager.controller.js"],
+  "css": [],
+  "propertyEditors": [],
+  "gridEditors": [],
+  "dashboards": [
+    {
+      "alias": "DictionaryManager.Dashboard",
+      "view": "/App_Plugins/DictionaryManager/angular/dictionarymanager.html",
+      "sections": ["settings"],
+      "tab": "Dictionary Manager",
+      "access": [{"grant": "admin"}]
+    }
+  ]
+}
