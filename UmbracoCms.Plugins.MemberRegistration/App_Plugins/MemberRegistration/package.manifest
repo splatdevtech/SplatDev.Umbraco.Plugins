@@ -1,0 +1,15 @@
+{
+  "javascript": ["/App_Plugins/MemberRegistration/angular/memberregistration.controller.js"],
+  "css": [],
+  "propertyEditors": [],
+  "gridEditors": [],
+  "dashboards": [
+    {
+      "alias": "MemberRegistration.Dashboard",
+      "view": "/App_Plugins/MemberRegistration/angular/memberregistration.html",
+      "sections": ["settings"],
+      "tab": "Member Registration",
+      "access": [{"grant": "admin"}]
+    }
+  ]
+}

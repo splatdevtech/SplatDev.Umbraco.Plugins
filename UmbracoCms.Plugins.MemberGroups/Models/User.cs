@@ -1,0 +1,22 @@
+using System;
+using UmbracoCms.Plugins.MemberGroups.Interfaces;
+using UmbracoCms.Plugins.MemberGroups.Enums;
+
+namespace UmbracoCms.Plugins.MemberGroups.Models
+{
+    public class User : IUser
+    {
+        public int AssignedUmbracoUserId { get; set; }
+        public Guid ClientGuid { get; set; }
+        public string Email { get; set; } = string.Empty;
+        public string Group { get; set; } = string.Empty;
+        UserTypes IUser.Group => UserTypes.Editor;
+        public string Name { get; set; } = string.Empty;
+        public string Password { get; set; } = string.Empty;
+        public string StartContentNodeAlias { get; set; } = string.Empty;
+        public string StartContentNodeName { get; set; } = string.Empty;
+        public string StartMediaNodeAlias { get; set; } = string.Empty;
+        public string StartMediaNodeName { get; set; } = string.Empty;
+        public string Username { get; set; } = string.Empty;
+    }
+}

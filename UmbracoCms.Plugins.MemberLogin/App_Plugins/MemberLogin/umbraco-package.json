@@ -1,0 +1,25 @@
+{
+  "$schema": "../../umbraco-package-schema.json",
+  "name": "UmbracoCms.Plugins.MemberLogin",
+  "version": "2.0.0",
+  "extensions": [
+    {
+      "type": "dashboard",
+      "alias": "UmbracoCms.MemberLogin.Dashboard",
+      "name": "Member Login Dashboard",
+      "element": "/App_Plugins/MemberLogin/dist/memberlogin-dashboard.element.js",
+      "elementName": "memberlogin-dashboard",
+      "weight": 100,
+      "meta": {
+        "label": "Member Login",
+        "pathname": "memberlogin"
+      },
+      "conditions": [
+        {
+          "alias": "Umb.Condition.SectionAlias",
+          "match": "Umb.Section.Settings"
+        }
+      ]
+    }
+  ]
+}

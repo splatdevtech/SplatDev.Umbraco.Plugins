@@ -1,0 +1,118 @@
+<div ng-controller="MemberRegistrationDashboardController" class="umb-dashboard-content">
+    <umb-load-indicator ng-if="loading"></umb-load-indicator>
+
+    <div class="umb-box">
+        <div class="umb-box-header">
+            <h2>Member Registration Manager</h2>
+        </div>
+        <div class="umb-box-content">
+            <p>Manage member registration, email verification, and approval workflow.</p>
+
+            <umb-tab-bar>
+                <li ng-class="{active: activeTab === 'overview'}">
+                    <a ng-click="setTab('overview')">Overview</a>
+                </li>
+                <li ng-class="{active: activeTab === 'register'}">
+                    <a ng-click="setTab('register')">Register</a>
+                </li>
+                <li ng-class="{active: activeTab === 'verify'}">
+                    <a ng-click="setTab('verify')">Verify Email</a>
+                </li>
+                <li ng-class="{active: activeTab === 'pending'}">
+                    <a ng-click="setTab('pending')">Pending ({{pendingMembers.length}})</a>
+                </li>
+            </umb-tab-bar>
+
+            <!-- Overview Tab -->
+            <div ng-if="activeTab === 'overview'">
+                <p>This plugin provides member registration functionality:</p>
+                <ul>
+                    <li>Registration form with email/username validation</li>
+                    <li>Email verification token stored in database (schema: memberreg)</li>
+                    <li>Admin approval workflow for new members</li>
+                    <li>Pending member management</li>
+                </ul>
+                <h4>API Endpoints</h4>
+                <ul>
+                    <li><code>POST /umbraco/api/memberregistration/Register</code></li>
+                    <li><code>POST /umbraco/api/memberregistration/VerifyEmail</code></li>
+                    <li><code>POST /umbraco/api/memberregistration/Approve?memberId=X</code></li>
+                    <li><code>GET /umbraco/api/memberregistration/GetPending</code></li>
+                </ul>
+            </div>
+
+            <!-- Register Tab -->
+            <div ng-if="activeTab === 'register'">
+                <div class="control-group">
+                    <label>Full Name</label>
+                    <input type="text" ng-model="registerModel.name" class="umb-input" />
+                </div>
+                <div class="control-group">
+                    <label>Email</label>
+                    <input type="email" ng-model="registerModel.email" class="umb-input" />
+                </div>
+                <div class="control-group">
+                    <label>Username</label>
+                    <input type="text" ng-model="registerModel.username" class="umb-input" />
+                </div>
+                <div class="control-group">
+                    <label>Password</label>
+                    <input type="password" ng-model="registerModel.password" class="umb-input" />
+                </div>
+                <div class="control-group">
+                    <label>Member Type Alias</label>
+                    <input type="text" ng-model="registerModel.memberTypeAlias" class="umb-input" placeholder="Member" />
+                </div>
+                <button ng-click="register()" class="btn umb-btn-primary">Register Member</button>
+                <div ng-if="result" class="alert"
+                     ng-class="{'alert-success': result.success, 'alert-error': !result.success}">
+                    {{result.message}}
+                </div>
+            </div>
+
+            <!-- Verify Tab -->
+            <div ng-if="activeTab === 'verify'">
+                <div class="control-group">
+                    <label>Email</label>
+                    <input type="email" ng-model="verifyModel.email" class="umb-input" />
+                </div>
+                <div class="control-group">
+                    <label>Verification Token</label>
+                    <input type="text" ng-model="verifyModel.token" class="umb-input" />
+                </div>
+                <button ng-click="verifyEmail()" class="btn umb-btn-primary">Verify Email</button>
+                <div ng-if="result" class="alert"
+                     ng-class="{'alert-success': result.success, 'alert-error': !result.success}">
+                    {{result.message}}
+                </div>
+            </div>
+
+            <!-- Pending Tab -->
+            <div ng-if="activeTab === 'pending'">
+                <p ng-if="pendingMembers.length === 0">No pending members awaiting approval.</p>
+                <table ng-if="pendingMembers.length > 0" class="umb-table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Username</th>
+                            <th>Registered</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="m in pendingMembers">
+                            <td>{{m.name}}</td>
+                            <td>{{m.email}}</td>
+                            <td>{{m.username}}</td>
+                            <td>{{formatDate(m.createDate)}}</td>
+                            <td>
+                                <button ng-click="approveMember(m.id)" class="btn btn-sm umb-btn-positive">Approve</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

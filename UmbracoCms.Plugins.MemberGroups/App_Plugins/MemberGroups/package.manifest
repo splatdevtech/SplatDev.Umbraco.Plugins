@@ -1,0 +1,15 @@
+{
+  "javascript": ["/App_Plugins/MemberGroups/angular/membergroups.controller.js"],
+  "css": [],
+  "propertyEditors": [],
+  "gridEditors": [],
+  "dashboards": [
+    {
+      "alias": "MemberGroups.Dashboard",
+      "view": "/App_Plugins/MemberGroups/angular/membergroups.html",
+      "sections": ["settings"],
+      "tab": "Member Groups",
+      "access": [{"grant": "admin"}]
+    }
+  ]
+}

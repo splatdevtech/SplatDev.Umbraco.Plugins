@@ -1,0 +1,78 @@
+<div class="member-login-component">
+    <form id="memberLoginForm" class="member-login-form">
+        <div class="form-group">
+            <label for="loginUsername">Username or Email</label>
+            <input type="text" id="loginUsername" name="username" class="form-control" required autocomplete="username" />
+        </div>
+        <div class="form-group">
+            <label for="loginPassword">Password</label>
+            <input type="password" id="loginPassword" name="password" class="form-control" required autocomplete="current-password" />
+        </div>
+
+        @if ((bool)ViewBag.ShowRememberMe)
+        {
+            <div class="form-check">
+                <input type="checkbox" id="rememberMe" name="rememberMe" class="form-check-input" />
+                <label for="rememberMe" class="form-check-label">Remember me</label>
+            </div>
+        }
+
+        <div id="loginError" class="alert alert-danger" style="display:none;"></div>
+        <div id="loginLockout" class="alert alert-warning" style="display:none;">
+            Your account has been locked. Please contact support or <a href="/forgot-password">reset your password</a>.
+        </div>
+
+        <button type="submit" class="btn btn-primary">Sign In</button>
+
+        @if ((bool)ViewBag.ShowForgotPassword)
+        {
+            <a href="/forgot-password" class="member-login-forgot">Forgot password?</a>
+        }
+    </form>
+</div>
+
+<script>
+    document.getElementById('memberLoginForm').addEventListener('submit', async function (e) {
+        e.preventDefault();
+        const errorEl = document.getElementById('loginError');
+        const lockoutEl = document.getElementById('loginLockout');
+        errorEl.style.display = 'none';
+        lockoutEl.style.display = 'none';
+
+        const payload = {
+            username: document.getElementById('loginUsername').value,
+            password: document.getElementById('loginPassword').value,
+            rememberMe: document.getElementById('rememberMe')?.checked ?? false
+        };
+
+        const resp = await fetch('/umbraco/api/memberlogin/Login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        });
+
+        if (resp.ok) {
+            window.location.href = '@ViewBag.ReturnUrl';
+        } else if (resp.status === 423) {
+            lockoutEl.style.display = 'block';
+        } else {
+            const data = await resp.json();
+            errorEl.textContent = data.message || 'Login failed.';
+            errorEl.style.display = 'block';
+        }
+    });
+</script>
+
+<style>
+    .member-login-component { max-width: 420px; margin: 0 auto; }
+    .member-login-form .form-group { margin-bottom: 1rem; }
+    .member-login-form label { display: block; margin-bottom: .375rem; font-weight: 500; }
+    .member-login-form .form-control { width: 100%; padding: .5rem .75rem; border: 1px solid #d1d5db; border-radius: 4px; font-size: 1rem; }
+    .member-login-form .form-check { margin-bottom: 1rem; display: flex; align-items: center; gap: .5rem; }
+    .member-login-form .btn-primary { width: 100%; padding: .625rem; background: #1a56db; color: #fff; border: none; border-radius: 4px; font-size: 1rem; cursor: pointer; margin-bottom: .75rem; }
+    .member-login-form .btn-primary:hover { background: #1e429f; }
+    .member-login-forgot { display: block; text-align: center; font-size: .875rem; }
+    .alert { padding: .75rem 1rem; border-radius: 4px; margin-bottom: 1rem; }
+    .alert-danger { background: #fde8e8; color: #c81e1e; border: 1px solid #f8b4b4; }
+    .alert-warning { background: #fdf6b2; color: #723b13; border: 1px solid #faca15; }
+</style>

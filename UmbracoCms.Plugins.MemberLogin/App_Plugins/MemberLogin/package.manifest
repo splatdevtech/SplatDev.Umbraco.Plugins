@@ -1,0 +1,15 @@
+{
+  "javascript": ["/App_Plugins/MemberLogin/angular/memberlogin.controller.js"],
+  "css": [],
+  "propertyEditors": [],
+  "gridEditors": [],
+  "dashboards": [
+    {
+      "alias": "MemberLogin.Dashboard",
+      "view": "/App_Plugins/MemberLogin/angular/memberlogin.html",
+      "sections": ["settings"],
+      "tab": "Member Login",
+      "access": [{"grant": "admin"}]
+    }
+  ]
+}

@@ -1,0 +1,132 @@
+<div ng-controller="MemberGroupsDashboardController" class="umb-dashboard-content">
+    <umb-load-indicator ng-if="loading"></umb-load-indicator>
+
+    <div class="umb-box">
+        <div class="umb-box-header">
+            <h2>Member Groups Manager</h2>
+        </div>
+        <div class="umb-box-content">
+            <p>Manage Umbraco member groups, member types, and user access.</p>
+
+            <umb-tab-bar>
+                <li ng-class="{active: activeTab === 'groups'}">
+                    <a ng-click="setTab('groups')">Groups ({{memberGroups.length}})</a>
+                </li>
+                <li ng-class="{active: activeTab === 'types'}">
+                    <a ng-click="setTab('types')">Member Types</a>
+                </li>
+                <li ng-class="{active: activeTab === 'assign'}">
+                    <a ng-click="setTab('assign')">Assign to Group</a>
+                </li>
+                <li ng-class="{active: activeTab === 'create-group'}">
+                    <a ng-click="setTab('create-group')">Create Group</a>
+                </li>
+                <li ng-class="{active: activeTab === 'user-access'}">
+                    <a ng-click="setTab('user-access')">User Access</a>
+                </li>
+                <li ng-class="{active: activeTab === 'lookup'}">
+                    <a ng-click="setTab('lookup')">Lookup Member</a>
+                </li>
+            </umb-tab-bar>
+
+            <!-- Groups Tab -->
+            <div ng-if="activeTab === 'groups'">
+                <table class="umb-table" ng-if="memberGroups.length > 0">
+                    <thead>
+                        <tr><th>ID</th><th>Name</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="g in memberGroups">
+                            <td>{{g.id}}</td>
+                            <td>{{g.name}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p ng-if="memberGroups.length === 0">No member groups found.</p>
+            </div>
+
+            <!-- Member Types Tab -->
+            <div ng-if="activeTab === 'types'">
+                <table class="umb-table" ng-if="memberTypes.length > 0">
+                    <thead>
+                        <tr><th>ID</th><th>Name</th><th>Alias</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="t in memberTypes">
+                            <td>{{t.id}}</td>
+                            <td>{{t.name}}</td>
+                            <td><code>{{t.alias}}</code></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p ng-if="memberTypes.length === 0">No member types found.</p>
+            </div>
+
+            <!-- Assign to Group Tab -->
+            <div ng-if="activeTab === 'assign'">
+                <div class="control-group">
+                    <label>Member Email</label>
+                    <input type="email" ng-model="addModel.email" class="umb-input" />
+                </div>
+                <div class="control-group">
+                    <label>Group Name</label>
+                    <input type="text" ng-model="addModel.group" class="umb-input" />
+                </div>
+                <button ng-click="addToGroup()" class="btn umb-btn-primary">Assign to Group</button>
+                <div ng-if="result" class="alert"
+                     ng-class="{'alert-success': result.success, 'alert-error': !result.success}">
+                    {{result.message}}
+                </div>
+            </div>
+
+            <!-- Create Group Tab -->
+            <div ng-if="activeTab === 'create-group'">
+                <div class="control-group">
+                    <label>Group Name</label>
+                    <input type="text" ng-model="newGroupModel.name" class="umb-input" />
+                </div>
+                <button ng-click="createGroup()" class="btn umb-btn-primary">Create Group</button>
+                <div ng-if="result" class="alert"
+                     ng-class="{'alert-success': result.success, 'alert-error': !result.success}">
+                    {{result.message}}
+                </div>
+            </div>
+
+            <!-- User Access Tab -->
+            <div ng-if="activeTab === 'user-access'">
+                <div class="control-group">
+                    <label>Username</label>
+                    <input type="text" ng-model="userModel.username" class="umb-input" />
+                </div>
+                <button ng-click="enableUser()" class="btn umb-btn-positive">Enable User</button>
+                &nbsp;
+                <button ng-click="disableUser()" class="btn umb-btn-warning">Disable User</button>
+                <div ng-if="result" class="alert"
+                     ng-class="{'alert-success': result.success, 'alert-error': !result.success}">
+                    {{result.message}}
+                </div>
+            </div>
+
+            <!-- Lookup Tab -->
+            <div ng-if="activeTab === 'lookup'">
+                <div class="control-group">
+                    <label>Member Email</label>
+                    <input type="email" ng-model="lookupModel.email" class="umb-input" />
+                </div>
+                <button ng-click="lookupMember()" class="btn umb-btn-primary">Lookup Member</button>
+                <div ng-if="foundMember" class="umb-box" style="margin-top:1rem;">
+                    <table class="umb-table">
+                        <tr><th>Field</th><th>Value</th></tr>
+                        <tr><td>ID</td><td>{{foundMember.id}}</td></tr>
+                        <tr><td>Name</td><td>{{foundMember.name}}</td></tr>
+                        <tr><td>Email</td><td>{{foundMember.email}}</td></tr>
+                        <tr><td>Username</td><td>{{foundMember.username}}</td></tr>
+                        <tr><td>Approved</td><td>{{foundMember.isApproved}}</td></tr>
+                        <tr><td>Locked Out</td><td>{{foundMember.isLockedOut}}</td></tr>
+                    </table>
+                </div>
+                <div ng-if="result && !foundMember" class="alert alert-error">{{result.message}}</div>
+            </div>
+        </div>
+    </div>
+</div>

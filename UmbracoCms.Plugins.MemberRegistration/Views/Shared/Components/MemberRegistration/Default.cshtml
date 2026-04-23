@@ -1,0 +1,74 @@
+<div class="member-registration-component">
+    <form id="memberRegForm" class="member-reg-form">
+        <div class="form-group">
+            <label for="regName">Full Name</label>
+            <input type="text" id="regName" name="name" class="form-control" required />
+        </div>
+        <div class="form-group">
+            <label for="regEmail">Email Address</label>
+            <input type="email" id="regEmail" name="email" class="form-control" required autocomplete="email" />
+        </div>
+        <div class="form-group">
+            <label for="regUsername">Username</label>
+            <input type="text" id="regUsername" name="username" class="form-control" required autocomplete="username" />
+        </div>
+        <div class="form-group">
+            <label for="regPassword">Password</label>
+            <input type="password" id="regPassword" name="password" class="form-control" required autocomplete="new-password" minlength="8" />
+        </div>
+
+        <div id="regError" class="alert alert-danger" style="display:none;"></div>
+        <div id="regSuccess" class="alert alert-success" style="display:none;">
+            Registration successful! Please check your email to verify your account.
+        </div>
+
+        <button type="submit" class="btn btn-primary">Create Account</button>
+        <p class="member-reg-login">Already have an account? <a href="/login">Sign in</a></p>
+    </form>
+</div>
+
+<script>
+    document.getElementById('memberRegForm').addEventListener('submit', async function (e) {
+        e.preventDefault();
+        const errorEl = document.getElementById('regError');
+        const successEl = document.getElementById('regSuccess');
+        errorEl.style.display = 'none';
+        successEl.style.display = 'none';
+
+        const payload = {
+            name: document.getElementById('regName').value,
+            email: document.getElementById('regEmail').value,
+            username: document.getElementById('regUsername').value,
+            password: document.getElementById('regPassword').value,
+            memberTypeAlias: '@ViewBag.MemberTypeAlias'
+        };
+
+        const resp = await fetch('/umbraco/api/memberregistration/Register', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        });
+
+        if (resp.ok) {
+            successEl.style.display = 'block';
+            document.getElementById('memberRegForm').reset();
+        } else {
+            const data = await resp.json();
+            errorEl.textContent = data.message || 'Registration failed.';
+            errorEl.style.display = 'block';
+        }
+    });
+</script>
+
+<style>
+    .member-registration-component { max-width: 480px; margin: 0 auto; }
+    .member-reg-form .form-group { margin-bottom: 1rem; }
+    .member-reg-form label { display: block; margin-bottom: .375rem; font-weight: 500; }
+    .member-reg-form .form-control { width: 100%; padding: .5rem .75rem; border: 1px solid #d1d5db; border-radius: 4px; font-size: 1rem; }
+    .member-reg-form .btn-primary { width: 100%; padding: .625rem; background: #1a56db; color: #fff; border: none; border-radius: 4px; font-size: 1rem; cursor: pointer; margin-bottom: .75rem; }
+    .member-reg-form .btn-primary:hover { background: #1e429f; }
+    .member-reg-login { text-align: center; font-size: .875rem; margin: 0; }
+    .alert { padding: .75rem 1rem; border-radius: 4px; margin-bottom: 1rem; }
+    .alert-danger { background: #fde8e8; color: #c81e1e; border: 1px solid #f8b4b4; }
+    .alert-success { background: #d1fae5; color: #065f46; border: 1px solid #6ee7b7; }
+</style>

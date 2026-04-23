@@ -1,0 +1,25 @@
+{
+  "$schema": "../../umbraco-package-schema.json",
+  "name": "UmbracoCms.Plugins.MemberGroups",
+  "version": "2.0.0",
+  "extensions": [
+    {
+      "type": "dashboard",
+      "alias": "UmbracoCms.MemberGroups.Dashboard",
+      "name": "Member Groups Dashboard",
+      "element": "/App_Plugins/MemberGroups/dist/membergroups-dashboard.element.js",
+      "elementName": "membergroups-dashboard",
+      "weight": 100,
+      "meta": {
+        "label": "Member Groups",
+        "pathname": "membergroups"
+      },
+      "conditions": [
+        {
+          "alias": "Umb.Condition.SectionAlias",
+          "match": "Umb.Section.Settings"
+        }
+      ]
+    }
+  ]
+}

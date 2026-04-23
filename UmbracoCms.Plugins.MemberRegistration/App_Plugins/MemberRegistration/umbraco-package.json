@@ -1,0 +1,25 @@
+{
+  "$schema": "../../umbraco-package-schema.json",
+  "name": "UmbracoCms.Plugins.MemberRegistration",
+  "version": "2.0.0",
+  "extensions": [
+    {
+      "type": "dashboard",
+      "alias": "UmbracoCms.MemberRegistration.Dashboard",
+      "name": "Member Registration Dashboard",
+      "element": "/App_Plugins/MemberRegistration/dist/memberregistration-dashboard.element.js",
+      "elementName": "memberregistration-dashboard",
+      "weight": 100,
+      "meta": {
+        "label": "Member Registration",
+        "pathname": "memberregistration"
+      },
+      "conditions": [
+        {
+          "alias": "Umb.Condition.SectionAlias",
+          "match": "Umb.Section.Settings"
+        }
+      ]
+    }
+  ]
+}

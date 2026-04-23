@@ -1,0 +1,102 @@
+<div ng-controller="MemberLoginDashboardController" class="umb-dashboard-content">
+    <umb-load-indicator ng-if="loading"></umb-load-indicator>
+
+    <div class="umb-box">
+        <div class="umb-box-header">
+            <h2>Member Login Manager</h2>
+        </div>
+        <div class="umb-box-content">
+            <p>Manage member login configuration and test authentication from the Umbraco backoffice.</p>
+
+            <umb-tab-bar>
+                <li ng-class="{active: activeTab === 'overview'}">
+                    <a ng-click="setTab('overview')">Overview</a>
+                </li>
+                <li ng-class="{active: activeTab === 'test-login'}">
+                    <a ng-click="setTab('test-login')">Test Login</a>
+                </li>
+                <li ng-class="{active: activeTab === 'forgot-password'}">
+                    <a ng-click="setTab('forgot-password')">Forgot Password</a>
+                </li>
+                <li ng-class="{active: activeTab === 'reset-password'}">
+                    <a ng-click="setTab('reset-password')">Reset Password</a>
+                </li>
+            </umb-tab-bar>
+
+            <!-- Overview Tab -->
+            <div ng-if="activeTab === 'overview'">
+                <p>This plugin provides custom member login functionality including:</p>
+                <ul>
+                    <li>Login form with remember me support</li>
+                    <li>Forgot password with token-based reset</li>
+                    <li>Account lockout handling</li>
+                    <li>Approval workflow support</li>
+                </ul>
+                <h4>API Endpoints</h4>
+                <ul>
+                    <li><code>POST /umbraco/api/memberlogin/Login</code></li>
+                    <li><code>POST /umbraco/api/memberlogin/Logout</code></li>
+                    <li><code>POST /umbraco/api/memberlogin/ForgotPassword</code></li>
+                    <li><code>POST /umbraco/api/memberlogin/ResetPassword</code></li>
+                </ul>
+            </div>
+
+            <!-- Test Login Tab -->
+            <div ng-if="activeTab === 'test-login'">
+                <div class="control-group">
+                    <label>Username / Email</label>
+                    <input type="text" ng-model="loginModel.username" class="umb-input" />
+                </div>
+                <div class="control-group">
+                    <label>Password</label>
+                    <input type="password" ng-model="loginModel.password" class="umb-input" />
+                </div>
+                <div class="control-group">
+                    <label>
+                        <input type="checkbox" ng-model="loginModel.rememberMe" /> Remember Me
+                    </label>
+                </div>
+                <button ng-click="testLogin()" class="btn umb-btn-primary">Test Login</button>
+                <div ng-if="loginResult" class="alert"
+                     ng-class="{'alert-success': loginResult.success, 'alert-error': !loginResult.success}">
+                    <span ng-if="loginResult.lockedOut"><strong>Account Locked:</strong> </span>
+                    {{loginResult.message}}
+                </div>
+            </div>
+
+            <!-- Forgot Password Tab -->
+            <div ng-if="activeTab === 'forgot-password'">
+                <div class="control-group">
+                    <label>Email Address</label>
+                    <input type="email" ng-model="forgotModel.email" class="umb-input" />
+                </div>
+                <button ng-click="sendForgotPassword()" class="btn umb-btn-primary">Send Reset Link</button>
+                <div ng-if="resetResult" class="alert"
+                     ng-class="{'alert-success': resetResult.success, 'alert-error': !resetResult.success}">
+                    {{resetResult.message}}
+                </div>
+            </div>
+
+            <!-- Reset Password Tab -->
+            <div ng-if="activeTab === 'reset-password'">
+                <div class="control-group">
+                    <label>Email</label>
+                    <input type="email" ng-model="resetModel.email" class="umb-input" />
+                </div>
+                <div class="control-group">
+                    <label>Reset Token</label>
+                    <input type="text" ng-model="resetModel.token" class="umb-input" />
+                </div>
+                <div class="control-group">
+                    <label>New Password</label>
+                    <input type="password" ng-model="resetModel.newPassword" class="umb-input" />
+                </div>
+                <button ng-click="resetPassword()" class="btn umb-btn-primary">Reset Password</button>
+                <div ng-if="resetResult" class="alert"
+                     ng-class="{'alert-success': resetResult.success, 'alert-error': !resetResult.success}">
+                    {{resetResult.message}}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
