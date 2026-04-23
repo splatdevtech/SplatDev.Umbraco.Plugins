@@ -54,12 +54,12 @@
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
-		<PackageReference Include="EFCoreSecondLevelCacheInterceptor" Version="6.0.0" />
-		<PackageReference Include="EFCoreSecondLevelCacheInterceptor.MemoryCache" Version="6.0.0" />
+		<PackageReference Include="EFCoreSecondLevelCacheInterceptor" Version="5.3.9" />
+		<PackageReference Include="EFCoreSecondLevelCacheInterceptor.MemoryCache" Version="5.3.9" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="HtmlAgilityPack" Version="1.11.73" />
+		<PackageReference Include="HtmlAgilityPack" Version="1.12.4" />
 	</ItemGroup>
 
 	<ItemGroup>

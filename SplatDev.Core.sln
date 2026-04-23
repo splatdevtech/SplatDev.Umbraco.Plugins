@@ -85,8 +85,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SplatDev.Umbraco.Plugins.OA
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SplatDev.Umbraco.Plugins.ShortUrls", "SplatDev.Umbraco.Plugins.ShortUrls\SplatDev.Umbraco.Plugins.ShortUrls.csproj", "{2BECDCEF-AE09-4AD5-9C41-20F36E9C7BDC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SplatDev.Umbraco.Plugins.PdfCurator", "SplatDev.Umbraco.Plugins.PdfCurator\SplatDev.Umbraco.Plugins.PdfCurator.csproj", "{88A9F125-F8F7-4C8A-A5D9-7AB0DDD7995A}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Umbraco.Plugins.Countries", "Umbraco.Plugins.Countries\Umbraco.Plugins.Countries.csproj", "{E0AE76A8-4A71-4C96-AC7C-7B2975E316F4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Umbraco.Plugins.CustomLogin", "Umbraco.Plugins.CustomLogin\Umbraco.Plugins.CustomLogin.csproj", "{FCA54D66-1B44-4F52-A3DA-B5E5B2F12575}"
@@ -599,18 +597,6 @@ Global
 		{2BECDCEF-AE09-4AD5-9C41-20F36E9C7BDC}.Release|x64.Build.0 = Release|Any CPU
 		{2BECDCEF-AE09-4AD5-9C41-20F36E9C7BDC}.Release|x86.ActiveCfg = Release|Any CPU
 		{2BECDCEF-AE09-4AD5-9C41-20F36E9C7BDC}.Release|x86.Build.0 = Release|Any CPU
-		{88A9F125-F8F7-4C8A-A5D9-7AB0DDD7995A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{88A9F125-F8F7-4C8A-A5D9-7AB0DDD7995A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{88A9F125-F8F7-4C8A-A5D9-7AB0DDD7995A}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{88A9F125-F8F7-4C8A-A5D9-7AB0DDD7995A}.Debug|x64.Build.0 = Debug|Any CPU
-		{88A9F125-F8F7-4C8A-A5D9-7AB0DDD7995A}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{88A9F125-F8F7-4C8A-A5D9-7AB0DDD7995A}.Debug|x86.Build.0 = Debug|Any CPU
-		{88A9F125-F8F7-4C8A-A5D9-7AB0DDD7995A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{88A9F125-F8F7-4C8A-A5D9-7AB0DDD7995A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{88A9F125-F8F7-4C8A-A5D9-7AB0DDD7995A}.Release|x64.ActiveCfg = Release|Any CPU
-		{88A9F125-F8F7-4C8A-A5D9-7AB0DDD7995A}.Release|x64.Build.0 = Release|Any CPU
-		{88A9F125-F8F7-4C8A-A5D9-7AB0DDD7995A}.Release|x86.ActiveCfg = Release|Any CPU
-		{88A9F125-F8F7-4C8A-A5D9-7AB0DDD7995A}.Release|x86.Build.0 = Release|Any CPU
 		{E0AE76A8-4A71-4C96-AC7C-7B2975E316F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E0AE76A8-4A71-4C96-AC7C-7B2975E316F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E0AE76A8-4A71-4C96-AC7C-7B2975E316F4}.Debug|x64.ActiveCfg = Debug|Any CPU

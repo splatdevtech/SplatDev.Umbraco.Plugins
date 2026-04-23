@@ -27,11 +27,16 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<ProjectReference Include="..\SplatDev.Umbraco.Common\SplatDev.Umbraco.Common.csproj" />
+		<ProjectReference Include="..\SplatDev.Umbraco.Markup\SplatDev.Umbraco.Markup.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<PackageReference Include="Azure.Identity" Version="1.13.2" />
 		<PackageReference Include="Microsoft.Graph" Version="5.73.0" />
 		<PackageReference Include="Microsoft.Identity.Client" Version="4.69.1" />
-		<PackageReference Include="MailKit" Version="4.8.0" />
-		<PackageReference Include="MimeKit" Version="4.8.0" />
+		<PackageReference Include="MailKit" Version="4.15.1" />
+		<PackageReference Include="MimeKit" Version="4.15.1" />
 	</ItemGroup>
 
 	<ItemGroup>
