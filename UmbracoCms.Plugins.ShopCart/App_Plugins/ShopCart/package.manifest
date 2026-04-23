@@ -1,0 +1,10 @@
+{
+  "dashboards": [
+    {
+      "alias": "shopCart",
+      "view": "/App_Plugins/ShopCart/dashboard.html",
+      "sections": ["content"],
+      "weight": -99
+    }
+  ]
+}

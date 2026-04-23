@@ -1,0 +1,10 @@
+{
+  "dashboards": [
+    {
+      "alias": "pagSeguro",
+      "view": "/App_Plugins/PagSeguro/dashboard.html",
+      "sections": ["content"],
+      "weight": -99
+    }
+  ]
+}

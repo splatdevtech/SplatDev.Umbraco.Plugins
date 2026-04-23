@@ -1,0 +1,10 @@
+{
+  "dashboards": [
+    {
+      "alias": "socialMediaChannels",
+      "view": "/App_Plugins/SocialMediaChannels/dashboard.html",
+      "sections": ["content"],
+      "weight": -99
+    }
+  ]
+}

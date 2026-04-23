@@ -1,0 +1,10 @@
+{
+  "dashboards": [
+    {
+      "alias": "socialMediaLogin",
+      "view": "/App_Plugins/SocialMediaLogin/dashboard.html",
+      "sections": ["content"],
+      "weight": -99
+    }
+  ]
+}

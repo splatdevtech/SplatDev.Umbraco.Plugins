@@ -1,0 +1,10 @@
+{
+  "dashboards": [
+    {
+      "alias": "liveVideo",
+      "view": "/App_Plugins/LiveVideo/dashboard.html",
+      "sections": ["content"],
+      "weight": -99
+    }
+  ]
+}

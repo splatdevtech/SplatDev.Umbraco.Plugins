@@ -1,0 +1,15 @@
+{
+  "$schema": "../../umbraco-package-schema.json",
+  "name": "MercadoPago Payments",
+  "version": "2.0.0",
+  "extensions": [
+    {
+      "type": "dashboard",
+      "alias": "mercadoPago.dashboard",
+      "name": "MercadoPago Dashboard",
+      "element": "/App_Plugins/MercadoPago/dist/dashboard.js",
+      "weight": -99,
+      "conditions": [{ "alias": "Umb.Condition.SectionAlias", "match": "Umb.Section.Content" }]
+    }
+  ]
+}

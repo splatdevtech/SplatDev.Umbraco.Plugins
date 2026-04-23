@@ -1,0 +1,10 @@
+{
+  "dashboards": [
+    {
+      "alias": "gdrp",
+      "view": "/App_Plugins/Gdrp/dashboard.html",
+      "sections": ["content"],
+      "weight": -99
+    }
+  ]
+}

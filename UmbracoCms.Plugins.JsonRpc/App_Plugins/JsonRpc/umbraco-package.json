@@ -1,0 +1,24 @@
+{
+  "$schema": "../../umbraco-package-schema.json",
+  "name": "JsonRpc",
+  "version": "1.0.0",
+  "allowPackageTelemetry": false,
+  "extensions": [
+    {
+      "type": "dashboard",
+      "alias": "jsonRpc.dashboard",
+      "name": "JSON-RPC Dashboard",
+      "element": "/App_Plugins/JsonRpc/dashboard.js",
+      "meta": {
+        "label": "JSON-RPC",
+        "pathname": "json-rpc"
+      },
+      "conditions": [
+        {
+          "alias": "Umb.Condition.SectionAlias",
+          "match": "Umb.Section.Content"
+        }
+      ]
+    }
+  ]
+}

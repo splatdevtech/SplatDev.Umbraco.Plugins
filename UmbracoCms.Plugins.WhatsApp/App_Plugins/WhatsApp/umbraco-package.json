@@ -1,0 +1,17 @@
+{
+  "$schema": "../../umbraco-package-schema.json",
+  "name": "WhatsApp Chat Button",
+  "version": "2.0.0",
+  "extensions": [
+    {
+      "type": "dashboard",
+      "alias": "whatsapp.dashboard",
+      "name": "WhatsApp Dashboard",
+      "element": "/App_Plugins/WhatsApp/dist/dashboard.js",
+      "weight": -99,
+      "conditions": [
+        { "alias": "Umb.Condition.SectionAlias", "match": "Umb.Section.Content" }
+      ]
+    }
+  ]
+}

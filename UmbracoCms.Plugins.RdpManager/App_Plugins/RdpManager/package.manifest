@@ -1,0 +1,10 @@
+{
+  "dashboards": [
+    {
+      "alias": "rdpManager",
+      "view": "/App_Plugins/RdpManager/dashboard.html",
+      "sections": ["content"],
+      "weight": -99
+    }
+  ]
+}

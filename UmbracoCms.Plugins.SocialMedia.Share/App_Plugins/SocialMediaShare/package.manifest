@@ -1,0 +1,10 @@
+{
+  "dashboards": [
+    {
+      "alias": "socialMediaShare",
+      "view": "/App_Plugins/SocialMediaShare/dashboard.html",
+      "sections": ["content"],
+      "weight": -99
+    }
+  ]
+}

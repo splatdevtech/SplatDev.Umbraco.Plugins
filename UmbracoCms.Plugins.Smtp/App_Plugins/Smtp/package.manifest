@@ -1,0 +1,10 @@
+{
+  "dashboards": [
+    {
+      "alias": "smtp",
+      "view": "/App_Plugins/Smtp/dashboard.html",
+      "sections": ["content"],
+      "weight": -99
+    }
+  ]
+}

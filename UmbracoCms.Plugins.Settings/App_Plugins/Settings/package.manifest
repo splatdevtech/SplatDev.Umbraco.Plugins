@@ -1,0 +1,10 @@
+{
+  "dashboards": [
+    {
+      "alias": "settings",
+      "view": "/App_Plugins/Settings/dashboard.html",
+      "sections": ["content"],
+      "weight": -99
+    }
+  ]
+}

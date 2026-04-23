@@ -1,0 +1,17 @@
+{
+  "$schema": "../../umbraco-package-schema.json",
+  "name": "Social Media Login",
+  "version": "2.0.0",
+  "extensions": [
+    {
+      "type": "dashboard",
+      "alias": "socialMediaLogin.dashboard",
+      "name": "Social Login Dashboard",
+      "element": "/App_Plugins/SocialMediaLogin/dist/dashboard.js",
+      "weight": -99,
+      "conditions": [
+        { "alias": "Umb.Condition.SectionAlias", "match": "Umb.Section.Content" }
+      ]
+    }
+  ]
+}

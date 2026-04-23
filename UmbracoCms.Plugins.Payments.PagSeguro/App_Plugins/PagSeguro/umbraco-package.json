@@ -1,0 +1,15 @@
+{
+  "$schema": "../../umbraco-package-schema.json",
+  "name": "PagSeguro Payments",
+  "version": "2.0.0",
+  "extensions": [
+    {
+      "type": "dashboard",
+      "alias": "pagSeguro.dashboard",
+      "name": "PagSeguro Dashboard",
+      "element": "/App_Plugins/PagSeguro/dist/dashboard.js",
+      "weight": -99,
+      "conditions": [{ "alias": "Umb.Condition.SectionAlias", "match": "Umb.Section.Content" }]
+    }
+  ]
+}

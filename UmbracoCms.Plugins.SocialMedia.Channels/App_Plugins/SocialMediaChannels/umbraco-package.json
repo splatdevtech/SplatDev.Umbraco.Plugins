@@ -1,0 +1,17 @@
+{
+  "$schema": "../../umbraco-package-schema.json",
+  "name": "Social Media Channels",
+  "version": "2.0.0",
+  "extensions": [
+    {
+      "type": "dashboard",
+      "alias": "socialMediaChannels.dashboard",
+      "name": "Social Media Channels Dashboard",
+      "element": "/App_Plugins/SocialMediaChannels/dist/dashboard.js",
+      "weight": -99,
+      "conditions": [
+        { "alias": "Umb.Condition.SectionAlias", "match": "Umb.Section.Content" }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "dashboards": [
+    {
+      "alias": "whatsapp",
+      "view": "/App_Plugins/WhatsApp/dashboard.html",
+      "sections": ["content"],
+      "weight": -99
+    }
+  ]
+}

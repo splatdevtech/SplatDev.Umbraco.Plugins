@@ -1,0 +1,17 @@
+{
+  "$schema": "../../umbraco-package-schema.json",
+  "name": "Video Preview",
+  "version": "2.0.0",
+  "extensions": [
+    {
+      "type": "dashboard",
+      "alias": "videoPreview.dashboard",
+      "name": "Video Preview Dashboard",
+      "element": "/App_Plugins/VideoPreview/dist/dashboard.js",
+      "weight": -99,
+      "conditions": [
+        { "alias": "Umb.Condition.SectionAlias", "match": "Umb.Section.Content" }
+      ]
+    }
+  ]
+}

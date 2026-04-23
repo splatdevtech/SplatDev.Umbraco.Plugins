@@ -1,0 +1,10 @@
+{
+  "dashboards": [
+    {
+      "alias": "mercadoPago",
+      "view": "/App_Plugins/MercadoPago/dashboard.html",
+      "sections": ["content"],
+      "weight": -99
+    }
+  ]
+}

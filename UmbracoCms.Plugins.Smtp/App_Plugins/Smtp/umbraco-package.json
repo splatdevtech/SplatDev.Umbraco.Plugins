@@ -1,0 +1,17 @@
+{
+  "$schema": "../../umbraco-package-schema.json",
+  "name": "SMTP Configuration",
+  "version": "2.0.0",
+  "extensions": [
+    {
+      "type": "dashboard",
+      "alias": "smtp.dashboard",
+      "name": "SMTP Dashboard",
+      "element": "/App_Plugins/Smtp/dist/dashboard.js",
+      "weight": -99,
+      "conditions": [
+        { "alias": "Umb.Condition.SectionAlias", "match": "Umb.Section.Content" }
+      ]
+    }
+  ]
+}

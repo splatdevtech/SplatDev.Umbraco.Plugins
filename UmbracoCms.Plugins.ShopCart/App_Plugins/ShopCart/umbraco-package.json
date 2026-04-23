@@ -1,0 +1,15 @@
+{
+  "$schema": "../../umbraco-package-schema.json",
+  "name": "ShopCart",
+  "version": "2.0.0",
+  "extensions": [
+    {
+      "type": "dashboard",
+      "alias": "shopCart.dashboard",
+      "name": "ShopCart Dashboard",
+      "element": "/App_Plugins/ShopCart/dist/dashboard.js",
+      "weight": -99,
+      "conditions": [{ "alias": "Umb.Condition.SectionAlias", "match": "Umb.Section.Content" }]
+    }
+  ]
+}

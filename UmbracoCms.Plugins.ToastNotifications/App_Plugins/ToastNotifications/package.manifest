@@ -1,0 +1,10 @@
+{
+  "dashboards": [
+    {
+      "alias": "toastNotifications",
+      "view": "/App_Plugins/ToastNotifications/dashboard.html",
+      "sections": ["content"],
+      "weight": -99
+    }
+  ]
+}

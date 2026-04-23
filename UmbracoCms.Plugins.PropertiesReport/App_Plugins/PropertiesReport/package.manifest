@@ -1,0 +1,10 @@
+{
+  "dashboards": [
+    {
+      "alias": "propertiesReport",
+      "view": "/App_Plugins/PropertiesReport/dashboard.html",
+      "sections": ["content"],
+      "weight": -99
+    }
+  ]
+}

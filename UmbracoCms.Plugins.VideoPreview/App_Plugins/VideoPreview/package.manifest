@@ -1,0 +1,10 @@
+{
+  "dashboards": [
+    {
+      "alias": "videoPreview",
+      "view": "/App_Plugins/VideoPreview/dashboard.html",
+      "sections": ["content"],
+      "weight": -99
+    }
+  ]
+}
