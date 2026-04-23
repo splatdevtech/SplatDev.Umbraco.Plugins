@@ -1,0 +1,19 @@
+{
+  "id": "Umbraco.Plugins.CacheWarmer",
+  "name": "Cache Warmer Manager",
+  "version": "13.5.3",
+  "allowPackageTelemetry": true,
+  "dashboards": [
+    {
+      "alias": "cacheWarmer",
+      "weight": 10,
+      "view": "/App_Plugins/Umbraco.Plugins.CacheWarmer/view.html",
+      "sections": [ "settings" ],
+      "access": [ { "grant": "admin" } ]
+    }
+  ],
+  "javascript": [
+    "~/App_Plugins/Umbraco.Plugins.CacheWarmer/controller.js",
+    "~/App_Plugins/Umbraco.Plugins.CacheWarmer/resources.js"
+  ]
+}

@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<language>
+  <area alias="dashboardTabs">
+    <key alias="cacheWarmer">Cache Warmer</key>
+  </area>
+  <area alias="texts">
+    <key alias="information">Clear or refresh the cache only if necessary. The Cache Warmer Manager already runs a background service for warming up the cache</key>
+    <key alias="titleCacheManager">Cache Warmer Manager</key>
+    <key alias="clear">Clear all cache keys</key>
+    <key alias="refresh">Refresh Cache (clears then runs warm up)</key>
+    <key alias="latest">Cache Log</key>
+    <key alias="notFound">Urls not found (404)</key>
+  </area>
+  <area alias="buttons">
+    <key alias="run">Refresh Cache</key>
+    <key alias="load">Refresh Log</key>
+    <key alias="clear">Clear Cache</key>
+  </area>
+</language>

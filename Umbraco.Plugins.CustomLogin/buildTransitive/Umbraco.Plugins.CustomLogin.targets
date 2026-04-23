@@ -1,0 +1,21 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <UmbracoPluginsCustomLoginContentFilesPath>$(MSBuildThisFileDirectory)..\App_Plugins\Umbraco.Plugins.CustomLogin\**\*.*</UmbracoPluginsCustomLoginContentFilesPath>
+  </PropertyGroup>
+
+  <Target Name="CopyUmbracoPluginsCustomLoginAssets" BeforeTargets="BeforeBuild">
+    <ItemGroup>
+      <UmbracoPluginsCustomLoginContentFiles Include="$(UmbracoPluginsCustomLoginContentFilesPath)" />
+    </ItemGroup>
+    <Message Text="Copying Umbraco.Plugins.CustomLogin files: $(UmbracoPluginsCustomLoginContentFilesPath) - #@(UmbracoPluginsCustomLoginContentFiles->Count()) files" Importance="high" />
+    <Copy SourceFiles="@(UmbracoPluginsCustomLoginContentFiles)" DestinationFiles="@(UmbracoPluginsCustomLoginContentFiles->'$(MSBuildProjectDirectory)\App_Plugins\Umbraco.Plugins.CustomLogin\%(RecursiveDir)%(Filename)%(Extension)')" SkipUnchangedFiles="true" />
+  </Target>
+
+  <Target Name="ClearUmbracoPluginsCustomLoginAssets" BeforeTargets="Clean">
+    <ItemGroup>
+      <UmbracoPluginsCustomLoginDir Include="$(MSBuildProjectDirectory)\App_Plugins\Umbraco.Plugins.CustomLogin\" />
+    </ItemGroup>
+    <Message Text="Clear old Umbraco.Plugins.CustomLogin data" Importance="high" />
+    <RemoveDir Directories="@(UmbracoPluginsCustomLoginDir)" />
+  </Target>
+</Project>

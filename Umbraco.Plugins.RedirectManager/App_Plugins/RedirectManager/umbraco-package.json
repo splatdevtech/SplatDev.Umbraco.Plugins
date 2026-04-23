@@ -1,0 +1,58 @@
+{
+  "$schema": "../../umbraco-package-schema.json",
+  "name": "SplatDev Redirect Manager",
+  "alias": "SplatDev.RedirectManager",
+  "version": "1.0.0",
+  "extensions": [
+    {
+      "type": "dashboard",
+      "alias": "SplatDev.RedirectManager.Dashboard",
+      "name": "Redirect Manager Dashboard",
+      "element": "/App_Plugins/RedirectManager/dist/redirect-manager.js",
+      "elementName": "redirect-manager-dashboard",
+      "weight": 10,
+      "meta": {
+        "label": "Redirect Manager",
+        "pathname": "redirect-manager"
+      },
+      "conditions": [
+        {
+          "alias": "Umb.Condition.SectionAlias",
+          "match": "Umb.Section.Settings"
+        }
+      ]
+    },
+    {
+      "type": "localization",
+      "alias": "SplatDev.RedirectManager.Localization.En",
+      "name": "Redirect Manager — English",
+      "meta": {
+        "culture": "en",
+        "localizations": {
+          "section": {
+            "redirectManager_heading": "Redirect Manager",
+            "redirectManager_addRedirect": "Add Redirect",
+            "redirectManager_fromUrl": "From URL",
+            "redirectManager_redirectTo": "Redirect To"
+          }
+        }
+      }
+    },
+    {
+      "type": "localization",
+      "alias": "SplatDev.RedirectManager.Localization.PtBr",
+      "name": "Redirect Manager — Português (Brasil)",
+      "meta": {
+        "culture": "pt-BR",
+        "localizations": {
+          "section": {
+            "redirectManager_heading": "Gerenciador de Redirecionamentos",
+            "redirectManager_addRedirect": "Adicionar Redirecionamento",
+            "redirectManager_fromUrl": "URL de Origem",
+            "redirectManager_redirectTo": "Redirecionar Para"
+          }
+        }
+      }
+    }
+  ]
+}

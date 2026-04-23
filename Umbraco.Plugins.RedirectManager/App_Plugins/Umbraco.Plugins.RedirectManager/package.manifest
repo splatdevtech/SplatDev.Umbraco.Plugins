@@ -1,0 +1,5 @@
+{
+    "id": "Umbraco.Plugins.RedirectManager",
+    "name": "Umbraco.Plugins.RedirectManager",
+    "allowPackageTelemetry": true
+}

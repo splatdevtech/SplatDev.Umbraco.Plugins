@@ -1,0 +1,21 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <UmbracoPluginsRedirectManagerContentFilesPath>$(MSBuildThisFileDirectory)..\App_Plugins\Umbraco.Plugins.RedirectManager\**\*.*</UmbracoPluginsRedirectManagerContentFilesPath>
+  </PropertyGroup>
+
+  <Target Name="CopyUmbracoPluginsRedirectManagerAssets" BeforeTargets="BeforeBuild">
+    <ItemGroup>
+      <UmbracoPluginsRedirectManagerContentFiles Include="$(UmbracoPluginsRedirectManagerContentFilesPath)" />
+    </ItemGroup>
+    <Message Text="Copying Umbraco.Plugins.RedirectManager files: $(UmbracoPluginsRedirectManagerContentFilesPath) - #@(UmbracoPluginsRedirectManagerContentFiles->Count()) files" Importance="high" />
+    <Copy SourceFiles="@(UmbracoPluginsRedirectManagerContentFiles)" DestinationFiles="@(UmbracoPluginsRedirectManagerContentFiles->'$(MSBuildProjectDirectory)\App_Plugins\Umbraco.Plugins.RedirectManager\%(RecursiveDir)%(Filename)%(Extension)')" SkipUnchangedFiles="true" />
+  </Target>
+
+  <Target Name="ClearUmbracoPluginsRedirectManagerAssets" BeforeTargets="Clean">
+    <ItemGroup>
+      <UmbracoPluginsRedirectManagerDir Include="$(MSBuildProjectDirectory)\App_Plugins\Umbraco.Plugins.RedirectManager\" />
+    </ItemGroup>
+    <Message Text="Clear old Umbraco.Plugins.RedirectManager data" Importance="high" />
+    <RemoveDir Directories="@(UmbracoPluginsRedirectManagerDir)" />
+  </Target>
+</Project>

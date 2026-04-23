@@ -1,0 +1,53 @@
+{
+  "$schema": "../../umbraco-package-schema.json",
+  "name": "ShortUrls",
+  "version": "1.0.0",
+  "extensions": [
+    {
+      "type": "dashboard",
+      "alias": "ShortUrls.Dashboard",
+      "name": "Short URLs Dashboard",
+      "element": "/App_Plugins/ShortUrls/dist/short-urls-dashboard.element.js",
+      "elementName": "short-urls-dashboard",
+      "weight": 100,
+      "meta": {
+        "label": "#shortUrls_dashboardLabel",
+        "pathname": "short-urls"
+      },
+      "conditions": [
+        {
+          "alias": "Umb.Condition.SectionAlias",
+          "match": "Umb.Section.Settings"
+        }
+      ]
+    },
+    {
+      "type": "localization",
+      "alias": "ShortUrls.Localization.En",
+      "name": "Short URLs English",
+      "integrityHash": null,
+      "meta": {
+        "culture": "en"
+      },
+      "translations": {
+        "shortUrls_dashboardLabel": "Short URLs",
+        "shortUrls_heading": "Short URLs",
+        "shortUrls_description": "Manage short URL redirects (/s/{code})"
+      }
+    },
+    {
+      "type": "localization",
+      "alias": "ShortUrls.Localization.PtBR",
+      "name": "Short URLs Portuguese (Brazil)",
+      "integrityHash": null,
+      "meta": {
+        "culture": "pt-BR"
+      },
+      "translations": {
+        "shortUrls_dashboardLabel": "URLs Curtas",
+        "shortUrls_heading": "URLs Curtas",
+        "shortUrls_description": "Gerencie redirecionamentos de URLs curtas (/s/{código})"
+      }
+    }
+  ]
+}

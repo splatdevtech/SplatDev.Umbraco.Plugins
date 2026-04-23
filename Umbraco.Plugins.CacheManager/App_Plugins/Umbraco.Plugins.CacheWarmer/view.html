@@ -1,0 +1,151 @@
+<style>
+    .manager-buttons {
+        display: flex;
+        gap: 50px;
+        justify-content: space-between;
+        align-content: center;
+    }
+
+        .manager-buttons > div {
+            position: relative;
+        }
+
+    .button-tools {
+        display: flex;
+        gap: 50px;
+        justify-content: flex-start;
+        align-content: center;
+    }
+
+        .button-tools > div {
+            position: relative;
+        }
+
+    .stats-wrapper {
+        display: flex;
+        gap: 10px;
+    }
+
+    .stats {
+        padding: 10px 20px;
+        color: #f2f2f2;
+        background: #199c5c;
+        border-radius: 4px;
+    }
+
+        .stats strong {
+            color: #ffd800;
+            font-size: 16px;
+        }
+
+    .cache-log {
+        margin-top: 30px;
+        width: 100%;
+        border: 1px solid #ccc;
+    }
+
+        .cache-log th {
+            background: #ccc;
+        }
+
+        .cache-log th, .cache-log td {
+            padding: 5px;
+            border: 1px solid #ccc;
+        }
+
+            .cache-log td.size120:last-child {
+                width: 120px;
+            }
+
+        .cache-log a {
+            color: blue;
+        }
+
+    .info {
+        width: 16px;
+        height: 16px;
+        color: #fff;
+        background-color: blue;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-content: center;
+        border: 1px solid #000;
+        position: absolute;
+        top: 5px;
+        right: -20px;
+        cursor: pointer;
+        font-family: 'Courier New';
+    }
+</style>
+<div ng-controller="CacheWarmerController as vm">
+    <umb-box>
+        <umb-box-header title-key="@texts_titleCacheManager"></umb-box-header>
+        <umb-box-content>
+
+            <umb-load-indicator ng-if="vm.loading">
+            </umb-load-indicator>
+            <p><localize key="texts_information" /></p>
+            <div class="manager-buttons">
+                <div class="button-tools">
+                    <div>
+
+                        <button ng-click="vm.clearCache()" ng-disabled="vm.loading" class="btn btn-warn"><localize key="buttons_clear" /></button> <div class="info" localize="title" title="@texts_clear">i</div>
+                    </div>
+                    <div>
+
+
+                        <button ng-click="vm.refreshCache()" ng-disabled="vm.loading" class="btn btn-success"><localize key="buttons_refresh" /></button><div class="info" localize="title" title="@texts_refresh">i</div>
+                    </div>
+                </div>
+                <div class="stats-wrapper">
+                    <div>Cached:</div>
+                    <div ng-if="vm.stats" class="stats"> <strong>{{vm.stats.Count}}</strong> TOTAL</div>
+                    <div ng-if="vm.stats.DbKeys" class="stats"> <strong>{{vm.stats.DbKeys.length}}</strong> queries</div>
+                    <div ng-if="vm.stats.MethodKeys" class="stats"> <strong>{{vm.stats.MethodKeys.length}}</strong> methods</div>
+                </div>
+            </div>
+
+            <hr />
+            <h4><localize key="texts_latest" /> </h4>
+            <button ng-click="vm.refreshLogs()" ng-disabled="vm.loading" class="btn btn-default"><localize key="buttons_load" /></button>
+            <table class="cache-log" ng-if="vm.latestTask">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>URL</th>
+                        <th>Description</th>
+                        <th>Cache Time</th>
+                        <th>Expires</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="item in vm.latestTask track by $index">
+                        <td>{{$index + 1}}</td>
+                        <td><a href="{{item.Url}}" target="_blank">{{item.Url}}</a></td>
+                        <td>{{item.Description}}</td>
+                        <td class="size120">{{item.CacheTime | date:'MMM-dd-yyyy hh:mm:ss (Z)'}}</td>
+                        <td>Sliding</td>
+                    </tr>
+                </tbody>
+            </table>
+            <hr />
+            <h4><localize key="texts_notFound" /> </h4>
+            <table class="cache-log" ng-if="vm.notFound">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>URL</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="item in vm.notFound track by $index">
+                        <td>{{$index + 1}}</td>
+                        <td>{{item.Url}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </umb-box-content>
+    </umb-box>
+
+</div>

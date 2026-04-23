@@ -1,0 +1,5 @@
+{
+    "id": "Umbraco.Plugins.Mailer",
+    "name": "Umbraco.Plugins.Mailer",
+    "allowPackageTelemetry": true
+}

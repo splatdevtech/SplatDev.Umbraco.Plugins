@@ -1,0 +1,53 @@
+{
+  "$schema": "../../umbraco-package-schema.json",
+  "name": "ExceptionManager",
+  "version": "1.0.0",
+  "extensions": [
+    {
+      "type": "dashboard",
+      "alias": "ExceptionManager.Dashboard",
+      "name": "Exception Manager Dashboard",
+      "element": "/App_Plugins/ExceptionManager/dist/exception-manager-dashboard.element.js",
+      "elementName": "exception-manager-dashboard",
+      "weight": 100,
+      "meta": {
+        "label": "#exceptionManager_dashboardLabel",
+        "pathname": "exception-manager"
+      },
+      "conditions": [
+        {
+          "alias": "Umb.Condition.SectionAlias",
+          "match": "Umb.Section.Settings"
+        }
+      ]
+    },
+    {
+      "type": "localization",
+      "alias": "ExceptionManager.Localization.En",
+      "name": "Exception Manager English",
+      "integrityHash": null,
+      "meta": {
+        "culture": "en"
+      },
+      "translations": {
+        "exceptionManager_dashboardLabel": "Exception Manager",
+        "exceptionManager_heading": "Exception Manager",
+        "exceptionManager_description": "View and manage application exceptions"
+      }
+    },
+    {
+      "type": "localization",
+      "alias": "ExceptionManager.Localization.PtBR",
+      "name": "Exception Manager Portuguese (Brazil)",
+      "integrityHash": null,
+      "meta": {
+        "culture": "pt-BR"
+      },
+      "translations": {
+        "exceptionManager_dashboardLabel": "Gerenciador de Exceções",
+        "exceptionManager_heading": "Gerenciador de Exceções",
+        "exceptionManager_description": "Visualize e gerencie as exceções da aplicação"
+      }
+    }
+  ]
+}

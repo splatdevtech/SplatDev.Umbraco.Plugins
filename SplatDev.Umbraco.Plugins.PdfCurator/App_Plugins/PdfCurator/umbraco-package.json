@@ -1,0 +1,53 @@
+{
+  "$schema": "../../umbraco-package-schema.json",
+  "name": "PDF Curator",
+  "version": "1.0.0",
+  "extensions": [
+    {
+      "type": "dashboard",
+      "alias": "SplatDev.PdfCurator.Dashboard",
+      "name": "PDF Curator Dashboard",
+      "element": "/App_Plugins/PdfCurator/dist/pdf-curator-dashboard.element.js",
+      "elementName": "pdf-curator-dashboard",
+      "weight": 100,
+      "meta": {
+        "label": "#pdfCurator_dashboardLabel",
+        "pathname": "pdf-curator"
+      },
+      "conditions": [
+        {
+          "alias": "Umb.Condition.SectionAlias",
+          "match": "Umb.Section.Settings"
+        }
+      ]
+    },
+    {
+      "type": "localization",
+      "alias": "SplatDev.PdfCurator.Localize.En",
+      "name": "PDF Curator English",
+      "meta": {
+        "culture": "en"
+      },
+      "js": "/App_Plugins/PdfCurator/dist/pdf-curator-dashboard.element.js",
+      "translations": {
+        "pdfCurator": {
+          "dashboardLabel": "PDF Curator"
+        }
+      }
+    },
+    {
+      "type": "localization",
+      "alias": "SplatDev.PdfCurator.Localize.PtBr",
+      "name": "PDF Curator Portuguese (Brazil)",
+      "meta": {
+        "culture": "pt-BR"
+      },
+      "js": "/App_Plugins/PdfCurator/dist/pdf-curator-dashboard.element.js",
+      "translations": {
+        "pdfCurator": {
+          "dashboardLabel": "Curador de PDF"
+        }
+      }
+    }
+  ]
+}

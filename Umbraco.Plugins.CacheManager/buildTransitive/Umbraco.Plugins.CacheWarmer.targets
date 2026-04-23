@@ -1,0 +1,21 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <UmbracoPluginsCacheWarmerContentFilesPath>$(MSBuildThisFileDirectory)..\App_Plugins\Umbraco.Plugins.CacheWarmer\**\*.*</UmbracoPluginsCacheWarmerContentFilesPath>
+  </PropertyGroup>
+
+  <Target Name="CopyUmbracoPluginsCacheWarmerAssets" BeforeTargets="BeforeBuild">
+    <ItemGroup>
+      <UmbracoPluginsCacheWarmerContentFiles Include="$(UmbracoPluginsCacheWarmerContentFilesPath)" />
+    </ItemGroup>
+    <Message Text="Copying Umbraco.Plugins.CacheWarmer files: $(UmbracoPluginsCacheWarmerContentFilesPath) - #@(UmbracoPluginsCacheWarmerContentFiles->Count()) files" Importance="high" />
+    <Copy SourceFiles="@(UmbracoPluginsCacheWarmerContentFiles)" DestinationFiles="@(UmbracoPluginsCacheWarmerContentFiles->'$(MSBuildProjectDirectory)\App_Plugins\Umbraco.Plugins.CacheWarmer\%(RecursiveDir)%(Filename)%(Extension)')" SkipUnchangedFiles="true" />
+  </Target>
+
+  <Target Name="ClearUmbracoPluginsCacheWarmerAssets" BeforeTargets="Clean">
+    <ItemGroup>
+      <UmbracoPluginsCacheWarmerDir Include="$(MSBuildProjectDirectory)\App_Plugins\Umbraco.Plugins.CacheWarmer\" />
+    </ItemGroup>
+    <Message Text="Clear old Umbraco.Plugins.CacheWarmer data" Importance="high" />
+    <RemoveDir Directories="@(UmbracoPluginsCacheWarmerDir)" />
+  </Target>
+</Project>

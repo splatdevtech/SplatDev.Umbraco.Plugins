@@ -1,0 +1,21 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <UmbracoPluginsMailerContentFilesPath>$(MSBuildThisFileDirectory)..\App_Plugins\Umbraco.Plugins.Mailer\**\*.*</UmbracoPluginsMailerContentFilesPath>
+  </PropertyGroup>
+
+  <Target Name="CopyUmbracoPluginsMailerAssets" BeforeTargets="BeforeBuild">
+    <ItemGroup>
+      <UmbracoPluginsMailerContentFiles Include="$(UmbracoPluginsMailerContentFilesPath)" />
+    </ItemGroup>
+    <Message Text="Copying Umbraco.Plugins.Mailer files: $(UmbracoPluginsMailerContentFilesPath) - #@(UmbracoPluginsMailerContentFiles->Count()) files" Importance="high" />
+    <Copy SourceFiles="@(UmbracoPluginsMailerContentFiles)" DestinationFiles="@(UmbracoPluginsMailerContentFiles->'$(MSBuildProjectDirectory)\App_Plugins\Umbraco.Plugins.Mailer\%(RecursiveDir)%(Filename)%(Extension)')" SkipUnchangedFiles="true" />
+  </Target>
+
+  <Target Name="ClearUmbracoPluginsMailerAssets" BeforeTargets="Clean">
+    <ItemGroup>
+      <UmbracoPluginsMailerDir Include="$(MSBuildProjectDirectory)\App_Plugins\Umbraco.Plugins.Mailer\" />
+    </ItemGroup>
+    <Message Text="Clear old Umbraco.Plugins.Mailer data" Importance="high" />
+    <RemoveDir Directories="@(UmbracoPluginsMailerDir)" />
+  </Target>
+</Project>
