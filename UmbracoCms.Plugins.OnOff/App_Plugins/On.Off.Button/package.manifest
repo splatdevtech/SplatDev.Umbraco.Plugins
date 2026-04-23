@@ -1,0 +1,9 @@
+{
+  "javascript": [
+    "~/App_Plugins/On.Off.Button/js/controller.js"
+  ],
+
+  "css": [
+    "~/App_Plugins/On.Off.Button/css/style.css"
+  ]
+}

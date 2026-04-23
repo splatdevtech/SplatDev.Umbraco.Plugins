@@ -1,0 +1,9 @@
+﻿<div ng-controller="OnOffButtonController as vm">
+   <div class="onoffswitch">
+    <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" ng-model="vm.checked" ng-click="vm.change()">
+    <label class="onoffswitch-label" for="myonoffswitch">
+        <span class="onoffswitch-inner" title="{{vm.OnText}}"></span>
+        <span class="onoffswitch-switch" title="{{vm.OffText}}"></span>
+    </label>
+</div>
+</div>

@@ -1,0 +1,42 @@
+{
+  "$schema": "../../umbraco-package-schema.json",
+  "name": "CopyValue",
+  "version": "2.0.0",
+  "extensions": [
+    {
+      "type": "dashboard",
+      "alias": "UmbracoCms.CopyValue.Dashboard",
+      "name": "Copy Value Dashboard",
+      "element": "/App_Plugins/CopyValue/dist/copyvalue-dashboard.element.js",
+      "elementName": "copyvalue-dashboard",
+      "weight": 100,
+      "meta": {
+        "label": "Copy Value",
+        "pathname": "copy-value"
+      },
+      "conditions": [
+        {
+          "alias": "Umb.Condition.SectionAlias",
+          "match": "Umb.Section.Settings"
+        }
+      ]
+    },
+    {
+      "type": "localization",
+      "alias": "UmbracoCms.CopyValue.Localization.En",
+      "name": "CopyValue — English",
+      "meta": {
+        "culture": "en",
+        "localizations": {
+          "section": {
+            "copyvalue_heading": "Copy Value",
+            "copyvalue_description": "Copy property values between content nodes",
+            "copyvalue_mappings": "Mapping Templates",
+            "copyvalue_source": "Source",
+            "copyvalue_target": "Target"
+          }
+        }
+      }
+    }
+  ]
+}

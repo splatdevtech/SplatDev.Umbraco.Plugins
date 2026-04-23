@@ -1,0 +1,115 @@
+<div ng-controller="CopyValueDashboardController" class="copyvalue-dashboard">
+    <div class="umb-panel-header">
+        <h1>Copy Value</h1>
+        <p class="umb-panel-description">Copy property values between content nodes using reusable mapping templates.</p>
+    </div>
+
+    <ul class="nav nav-tabs" style="margin-bottom:16px;">
+        <li ng-class="{active: activeTab === 'mappings'}">
+            <a href="" ng-click="setTab('mappings')">Mapping Templates ({{mappings.length}})</a>
+        </li>
+        <li ng-class="{active: activeTab === 'copy'}">
+            <a href="" ng-click="setTab('copy')">Execute Copy</a>
+        </li>
+    </ul>
+
+    <!-- Mappings Tab -->
+    <div ng-show="activeTab === 'mappings'">
+        <div style="margin-bottom:16px;">
+            <button class="btn btn-primary" ng-click="newMapping()">
+                <i class="icon-add"></i> Add Mapping Template
+            </button>
+        </div>
+
+        <!-- Edit Form -->
+        <div ng-if="showForm" style="background:#f9fafb;border:1px solid #e5e7eb;border-radius:6px;padding:16px;margin-bottom:20px;">
+            <h3 style="margin-top:0;">{{editingMapping.id ? 'Edit' : 'New'}} Mapping Template</h3>
+            <div class="control-group">
+                <label>Name</label>
+                <input class="umb-textstring" type="text" ng-model="editingMapping.name" placeholder="Blog → News copy" />
+            </div>
+            <div class="control-group">
+                <label>Source Document Type Alias</label>
+                <input class="umb-textstring" type="text" ng-model="editingMapping.sourceDocTypeAlias" placeholder="blogPost" />
+            </div>
+            <div class="control-group">
+                <label>Target Document Type Alias</label>
+                <input class="umb-textstring" type="text" ng-model="editingMapping.targetDocTypeAlias" placeholder="newsArticle" />
+            </div>
+            <div class="control-group">
+                <label>Property Mappings (JSON)</label>
+                <textarea class="umb-textstring" rows="6" ng-model="editingMapping.propertyMappingsJson"
+                    placeholder='[{"source":"pageTitle","target":"headline"},{"source":"bodyText","target":"content"}]'
+                    style="width:100%;font-family:monospace;font-size:0.85rem;"></textarea>
+                <small style="color:#6b7280;">Array of {{"{"}}source, target{{"}"}} alias pairs.</small>
+            </div>
+            <div style="display:flex;gap:8px;margin-top:12px;">
+                <button class="btn btn-success" ng-click="saveMapping()" ng-disabled="saving">Save</button>
+                <button class="btn btn-default" ng-click="cancelEdit()">Cancel</button>
+            </div>
+        </div>
+
+        <div ng-if="loading" class="umb-loading">Loading mappings...</div>
+
+        <div ng-if="!loading">
+            <table class="table" ng-if="mappings.length > 0">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Source Doc Type</th>
+                        <th>Target Doc Type</th>
+                        <th>Created</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="mapping in mappings">
+                        <td><strong>{{mapping.name}}</strong></td>
+                        <td><code>{{mapping.sourceDocTypeAlias}}</code></td>
+                        <td><code>{{mapping.targetDocTypeAlias}}</code></td>
+                        <td>{{formatDate(mapping.createdAt)}}</td>
+                        <td>
+                            <button class="btn btn-xs btn-default" ng-click="editMapping(mapping)">Edit</button>
+                            <button class="btn btn-xs btn-danger" ng-click="deleteMapping(mapping)">Delete</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <p ng-if="mappings.length === 0" style="color:#6b7280;">No mapping templates found.</p>
+        </div>
+    </div>
+
+    <!-- Execute Copy Tab -->
+    <div ng-show="activeTab === 'copy'">
+        <div style="background:#f9fafb;border:1px solid #e5e7eb;border-radius:6px;padding:16px;max-width:500px;">
+            <h3 style="margin-top:0;">Execute Property Copy</h3>
+            <div class="control-group">
+                <label>Mapping Template</label>
+                <select class="umb-textstring" ng-model="copyOp.selectedMappingId">
+                    <option value="">— Select a mapping —</option>
+                    <option ng-repeat="m in mappings" value="{{m.id}}">{{m.name}}</option>
+                </select>
+            </div>
+            <div class="control-group">
+                <label>Source Content ID</label>
+                <input class="umb-textstring" type="number" ng-model="copyOp.sourceContentId" placeholder="1234" />
+            </div>
+            <div class="control-group">
+                <label>Target Content ID</label>
+                <input class="umb-textstring" type="number" ng-model="copyOp.targetContentId" placeholder="5678" />
+            </div>
+            <div class="control-group">
+                <label>
+                    <input type="checkbox" ng-model="copyOp.publish" /> Publish after copy
+                </label>
+            </div>
+            <button class="btn btn-primary" ng-click="executeCopy()">Execute Copy</button>
+
+            <div ng-if="copyOp.result" style="margin-top:12px;padding:10px;border-radius:4px;"
+                 ng-class="{'alert-success': copyOp.result.success, 'alert-danger': !copyOp.result.success}"
+                 class="alert">
+                {{copyOp.result.message}}
+            </div>
+        </div>
+    </div>
+</div>

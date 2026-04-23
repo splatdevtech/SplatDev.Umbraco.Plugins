@@ -1,0 +1,85 @@
+<div ng-controller="OnOffDashboardController" class="onoff-dashboard">
+    <div class="umb-panel-header">
+        <h1>Feature Toggles</h1>
+        <p class="umb-panel-description">Enable, disable and schedule site features from the Umbraco backoffice.</p>
+    </div>
+
+    <div style="margin-bottom:16px;">
+        <button class="btn btn-primary" ng-click="newFeature()">
+            <i class="icon-add"></i> Add Feature Toggle
+        </button>
+    </div>
+
+    <!-- Edit Form -->
+    <div ng-if="showForm" style="background:#f9fafb;border:1px solid #e5e7eb;border-radius:6px;padding:16px;margin-bottom:20px;">
+        <h3 style="margin-top:0;">{{editingFeature.id ? 'Edit' : 'New'}} Feature Toggle</h3>
+        <div class="control-group">
+            <label>Name</label>
+            <input class="umb-textstring" type="text" ng-model="editingFeature.name" placeholder="My Feature" />
+        </div>
+        <div class="control-group">
+            <label>Alias</label>
+            <input class="umb-textstring" type="text" ng-model="editingFeature.alias" placeholder="myFeature" />
+        </div>
+        <div class="control-group">
+            <label>Description</label>
+            <input class="umb-textstring" type="text" ng-model="editingFeature.description" placeholder="Optional description" />
+        </div>
+        <div class="control-group">
+            <label>
+                <input type="checkbox" ng-model="editingFeature.isEnabled" /> Enabled
+            </label>
+        </div>
+        <div class="control-group">
+            <label>Scheduled Enable At (UTC)</label>
+            <input class="umb-textstring" type="datetime-local" ng-model="editingFeature.scheduledEnableAt" />
+        </div>
+        <div class="control-group">
+            <label>Scheduled Disable At (UTC)</label>
+            <input class="umb-textstring" type="datetime-local" ng-model="editingFeature.scheduledDisableAt" />
+        </div>
+        <div style="display:flex;gap:8px;margin-top:12px;">
+            <button class="btn btn-success" ng-click="saveFeature()" ng-disabled="saving">Save</button>
+            <button class="btn btn-default" ng-click="cancelEdit()">Cancel</button>
+        </div>
+    </div>
+
+    <div ng-if="loading" class="umb-loading">Loading feature toggles...</div>
+
+    <div ng-if="!loading">
+        <table class="table" ng-if="features.length > 0">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Alias</th>
+                    <th>Status</th>
+                    <th>Scheduled Enable</th>
+                    <th>Scheduled Disable</th>
+                    <th>Updated</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="feature in features">
+                    <td><strong>{{feature.name}}</strong><br/><small style="color:#6b7280;">{{feature.description}}</small></td>
+                    <td><code>{{feature.alias}}</code></td>
+                    <td>
+                        <span ng-if="feature.isEnabled" style="color:green;font-weight:600;">ON</span>
+                        <span ng-if="!feature.isEnabled" style="color:#dc2626;font-weight:600;">OFF</span>
+                    </td>
+                    <td>{{formatDate(feature.scheduledEnableAt)}}</td>
+                    <td>{{formatDate(feature.scheduledDisableAt)}}</td>
+                    <td>{{formatDate(feature.updatedAt)}}</td>
+                    <td>
+                        <button class="btn btn-xs btn-default" ng-click="toggleFeature(feature)">
+                            {{feature.isEnabled ? 'Disable' : 'Enable'}}
+                        </button>
+                        <button class="btn btn-xs btn-default" ng-click="editFeature(feature)">Edit</button>
+                        <button class="btn btn-xs btn-danger" ng-click="deleteFeature(feature)">Delete</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <p ng-if="features.length === 0" style="color:#6b7280;">No feature toggles found. Click "Add Feature Toggle" to create one.</p>
+    </div>
+</div>

@@ -1,0 +1,35 @@
+@using UmbracoCms.Plugins.CopyValue.Models
+@model IEnumerable<CopyMapping>
+
+<div class="copyvalue-component">
+    @if (!Model.Any())
+    {
+        <p class="copyvalue-empty">No copy mapping templates configured.</p>
+    }
+    else
+    {
+        <ul class="copyvalue-list">
+            @foreach (var mapping in Model)
+            {
+                <li class="copyvalue-item">
+                    <strong>@mapping.Name</strong>
+                    <span class="copyvalue-meta">
+                        <code>@mapping.SourceDocTypeAlias</code>
+                        &rarr;
+                        <code>@mapping.TargetDocTypeAlias</code>
+                    </span>
+                    <small class="copyvalue-date">Created @mapping.CreatedAt.ToString("MMM d, yyyy")</small>
+                </li>
+            }
+        </ul>
+    }
+</div>
+
+<style>
+    .copyvalue-list { list-style: none; margin: 0; padding: 0; }
+    .copyvalue-item { padding: 8px 0; border-bottom: 1px solid #e5e7eb; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+    .copyvalue-meta { color: #6b7280; font-size: 0.875rem; }
+    .copyvalue-date { color: #9ca3af; font-size: 0.75rem; margin-left: auto; }
+    .copyvalue-empty { color: #6b7280; }
+    code { background: #f3f4f6; padding: 1px 6px; border-radius: 4px; font-size: 0.8em; }
+</style>

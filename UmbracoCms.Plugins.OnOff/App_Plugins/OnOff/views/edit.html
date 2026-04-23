@@ -1,0 +1,28 @@
+<div class="onoff-editor">
+    <div class="onoff-toggle-wrap" ng-class="{'onoff-on': model.value === 'true' || model.value === true, 'onoff-off': !(model.value === 'true' || model.value === true)}">
+        <button type="button"
+                class="onoff-toggle-btn"
+                ng-click="model.value = !(model.value === 'true' || model.value === true)">
+            <span class="onoff-toggle-label">
+                {{(model.value === 'true' || model.value === true) ? (model.config.onText || 'On') : (model.config.offText || 'Off')}}
+            </span>
+            <span class="onoff-toggle-indicator"></span>
+        </button>
+    </div>
+</div>
+
+<style>
+    .onoff-editor { padding: 4px 0; }
+    .onoff-toggle-btn {
+        display: inline-flex; align-items: center; gap: 10px;
+        border: 2px solid #e5e7eb; border-radius: 9999px;
+        padding: 6px 16px; cursor: pointer; background: #f9fafb;
+        font-size: 0.9rem; font-weight: 600; transition: all 0.2s;
+    }
+    .onoff-on .onoff-toggle-btn { border-color: #10b981; background: #d1fae5; color: #065f46; }
+    .onoff-off .onoff-toggle-btn { border-color: #e5e7eb; background: #f9fafb; color: #6b7280; }
+    .onoff-toggle-indicator {
+        width: 14px; height: 14px; border-radius: 50%;
+        background: currentColor; display: inline-block;
+    }
+</style>

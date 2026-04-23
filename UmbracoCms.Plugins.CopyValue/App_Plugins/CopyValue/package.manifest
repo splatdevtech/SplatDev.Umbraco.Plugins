@@ -1,0 +1,15 @@
+{
+  "javascript": ["/App_Plugins/CopyValue/angular/copyvalue.controller.js"],
+  "css": [],
+  "propertyEditors": [],
+  "gridEditors": [],
+  "dashboards": [
+    {
+      "alias": "CopyValue.Dashboard",
+      "view": "/App_Plugins/CopyValue/angular/copyvalue.html",
+      "sections": ["settings"],
+      "tab": "Copy Value",
+      "access": [{"grant": "admin"}]
+    }
+  ]
+}

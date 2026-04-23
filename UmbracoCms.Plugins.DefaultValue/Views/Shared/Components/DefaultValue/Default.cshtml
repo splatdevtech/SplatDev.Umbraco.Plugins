@@ -1,0 +1,48 @@
+@using UmbracoCms.Plugins.DefaultValue.Models
+@model IEnumerable<DefaultValueRule>
+
+<div class="defaultvalue-component">
+    @if (!string.IsNullOrEmpty(ViewBag.DocumentTypeAlias as string))
+    {
+        <h4>Default Value Rules for <code>@ViewBag.DocumentTypeAlias</code></h4>
+    }
+    @if (!Model.Any())
+    {
+        <p class="defaultvalue-empty">No default value rules configured.</p>
+    }
+    else
+    {
+        <table class="defaultvalue-table">
+            <thead>
+                <tr>
+                    <th>Document Type</th>
+                    <th>Property Alias</th>
+                    <th>Default Value</th>
+                    <th>Priority</th>
+                    <th>Enabled</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var rule in Model)
+                {
+                    <tr class="@(rule.IsEnabled ? "" : "defaultvalue-disabled")">
+                        <td><code>@rule.DocumentTypeAlias</code></td>
+                        <td><code>@rule.PropertyAlias</code></td>
+                        <td>@rule.DefaultValue</td>
+                        <td>@rule.Priority</td>
+                        <td>@(rule.IsEnabled ? "Yes" : "No")</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>
+
+<style>
+    .defaultvalue-table { width: 100%; border-collapse: collapse; font-size: 0.875rem; }
+    .defaultvalue-table th, .defaultvalue-table td { padding: 8px 12px; border-bottom: 1px solid #e5e7eb; text-align: left; }
+    .defaultvalue-table th { font-weight: 600; background: #f9fafb; }
+    .defaultvalue-disabled td { color: #9ca3af; }
+    .defaultvalue-empty { color: #6b7280; }
+    code { background: #f3f4f6; padding: 1px 6px; border-radius: 4px; font-size: 0.8em; }
+</style>

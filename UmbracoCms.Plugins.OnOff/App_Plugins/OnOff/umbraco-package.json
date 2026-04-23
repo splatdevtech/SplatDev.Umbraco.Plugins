@@ -1,0 +1,43 @@
+{
+  "$schema": "../../umbraco-package-schema.json",
+  "name": "OnOff",
+  "version": "2.0.0",
+  "extensions": [
+    {
+      "type": "dashboard",
+      "alias": "UmbracoCms.OnOff.Dashboard",
+      "name": "Feature Toggles Dashboard",
+      "element": "/App_Plugins/OnOff/dist/onoff-dashboard.element.js",
+      "elementName": "onoff-dashboard",
+      "weight": 100,
+      "meta": {
+        "label": "Feature Toggles",
+        "pathname": "feature-toggles"
+      },
+      "conditions": [
+        {
+          "alias": "Umb.Condition.SectionAlias",
+          "match": "Umb.Section.Settings"
+        }
+      ]
+    },
+    {
+      "type": "localization",
+      "alias": "UmbracoCms.OnOff.Localization.En",
+      "name": "OnOff — English",
+      "meta": {
+        "culture": "en",
+        "localizations": {
+          "section": {
+            "onoff_heading": "Feature Toggles",
+            "onoff_description": "Enable, disable and schedule site features",
+            "onoff_features": "Features",
+            "onoff_enabled": "Enabled",
+            "onoff_disabled": "Disabled",
+            "onoff_scheduled": "Scheduled"
+          }
+        }
+      }
+    }
+  ]
+}

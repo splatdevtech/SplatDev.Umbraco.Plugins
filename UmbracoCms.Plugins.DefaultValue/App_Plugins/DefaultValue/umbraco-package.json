@@ -1,0 +1,42 @@
+{
+  "$schema": "../../umbraco-package-schema.json",
+  "name": "DefaultValue",
+  "version": "2.0.0",
+  "extensions": [
+    {
+      "type": "dashboard",
+      "alias": "UmbracoCms.DefaultValue.Dashboard",
+      "name": "Default Values Dashboard",
+      "element": "/App_Plugins/DefaultValue/dist/defaultvalue-dashboard.element.js",
+      "elementName": "defaultvalue-dashboard",
+      "weight": 100,
+      "meta": {
+        "label": "Default Values",
+        "pathname": "default-values"
+      },
+      "conditions": [
+        {
+          "alias": "Umb.Condition.SectionAlias",
+          "match": "Umb.Section.Settings"
+        }
+      ]
+    },
+    {
+      "type": "localization",
+      "alias": "UmbracoCms.DefaultValue.Localization.En",
+      "name": "DefaultValue — English",
+      "meta": {
+        "culture": "en",
+        "localizations": {
+          "section": {
+            "defaultvalue_heading": "Default Values",
+            "defaultvalue_description": "Configure default property values per document type",
+            "defaultvalue_rules": "Rules",
+            "defaultvalue_doctype": "Document Type",
+            "defaultvalue_property": "Property"
+          }
+        }
+      }
+    }
+  ]
+}
