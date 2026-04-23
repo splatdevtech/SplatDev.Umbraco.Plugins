@@ -1,4 +1,4 @@
-﻿namespace SplatDev.Payments.MercadoPago.Requests
+namespace SplatDev.Payments.MercadoPago.Requests
 {
     using global::MercadoPago.Client;
     using global::MercadoPago.Client.PaymentMethod;
@@ -35,14 +35,14 @@
                 RetryStrategy = new DefaultRetryStrategy(5)
             };
             MercadoPagoConfig.AccessToken = ACCESS_TOKEN;
-            client = new RestClient(Constants.APIv1);
-            client.UseNewtonsoftJson(Constants.API_JSON_SETTINGS);
+            var options = new RestClientOptions(Constants.APIv1);
+            client = new RestClient(options, configureSerialization: s => s.UseNewtonsoftJson(Constants.API_JSON_SETTINGS));
             client.AddDefaultHeader("Authorization", $"Bearer {ACCESS_TOKEN}");
         }
 
         public async Task<Identification[]> GetIdentificationTypesAsync()
         {
-            var request = new RestRequest("identification_types", DataFormat.Json);
+            var request = new RestRequest("identification_types");
             var response = await client.GetAsync<Identification[]>(request);
             return response;
         }
@@ -66,12 +66,12 @@
             RestRequest request;
             var url = "payments";
             if (string.IsNullOrEmpty(sort) && string.IsNullOrEmpty(criteria))
-                request = new RestRequest(url, DataFormat.Json);
+                request = new RestRequest(url);
             else
             {
                 url += $"/search?sort={sort}&criteria={criteria}";
                 if (!string.IsNullOrEmpty(externalReference)) url += $"&external_reference={externalReference}";
-                request = new RestRequest(url, DataFormat.Json);
+                request = new RestRequest(url);
             }
 
             var response = await client.GetAsync<FindPaymentsResults>(request);
@@ -82,7 +82,7 @@
         {
             RestRequest request;
             var url = $"payments/{paymentId}";
-            request = new RestRequest(url, DataFormat.Json);
+            request = new RestRequest(url);
 
             var response = await client.GetAsync<Result>(request);
             return response;
@@ -90,12 +90,10 @@
 
         public async Task<Payment> UpdatePaymentAsync(long paymentId, Payment payment)
         {
-            var request = new RestRequest($"payments/{paymentId}")
-            {
-#pragma warning disable CS0618 // Type or member is obsolete
-                Body = new RequestBody("application/json", null, JsonConvert.SerializeObject(payment, Constants.API_JSON_SETTINGS))
-#pragma warning restore CS0618 // Type or member is obsolete
-            };
+            var request = new RestRequest($"payments/{paymentId}");
+            request.AddStringBody(
+                JsonConvert.SerializeObject(payment, Constants.API_JSON_SETTINGS),
+                ContentType.Json);
 
             var response = client.Put(request);
             var json = JsonConvert.DeserializeObject<Payment>(response.Content, Constants.API_JSON_SETTINGS);
@@ -112,7 +110,7 @@
 
         public async Task<FindPaymentsResults> SearchPaymentMethodAsync(string bins, string processingMode = "aggregator", string marketplace = "NONE", string status = "active")
         {
-            var request = new RestRequest("/payment_methods/search", DataFormat.Json);
+            var request = new RestRequest("/payment_methods/search");
             request.AddQueryParameter("marketplace", marketplace);
             request.AddQueryParameter("status", status);
             request.AddQueryParameter("processing_mode", processingMode);

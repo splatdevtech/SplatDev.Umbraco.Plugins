@@ -6,7 +6,7 @@
     [Table("IpBlacklist")]
     public class IpBlacklist
     {
-        [Key, Index]
+        [Key]
         public int Id { get; set; }
 
         public DateTime BannedOn { get; set; }

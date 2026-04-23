@@ -6,7 +6,7 @@
     [Table("IpHistory")]
     public class IpHistory
     {
-        [Key, Index]
+        [Key]
         public int Id { get; set; }
 
         public DateTime OccurredOn { get; set; }

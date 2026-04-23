@@ -6,7 +6,7 @@
     [Table("IpWhitelist")]
     public class IpWhitelist
     {
-        [Key, Index]
+        [Key]
         public int Id { get; set; }
         public string AddedBy { get; set; }
         public DateTime AddedOn { get; set; }

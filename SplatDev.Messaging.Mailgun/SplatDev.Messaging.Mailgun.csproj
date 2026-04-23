@@ -12,7 +12,7 @@
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="mailgun.net" Version="2.0.2" />
+    <PackageReference Include="mailgun_csharp" Version="0.9.0" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="../SplatDev.Messaging/SplatDev.Messaging.csproj" />

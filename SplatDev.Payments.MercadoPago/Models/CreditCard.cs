@@ -4,7 +4,7 @@
     using System;
 
     using SplatDev.Payments.Interfaces;
-    public struct CreditCard : ICard, IPaymentMethod
+    public class CreditCard : ICard, IPaymentMethod
     {
         
         public string Id { get; set; }

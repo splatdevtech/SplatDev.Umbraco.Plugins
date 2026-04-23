@@ -12,6 +12,9 @@
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
   <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="../SplatDev.Messaging/SplatDev.Messaging.csproj" />
   </ItemGroup>
 </Project>

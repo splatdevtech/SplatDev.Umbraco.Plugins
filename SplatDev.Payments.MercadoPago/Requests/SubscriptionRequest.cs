@@ -1,4 +1,4 @@
-﻿namespace SplatDev.Payments.MercadoPago.Requests
+namespace SplatDev.Payments.MercadoPago.Requests
 {
 
     using Newtonsoft.Json;
@@ -24,21 +24,17 @@
         {
             ACCESS_TOKEN = accessToken;
             PUBLIC_KEY = publicKey;
-            client = new RestClient(Constants.API);
-            client.UseNewtonsoftJson(Constants.API_JSON_SETTINGS);
+            var options = new RestClientOptions(Constants.API);
+            client = new RestClient(options, configureSerialization: s => s.UseNewtonsoftJson(Constants.API_JSON_SETTINGS));
             client.AddDefaultHeader("Authorization", $"Bearer {ACCESS_TOKEN}");
         }
 
         public async Task<Subscription> CreateSubscriptionAsync(ISubscription subscription)
         {
-            var request = new RestRequest($"preapproval")
-            {
-#pragma warning disable CS0618 // Type or member is obsolete
-                Body = new RequestBody("application/json", null, JsonConvert.SerializeObject(subscription, Constants.API_JSON_SETTINGS))
-#pragma warning restore CS0618 // Type or member is obsolete
-            };
-            //var response = await client.PostAsync<Subscription>(request);
-            //return response;
+            var request = new RestRequest($"preapproval");
+            request.AddStringBody(
+                JsonConvert.SerializeObject(subscription, Constants.API_JSON_SETTINGS),
+                ContentType.Json);
 
             var response = client.Post(request);
             await Task.FromResult(0);

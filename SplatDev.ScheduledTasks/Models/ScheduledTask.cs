@@ -10,7 +10,7 @@
     {
         public const string CLASS_NAME = "Scheduled Task";
 
-        [Key, Index]
+        [Key]
         public int Id { get; set; }
 
         [Display(Name = "Active")]

@@ -1,4 +1,4 @@
-﻿namespace SplatDev.Payments.MercadoPago.Requests
+namespace SplatDev.Payments.MercadoPago.Requests
 {
     using global::MercadoPago.Client;
     using global::MercadoPago.Client.Common;
@@ -11,7 +11,6 @@
     using RestSharp.Serializers.NewtonsoftJson;
 
     using System.Threading.Tasks;
-    using System.Web;
 
     using SplatDev.Payments.Interfaces;
 
@@ -31,13 +30,13 @@
                 AccessToken = ACCESS_TOKEN,
                 RetryStrategy = new DefaultRetryStrategy(5)
             };
-            REFERRER = HttpUtility.UrlEncode(referrer);
+            REFERRER = Uri.EscapeDataString(referrer);
         }
 
         public async Task<Models.CreditCard> GenerateCardTokenAsync(Models.CreditCard model, string locale = "pt-BR")
         {
-            var client = new RestClient(Constants.APIv1);
-            client.UseNewtonsoftJson(Constants.API_JSON_SETTINGS);
+            var options = new RestClientOptions(Constants.APIv1);
+            var client = new RestClient(options, configureSerialization: s => s.UseNewtonsoftJson(Constants.API_JSON_SETTINGS));
             client.AddDefaultHeader("X-Product-Id", "BTR2N61O1F60OR8RLSGG");
             client.AddDefaultHeader("Authorization", $"Bearer {ACCESS_TOKEN}");
             var request = new RestRequest($"card_tokens?public_key={PUBLIC_KEY}&locale={locale}&js_version=2.0.0&referer={REFERRER}");
@@ -112,7 +111,7 @@
         public Task<bool> ConfirmTransationAsync(string transaction, string referenceCode, string receiver, string token)
         {
             throw new System.NotImplementedException();
-        } 
+        }
         #endregion
     }
 }

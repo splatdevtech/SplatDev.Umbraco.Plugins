@@ -10,9 +10,6 @@
     using System.Linq;
     using System.Reflection;
     using System.Text;
-
-    using Umbraco.Core;
-    using Umbraco.Core.Persistence;
     public static class DatabaseHelper
     {
         public static bool ColumnExists(this Database db, ITable table, PropertyInfo column)
@@ -50,7 +47,7 @@
             try
             {
                 if (!string.IsNullOrEmpty(assemblyName)) assembly = Assembly.Load(assemblyName);
-                classes = assembly.GetTypes().Where(t => t.IsClass && t.Inherits<ITable>());
+                classes = assembly.GetTypes().Where(t => t.IsClass && typeof(ITable).IsAssignableFrom(t));
             }
             catch (ReflectionTypeLoadException ex)
             {

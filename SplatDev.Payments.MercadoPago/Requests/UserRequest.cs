@@ -1,4 +1,4 @@
-﻿namespace SplatDev.Payments.MercadoPago.Requests
+namespace SplatDev.Payments.MercadoPago.Requests
 {
     using global::MercadoPago.Config;
 
@@ -18,19 +18,15 @@
         {
             ACCESS_TOKEN = accessToken;
             MercadoPagoConfig.AccessToken = ACCESS_TOKEN;
-            client = new RestClient(Constants.APIv1);
-            client.UseNewtonsoftJson(Constants.API_JSON_SETTINGS);
+            var options = new RestClientOptions(Constants.APIv1);
+            client = new RestClient(options, configureSerialization: s => s.UseNewtonsoftJson(Constants.API_JSON_SETTINGS));
             client.AddDefaultHeader("Authorization", $"Bearer {ACCESS_TOKEN}");
         }
 
         public async Task<User> CreateTestUser(string siteId = "MLB")
         {
-            var request = new RestRequest("/users/test_user")
-            {
-#pragma warning disable CS0618 // Type or member is obsolete
-                Body = new RequestBody("application/json", null, new { site_id = siteId })
-#pragma warning restore CS0618 // Type or member is obsolete
-            };
+            var request = new RestRequest("/users/test_user");
+            request.AddJsonBody(new { site_id = siteId });
             return await client.PostAsync<User>(request);
         }
     }

@@ -9,12 +9,12 @@
     using SplatDev.UrlShortening.Models;
 
     using System;
+    using System.Linq;
+    using System.Security.Cryptography;
     using System.Text;
     using System.Text.RegularExpressions;
     using System.Threading;
     using System.Threading.Tasks;
-    using System.Web;
-    using System.Web.Security;
 
     public static class Tools
     {
@@ -30,7 +30,7 @@
         public static async Task<CheckPhishResponse> CheckPhish(string apiKey, string url, bool insights = false)
         {
             var client = new RestClient(Constants.CHECK_PHISH_URL);
-            var request = new RestRequest("api/neo/scan", DataFormat.Json);
+            var request = new RestRequest("api/neo/scan");
             request.AddJsonBody(new { apiKey, urlInfo = new { url } });
             await Task.FromResult(0);
             var response = client.Post(request);
@@ -46,7 +46,7 @@
             };
 
             Thread.Sleep(5 * 1000);
-            var requestStatus = new RestRequest("api/neo/scan/status", DataFormat.Json);
+            var requestStatus = new RestRequest("api/neo/scan/status");
             requestStatus.AddJsonBody(new { apiKey, job.jobID, insights });
             var responseStatus = client.Post(requestStatus);
 
@@ -66,7 +66,7 @@
         public static async Task<CheckPhishResponse> CheckPhishPendingJob(string apiKey, string jobId, bool insights = false)
         {
             var client = new RestClient(Constants.CHECK_PHISH_URL);
-            var requestStatus = new RestRequest("api/neo/scan/status", DataFormat.Json);
+            var requestStatus = new RestRequest("api/neo/scan/status");
             requestStatus.AddJsonBody(new { apiKey, jobID = jobId, insights });
             var responseStatus = client.Post(requestStatus);
             await Task.FromResult(0);
@@ -137,14 +137,15 @@
                     ThreatEntries = entries
                 }
             };
-            var client = new RestClient(Constants.GOOGLE_SAFE_BROWSING);
-            var request = new RestRequest($"v4/threatMatches:find", DataFormat.Json)
+            var jsonSettings = new JsonSerializerSettings
             {
-#pragma warning disable CS0618 // Type or member is obsolete
-                Body = new RequestBody("application/json", "", JsonConvert.SerializeObject(body, Resolvers.API_JSON_SETTINGS_LOWERCASE))
+                ContractResolver = new Newtonsoft.Json.Serialization.CamelCasePropertyNamesContractResolver(),
+                NullValueHandling = NullValueHandling.Ignore
             };
-            request.AddQueryParameter("key", apiKey, false);
-#pragma warning restore CS0618 // Type or member is obsolete
+            var client = new RestClient(Constants.GOOGLE_SAFE_BROWSING);
+            var request = new RestRequest($"v4/threatMatches:find");
+            request.AddStringBody(JsonConvert.SerializeObject(body, jsonSettings), ContentType.Json);
+            request.AddQueryParameter("key", apiKey);
             var response = await client.PostAsync<GoogleSecuritySafebrowsingV4FindThreatMatchesResponse>(request);
             return response;
         }
@@ -158,7 +159,7 @@
         public static async Task<IpQualityScoreResponse> IpQualityScore(string apiKey, string url)
         {
             var client = new RestClient(Constants.IP_QUALITY_SCORE);
-            var request = new RestRequest($"json/url/{apiKey}/{HttpUtility.UrlEncode(url)}");
+            var request = new RestRequest($"json/url/{apiKey}/{Uri.EscapeDataString(url)}");
             await Task.FromResult(0);
             var response = await client.PostAsync<IpQualityScoreResponse>(request);
             return response;
@@ -170,8 +171,9 @@
         /// <returns></returns>
         public static async Task<string> GeneratePasswordAsync()
         {
-            // Generate a password which we'll email the member
-            var password = Membership.GeneratePassword(10, 1);
+            const string chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%";
+            var bytes = RandomNumberGenerator.GetBytes(10);
+            var password = new string(bytes.Select(b => chars[b % chars.Length]).ToArray());
             await Task.FromResult(0);
             return _regex.Replace(password, "9");
         }
@@ -186,7 +188,7 @@
         {
             string saltedPassword = password + salt;
             byte[] data = Encoding.ASCII.GetBytes(saltedPassword);
-            data = new System.Security.Cryptography.SHA256Managed().ComputeHash(data);
+            data = SHA256.HashData(data);
             await Task.FromResult(0);
             return Encoding.ASCII.GetString(data);
         }

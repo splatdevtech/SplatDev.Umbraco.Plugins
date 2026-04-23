@@ -2,7 +2,7 @@
 {
 
     using System;
-    public struct PreApprovalPlan
+    public class PreApprovalPlan
     {
         
         public string Id { get; set; }

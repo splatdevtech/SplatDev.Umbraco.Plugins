@@ -12,8 +12,10 @@
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="MercadoPago.net" Version="3.0.0" />
+    <PackageReference Include="mercadopago-sdk" Version="2.11.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="RestSharp" Version="112.1.0" />
+    <PackageReference Include="RestSharp.Serializers.NewtonsoftJson" Version="112.1.0" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="../SplatDev.Payments/SplatDev.Payments.csproj" />
