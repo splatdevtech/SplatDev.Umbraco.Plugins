@@ -1,0 +1,94 @@
+@using UmbracoCms.Plugins.NewsTicker.Models
+@model List<NewsTickerItem>
+
+@{
+    var settings = ViewData["Settings"] as NewsTickerSettings ?? new NewsTickerSettings();
+    var tickerId = "news-ticker-" + Guid.NewGuid().ToString("N")[..8];
+    var durationSeconds = Math.Max(5, 100 - settings.Speed / 2);
+}
+
+@if (Model != null && Model.Count > 0)
+{
+    <div class="news-ticker-wrapper" id="@tickerId"
+         style="background-color: @settings.BackgroundColor; color: @settings.TextColor;">
+        <div class="news-ticker-label">NEWS</div>
+        <div class="news-ticker-viewport">
+            <div class="news-ticker-track news-ticker-@settings.Direction"
+                 style="animation-duration: @durationSeconds@(Model.Count)s;">
+                @foreach (var item in Model)
+                {
+                    <span class="news-ticker-item">
+                        @if (!string.IsNullOrWhiteSpace(item.Url))
+                        {
+                            <a href="@item.Url" style="color: inherit; text-decoration: underline;">@item.Text</a>
+                        }
+                        else
+                        {
+                            @item.Text
+                        }
+                        <span class="news-ticker-separator">&#9679;</span>
+                    </span>
+                }
+            </div>
+        </div>
+    </div>
+
+    <style>
+        #@tickerId {
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            height: 2.5rem;
+            font-size: 0.875rem;
+            font-family: sans-serif;
+        }
+
+        #@tickerId .news-ticker-label {
+            flex-shrink: 0;
+            padding: 0 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            border-right: 2px solid rgba(255,255,255,0.3);
+            margin-right: 0.5rem;
+        }
+
+        #@tickerId .news-ticker-viewport {
+            flex: 1;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+        #@tickerId .news-ticker-track {
+            display: inline-block;
+            white-space: nowrap;
+        }
+
+        #@tickerId .news-ticker-left {
+            animation: ticker-scroll-left linear infinite;
+        }
+
+        #@tickerId .news-ticker-right {
+            animation: ticker-scroll-right linear infinite;
+        }
+
+        #@tickerId .news-ticker-item {
+            display: inline-block;
+            padding: 0 1.5rem;
+        }
+
+        #@tickerId .news-ticker-separator {
+            margin-left: 1.5rem;
+            opacity: 0.5;
+        }
+
+        @@keyframes ticker-scroll-left {
+            from { transform: translateX(0); }
+            to   { transform: translateX(-50%); }
+        }
+
+        @@keyframes ticker-scroll-right {
+            from { transform: translateX(-50%); }
+            to   { transform: translateX(0); }
+        }
+    </style>
+}

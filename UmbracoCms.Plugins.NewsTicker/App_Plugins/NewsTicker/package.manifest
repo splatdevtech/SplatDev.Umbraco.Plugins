@@ -1,0 +1,15 @@
+{
+  "javascript": ["/App_Plugins/NewsTicker/angular/news-ticker.controller.js"],
+  "css": [],
+  "propertyEditors": [],
+  "gridEditors": [],
+  "dashboards": [
+    {
+      "alias": "NewsTicker.Dashboard",
+      "view": "/App_Plugins/NewsTicker/angular/news-ticker.html",
+      "sections": ["settings"],
+      "tab": "News Ticker",
+      "access": [{"grant": "admin"}]
+    }
+  ]
+}

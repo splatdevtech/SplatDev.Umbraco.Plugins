@@ -1,0 +1,25 @@
+{
+  "$schema": "../../umbraco-package-schema.json",
+  "name": "Newsletters",
+  "version": "1.0.0",
+  "extensions": [
+    {
+      "type": "dashboard",
+      "alias": "UmbracoCms.Newsletters.Dashboard",
+      "name": "Newsletters Dashboard",
+      "element": "/App_Plugins/Newsletters/dist/newsletters-dashboard.element.js",
+      "elementName": "newsletters-dashboard",
+      "weight": 100,
+      "meta": {
+        "label": "Newsletters",
+        "pathname": "newsletters"
+      },
+      "conditions": [
+        {
+          "alias": "Umb.Condition.SectionAlias",
+          "match": "Umb.Section.Settings"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,169 @@
+@using UmbracoCms.Plugins.Tweets.Models
+@model List<CachedTweet>
+
+@{
+    var settings = ViewData["Settings"] as TweetSettings ?? new TweetSettings();
+}
+
+<div class="tweets-feed">
+    @if (Model == null || !Model.Any())
+    {
+        <div class="tweets-empty">
+            <p>No tweets to display. Configure a Bearer Token and Twitter handle, then refresh the cache.</p>
+        </div>
+    }
+    else
+    {
+        @foreach (var tweet in Model)
+        {
+            <article class="tweet-card">
+                <div class="tweet-card__header">
+                    @if (!string.IsNullOrWhiteSpace(tweet.AuthorAvatarUrl))
+                    {
+                        <img src="@tweet.AuthorAvatarUrl"
+                             alt="@tweet.AuthorName avatar"
+                             class="tweet-card__avatar"
+                             loading="lazy" />
+                    }
+                    else
+                    {
+                        <div class="tweet-card__avatar tweet-card__avatar--placeholder">
+                            @tweet.AuthorHandle[0..1].ToUpper()
+                        </div>
+                    }
+                    <div class="tweet-card__author">
+                        <div class="tweet-card__author-name">@tweet.AuthorName</div>
+                        <div class="tweet-card__author-handle">@@@tweet.AuthorHandle</div>
+                    </div>
+                    <a href="@tweet.TweetUrl" target="_blank" rel="noopener noreferrer"
+                       class="tweet-card__x-icon" aria-label="View on X (Twitter)">
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+                            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.743l7.73-8.835L1.254 2.25H8.08l4.26 5.632 5.904-5.632zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                        </svg>
+                    </a>
+                </div>
+                <div class="tweet-card__content">@tweet.Content</div>
+                <div class="tweet-card__footer">
+                    <span class="tweet-card__stat" title="Likes">
+                        <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor">
+                            <path d="M12 21.638h-.014C9.403 21.59 1.95 14.856 1.95 8.478c0-3.064 2.525-5.754 5.403-5.754 2.29 0 3.83 1.58 4.646 2.73.814-1.148 2.354-2.73 4.645-2.73 2.88 0 5.404 2.69 5.404 5.755 0 6.376-7.454 13.11-10.037 13.157H12z"/>
+                        </svg>
+                        @tweet.LikeCount
+                    </span>
+                    <span class="tweet-card__stat" title="Retweets">
+                        <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor">
+                            <path d="M23.77 15.67c-.292-.293-.767-.293-1.06 0l-2.22 2.22V7.65c0-2.068-1.683-3.75-3.75-3.75h-5.85c-.414 0-.75.336-.75.75s.336.75.75.75h5.85c1.24 0 2.25 1.01 2.25 2.25v10.24l-2.22-2.22c-.293-.293-.768-.293-1.06 0s-.294.768 0 1.06l3.5 3.5c.145.147.337.22.53.22s.383-.072.53-.22l3.5-3.5c.294-.292.294-.767 0-1.06zm-10.66 3.28H7.26c-1.24 0-2.25-1.01-2.25-2.25V6.46l2.22 2.22c.148.147.34.22.532.22s.384-.073.53-.22c.293-.293.293-.768 0-1.06l-3.5-3.5c-.293-.294-.768-.294-1.06 0l-3.5 3.5c-.294.292-.294.767 0 1.06s.767.293 1.06 0l2.22-2.22V16.7c0 2.068 1.683 3.75 3.75 3.75h5.85c.414 0 .75-.336.75-.75s-.337-.75-.75-.75z"/>
+                        </svg>
+                        @tweet.RetweetCount
+                    </span>
+                    <time class="tweet-card__time"
+                          datetime="@tweet.PublishedAt.ToString("o")">
+                        @tweet.PublishedAt.ToString("MMM d, yyyy")
+                    </time>
+                </div>
+            </article>
+        }
+    }
+</div>
+
+<style>
+    .tweets-feed {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .tweets-empty {
+        padding: 32px;
+        text-align: center;
+        color: #6b7280;
+        background: #f9fafb;
+        border-radius: 8px;
+    }
+
+    .tweet-card {
+        border: 1px solid #e5e7eb;
+        border-radius: 12px;
+        padding: 16px;
+        background: #fff;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    .tweet-card__header {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 12px;
+    }
+
+    .tweet-card__avatar {
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+        object-fit: cover;
+        flex-shrink: 0;
+    }
+
+    .tweet-card__avatar--placeholder {
+        background: #1d9bf0;
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        font-size: 1.1rem;
+    }
+
+    .tweet-card__author {
+        flex: 1;
+    }
+
+    .tweet-card__author-name {
+        font-weight: 700;
+        font-size: 0.9rem;
+        color: #0f172a;
+    }
+
+    .tweet-card__author-handle {
+        font-size: 0.8rem;
+        color: #6b7280;
+    }
+
+    .tweet-card__x-icon {
+        color: #6b7280;
+        display: flex;
+        align-items: center;
+    }
+
+    .tweet-card__x-icon:hover {
+        color: #0f172a;
+    }
+
+    .tweet-card__content {
+        font-size: 0.95rem;
+        line-height: 1.6;
+        color: #0f172a;
+        margin-bottom: 12px;
+        white-space: pre-wrap;
+        word-break: break-word;
+    }
+
+    .tweet-card__footer {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        font-size: 0.8rem;
+        color: #6b7280;
+    }
+
+    .tweet-card__stat {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+    }
+
+    .tweet-card__time {
+        margin-left: auto;
+        font-size: 0.75rem;
+    }
+</style>

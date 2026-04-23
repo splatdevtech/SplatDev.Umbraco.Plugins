@@ -1,0 +1,15 @@
+{
+  "javascript": ["/App_Plugins/Tweets/angular/tweets.controller.js"],
+  "css": [],
+  "propertyEditors": [],
+  "gridEditors": [],
+  "dashboards": [
+    {
+      "alias": "Tweets.Dashboard",
+      "view": "/App_Plugins/Tweets/angular/tweets.html",
+      "sections": ["settings"],
+      "tab": "Tweets",
+      "access": [{"grant": "admin"}]
+    }
+  ]
+}

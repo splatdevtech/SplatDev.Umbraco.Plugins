@@ -1,0 +1,15 @@
+{
+  "javascript": ["/App_Plugins/Newsletters/angular/newsletters.controller.js"],
+  "css": [],
+  "propertyEditors": [],
+  "gridEditors": [],
+  "dashboards": [
+    {
+      "alias": "Newsletters.Dashboard",
+      "view": "/App_Plugins/Newsletters/angular/newsletters.html",
+      "sections": ["settings"],
+      "tab": "Newsletters",
+      "access": [{"grant": "admin"}]
+    }
+  ]
+}

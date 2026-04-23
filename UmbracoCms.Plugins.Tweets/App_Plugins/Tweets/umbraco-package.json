@@ -1,0 +1,25 @@
+{
+  "$schema": "../../umbraco-package-schema.json",
+  "name": "Tweets",
+  "version": "1.0.0",
+  "extensions": [
+    {
+      "type": "dashboard",
+      "alias": "UmbracoCms.Tweets.Dashboard",
+      "name": "Tweets Dashboard",
+      "element": "/App_Plugins/Tweets/dist/tweets-dashboard.element.js",
+      "elementName": "tweets-dashboard",
+      "weight": 100,
+      "meta": {
+        "label": "Tweets",
+        "pathname": "tweets"
+      },
+      "conditions": [
+        {
+          "alias": "Umb.Condition.SectionAlias",
+          "match": "Umb.Section.Settings"
+        }
+      ]
+    }
+  ]
+}

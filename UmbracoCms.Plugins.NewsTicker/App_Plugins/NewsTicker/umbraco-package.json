@@ -1,0 +1,25 @@
+{
+  "$schema": "../../umbraco-package-schema.json",
+  "name": "News Ticker",
+  "version": "1.0.0",
+  "extensions": [
+    {
+      "type": "dashboard",
+      "alias": "UmbracoCms.NewsTicker.Dashboard",
+      "name": "News Ticker Dashboard",
+      "element": "/App_Plugins/NewsTicker/dist/news-ticker-dashboard.element.js",
+      "elementName": "news-ticker-dashboard",
+      "weight": 100,
+      "meta": {
+        "label": "News Ticker",
+        "pathname": "news-ticker"
+      },
+      "conditions": [
+        {
+          "alias": "Umb.Condition.SectionAlias",
+          "match": "Umb.Section.Settings"
+        }
+      ]
+    }
+  ]
+}

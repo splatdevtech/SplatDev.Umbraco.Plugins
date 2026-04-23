@@ -1,0 +1,148 @@
+@{
+    var buttonLabel = ViewData["ButtonLabel"] as string ?? "Subscribe";
+    var placeholderText = ViewData["PlaceholderText"] as string ?? "Enter your email address";
+    var formId = "newsletter-form-" + Guid.NewGuid().ToString("N")[..8];
+}
+
+<div class="newsletter-subscribe" id="@formId">
+    <form class="newsletter-form" onsubmit="return false;">
+        <div class="newsletter-form__row">
+            <input
+                type="text"
+                class="newsletter-form__input"
+                placeholder="First name"
+                id="@(formId)-first-name"
+                autocomplete="given-name" />
+            <input
+                type="text"
+                class="newsletter-form__input"
+                placeholder="Last name"
+                id="@(formId)-last-name"
+                autocomplete="family-name" />
+        </div>
+        <div class="newsletter-form__row">
+            <input
+                type="email"
+                class="newsletter-form__input newsletter-form__input--email"
+                placeholder="@placeholderText"
+                id="@(formId)-email"
+                required
+                autocomplete="email" />
+            <button type="submit" class="newsletter-form__button" id="@(formId)-btn">
+                @buttonLabel
+            </button>
+        </div>
+        <div class="newsletter-form__message" id="@(formId)-msg" style="display:none;"></div>
+    </form>
+</div>
+
+<style>
+    #@formId .newsletter-form__row {
+        display: flex;
+        gap: 8px;
+        margin-bottom: 8px;
+    }
+
+    #@formId .newsletter-form__input {
+        flex: 1;
+        padding: 10px 14px;
+        border: 1px solid #d1d5db;
+        border-radius: 6px;
+        font-size: 0.9rem;
+        outline: none;
+        transition: border-color 0.15s;
+    }
+
+    #@formId .newsletter-form__input:focus {
+        border-color: #2563eb;
+        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    }
+
+    #@formId .newsletter-form__input--email {
+        flex: 2;
+    }
+
+    #@formId .newsletter-form__button {
+        padding: 10px 20px;
+        background: #2563eb;
+        color: #fff;
+        border: none;
+        border-radius: 6px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background 0.15s;
+        white-space: nowrap;
+    }
+
+    #@formId .newsletter-form__button:hover {
+        background: #1d4ed8;
+    }
+
+    #@formId .newsletter-form__button:disabled {
+        background: #9ca3af;
+        cursor: not-allowed;
+    }
+
+    #@formId .newsletter-form__message {
+        margin-top: 8px;
+        padding: 8px 12px;
+        border-radius: 6px;
+        font-size: 0.875rem;
+    }
+
+    #@formId .newsletter-form__message.success {
+        background: #dcfce7;
+        color: #166534;
+    }
+
+    #@formId .newsletter-form__message.error {
+        background: #fee2e2;
+        color: #991b1b;
+    }
+</style>
+
+<script>
+(function () {
+    var form = document.querySelector('#@formId .newsletter-form');
+    var msgEl = document.getElementById('@(formId)-msg');
+    var btn = document.getElementById('@(formId)-btn');
+
+    if (!form) return;
+
+    form.addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        var email = document.getElementById('@(formId)-email').value;
+        var firstName = document.getElementById('@(formId)-first-name').value;
+        var lastName = document.getElementById('@(formId)-last-name').value;
+
+        if (!email) return;
+
+        btn.disabled = true;
+        btn.textContent = 'Subscribing…';
+
+        fetch('/umbraco/api/newsletters/subscribe', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email: email, firstName: firstName, lastName: lastName })
+        })
+        .then(function (res) { return res.json(); })
+        .then(function (data) {
+            msgEl.style.display = 'block';
+            msgEl.textContent = data.message || 'Thank you!';
+            msgEl.className = 'newsletter-form__message ' + (data.success ? 'success' : 'error');
+            if (data.success) form.reset();
+        })
+        .catch(function () {
+            msgEl.style.display = 'block';
+            msgEl.textContent = 'An error occurred. Please try again.';
+            msgEl.className = 'newsletter-form__message error';
+        })
+        .finally(function () {
+            btn.disabled = false;
+            btn.textContent = '@buttonLabel';
+        });
+    });
+})();
+</script>
