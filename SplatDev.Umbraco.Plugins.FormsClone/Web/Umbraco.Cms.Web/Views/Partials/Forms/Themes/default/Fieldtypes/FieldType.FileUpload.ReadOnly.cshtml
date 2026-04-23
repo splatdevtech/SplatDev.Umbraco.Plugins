@@ -1,0 +1,13 @@
+@using Umbraco.Forms.Core.Providers.FieldTypes
+@model Umbraco.Forms.Web.Models.FieldViewModel
+
+@{
+    @foreach (string filePath in Model.Values)
+    {
+        var fileName = filePath.Split(new[] { FileUpload.EncryptedFilePathAndFileNameSeparator }, StringSplitOptions.None).Last();
+        <div>@fileName</div>
+    }
+}
+
+
+

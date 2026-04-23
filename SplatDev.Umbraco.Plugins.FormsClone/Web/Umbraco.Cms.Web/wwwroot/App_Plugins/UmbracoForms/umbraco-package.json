@@ -1,0 +1,13 @@
+{
+  "id": "Umbraco.Forms",
+  "name": "Umbraco Forms",
+  "version": "15.1.1",
+  "extensions": [
+    {
+      "name": "Umbraco Forms EntryPoint",
+      "alias": "Umb.Forms.EntryPoint",
+      "type": "backofficeEntryPoint",
+      "js": "/App_Plugins/UmbracoForms/umbraco-forms.js"
+    }
+  ]
+}

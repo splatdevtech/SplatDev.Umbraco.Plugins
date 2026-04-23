@@ -1,0 +1,303 @@
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@{
+    Layout = null;
+    var root        = Model.AncestorsOrSelf().FirstOrDefault(n => n.ContentType.Alias == "portfolioRoot");
+    var ownerName   = root?.Value<string>("yourName") ?? root?.Name ?? "Portfolio";
+    var accentColor = root?.Value<string>("accentColor") ?? "#6c63ff";
+
+    var projectTitle = Model.Value<string>("projectTitle") ?? Model.Name;
+    var client       = Model.Value<string>("client") ?? string.Empty;
+    var year         = Model.Value<int>("year");
+    var category     = Model.Value<string>("category") ?? string.Empty;
+    var status       = Model.Value<string>("status") ?? string.Empty;
+    var description  = Model.Value<Umbraco.Cms.Core.Strings.IHtmlEncodedString>("description");
+    var challenge    = Model.Value<string>("challenge") ?? string.Empty;
+    var solution     = Model.Value<string>("solution") ?? string.Empty;
+    var featuredImage = Model.Value<Umbraco.Cms.Core.Models.MediaWithCrops>("featuredImage");
+    var liveUrl      = Model.Value<Umbraco.Cms.Core.Models.Link>("liveUrl");
+    var sourceUrl    = Model.Value<Umbraco.Cms.Core.Models.Link>("sourceUrl");
+
+    var listing = Model.Parent;
+    var siblings = listing?.Children
+        .Where(c => c.ContentType.Alias == "project" && c.Id != Model.Id)
+        .OrderByDescending(c => c.Value<int>("year"))
+        .ToList() ?? [];
+
+    var currentIndex = listing?.Children
+        .Where(c => c.ContentType.Alias == "project")
+        .OrderByDescending(c => c.Value<int>("year"))
+        .ToList()
+        .FindIndex(c => c.Id == Model.Id) ?? -1;
+
+    var prevProject = currentIndex > 0
+        ? listing?.Children.Where(c => c.ContentType.Alias == "project")
+            .OrderByDescending(c => c.Value<int>("year"))
+            .ElementAtOrDefault(currentIndex - 1)
+        : null;
+
+    var nextProject = listing?.Children.Where(c => c.ContentType.Alias == "project")
+        .OrderByDescending(c => c.Value<int>("year"))
+        .ElementAtOrDefault(currentIndex + 1);
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@projectTitle | @ownerName</title>
+    <style>:root { --color-accent: @accentColor; }</style>
+    <link rel="stylesheet" href="/css/portfolio-theme.css" />
+</head>
+<body class="portfolio-layout" data-theme="light">
+
+    <header class="portfolio-header">
+        <div class="container portfolio-header__inner">
+            <a class="portfolio-header__logo" href="@(root?.Url() ?? "/")">@ownerName</a>
+            <nav class="portfolio-nav" aria-label="Breadcrumb">
+                <ul class="portfolio-nav__list">
+                    <li><a href="@(root?.Url() ?? "/")">Home</a></li>
+                    @if (listing != null)
+                    {
+                        <li><a href="@listing.Url()">Work</a></li>
+                    }
+                    <li><span aria-current="page">@projectTitle</span></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+
+        <!-- ── Featured Image ─────────────────────────────────────────── -->
+        @if (featuredImage != null)
+        {
+            <div class="project-hero">
+                <img src="@featuredImage.MediaUrl()"
+                     alt="@projectTitle featured image"
+                     class="project-hero__image"
+                     loading="eager" />
+            </div>
+        }
+
+        <!-- ── Project Header ─────────────────────────────────────────── -->
+        <section class="project-header section">
+            <div class="container project-header__inner">
+                <div class="project-header__text">
+                    <h1 class="project-header__title">@projectTitle</h1>
+                    @if (description != null)
+                    {
+                        <div class="project-header__desc richtext">@Html.Raw(description)</div>
+                    }
+                    <div class="project-header__actions">
+                        @if (liveUrl != null)
+                        {
+                            <a class="btn btn--accent"
+                               href="@liveUrl.Url"
+                               target="_blank"
+                               rel="noopener noreferrer">
+                                View Live &rarr;
+                            </a>
+                        }
+                        @if (sourceUrl != null)
+                        {
+                            <a class="btn btn--outline"
+                               href="@sourceUrl.Url"
+                               target="_blank"
+                               rel="noopener noreferrer">
+                                Source Code
+                            </a>
+                        }
+                    </div>
+                </div>
+
+                <aside class="project-meta-card card">
+                    <dl class="project-meta">
+                        @if (!string.IsNullOrWhiteSpace(client))
+                        {
+                            <div class="project-meta__row">
+                                <dt>Client</dt>
+                                <dd>@client</dd>
+                            </div>
+                        }
+                        @if (year > 0)
+                        {
+                            <div class="project-meta__row">
+                                <dt>Year</dt>
+                                <dd>@year</dd>
+                            </div>
+                        }
+                        @if (!string.IsNullOrWhiteSpace(category))
+                        {
+                            <div class="project-meta__row">
+                                <dt>Category</dt>
+                                <dd><span class="project-tag">@category</span></dd>
+                            </div>
+                        }
+                        @if (!string.IsNullOrWhiteSpace(status))
+                        {
+                            <div class="project-meta__row">
+                                <dt>Status</dt>
+                                <dd><span class="status-badge status-badge--@status.ToLower().Replace(" ", "-")">@status</span></dd>
+                            </div>
+                        }
+                    </dl>
+                </aside>
+            </div>
+        </section>
+
+        <!-- ── Challenge / Solution ───────────────────────────────────── -->
+        @if (!string.IsNullOrWhiteSpace(challenge) || !string.IsNullOrWhiteSpace(solution))
+        {
+            <section class="narrative section section--alt">
+                <div class="container narrative__grid">
+                    @if (!string.IsNullOrWhiteSpace(challenge))
+                    {
+                        <div class="narrative__block">
+                            <h2 class="narrative__heading">The Challenge</h2>
+                            <p>@challenge</p>
+                        </div>
+                    }
+                    @if (!string.IsNullOrWhiteSpace(solution))
+                    {
+                        <div class="narrative__block">
+                            <h2 class="narrative__heading">The Solution</h2>
+                            <p>@solution</p>
+                        </div>
+                    }
+                </div>
+            </section>
+        }
+
+        <!-- ── Gallery ────────────────────────────────────────────────── -->
+        @{
+            var gallery = Model.Value<IEnumerable<Umbraco.Cms.Core.Models.Blocks.BlockListItem>>("gallery");
+        }
+        @if (gallery != null && gallery.Any())
+        {
+            <section class="project-gallery section" aria-labelledby="gallery-heading">
+                <div class="container">
+                    <h2 id="gallery-heading" class="section-heading">Gallery</h2>
+                    <div class="gallery-grid">
+                        @foreach (var item in gallery)
+                        {
+                            var mediaFile = item.Content.Value<Umbraco.Cms.Core.Models.MediaWithCrops>("mediaFile");
+                            var caption   = item.Content.Value<string>("caption") ?? string.Empty;
+                            var mType     = item.Content.Value<string>("mediaType") ?? "Image";
+
+                            if (mediaFile != null)
+                            {
+                                <figure class="gallery-item lightbox-trigger"
+                                        data-src="@mediaFile.MediaUrl()"
+                                        data-type="@mType.ToLower()">
+                                    <img src="@mediaFile.MediaUrl()"
+                                         alt="@caption"
+                                         loading="lazy"
+                                         class="gallery-item__image" />
+                                    @if (!string.IsNullOrWhiteSpace(caption))
+                                    {
+                                        <figcaption class="gallery-item__caption">@caption</figcaption>
+                                    }
+                                </figure>
+                            }
+                        }
+                    </div>
+                </div>
+            </section>
+        }
+
+        <!-- ── Technologies ───────────────────────────────────────────── -->
+        @{
+            var technologies = Model.Value<IEnumerable<Umbraco.Cms.Core.Models.Blocks.BlockListItem>>("technologies");
+        }
+        @if (technologies != null && technologies.Any())
+        {
+            <section class="technologies section" aria-labelledby="tech-heading">
+                <div class="container">
+                    <h2 id="tech-heading" class="section-heading">Technologies Used</h2>
+                    <ul class="tech-list">
+                        @foreach (var item in technologies)
+                        {
+                            var techName  = item.Content.Value<string>("techName") ?? string.Empty;
+                            var techIcon  = item.Content.Value<Umbraco.Cms.Core.Models.MediaWithCrops>("techIcon");
+                            var profLevel = item.Content.Value<int>("proficiency");
+
+                            <li class="tech-item">
+                                @if (techIcon != null)
+                                {
+                                    <img src="@techIcon.MediaUrl()" alt="@techName" class="tech-item__icon" loading="lazy" />
+                                }
+                                <span class="tech-item__name">@techName</span>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </section>
+        }
+
+        <!-- ── Prev / Next Navigation ─────────────────────────────────── -->
+        @if (prevProject != null || nextProject != null)
+        {
+            <nav class="project-nav section" aria-label="Navigate to adjacent projects">
+                <div class="container project-nav__inner">
+                    @if (prevProject != null)
+                    {
+                        var prevImage = prevProject.Value<Umbraco.Cms.Core.Models.MediaWithCrops>("featuredImage");
+                        <a class="project-nav__link project-nav__link--prev" href="@prevProject.Url()">
+                            <span class="project-nav__label">&larr; Previous</span>
+                            <span class="project-nav__title">@(prevProject.Value<string>("projectTitle") ?? prevProject.Name)</span>
+                        </a>
+                    }
+                    else
+                    {
+                        <span></span>
+                    }
+                    @if (nextProject != null)
+                    {
+                        <a class="project-nav__link project-nav__link--next" href="@nextProject.Url()">
+                            <span class="project-nav__label">Next &rarr;</span>
+                            <span class="project-nav__title">@(nextProject.Value<string>("projectTitle") ?? nextProject.Name)</span>
+                        </a>
+                    }
+                </div>
+            </nav>
+        }
+
+    </main>
+
+    <!-- ── Lightbox overlay (CSS-driven) ──────────────────────────────── -->
+    <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Image lightbox" hidden>
+        <button class="lightbox__close" id="lightbox-close" aria-label="Close lightbox">&times;</button>
+        <div class="lightbox__content">
+            <img src="" alt="" id="lightbox-img" />
+        </div>
+    </div>
+
+    <footer class="portfolio-footer">
+        <div class="container portfolio-footer__inner">
+            <p>&copy; @DateTime.UtcNow.Year @ownerName.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Lightweight lightbox
+        const triggers = document.querySelectorAll('.lightbox-trigger');
+        const lb       = document.getElementById('lightbox');
+        const lbImg    = document.getElementById('lightbox-img');
+        const lbClose  = document.getElementById('lightbox-close');
+
+        triggers.forEach(t => {
+            t.addEventListener('click', () => {
+                lbImg.src = t.dataset.src;
+                lbImg.alt = t.querySelector('figcaption')?.textContent ?? '';
+                lb.hidden = false;
+                lb.focus();
+            });
+        });
+
+        lbClose?.addEventListener('click', () => { lb.hidden = true; lbImg.src = ''; });
+        lb?.addEventListener('click', (e) => { if (e.target === lb) { lb.hidden = true; lbImg.src = ''; } });
+        document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { lb.hidden = true; } });
+    </script>
+
+</body>
+</html>

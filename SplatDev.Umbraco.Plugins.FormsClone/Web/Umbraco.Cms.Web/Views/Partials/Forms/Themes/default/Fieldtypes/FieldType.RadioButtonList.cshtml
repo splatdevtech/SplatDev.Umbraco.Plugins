@@ -1,0 +1,26 @@
+@model Umbraco.Forms.Web.Models.FieldViewModel  
+@using Umbraco.Forms.Web
+  
+@{
+    var i = 0;
+    var displayLayout = (Model.GetSettingValue<string>("DisplayLayout", "Vertical") ?? string.Empty).ToLower();
+}
+   
+<div class="@Html.GetFormFieldClass(Model.FieldTypeName) radiobuttonlist radiobuttonlist-@displayLayout" id="@Model.Id" data-umb="@Model.Id">
+    @foreach (Umbraco.Forms.Web.Models.PrevalueViewModel pv in Model.PreValues)
+    {
+        <div>
+            <input type="radio" name="@Model.Name" id="@string.Concat(Model.Id,"_",i)" data-umb="@string.Concat(Model.Id, "_", i)" value="@pv.Value"
+            @if (Model.Mandatory)
+            {
+                <text>data-val="true" data-val-required="@Model.RequiredErrorMessage" data-rule-required="true" data-msg-required="@Model.RequiredErrorMessage"</text>
+            }
+            @if (Model.ContainsValue(pv.Value))
+            {
+                <text>checked="checked"</text>
+            } />
+            <label for="@string.Concat(Model.Id,"_",i)">@pv.Caption</label>
+        </div>
+        i++;
+    }
+</div>

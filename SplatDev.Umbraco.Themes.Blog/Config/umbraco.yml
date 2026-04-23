@@ -1,0 +1,401 @@
+# Blog Theme – Umbraco Schema
+# Package: UmbracoCms.Themes.Blog v1.0.0
+# Plugin: SplatDev.Umbraco.Plugins.Yaml2Schema
+
+# ─────────────────────────────────────────────
+# DATA TYPES
+# ─────────────────────────────────────────────
+dataTypes:
+
+  - alias: textString
+    name: Text String
+    editorUiAlias: Umbraco.TextBox
+    config:
+      maxLength: 512
+
+  - alias: textArea
+    name: Text Area
+    editorUiAlias: Umbraco.TextArea
+    config:
+      maxChars: 2000
+
+  - alias: richTextEditor
+    name: Rich Text Editor
+    editorUiAlias: Umbraco.TinyMCE
+    config:
+      toolbar:
+        - bold
+        - italic
+        - underline
+        - strikethrough
+        - alignleft
+        - aligncenter
+        - alignright
+        - bullist
+        - numlist
+        - outdent
+        - indent
+        - link
+        - unlink
+        - umbmediapicker
+        - umbmacro
+        - umbembeddialog
+      stylesheets: []
+      dimensions:
+        height: 500
+
+  - alias: imagePicker
+    name: Image Picker
+    editorUiAlias: Umbraco.MediaPicker3
+    config:
+      multiple: false
+      onlyImages: true
+
+  - alias: multiImagePicker
+    name: Multi Image Picker
+    editorUiAlias: Umbraco.MediaPicker3
+    config:
+      multiple: true
+      onlyImages: true
+
+  - alias: toggle
+    name: Toggle
+    editorUiAlias: Umbraco.TrueFalse
+
+  - alias: urlPicker
+    name: URL Picker
+    editorUiAlias: Umbraco.MultiUrlPicker
+    config:
+      maxNumberOfItems: 1
+
+  - alias: multiUrlPicker
+    name: Multi URL Picker
+    editorUiAlias: Umbraco.MultiUrlPicker
+    config:
+      maxNumberOfItems: 20
+
+  - alias: tags
+    name: Tags
+    editorUiAlias: Umbraco.Tags
+
+  - alias: dateTimePicker
+    name: Date Time Picker
+    editorUiAlias: Umbraco.DateTime
+
+  - alias: integerField
+    name: Integer
+    editorUiAlias: Umbraco.Integer
+
+  - alias: multipleAuthors
+    name: Multiple Authors
+    editorUiAlias: Umbraco.ContentPicker
+
+  - alias: commentBlockList
+    name: Comment Block List
+    editorUiAlias: Umbraco.BlockList
+    valueType: NTEXT
+    update: true
+    config:
+      blocks:
+        - contentElementTypeAlias: commentElement
+
+  - alias: relatedPostBlockList
+    name: Related Post Block List
+    editorUiAlias: Umbraco.BlockList
+    valueType: NTEXT
+    update: true
+    config:
+      blocks:
+        - contentElementTypeAlias: relatedPostElement
+
+# ─────────────────────────────────────────────
+# DOCUMENT TYPES
+# ─────────────────────────────────────────────
+documentTypes:
+
+  # ── Element Types ─────────────────────────
+
+  - alias: commentElement
+    name: Comment
+    icon: icon-chat
+    isElement: true
+    tabs:
+      - name: Content
+        properties:
+          - alias: authorName
+            name: Author Name
+            dataType: textString
+          - alias: email
+            name: Email
+            dataType: textString
+          - alias: body
+            name: Body
+            dataType: textArea
+          - alias: createdDate
+            name: Created Date
+            dataType: dateTimePicker
+
+  - alias: relatedPostElement
+    name: Related Post
+    icon: icon-document
+    isElement: true
+    tabs:
+      - name: Content
+        properties:
+          - alias: title
+            name: Title
+            dataType: textString
+          - alias: url
+            name: URL
+            dataType: urlPicker
+          - alias: image
+            name: Image
+            dataType: imagePicker
+
+  # ── Blog Root ─────────────────────────────
+
+  - alias: blogRoot
+    name: Blog Root
+    icon: icon-book-alt
+    allowAsRoot: true
+    allowedChildTypes:
+      - blogListing
+      - blogPost
+      - blogCategory
+      - blogTag
+      - blogAuthor
+    tabs:
+      - name: Blog Settings
+        properties:
+          - alias: blogTitle
+            name: Blog Title
+            dataType: textString
+            required: true
+            description: "The main title of the blog"
+          - alias: blogDescription
+            name: Blog Description
+            dataType: textArea
+            description: "Short description of the blog shown in header/meta"
+          - alias: postsPerPage
+            name: Posts Per Page
+            dataType: integerField
+            description: "Number of posts to show per listing page (default: 10)"
+          - alias: commentingEnabled
+            name: Commenting Enabled
+            dataType: toggle
+            description: "Enable or disable comments globally"
+          - alias: defaultImage
+            name: Default Featured Image
+            dataType: imagePicker
+            description: "Fallback image when a post has no featured image"
+
+  # ── Blog Listing ──────────────────────────
+
+  - alias: blogListing
+    name: Blog Listing
+    icon: icon-list
+    compositions:
+      - basePage
+    allowedChildTypes:
+      - blogPost
+    allowedTemplates:
+      - BlogListing
+    defaultTemplate: BlogListing
+    tabs:
+      - name: Content
+        properties:
+          - alias: pageTitle
+            name: Page Title
+            dataType: textString
+            required: true
+          - alias: intro
+            name: Intro Text
+            dataType: textArea
+            description: "Optional introductory paragraph shown above the post list"
+      - name: Sidebar
+        properties:
+          - alias: showCategories
+            name: Show Categories
+            dataType: toggle
+            description: "Display categories widget in the sidebar"
+          - alias: showTags
+            name: Show Tags
+            dataType: toggle
+            description: "Display tag cloud in the sidebar"
+          - alias: showArchive
+            name: Show Archive
+            dataType: toggle
+            description: "Display monthly archive links in the sidebar"
+
+  # ── Blog Post ─────────────────────────────
+
+  - alias: blogPost
+    name: Blog Post
+    icon: icon-document-line
+    compositions:
+      - basePage
+    allowedTemplates:
+      - BlogPost
+    defaultTemplate: BlogPost
+    tabs:
+      - name: Content
+        properties:
+          - alias: title
+            name: Title
+            dataType: textString
+            required: true
+          - alias: excerpt
+            name: Excerpt
+            dataType: textArea
+            description: "Short summary shown on listing pages and in meta description"
+          - alias: body
+            name: Body
+            dataType: richTextEditor
+          - alias: featuredImage
+            name: Featured Image
+            dataType: imagePicker
+          - alias: featuredVideo
+            name: Featured Video URL
+            dataType: urlPicker
+            description: "YouTube or Vimeo URL to embed as hero video"
+      - name: Author
+        properties:
+          - alias: authorName
+            name: Author Name
+            dataType: textString
+          - alias: authorBio
+            name: Author Bio
+            dataType: textArea
+          - alias: authorPhoto
+            name: Author Photo
+            dataType: imagePicker
+      - name: Metadata
+        properties:
+          - alias: publishDate
+            name: Publish Date
+            dataType: dateTimePicker
+          - alias: categories
+            name: Categories
+            dataType: multiUrlPicker
+            description: "Link to one or more blogCategory nodes"
+          - alias: postTags
+            name: Tags
+            dataType: tags
+          - alias: estimatedReadTime
+            name: Estimated Read Time (minutes)
+            dataType: integerField
+      - name: Comments
+        properties:
+          - alias: commentsList
+            name: Comments
+            dataType: commentBlockList
+
+  # ── Blog Category ─────────────────────────
+
+  - alias: blogCategory
+    name: Blog Category
+    icon: icon-folder
+    compositions:
+      - basePage
+    allowedTemplates:
+      - BlogCategory
+    defaultTemplate: BlogCategory
+    tabs:
+      - name: Content
+        properties:
+          - alias: categoryName
+            name: Category Name
+            dataType: textString
+            required: true
+          - alias: description
+            name: Description
+            dataType: textArea
+          - alias: icon
+            name: Icon Class
+            dataType: textString
+            description: "CSS class for category icon (e.g. icon-folder)"
+
+  # ── Blog Tag ──────────────────────────────
+
+  - alias: blogTag
+    name: Blog Tag
+    icon: icon-tag
+    compositions:
+      - basePage
+    allowedTemplates:
+      - BlogTag
+    defaultTemplate: BlogTag
+    tabs:
+      - name: Content
+        properties:
+          - alias: tagName
+            name: Tag Name
+            dataType: textString
+            required: true
+          - alias: color
+            name: Tag Color
+            dataType: textString
+            description: "CSS color value or hex code for tag styling"
+
+  # ── Blog Author ───────────────────────────
+
+  - alias: blogAuthor
+    name: Blog Author
+    icon: icon-user
+    compositions:
+      - basePage
+    allowedTemplates:
+      - BlogAuthor
+    defaultTemplate: BlogAuthor
+    tabs:
+      - name: Profile
+        properties:
+          - alias: fullName
+            name: Full Name
+            dataType: textString
+            required: true
+          - alias: bio
+            name: Bio
+            dataType: richTextEditor
+          - alias: photo
+            name: Photo
+            dataType: imagePicker
+          - alias: email
+            name: Email
+            dataType: textString
+          - alias: website
+            name: Website
+            dataType: urlPicker
+      - name: Social
+        properties:
+          - alias: twitterUrl
+            name: Twitter / X URL
+            dataType: urlPicker
+          - alias: linkedInUrl
+            name: LinkedIn URL
+            dataType: urlPicker
+
+# ─────────────────────────────────────────────
+# TEMPLATES
+# ─────────────────────────────────────────────
+templates:
+
+  - alias: BlogListing
+    name: Blog Listing
+    path: BlogListing.cshtml
+
+  - alias: BlogPost
+    name: Blog Post
+    path: BlogPost.cshtml
+
+  - alias: BlogCategory
+    name: Blog Category
+    path: BlogCategory.cshtml
+
+  - alias: BlogTag
+    name: Blog Tag
+    path: BlogTag.cshtml
+
+  - alias: BlogAuthor
+    name: Blog Author
+    path: BlogAuthor.cshtml

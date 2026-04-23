@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="xunit" Version="2.9.0" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.8.2">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.12.0" />
+    <PackageReference Include="YamlDotNet" Version="15.1.0" />
+    <PackageReference Include="FluentAssertions" Version="7.0.0" />
+  </ItemGroup>
+  <!-- Project references to each theme -->
+  <ItemGroup>
+    <ProjectReference Include="..\SplatDev.Umbraco.Themes.Base\SplatDev.Umbraco.Themes.Base.csproj" />
+    <ProjectReference Include="..\SplatDev.Umbraco.Themes.Blog\SplatDev.Umbraco.Themes.Blog.csproj" />
+    <ProjectReference Include="..\SplatDev.Umbraco.Themes.Commerce\SplatDev.Umbraco.Themes.Commerce.csproj" />
+    <ProjectReference Include="..\SplatDev.Umbraco.Themes.Conference\SplatDev.Umbraco.Themes.Conference.csproj" />
+    <ProjectReference Include="..\SplatDev.Umbraco.Themes.Corporate\SplatDev.Umbraco.Themes.Corporate.csproj" />
+    <ProjectReference Include="..\SplatDev.Umbraco.Themes.Forum\SplatDev.Umbraco.Themes.Forum.csproj" />
+    <ProjectReference Include="..\SplatDev.Umbraco.Themes.Hotel\SplatDev.Umbraco.Themes.Hotel.csproj" />
+    <ProjectReference Include="..\SplatDev.Umbraco.Themes.Landing\SplatDev.Umbraco.Themes.Landing.csproj" />
+    <ProjectReference Include="..\SplatDev.Umbraco.Themes.Portfolio\SplatDev.Umbraco.Themes.Portfolio.csproj" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,96 @@
+@using Umbraco.Cms.Core.Models.PublishedContent
+@using Umbraco.Extensions
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@{
+    Layout = "Shared/_Layout.cshtml";
+
+    var title = Model.HasValue("title") ? Model.Value<string>("title") : Model.Name;
+    var heroImage = Model.HasValue("heroImage") ? Model.Value<IPublishedContent>("heroImage") : null;
+    var bodyContent = Model.HasValue("bodyContent") ? Model.Value<Umbraco.Cms.Core.Strings.IHtmlEncodedString>("bodyContent") : null;
+    var sidebar = Model.HasValue("sidebar") ? Model.Value<Umbraco.Cms.Core.Strings.IHtmlEncodedString>("sidebar") : null;
+    var hasSidebar = sidebar != null && !string.IsNullOrWhiteSpace(sidebar.ToString());
+}
+
+@section header {
+    @await Html.PartialAsync("Shared/_Navigation", Model)
+}
+
+<!-- Page Hero / Breadcrumb Banner -->
+<section class="page-banner@(heroImage != null ? " page-banner--with-image" : "")"
+         @(heroImage != null ? $"style=\"background-image: url('{heroImage.Url()}')\"" : "")>
+    <div class="page-banner__overlay" aria-hidden="true"></div>
+    <div class="container page-banner__content">
+        <h1 class="page-banner__title">@title</h1>
+
+        <!-- Breadcrumb -->
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <ol class="breadcrumb__list">
+                <li class="breadcrumb__item">
+                    <a class="breadcrumb__link" href="/">Home</a>
+                </li>
+                @{
+                    var ancestors = Model.Ancestors().Reverse().ToList();
+                    foreach (var ancestor in ancestors)
+                    {
+                        if (ancestor.Level > 1)
+                        {
+                            <li class="breadcrumb__item" aria-hidden="true">
+                                <span class="breadcrumb__separator">/</span>
+                            </li>
+                            <li class="breadcrumb__item">
+                                <a class="breadcrumb__link" href="@ancestor.Url()">@ancestor.Name</a>
+                            </li>
+                        }
+                    }
+                }
+                <li class="breadcrumb__item" aria-hidden="true">
+                    <span class="breadcrumb__separator">/</span>
+                </li>
+                <li class="breadcrumb__item">
+                    <span aria-current="page">@Model.Name</span>
+                </li>
+            </ol>
+        </nav>
+    </div>
+</section>
+
+<!-- Page Content -->
+<section class="page-content">
+    <div class="container">
+        @if (hasSidebar)
+        {
+            <!-- Two-column layout when sidebar has content -->
+            <div class="layout-with-sidebar">
+                <article class="layout-with-sidebar__main" aria-label="Main content">
+                    @if (bodyContent != null)
+                    {
+                        <div class="rich-text">
+                            @Html.Raw(bodyContent)
+                        </div>
+                    }
+                </article>
+                <aside class="layout-with-sidebar__sidebar" aria-label="Sidebar">
+                    <div class="rich-text">
+                        @Html.Raw(sidebar)
+                    </div>
+                </aside>
+            </div>
+        }
+        else
+        {
+            <!-- Single-column layout -->
+            <article class="content-single" aria-label="Page content">
+                @if (bodyContent != null)
+                {
+                    <div class="rich-text">
+                        @Html.Raw(bodyContent)
+                    </div>
+                }
+            </article>
+        }
+    </div>
+</section>
+
+@section footer {
+    @await Html.PartialAsync("Shared/_Footer", Model)
+}

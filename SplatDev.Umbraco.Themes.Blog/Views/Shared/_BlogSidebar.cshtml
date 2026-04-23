@@ -1,0 +1,137 @@
+@using Umbraco.Cms.Core.Models.PublishedContent
+@using Umbraco.Extensions
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<IPublishedContent>
+@{
+    // This partial receives the current listing/post page as Model
+    var showCategories = Model.Value<bool>("showCategories");
+    var showTags = Model.Value<bool>("showTags");
+    var showArchive = Model.Value<bool>("showArchive");
+
+    // Find root-level blog container
+    var blogRoot = Model.AncestorOrSelf(1) ?? Model.Root();
+
+    // Collect categories, tags, recent posts from the blog tree
+    var allPosts = blogRoot?.Descendants()
+        .Where(x => x.ContentType.Alias == "blogPost" && x.IsPublished())
+        .OrderByDescending(x => x.Value<DateTime>("publishDate") != default
+            ? x.Value<DateTime>("publishDate")
+            : x.CreateDate)
+        .ToList() ?? new List<IPublishedContent>();
+
+    var recentPosts = allPosts.Take(5).ToList();
+
+    var categories = blogRoot?.Descendants()
+        .Where(x => x.ContentType.Alias == "blogCategory" && x.IsPublished())
+        .ToList() ?? new List<IPublishedContent>();
+
+    // Build archive: group by year/month
+    var archive = allPosts
+        .GroupBy(p =>
+        {
+            var d = p.Value<DateTime>("publishDate") != default
+                ? p.Value<DateTime>("publishDate")
+                : p.CreateDate;
+            return new { d.Year, d.Month };
+        })
+        .OrderByDescending(g => g.Key.Year)
+        .ThenByDescending(g => g.Key.Month)
+        .Take(12)
+        .ToList();
+
+    // Collect all tags
+    var allTags = allPosts
+        .SelectMany(p => p.Value<IEnumerable<string>>("postTags") ?? Enumerable.Empty<string>())
+        .GroupBy(t => t, StringComparer.OrdinalIgnoreCase)
+        .OrderByDescending(g => g.Count())
+        .Take(30)
+        .ToList();
+}
+
+<aside class="blog-sidebar" aria-label="Blog sidebar">
+
+    <div class="blog-sidebar__widget">
+        <h3 class="blog-sidebar__widget-title">Recent Posts</h3>
+        @if (recentPosts.Any())
+        {
+            <ul class="recent-posts-list">
+                @foreach (var post in recentPosts)
+                {
+                    var pTitle = post.Value<string>("title") ?? post.Name;
+                    var pDate = post.Value<DateTime>("publishDate") != default
+                        ? post.Value<DateTime>("publishDate")
+                        : post.CreateDate;
+                    <li class="recent-posts-list__item">
+                        <a class="recent-posts-list__link" href="@post.Url()">@pTitle</a>
+                        <time class="recent-posts-list__date" datetime="@pDate.ToString("yyyy-MM-dd")">
+                            @pDate.ToString("MMM d, yyyy")
+                        </time>
+                    </li>
+                }
+            </ul>
+        }
+        else
+        {
+            <p class="blog-sidebar__empty">No posts yet.</p>
+        }
+    </div>
+
+    @if (showCategories && categories.Any())
+    {
+        <div class="blog-sidebar__widget">
+            <h3 class="blog-sidebar__widget-title">Categories</h3>
+            <ul class="category-list">
+                @foreach (var cat in categories)
+                {
+                    var catName = cat.Value<string>("categoryName") ?? cat.Name;
+                    var catIcon = cat.Value<string>("icon");
+                    <li class="category-list__item">
+                        <a class="category-list__link" href="@cat.Url()">
+                            @if (!string.IsNullOrWhiteSpace(catIcon))
+                            {
+                                <span class="category-list__icon @catIcon" aria-hidden="true"></span>
+                            }
+                            @catName
+                        </a>
+                    </li>
+                }
+            </ul>
+        </div>
+    }
+
+    @if (showTags && allTags.Any())
+    {
+        <div class="blog-sidebar__widget">
+            <h3 class="blog-sidebar__widget-title">Tags</h3>
+            <div class="tag-cloud" aria-label="Tag cloud">
+                @foreach (var tagGroup in allTags)
+                {
+                    <a class="tag-cloud__tag tag-pill" href="?tag=@Uri.EscapeDataString(tagGroup.Key)">
+                        #@tagGroup.Key
+                        <span class="tag-cloud__count" aria-label="@tagGroup.Count() posts">(@tagGroup.Count())</span>
+                    </a>
+                }
+            </div>
+        </div>
+    }
+
+    @if (showArchive && archive.Any())
+    {
+        <div class="blog-sidebar__widget">
+            <h3 class="blog-sidebar__widget-title">Archive</h3>
+            <ul class="archive-list">
+                @foreach (var group in archive)
+                {
+                    var monthName = new DateTime(group.Key.Year, group.Key.Month, 1).ToString("MMMM yyyy");
+                    var count = group.Count();
+                    <li class="archive-list__item">
+                        <a class="archive-list__link" href="?year=@group.Key.Year&month=@group.Key.Month">
+                            @monthName
+                            <span class="archive-list__count">(@count)</span>
+                        </a>
+                    </li>
+                }
+            </ul>
+        </div>
+    }
+
+</aside>

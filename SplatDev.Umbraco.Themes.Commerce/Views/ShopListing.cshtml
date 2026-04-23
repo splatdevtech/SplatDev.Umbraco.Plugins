@@ -1,0 +1,216 @@
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@{
+    Layout = null;
+    var pageTitle = Model.Value<string>("pageTitle") ?? "Shop";
+    var intro = Model.Value<string>("intro");
+    var defaultLayout = Model.Value<string>("defaultLayout") ?? "Grid";
+    var productsPerPage = Model.Value<int>("productsPerPage");
+    if (productsPerPage <= 0) productsPerPage = 12;
+    var showFilters = Model.Value<bool>("showFilters");
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@pageTitle</title>
+    <link rel="stylesheet" href="/css/commerce-theme.css" />
+</head>
+<body class="commerce-theme shop-listing-page">
+
+    <header class="site-header">
+        <div class="container">
+            <nav class="breadcrumb" aria-label="Breadcrumb">
+                <ol>
+                    <li><a href="/">Home</a></li>
+                    <li aria-current="page">@pageTitle</li>
+                </ol>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container shop-listing-layout">
+
+        <div class="page-hero">
+            <h1 class="page-title">@pageTitle</h1>
+            @if (!string.IsNullOrWhiteSpace(intro))
+            {
+                <p class="page-intro">@intro</p>
+            }
+        </div>
+
+        <div class="shop-listing-wrapper">
+
+            @if (showFilters)
+            {
+                <aside class="filters-sidebar" aria-label="Product filters">
+                    <div class="filter-group">
+                        <h3 class="filter-heading">Categories</h3>
+                        <ul class="filter-list category-list">
+                            <li><a href="#" class="filter-link active">All Products</a></li>
+                            <li><a href="#" class="filter-link">Electronics</a></li>
+                            <li><a href="#" class="filter-link">Clothing</a></li>
+                            <li><a href="#" class="filter-link">Home &amp; Garden</a></li>
+                            <li><a href="#" class="filter-link">Sports</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="filter-group">
+                        <h3 class="filter-heading">Price Range</h3>
+                        <div class="price-range-inputs">
+                            <label class="sr-only" for="priceMin">Minimum price</label>
+                            <input type="number" id="priceMin" class="price-input" placeholder="Min" min="0" />
+                            <span class="price-separator">–</span>
+                            <label class="sr-only" for="priceMax">Maximum price</label>
+                            <input type="number" id="priceMax" class="price-input" placeholder="Max" min="0" />
+                        </div>
+                        <button type="button" class="btn btn-outline btn-sm apply-price-filter">Apply</button>
+                    </div>
+
+                    <div class="filter-group">
+                        <h3 class="filter-heading">Availability</h3>
+                        <label class="filter-checkbox">
+                            <input type="checkbox" id="inStockOnly" />
+                            <span>In Stock Only</span>
+                        </label>
+                    </div>
+                </aside>
+            }
+
+            <section class="products-main">
+
+                <div class="products-toolbar">
+                    <div class="products-count">
+                        <span class="count-label">Showing products</span>
+                    </div>
+                    <div class="toolbar-right">
+                        <div class="sort-control">
+                            <label for="sortSelect">Sort by:</label>
+                            <select id="sortSelect" class="sort-select">
+                                <option value="newest">Newest</option>
+                                <option value="price-asc">Price: Low to High</option>
+                                <option value="price-desc">Price: High to Low</option>
+                                <option value="popularity">Popularity</option>
+                            </select>
+                        </div>
+                        <div class="layout-toggle" role="group" aria-label="View layout">
+                            <button type="button" class="layout-btn @(defaultLayout == "Grid" ? "active" : "")" data-layout="grid" aria-label="Grid view">
+                                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+                                    <rect x="0" y="0" width="7" height="7"/><rect x="9" y="0" width="7" height="7"/>
+                                    <rect x="0" y="9" width="7" height="7"/><rect x="9" y="9" width="7" height="7"/>
+                                </svg>
+                            </button>
+                            <button type="button" class="layout-btn @(defaultLayout == "List" ? "active" : "")" data-layout="list" aria-label="List view">
+                                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+                                    <rect x="0" y="0" width="16" height="3"/><rect x="0" y="6" width="16" height="3"/><rect x="0" y="12" width="16" height="3"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="products-grid @(defaultLayout == "List" ? "products-list" : "")" id="productsContainer">
+                    @* Product cards rendered by child nodes or Surface Controller *@
+                    @foreach (var product in Model.Children ?? Enumerable.Empty<Umbraco.Cms.Core.Models.PublishedContent.IPublishedContent>())
+                    {
+                        var productName = product.Value<string>("productName") ?? product.Name;
+                        var price = product.Value<decimal>("price");
+                        var salePrice = product.Value<decimal>("salePrice");
+                        var hasSale = salePrice > 0 && salePrice < price;
+                        var stockStatus = product.Value<string>("stockStatus") ?? "In Stock";
+                        var featuredImage = product.Value<Umbraco.Cms.Core.Models.PublishedContent.IPublishedContent>("featuredImage");
+                        var sku = product.Value<string>("sku");
+
+                        <article class="product-card" data-sku="@sku">
+                            <a href="@product.Url()" class="product-card-link" aria-label="View @productName">
+                                <div class="product-card-image-wrapper">
+                                    @if (featuredImage != null)
+                                    {
+                                        <img src="@featuredImage.Url()" alt="@productName" class="product-card-image" loading="lazy" />
+                                    }
+                                    else
+                                    {
+                                        <div class="product-card-image-placeholder" aria-hidden="true">
+                                            <svg width="48" height="48" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5">
+                                                <rect x="4" y="4" width="40" height="40" rx="4"/>
+                                                <circle cx="16" cy="16" r="4"/>
+                                                <path d="M4 30l10-10 8 8 6-6 16 16"/>
+                                            </svg>
+                                        </div>
+                                    }
+                                    @if (hasSale)
+                                    {
+                                        <span class="product-badge product-badge--sale">Sale</span>
+                                    }
+                                    @if (stockStatus == "Out of Stock")
+                                    {
+                                        <span class="product-badge product-badge--out-of-stock">Out of Stock</span>
+                                    }
+                                    @if (stockStatus == "Pre-order")
+                                    {
+                                        <span class="product-badge product-badge--preorder">Pre-order</span>
+                                    }
+                                </div>
+                                <div class="product-card-body">
+                                    <h2 class="product-card-name">@productName</h2>
+                                    <div class="product-card-pricing">
+                                        @if (hasSale)
+                                        {
+                                            <span class="price price--original" aria-label="Original price">@price.ToString("C")</span>
+                                            <span class="price price--sale" aria-label="Sale price">@salePrice.ToString("C")</span>
+                                        }
+                                        else if (price > 0)
+                                        {
+                                            <span class="price">@price.ToString("C")</span>
+                                        }
+                                    </div>
+                                </div>
+                            </a>
+                            <div class="product-card-actions">
+                                <button type="button"
+                                        class="btn btn-primary btn-add-to-cart @(stockStatus == "Out of Stock" ? "btn-disabled" : "")"
+                                        data-product-id="@product.Id"
+                                        data-product-name="@productName"
+                                        @(stockStatus == "Out of Stock" ? "disabled" : "")
+                                        aria-label="Add @productName to cart">
+                                    @(stockStatus == "Out of Stock" ? "Out of Stock" : "Add to Cart")
+                                </button>
+                            </div>
+                        </article>
+                    }
+                </div>
+
+                <nav class="pagination" aria-label="Product pages">
+                    <button type="button" class="pagination-btn pagination-prev" aria-label="Previous page" disabled>
+                        &lsaquo; Prev
+                    </button>
+                    <span class="pagination-pages">
+                        <button type="button" class="pagination-page active" aria-current="page" aria-label="Page 1">1</button>
+                        <button type="button" class="pagination-page" aria-label="Page 2">2</button>
+                        <button type="button" class="pagination-page" aria-label="Page 3">3</button>
+                    </span>
+                    <button type="button" class="pagination-btn pagination-next" aria-label="Next page">
+                        Next &rsaquo;
+                    </button>
+                </nav>
+
+            </section>
+        </div>
+    </main>
+
+    <script>
+        document.querySelectorAll('.layout-btn').forEach(btn => {
+            btn.addEventListener('click', function () {
+                document.querySelectorAll('.layout-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                const container = document.getElementById('productsContainer');
+                if (this.dataset.layout === 'list') {
+                    container.classList.add('products-list');
+                } else {
+                    container.classList.remove('products-list');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

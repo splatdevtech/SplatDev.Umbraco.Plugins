@@ -1,0 +1,575 @@
+# UmbracoCms.Themes.Hotel – Umbraco Schema
+# Version: 1.0.0
+# Plugin: SplatDev.Umbraco.Plugins.Yaml2Schema
+
+# ─────────────────────────────────────────────
+# DATA TYPES
+# ─────────────────────────────────────────────
+dataTypes:
+
+  # Text
+  - alias: textString
+    name: Text String
+    editorUiAlias: Umbraco.TextBox
+    config:
+      maxLength: 512
+
+  - alias: textStringShort
+    name: Text String (Short)
+    editorUiAlias: Umbraco.TextBox
+    config:
+      maxLength: 160
+
+  - alias: textArea
+    name: Text Area
+    editorUiAlias: Umbraco.TextArea
+    config:
+      maxChars: 2000
+
+  - alias: richTextEditor
+    name: Rich Text Editor
+    editorUiAlias: Umbraco.TinyMCE
+
+  # Media
+  - alias: imagePicker
+    name: Image Picker
+    editorUiAlias: Umbraco.MediaPicker3
+    config:
+      multiple: false
+      onlyImages: true
+
+  - alias: multiImagePicker
+    name: Multi Image Picker
+    editorUiAlias: Umbraco.MediaPicker3
+    config:
+      multiple: true
+      onlyImages: true
+
+  # Link
+  - alias: urlPicker
+    name: URL Picker
+    editorUiAlias: Umbraco.MultiUrlPicker
+    config:
+      maxNumberOfItems: 1
+
+  # Toggle
+  - alias: toggle
+    name: Toggle
+    editorUiAlias: Umbraco.TrueFalse
+
+  # Numeric
+  - alias: integerField
+    name: Integer
+    editorUiAlias: Umbraco.Integer
+
+  - alias: decimalField
+    name: Decimal
+    editorUiAlias: Umbraco.Decimal
+
+  # Date/Time
+  - alias: dateTimePicker
+    name: Date Time Picker
+    editorUiAlias: Umbraco.DateTime
+
+  # Hotel-specific dropdowns
+  - alias: starRating
+    name: Star Rating
+    editorUiAlias: Umbraco.Integer
+
+  - alias: bedType
+    name: Bed Type
+    editorUiAlias: Umbraco.DropDown.Flexible
+    config:
+      multiple: false
+      items:
+        - Single
+        - Double
+        - Queen
+        - King
+        - Twin
+        - Suite
+
+  - alias: roomView
+    name: Room View
+    editorUiAlias: Umbraco.DropDown.Flexible
+    config:
+      multiple: false
+      items:
+        - City
+        - Garden
+        - Pool
+        - Ocean
+        - Mountain
+
+  - alias: amenityCategory
+    name: Amenity Category
+    editorUiAlias: Umbraco.DropDown.Flexible
+    config:
+      multiple: false
+      items:
+        - Wellness
+        - Business
+        - Dining
+        - Activities
+        - Services
+
+# ─────────────────────────────────────────────
+# DOCUMENT TYPES
+# ─────────────────────────────────────────────
+documentTypes:
+
+  # ── Element Types ─────────────────────────
+
+  - alias: amenityItem
+    name: Amenity Item
+    icon: icon-star
+    isElement: true
+    tabs:
+      - name: Content
+        properties:
+          - alias: icon
+            name: Icon
+            dataType: textStringShort
+            description: CSS class or SVG icon name
+          - alias: name
+            name: Name
+            dataType: textString
+            required: true
+          - alias: description
+            name: Description
+            dataType: textArea
+
+  - alias: reviewItem
+    name: Review Item
+    icon: icon-chat
+    isElement: true
+    tabs:
+      - name: Content
+        properties:
+          - alias: guestName
+            name: Guest Name
+            dataType: textString
+            required: true
+          - alias: rating
+            name: Rating (1-5)
+            dataType: integerField
+          - alias: reviewText
+            name: Review Text
+            dataType: textArea
+            required: true
+          - alias: stayDate
+            name: Stay Date
+            dataType: dateTimePicker
+          - alias: roomType
+            name: Room Type
+            dataType: textStringShort
+
+  - alias: roomFeature
+    name: Room Feature
+    icon: icon-check
+    isElement: true
+    tabs:
+      - name: Content
+        properties:
+          - alias: featureName
+            name: Feature Name
+            dataType: textString
+            required: true
+          - alias: featureIcon
+            name: Feature Icon
+            dataType: textStringShort
+
+  - alias: galleryItem
+    name: Gallery Item
+    icon: icon-picture
+    isElement: true
+    tabs:
+      - name: Content
+        properties:
+          - alias: image
+            name: Image
+            dataType: imagePicker
+            required: true
+          - alias: caption
+            name: Caption
+            dataType: textStringShort
+          - alias: category
+            name: Category
+            dataType: textStringShort
+
+  # ── Document Types ────────────────────────
+
+  - alias: hotelRoot
+    name: Hotel Root
+    icon: icon-home
+    allowAsRoot: true
+    allowedChildTypes:
+      - hotelHome
+      - roomsListing
+      - amenitiesPage
+      - diningPage
+      - galleryPage
+      - reviewsPage
+      - contactPage
+    tabs:
+      - name: Hotel Settings
+        properties:
+          - alias: hotelName
+            name: Hotel Name
+            dataType: textString
+            required: true
+          - alias: tagline
+            name: Tagline
+            dataType: textStringShort
+          - alias: logo
+            name: Logo
+            dataType: imagePicker
+          - alias: starRating
+            name: Star Rating (1-5)
+            dataType: starRating
+          - alias: address
+            name: Address
+            dataType: textArea
+          - alias: phone
+            name: Phone
+            dataType: textStringShort
+          - alias: email
+            name: Email
+            dataType: textStringShort
+          - alias: checkInTime
+            name: Check-In Time
+            dataType: textStringShort
+            description: "E.g.: 3:00 PM"
+          - alias: checkOutTime
+            name: Check-Out Time
+            dataType: textStringShort
+            description: "E.g.: 11:00 AM"
+          - alias: bookingUrl
+            name: Booking URL
+            dataType: urlPicker
+      - name: Social
+        properties:
+          - alias: instagram
+            name: Instagram URL
+            dataType: urlPicker
+          - alias: facebook
+            name: Facebook URL
+            dataType: urlPicker
+          - alias: tripadvisorUrl
+            name: TripAdvisor URL
+            dataType: urlPicker
+
+  - alias: basePage
+    name: Base Page
+    icon: icon-document
+    isElement: false
+    tabs:
+      - name: SEO
+        properties:
+          - alias: metaTitle
+            name: Meta Title
+            dataType: textStringShort
+          - alias: metaDescription
+            name: Meta Description
+            dataType: textStringShort
+          - alias: ogImage
+            name: OG Image
+            dataType: imagePicker
+
+  - alias: hotelHome
+    name: Hotel Home
+    icon: icon-home
+    compositions:
+      - basePage
+    allowedTemplates:
+      - HotelHome
+    defaultTemplate: HotelHome
+    tabs:
+      - name: Hero
+        properties:
+          - alias: heroHeadline
+            name: Headline
+            dataType: textString
+            required: true
+          - alias: heroText
+            name: Hero Text
+            dataType: textArea
+          - alias: heroImage
+            name: Hero Image
+            dataType: imagePicker
+          - alias: heroVideo
+            name: Hero Video URL
+            dataType: textString
+            description: Optional video background (MP4 URL)
+      - name: About
+        properties:
+          - alias: aboutTitle
+            name: About Title
+            dataType: textString
+          - alias: aboutText
+            name: About Text
+            dataType: richTextEditor
+          - alias: aboutImage
+            name: About Image
+            dataType: imagePicker
+      - name: Featured Rooms
+        properties:
+          - alias: featuredRoomsTitle
+            name: Featured Rooms Title
+            dataType: textString
+      - name: Amenities Preview
+        properties:
+          - alias: amenitiesTitle
+            name: Amenities Title
+            dataType: textString
+      - name: Reviews
+        properties:
+          - alias: reviewsTitle
+            name: Reviews Title
+            dataType: textString
+
+  - alias: roomsListing
+    name: Rooms Listing
+    icon: icon-document-dupe
+    allowedChildTypes:
+      - room
+    allowedTemplates:
+      - RoomsListing
+    defaultTemplate: RoomsListing
+    tabs:
+      - name: Content
+        properties:
+          - alias: pageTitle
+            name: Page Title
+            dataType: textString
+            required: true
+          - alias: intro
+            name: Introduction
+            dataType: textArea
+          - alias: defaultSorting
+            name: Default Sorting
+            dataType: textStringShort
+            description: "E.g.: pricePerNight, roomName"
+
+  - alias: room
+    name: Room
+    icon: icon-document
+    allowedTemplates:
+      - Room
+    defaultTemplate: Room
+    tabs:
+      - name: Room Details
+        properties:
+          - alias: roomName
+            name: Room Name
+            dataType: textString
+            required: true
+          - alias: roomCode
+            name: Room Code
+            dataType: textStringShort
+          - alias: bedType
+            name: Bed Type
+            dataType: bedType
+          - alias: maxOccupancy
+            name: Max Occupancy
+            dataType: integerField
+          - alias: squareMeters
+            name: Size (m²)
+            dataType: decimalField
+          - alias: view
+            name: View
+            dataType: roomView
+          - alias: shortDescription
+            name: Short Description
+            dataType: textArea
+          - alias: fullDescription
+            name: Full Description
+            dataType: richTextEditor
+      - name: Media
+        properties:
+          - alias: featuredImage
+            name: Featured Image
+            dataType: imagePicker
+      - name: Pricing
+        properties:
+          - alias: pricePerNight
+            name: Price Per Night
+            dataType: decimalField
+          - alias: currency
+            name: Currency
+            dataType: textStringShort
+            description: "E.g.: USD, EUR, GBP"
+          - alias: breakfastIncluded
+            name: Breakfast Included
+            dataType: toggle
+          - alias: taxesIncluded
+            name: Taxes Included
+            dataType: toggle
+      - name: Availability
+        properties:
+          - alias: available
+            name: Available
+            dataType: toggle
+          - alias: bookingUrl
+            name: Booking URL
+            dataType: urlPicker
+
+  - alias: amenitiesPage
+    name: Amenities Page
+    icon: icon-star
+    compositions:
+      - basePage
+    allowedTemplates:
+      - AmenitiesPage
+    defaultTemplate: AmenitiesPage
+    tabs:
+      - name: Content
+        properties:
+          - alias: pageTitle
+            name: Page Title
+            dataType: textString
+            required: true
+          - alias: intro
+            name: Introduction
+            dataType: textArea
+
+  - alias: diningPage
+    name: Dining Page
+    icon: icon-fork
+    compositions:
+      - basePage
+    allowedTemplates:
+      - DiningPage
+    defaultTemplate: DiningPage
+    tabs:
+      - name: Content
+        properties:
+          - alias: pageTitle
+            name: Page Title
+            dataType: textString
+            required: true
+          - alias: intro
+            name: Introduction
+            dataType: textArea
+          - alias: restaurantName
+            name: Restaurant Name
+            dataType: textString
+          - alias: cuisineType
+            name: Cuisine Type
+            dataType: textStringShort
+          - alias: hoursText
+            name: Hours
+            dataType: textString
+          - alias: menuDescription
+            name: Menu Description
+            dataType: richTextEditor
+          - alias: gallery
+            name: Gallery
+            dataType: multiImagePicker
+          - alias: reservationUrl
+            name: Reservation URL
+            dataType: urlPicker
+
+  - alias: galleryPage
+    name: Gallery Page
+    icon: icon-picture
+    compositions:
+      - basePage
+    allowedTemplates:
+      - GalleryPage
+    defaultTemplate: GalleryPage
+    tabs:
+      - name: Content
+        properties:
+          - alias: pageTitle
+            name: Page Title
+            dataType: textString
+            required: true
+          - alias: intro
+            name: Introduction
+            dataType: textArea
+
+  - alias: reviewsPage
+    name: Reviews Page
+    icon: icon-chat
+    compositions:
+      - basePage
+    allowedTemplates:
+      - ReviewsPage
+    defaultTemplate: ReviewsPage
+    tabs:
+      - name: Content
+        properties:
+          - alias: pageTitle
+            name: Page Title
+            dataType: textString
+            required: true
+          - alias: intro
+            name: Introduction
+            dataType: textArea
+          - alias: averageRating
+            name: Average Rating
+            dataType: decimalField
+          - alias: totalReviews
+            name: Total Reviews
+            dataType: integerField
+
+  - alias: contactPage
+    name: Contact Page
+    icon: icon-mail
+    compositions:
+      - basePage
+    allowedTemplates:
+      - ContactPage
+    defaultTemplate: ContactPage
+    tabs:
+      - name: Content
+        properties:
+          - alias: pageTitle
+            name: Page Title
+            dataType: textString
+            required: true
+          - alias: address
+            name: Address
+            dataType: textArea
+          - alias: phone
+            name: Phone
+            dataType: textStringShort
+          - alias: email
+            name: Email
+            dataType: textStringShort
+          - alias: mapEmbedCode
+            name: Map Embed Code
+            dataType: textArea
+          - alias: directionsText
+            name: Directions
+            dataType: richTextEditor
+
+# ─────────────────────────────────────────────
+# TEMPLATES
+# ─────────────────────────────────────────────
+templates:
+
+  - alias: HotelHome
+    name: Hotel Home
+
+  - alias: RoomsListing
+    name: Rooms Listing
+
+  - alias: Room
+    name: Room
+
+  - alias: AmenitiesPage
+    name: Amenities Page
+
+  - alias: DiningPage
+    name: Dining Page
+
+  - alias: GalleryPage
+    name: Gallery Page
+
+  - alias: ReviewsPage
+    name: Reviews Page
+
+  - alias: ContactPage
+    name: Contact Page

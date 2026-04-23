@@ -1,0 +1,175 @@
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@{
+    Layout = null;
+    var root = Model.AncestorOrSelf<Umbraco.Cms.Core.Models.PublishedContent.IPublishedContent>(1) ?? Model;
+    var companyName  = root.Value<string>("companyName") ?? "Company";
+    var logo         = root.Value<Umbraco.Cms.Core.Models.PublishedContent.IPublishedContent>("logo");
+
+    var pageTitle    = Model.Value<string>("pageTitle") ?? "Our Services";
+    var intro        = Model.Value<string>("intro");
+    var servicesGrid = Model.Value<Umbraco.Cms.Core.Models.Blocks.BlockListModel>("servicesGrid");
+
+    var metaTitle = Model.Value<string>("metaTitle") ?? pageTitle;
+    var metaDesc  = Model.Value<string>("metaDescription");
+
+    var categories = servicesGrid?
+        .Select(s => s.Content.Value<string>("category"))
+        .Where(c => !string.IsNullOrWhiteSpace(c))
+        .Distinct()
+        .OrderBy(c => c)
+        .ToList() ?? new List<string?>();
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@metaTitle – @companyName</title>
+    @if (!string.IsNullOrWhiteSpace(metaDesc)) { <meta name="description" content="@metaDesc" /> }
+    <link rel="stylesheet" href="/css/corporate-theme.css" />
+</head>
+<body class="corporate-theme services-page">
+
+    <header class="site-header" role="banner">
+        <div class="container header-inner">
+            <a href="@root.Url()" class="site-logo-link" aria-label="@companyName home">
+                @if (logo != null) { <img src="@logo.Url()" alt="@companyName" class="site-logo" /> }
+                else { <span class="site-logo-text">@companyName</span> }
+            </a>
+            <nav class="main-nav" aria-label="Main navigation">
+                <ul>
+                    @foreach (var child in root.Children?.Where(c => !c.Value<bool>("hideFromNavigation"))
+                        ?? Enumerable.Empty<Umbraco.Cms.Core.Models.PublishedContent.IPublishedContent>())
+                    {
+                        <li><a href="@child.Url()" @(child.Id == Model.Id ? "aria-current='page'" : "")>@child.Name</a></li>
+                    }
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main id="main-content">
+
+        <section class="page-hero-section page-hero-section--short" aria-label="@pageTitle">
+            <div class="container page-hero-content">
+                <nav class="breadcrumb" aria-label="Breadcrumb">
+                    <ol>
+                        <li><a href="@root.Url()">Home</a></li>
+                        <li aria-current="page">@pageTitle</li>
+                    </ol>
+                </nav>
+                <h1 class="page-hero-headline">@pageTitle</h1>
+                @if (!string.IsNullOrWhiteSpace(intro))
+                {
+                    <p class="page-hero-subtext">@intro</p>
+                }
+            </div>
+        </section>
+
+        <section class="services-section section" aria-label="Services list">
+            <div class="container">
+
+                @if (categories.Any())
+                {
+                    <div class="category-filter-bar" role="group" aria-label="Filter services by category">
+                        <button type="button" class="filter-tag active" data-filter="all">All</button>
+                        @foreach (var cat in categories)
+                        {
+                            <button type="button" class="filter-tag" data-filter="@cat?.ToLowerInvariant()">@cat</button>
+                        }
+                    </div>
+                }
+
+                @if (servicesGrid != null && servicesGrid.Any())
+                {
+                    <div class="services-full-grid" id="servicesGrid">
+                        @foreach (var svc in servicesGrid)
+                        {
+                            var svcName  = svc.Content.Value<string>("serviceName") ?? "Service";
+                            var svcCat   = svc.Content.Value<string>("category") ?? "";
+                            var svcDesc  = svc.Content.Value<string>("shortDescription");
+                            var svcFull  = svc.Content.Value<Umbraco.Cms.Core.Models.PublishedContent.IHtmlEncodedString>("fullDescription");
+                            var svcIcon  = svc.Content.Value<string>("icon");
+                            var svcImg   = svc.Content.Value<Umbraco.Cms.Core.Models.PublishedContent.IPublishedContent>("image");
+                            var features = svc.Content.Value<Umbraco.Cms.Core.Models.Blocks.BlockListModel>("features");
+                            <article class="service-detail-card" data-category="@svcCat.ToLowerInvariant()">
+                                @if (svcImg != null)
+                                {
+                                    <div class="service-detail-image-wrapper">
+                                        <img src="@svcImg.Url()" alt="@svcName" class="service-detail-image" loading="lazy" />
+                                    </div>
+                                }
+                                <div class="service-detail-body">
+                                    <div class="service-detail-header">
+                                        @if (!string.IsNullOrWhiteSpace(svcIcon))
+                                        {
+                                            <span class="service-icon-char service-icon-char--lg" aria-hidden="true">@svcIcon</span>
+                                        }
+                                        <div>
+                                            @if (!string.IsNullOrWhiteSpace(svcCat))
+                                            {
+                                                <span class="service-category-tag">@svcCat</span>
+                                            }
+                                            <h2 class="service-detail-title">@svcName</h2>
+                                        </div>
+                                    </div>
+                                    @if (!string.IsNullOrWhiteSpace(svcDesc))
+                                    {
+                                        <p class="service-detail-desc">@svcDesc</p>
+                                    }
+                                    @if (svcFull != null)
+                                    {
+                                        <div class="rich-text-content service-full-desc">@Html.Raw(svcFull.ToHtmlString())</div>
+                                    }
+                                    @if (features != null && features.Any())
+                                    {
+                                        <ul class="service-features-list" aria-label="Features of @svcName">
+                                            @foreach (var feat in features)
+                                            {
+                                                var featTitle = feat.Content.Value<string>("title");
+                                                var featDesc  = feat.Content.Value<string>("description");
+                                                <li class="service-feature-item">
+                                                    <span class="feature-check" aria-hidden="true">&#10003;</span>
+                                                    <div>
+                                                        @if (!string.IsNullOrWhiteSpace(featTitle)) { <strong>@featTitle</strong> }
+                                                        @if (!string.IsNullOrWhiteSpace(featDesc))  { <span> – @featDesc</span> }
+                                                    </div>
+                                                </li>
+                                            }
+                                        </ul>
+                                    }
+                                </div>
+                            </article>
+                        }
+                    </div>
+                }
+                else
+                {
+                    <p class="no-content">No services defined yet.</p>
+                }
+            </div>
+        </section>
+
+    </main>
+
+    @await Html.PartialAsync("_CorporateFooter", root)
+
+    <script>
+        (function () {
+            const filterBtns = document.querySelectorAll('.filter-tag');
+            const cards = document.querySelectorAll('.service-detail-card');
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', function () {
+                    filterBtns.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    const filter = this.dataset.filter;
+                    cards.forEach(c => {
+                        const show = filter === 'all' || c.dataset.category === filter;
+                        c.style.display = show ? '' : 'none';
+                    });
+                });
+            });
+        })();
+    </script>
+</body>
+</html>

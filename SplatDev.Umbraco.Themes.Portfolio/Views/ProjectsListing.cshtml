@@ -1,0 +1,179 @@
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@{
+    Layout = null;
+    var root        = Model.AncestorsOrSelf().FirstOrDefault(n => n.ContentType.Alias == "portfolioRoot");
+    var ownerName   = root?.Value<string>("yourName") ?? root?.Name ?? "Portfolio";
+    var accentColor = root?.Value<string>("accentColor") ?? "#6c63ff";
+
+    var pageTitle   = Model.Value<string>("pageTitle") ?? "Projects";
+    var intro       = Model.Value<string>("intro") ?? string.Empty;
+    var defaultFilter = Model.Value<string>("defaultFilter") ?? string.Empty;
+
+    var projects = Model.Children
+        .Where(c => c.ContentType.Alias == "project")
+        .OrderByDescending(c => c.Value<int>("year"))
+        .ToList();
+
+    var categories = projects
+        .Select(p => p.Value<string>("category") ?? string.Empty)
+        .Where(c => !string.IsNullOrWhiteSpace(c))
+        .Distinct()
+        .OrderBy(c => c)
+        .ToList();
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@pageTitle | @ownerName</title>
+    <style>:root { --color-accent: @accentColor; }</style>
+    <link rel="stylesheet" href="/css/portfolio-theme.css" />
+</head>
+<body class="portfolio-layout" data-theme="light">
+
+    <header class="portfolio-header">
+        <div class="container portfolio-header__inner">
+            <a class="portfolio-header__logo" href="@(root?.Url() ?? "/")">@ownerName</a>
+            <nav class="portfolio-nav" aria-label="Main navigation">
+                <ul class="portfolio-nav__list">
+                    <li><a href="@(root?.Url() ?? "/")">Home</a></li>
+                    <li><a href="@Model.Url()" aria-current="page">Work</a></li>
+                    @{
+                        var aboutPage   = root?.Children.FirstOrDefault(c => c.ContentType.Alias == "aboutPage");
+                        var contactPage = root?.Children.FirstOrDefault(c => c.ContentType.Alias == "contactPage");
+                    }
+                    @if (aboutPage != null)   { <li><a href="@aboutPage.Url()">About</a></li> }
+                    @if (contactPage != null) { <li><a href="@contactPage.Url()" class="nav-cta">Hire Me</a></li> }
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="page-hero section">
+            <div class="container">
+                <h1 class="page-hero__title">@pageTitle</h1>
+                @if (!string.IsNullOrWhiteSpace(intro))
+                {
+                    <p class="page-hero__intro">@intro</p>
+                }
+            </div>
+        </section>
+
+        <section class="projects-section section" aria-labelledby="projects-heading">
+            <div class="container">
+                <h2 id="projects-heading" class="sr-only">Projects</h2>
+
+                @if (categories.Any())
+                {
+                    <nav class="filter-bar" aria-label="Filter projects by category">
+                        <button class="filter-btn @(string.IsNullOrWhiteSpace(defaultFilter) ? "filter-btn--active" : "")"
+                                data-filter="*"
+                                type="button">All</button>
+                        @foreach (var cat in categories)
+                        {
+                            var isActive = cat == defaultFilter;
+                            var catSlug  = cat.ToLower().Replace("/", "-").Replace(" ", "-");
+                            <button class="filter-btn @(isActive ? "filter-btn--active" : "")"
+                                    data-filter="@catSlug"
+                                    type="button">@cat</button>
+                        }
+                    </nav>
+                }
+
+                @if (!projects.Any())
+                {
+                    <p class="empty-state">No projects yet. Add child pages of type <em>Project</em>.</p>
+                }
+                else
+                {
+                    <div class="project-grid project-grid--filterable" id="project-grid">
+                        @foreach (var project in projects)
+                        {
+                            var projTitle  = project.Value<string>("projectTitle") ?? project.Name;
+                            var projCat    = project.Value<string>("category") ?? string.Empty;
+                            var projYear   = project.Value<int>("year");
+                            var projStatus = project.Value<string>("status") ?? string.Empty;
+                            var projImage  = project.Value<Umbraco.Cms.Core.Models.MediaWithCrops>("featuredImage");
+                            var catSlug    = projCat.ToLower().Replace("/", "-").Replace(" ", "-");
+
+                            <article class="project-card"
+                                     data-category="@catSlug"
+                                     aria-label="@projTitle">
+                                <a class="project-card__link" href="@project.Url()" tabindex="-1" aria-hidden="true">
+                                    <div class="project-card__image-wrap">
+                                        @if (projImage != null)
+                                        {
+                                            <img src="@projImage.MediaUrl()"
+                                                 alt="@projTitle"
+                                                 class="project-card__image"
+                                                 loading="lazy" />
+                                        }
+                                        else
+                                        {
+                                            <div class="project-card__placeholder" aria-hidden="true"></div>
+                                        }
+                                        <div class="project-card__overlay">
+                                            <span class="project-card__overlay-title">@projTitle</span>
+                                            @if (!string.IsNullOrWhiteSpace(projCat))
+                                            {
+                                                <span class="project-card__overlay-cat">@projCat</span>
+                                            }
+                                            <span class="project-card__overlay-cta">View Project</span>
+                                        </div>
+                                    </div>
+                                </a>
+                                <div class="project-card__meta">
+                                    <h3 class="project-card__title">
+                                        <a href="@project.Url()">@projTitle</a>
+                                    </h3>
+                                    <div class="project-card__tags">
+                                        @if (!string.IsNullOrWhiteSpace(projCat))
+                                        {
+                                            <span class="project-tag">@projCat</span>
+                                        }
+                                        @if (projYear > 0)
+                                        {
+                                            <span class="project-tag project-tag--year">@projYear</span>
+                                        }
+                                    </div>
+                                </div>
+                            </article>
+                        }
+                    </div>
+                }
+            </div>
+        </section>
+    </main>
+
+    <footer class="portfolio-footer">
+        <div class="container portfolio-footer__inner">
+            <p>&copy; @DateTime.UtcNow.Year @ownerName.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Isotope-ready client-side filter (CSS-class based fallback)
+        const btns = document.querySelectorAll('.filter-btn');
+        const cards = document.querySelectorAll('.project-card');
+
+        btns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                btns.forEach(b => b.classList.remove('filter-btn--active'));
+                btn.classList.add('filter-btn--active');
+
+                const filter = btn.dataset.filter;
+                cards.forEach(card => {
+                    if (filter === '*' || card.dataset.category === filter) {
+                        card.style.display = '';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>

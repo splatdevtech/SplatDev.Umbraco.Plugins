@@ -1,0 +1,231 @@
+@using Umbraco.Cms.Web.Common.PublishedModels
+@using Umbraco.Extensions
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@{
+    Layout = "_Layout";
+    var title = Model.Value<string>("title") ?? Model.Name;
+    var excerpt = Model.Value<string>("excerpt");
+    var body = Model.Value<Microsoft.AspNetCore.Html.IHtmlContent>("body");
+    var featuredImage = Model.Value<Umbraco.Cms.Core.Models.PublishedContent.IPublishedContent>("featuredImage");
+    var authorName = Model.Value<string>("authorName");
+    var authorBio = Model.Value<string>("authorBio");
+    var authorPhoto = Model.Value<Umbraco.Cms.Core.Models.PublishedContent.IPublishedContent>("authorPhoto");
+    var publishDate = Model.Value<DateTime>("publishDate") != default
+        ? Model.Value<DateTime>("publishDate")
+        : Model.CreateDate;
+    var readTime = Model.Value<int>("estimatedReadTime");
+    var postTags = Model.Value<IEnumerable<string>>("postTags");
+    var commentsList = Model.Value<Umbraco.Cms.Core.Models.Blocks.BlockListModel>("commentsList");
+
+    // Get listing parent for breadcrumb
+    var listingParent = Model.Parent;
+
+    // Related posts: siblings excluding current
+    var relatedPosts = Model.Siblings()
+        .Where(x => x.ContentType.Alias == "blogPost" && x.Id != Model.Id)
+        .Take(3)
+        .ToList();
+}
+
+<article class="blog-post" itemscope itemtype="https://schema.org/Article">
+    <meta itemprop="headline" content="@title" />
+    @if (!string.IsNullOrWhiteSpace(excerpt))
+    {
+        <meta itemprop="description" content="@excerpt" />
+    }
+    <meta itemprop="datePublished" content="@publishDate.ToString("yyyy-MM-ddTHH:mm:ssZ")" />
+
+    <header class="blog-post__header @(featuredImage != null ? "blog-post__header--has-image" : "")">
+        @if (featuredImage != null)
+        {
+            <div class="blog-post__featured-image" role="img" aria-label="@title"
+                 style="background-image: url('@featuredImage.Url()')" itemprop="image" content="@featuredImage.Url()">
+            </div>
+            <div class="blog-post__header-overlay"></div>
+        }
+        <div class="blog-post__header-content container">
+            @if (listingParent != null)
+            {
+                <nav class="blog-post__breadcrumb" aria-label="Breadcrumb">
+                    <ol class="breadcrumb__list">
+                        <li class="breadcrumb__item">
+                            <a href="@listingParent.Url()">@(listingParent.Value<string>("pageTitle") ?? listingParent.Name)</a>
+                        </li>
+                        <li class="breadcrumb__item breadcrumb__item--current" aria-current="page">@title</li>
+                    </ol>
+                </nav>
+            }
+            <h1 class="blog-post__title">@title</h1>
+            <div class="blog-post__meta">
+                <time class="blog-post__date" datetime="@publishDate.ToString("yyyy-MM-dd")">
+                    @publishDate.ToString("MMMM d, yyyy")
+                </time>
+                @if (!string.IsNullOrWhiteSpace(authorName))
+                {
+                    <span class="blog-post__meta-sep" aria-hidden="true">&bull;</span>
+                    <span class="blog-post__author" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                        <span itemprop="name">@authorName</span>
+                    </span>
+                }
+                @if (readTime > 0)
+                {
+                    <span class="blog-post__meta-sep" aria-hidden="true">&bull;</span>
+                    <span class="blog-post__read-time">@readTime min read</span>
+                }
+            </div>
+            @if (!string.IsNullOrWhiteSpace(excerpt))
+            {
+                <p class="blog-post__excerpt">@excerpt</p>
+            }
+        </div>
+    </header>
+
+    <div class="blog-post__body container">
+        <div class="blog-post__content" itemprop="articleBody">
+            @if (body != null)
+            {
+                @body
+            }
+        </div>
+
+        @if (postTags != null && postTags.Any())
+        {
+            <div class="blog-post__tags">
+                <span class="blog-post__tags-label">Tags:</span>
+                @foreach (var tag in postTags)
+                {
+                    <a class="tag-pill" href="?tag=@Uri.EscapeDataString(tag)">#@tag</a>
+                }
+            </div>
+        }
+    </div>
+
+    @if (!string.IsNullOrWhiteSpace(authorName) || authorPhoto != null || !string.IsNullOrWhiteSpace(authorBio))
+    {
+        <aside class="blog-post__author-bio container" aria-label="About the author">
+            <div class="author-card">
+                @if (authorPhoto != null)
+                {
+                    <img class="author-card__photo"
+                         src="@authorPhoto.Url()"
+                         alt="@authorName"
+                         width="80" height="80"
+                         loading="lazy"
+                         itemprop="image" />
+                }
+                <div class="author-card__info">
+                    @if (!string.IsNullOrWhiteSpace(authorName))
+                    {
+                        <p class="author-card__name" itemprop="author">@authorName</p>
+                    }
+                    @if (!string.IsNullOrWhiteSpace(authorBio))
+                    {
+                        <p class="author-card__bio">@authorBio</p>
+                    }
+                </div>
+            </div>
+        </aside>
+    }
+
+    @if (relatedPosts.Any())
+    {
+        <section class="blog-post__related container" aria-label="Related posts">
+            <h2 class="blog-post__related-title">Related Posts</h2>
+            <div class="related-posts-grid">
+                @foreach (var related in relatedPosts)
+                {
+                    var relTitle = related.Value<string>("title") ?? related.Name;
+                    var relExcerpt = related.Value<string>("excerpt");
+                    var relImage = related.Value<Umbraco.Cms.Core.Models.PublishedContent.IPublishedContent>("featuredImage");
+                    var relDate = related.Value<DateTime>("publishDate") != default
+                        ? related.Value<DateTime>("publishDate")
+                        : related.CreateDate;
+
+                    <article class="related-post-card">
+                        @if (relImage != null)
+                        {
+                            <a href="@related.Url()" class="related-post-card__image-link" tabindex="-1" aria-hidden="true">
+                                <div class="related-post-card__image"
+                                     style="background-image: url('@relImage.Url()')"></div>
+                            </a>
+                        }
+                        <div class="related-post-card__body">
+                            <time class="related-post-card__date" datetime="@relDate.ToString("yyyy-MM-dd")">
+                                @relDate.ToString("MMM d, yyyy")
+                            </time>
+                            <h3 class="related-post-card__title">
+                                <a href="@related.Url()">@relTitle</a>
+                            </h3>
+                            @if (!string.IsNullOrWhiteSpace(relExcerpt))
+                            {
+                                <p class="related-post-card__excerpt">@relExcerpt</p>
+                            }
+                        </div>
+                    </article>
+                }
+            </div>
+        </section>
+    }
+
+    @if (commentsList != null && commentsList.Any())
+    {
+        <section class="blog-post__comments container" aria-label="Comments">
+            <h2 class="comments__title">Comments (@commentsList.Count())</h2>
+            <ol class="comments__list">
+                @foreach (var comment in commentsList)
+                {
+                    var commentAuthor = comment.Content.Value<string>("authorName") ?? "Anonymous";
+                    var commentBody = comment.Content.Value<string>("body");
+                    var commentDate = comment.Content.Value<DateTime>("createdDate");
+
+                    <li class="comment" itemscope itemtype="https://schema.org/Comment">
+                        <div class="comment__header">
+                            <span class="comment__author" itemprop="author">@commentAuthor</span>
+                            @if (commentDate != default)
+                            {
+                                <time class="comment__date" datetime="@commentDate.ToString("yyyy-MM-dd")"
+                                      itemprop="dateCreated">
+                                    @commentDate.ToString("MMMM d, yyyy")
+                                </time>
+                            }
+                        </div>
+                        @if (!string.IsNullOrWhiteSpace(commentBody))
+                        {
+                            <div class="comment__body" itemprop="text">
+                                <p>@commentBody</p>
+                            </div>
+                        }
+                    </li>
+                }
+            </ol>
+        </section>
+    }
+
+    <section class="blog-post__comment-form container" aria-label="Leave a comment">
+        <h2 class="comment-form__title">Leave a Comment</h2>
+        <form class="comment-form" method="post" action="/api/blog/comment" novalidate>
+            @Html.AntiForgeryToken()
+            <input type="hidden" name="postId" value="@Model.Id" />
+            <div class="comment-form__row">
+                <div class="comment-form__field">
+                    <label class="comment-form__label" for="comment-author">Name <abbr title="required">*</abbr></label>
+                    <input class="comment-form__input" type="text" id="comment-author" name="authorName"
+                           required maxlength="100" autocomplete="name" />
+                </div>
+                <div class="comment-form__field">
+                    <label class="comment-form__label" for="comment-email">Email <abbr title="required">*</abbr></label>
+                    <input class="comment-form__input" type="email" id="comment-email" name="email"
+                           required maxlength="200" autocomplete="email" />
+                </div>
+            </div>
+            <div class="comment-form__field">
+                <label class="comment-form__label" for="comment-body">Comment <abbr title="required">*</abbr></label>
+                <textarea class="comment-form__textarea" id="comment-body" name="body"
+                          required maxlength="2000" rows="6"></textarea>
+            </div>
+            <div class="comment-form__actions">
+                <button class="comment-form__submit btn btn--primary" type="submit">Post Comment</button>
+            </div>
+        </form>
+    </section>
+</article>

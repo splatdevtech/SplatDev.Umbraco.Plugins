@@ -1,0 +1,133 @@
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@{
+    Layout = null;
+    var root = Model.Root();
+    var confName = root?.Value<string>("confName") ?? "Conference";
+    var registrationUrl = root?.Value<Umbraco.Cms.Core.Models.Link>("registrationUrl");
+
+    var venueName = Model.Value<string>("venueName") ?? "Venue";
+    var address = Model.Value<string>("address") ?? string.Empty;
+    var description = Model.Value<IHtmlContent>("description");
+    var mainImage = Model.Value<Umbraco.Cms.Core.Models.PublishedContent.IPublishedContent>("mainImage");
+    var gallery = Model.Value<IEnumerable<Umbraco.Cms.Core.Models.PublishedContent.IPublishedContent>>("gallery");
+    var mapEmbedCode = Model.Value<string>("mapEmbedCode") ?? string.Empty;
+    var travelInfo = Model.Value<IHtmlContent>("travelInfo");
+    var nearbyHotels = Model.Value<IHtmlContent>("nearbyHotels");
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@venueName – @confName</title>
+    <link rel="stylesheet" href="/css/conference-theme.css" />
+</head>
+<body class="conf-venue-page">
+
+    <header class="conf-header">
+        <div class="conf-container conf-header__inner">
+            <a href="/" class="conf-header__brand"><span class="conf-header__name">@confName</span></a>
+            @if (registrationUrl != null)
+            {
+                <a href="@registrationUrl.Url" class="conf-btn conf-btn--primary conf-header__cta" target="@(registrationUrl.Target ?? "_self")">Register Now</a>
+            }
+        </div>
+    </header>
+
+    <main class="conf-main">
+
+        <!-- Hero image -->
+        @if (mainImage != null)
+        {
+            <div class="conf-venue-hero" style="background-image:url('@mainImage.Url()')">
+                <div class="conf-venue-hero__overlay"></div>
+                <div class="conf-container conf-venue-hero__content">
+                    <h1 class="conf-venue-hero__name">@venueName</h1>
+                    @if (!string.IsNullOrWhiteSpace(address))
+                    {
+                        <p class="conf-venue-hero__address">@address</p>
+                    }
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="conf-page-header conf-container">
+                <h1 class="conf-page-header__title">@venueName</h1>
+                @if (!string.IsNullOrWhiteSpace(address))
+                {
+                    <p class="conf-venue-address">@address</p>
+                }
+            </div>
+        }
+
+        <div class="conf-container">
+
+            <!-- Description -->
+            @if (description != null)
+            {
+                <section class="conf-section conf-venue-description">
+                    <div class="conf-prose">@description</div>
+                </section>
+            }
+
+            <!-- Gallery -->
+            @if (gallery != null && gallery.Any())
+            {
+                <section class="conf-section conf-venue-gallery">
+                    <h2 class="conf-section__title">Gallery</h2>
+                    <div class="conf-gallery-grid">
+                        @foreach (var img in gallery)
+                        {
+                            <div class="conf-gallery-item">
+                                <img src="@img.Url()" alt="@venueName" loading="lazy" />
+                            </div>
+                        }
+                    </div>
+                </section>
+            }
+
+            <!-- Map -->
+            @if (!string.IsNullOrWhiteSpace(mapEmbedCode))
+            {
+                <section class="conf-section conf-venue-map">
+                    <h2 class="conf-section__title">Location</h2>
+                    @if (!string.IsNullOrWhiteSpace(address))
+                    {
+                        <p class="conf-venue-map__address">@address</p>
+                    }
+                    <div class="conf-map-embed">
+                        @Html.Raw(mapEmbedCode)
+                    </div>
+                </section>
+            }
+
+            <!-- Travel Info -->
+            @if (travelInfo != null)
+            {
+                <section class="conf-section conf-venue-travel">
+                    <h2 class="conf-section__title">Getting There</h2>
+                    <div class="conf-prose">@travelInfo</div>
+                </section>
+            }
+
+            <!-- Nearby Hotels -->
+            @if (nearbyHotels != null)
+            {
+                <section class="conf-section conf-venue-hotels">
+                    <h2 class="conf-section__title">Nearby Hotels</h2>
+                    <div class="conf-prose">@nearbyHotels</div>
+                </section>
+            }
+
+        </div>
+    </main>
+
+    <footer class="conf-footer">
+        <div class="conf-container conf-footer__inner">
+            <p class="conf-footer__name">@confName</p>
+        </div>
+    </footer>
+
+</body>
+</html>

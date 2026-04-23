@@ -1,0 +1,59 @@
+{
+  "$schema": "../../umbraco-package-schema.json",
+  "name": "SEO",
+  "version": "1.0.0",
+  "extensions": [
+    {
+      "type": "dashboard",
+      "alias": "SplatDev.SEO.Dashboard",
+      "name": "SEO Dashboard",
+      "element": "/App_Plugins/SEO/dist/seo-dashboard.element.js",
+      "elementName": "seo-dashboard",
+      "weight": 100,
+      "meta": {
+        "label": "#seo_dashboardLabel",
+        "pathname": "seo"
+      },
+      "conditions": [
+        {
+          "alias": "Umb.Condition.SectionAlias",
+          "match": "Umb.Section.Settings"
+        }
+      ]
+    },
+    {
+      "type": "localization",
+      "alias": "SplatDev.SEO.Localization.En",
+      "name": "SEO — English",
+      "meta": {
+        "culture": "en",
+        "localizations": {
+          "section": {
+            "seo_heading": "SEO Dashboard",
+            "seo_description": "SEO analysis and meta tag management",
+            "seo_analysis": "Analysis",
+            "seo_metaTags": "Meta Tags",
+            "seo_openGraph": "Open Graph"
+          }
+        }
+      }
+    },
+    {
+      "type": "localization",
+      "alias": "SplatDev.SEO.Localization.PtBr",
+      "name": "SEO — Português (Brasil)",
+      "meta": {
+        "culture": "pt-BR",
+        "localizations": {
+          "section": {
+            "seo_heading": "Painel SEO",
+            "seo_description": "Análise de SEO e gerenciamento de meta tags",
+            "seo_analysis": "Análise",
+            "seo_metaTags": "Meta Tags",
+            "seo_openGraph": "Open Graph"
+          }
+        }
+      }
+    }
+  ]
+}

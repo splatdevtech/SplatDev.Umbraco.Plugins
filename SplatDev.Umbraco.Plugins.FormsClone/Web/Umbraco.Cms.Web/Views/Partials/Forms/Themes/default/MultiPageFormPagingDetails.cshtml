@@ -1,0 +1,32 @@
+@using System.Text
+@model Umbraco.Forms.Web.Models.FormViewModel
+
+@{
+    var html = new StringBuilder();
+
+    string formatStringWithHtml = Model.PagingDetailsFormat
+        .Replace("{0}", "<span class=\"umbraco-forms-paging-count-number\">{0}</span>")
+        .Replace("{1}", "<span class=\"umbraco-forms-paging-count-number\">{1}</span>");
+    html.Append("<div class=\"umbraco-forms-paging-count\">");
+    html.AppendFormat(formatStringWithHtml, Model.PageNumber, Model.PageCount);
+    html.Append("</div>");
+
+    html.Append("<ol class=\"umbraco-forms-paging-captions\">");
+    for (int i = 0; i < Model.Pages.Count; i++)
+    {
+        html.AppendFormat(
+            "<li class=\"umbraco-forms-paging-captions-caption" + (Model.FormStep == i ? " umbraco-forms-paging-captions-caption-current" : string.Empty) + "\">{0}</li>",
+            Model.GetPageCaption(i));
+    }
+    if (Model.HasSummaryPage)
+    {
+        html.AppendFormat(
+            "<li class=\"umbraco-forms-paging-captions-caption\">{0}</li>",
+            @Model.SummaryCaption);
+    }
+    html.Append("</ol>");
+
+    <div class="umbraco-forms-paging">
+        @Html.Raw(html.ToString())
+    </div>
+}

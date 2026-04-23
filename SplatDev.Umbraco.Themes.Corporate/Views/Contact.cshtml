@@ -1,0 +1,250 @@
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@{
+    Layout = null;
+    var root = Model.AncestorOrSelf<Umbraco.Cms.Core.Models.PublishedContent.IPublishedContent>(1) ?? Model;
+    var companyName = root.Value<string>("companyName") ?? "Company";
+    var logo = root.Value<Umbraco.Cms.Core.Models.PublishedContent.IPublishedContent>("logo");
+
+    var pageTitle    = Model.Value<string>("pageTitle") ?? "Contact Us";
+    var intro        = Model.Value<string>("intro");
+    var email        = Model.Value<string>("email") ?? root.Value<string>("email");
+    var phone        = Model.Value<string>("phone") ?? root.Value<string>("phone");
+    var address      = Model.Value<string>("address") ?? root.Value<string>("address");
+    var mapEmbed     = Model.Value<string>("mapEmbedCode");
+    var formHeadline = Model.Value<string>("formHeadline") ?? "Send us a Message";
+    var successMsg   = Model.Value<string>("successMessage") ?? "Thank you! We'll be in touch shortly.";
+
+    var metaTitle = Model.Value<string>("metaTitle") ?? pageTitle;
+    var metaDesc  = Model.Value<string>("metaDescription");
+
+    var linkedIn  = root.Value<Umbraco.Cms.Core.Models.PublishedContent.IHtmlEncodedString>("linkedIn");
+    var twitter   = root.Value<Umbraco.Cms.Core.Models.PublishedContent.IHtmlEncodedString>("twitter");
+    var facebook  = root.Value<Umbraco.Cms.Core.Models.PublishedContent.IHtmlEncodedString>("facebook");
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@metaTitle – @companyName</title>
+    @if (!string.IsNullOrWhiteSpace(metaDesc)) { <meta name="description" content="@metaDesc" /> }
+    <link rel="stylesheet" href="/css/corporate-theme.css" />
+</head>
+<body class="corporate-theme contact-page">
+
+    <header class="site-header" role="banner">
+        <div class="container header-inner">
+            <a href="@root.Url()" class="site-logo-link" aria-label="@companyName home">
+                @if (logo != null) { <img src="@logo.Url()" alt="@companyName" class="site-logo" /> }
+                else { <span class="site-logo-text">@companyName</span> }
+            </a>
+            <nav class="main-nav" aria-label="Main navigation">
+                <ul>
+                    @foreach (var child in root.Children?.Where(c => !c.Value<bool>("hideFromNavigation"))
+                        ?? Enumerable.Empty<Umbraco.Cms.Core.Models.PublishedContent.IPublishedContent>())
+                    {
+                        <li><a href="@child.Url()" @(child.Id == Model.Id ? "aria-current='page'" : "")>@child.Name</a></li>
+                    }
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main id="main-content">
+
+        <section class="page-hero-section page-hero-section--short" aria-label="@pageTitle">
+            <div class="container page-hero-content">
+                <nav class="breadcrumb" aria-label="Breadcrumb">
+                    <ol>
+                        <li><a href="@root.Url()">Home</a></li>
+                        <li aria-current="page">@pageTitle</li>
+                    </ol>
+                </nav>
+                <h1 class="page-hero-headline">@pageTitle</h1>
+                @if (!string.IsNullOrWhiteSpace(intro))
+                {
+                    <p class="page-hero-subtext">@intro</p>
+                }
+            </div>
+        </section>
+
+        <section class="contact-section section" aria-label="Contact">
+            <div class="container contact-layout">
+
+                <!-- Contact Info -->
+                <aside class="contact-info-col" aria-label="Contact details">
+                    <h2 class="contact-info-title">Get in Touch</h2>
+
+                    @if (!string.IsNullOrWhiteSpace(email))
+                    {
+                        <div class="contact-info-item">
+                            <span class="contact-info-icon" aria-hidden="true">
+                                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5">
+                                    <rect x="2" y="4" width="16" height="12" rx="2"/>
+                                    <path d="M2 6l8 5 8-5"/>
+                                </svg>
+                            </span>
+                            <div>
+                                <strong>Email</strong>
+                                <a href="mailto:@email" class="contact-detail-link">@email</a>
+                            </div>
+                        </div>
+                    }
+
+                    @if (!string.IsNullOrWhiteSpace(phone))
+                    {
+                        <div class="contact-info-item">
+                            <span class="contact-info-icon" aria-hidden="true">
+                                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5">
+                                    <path d="M3 3a2 2 0 012-2h2l2 5-2 2a12 12 0 005 5l2-2 5 2v2a2 2 0 01-2 2C8 17 3 12 3 3z"/>
+                                </svg>
+                            </span>
+                            <div>
+                                <strong>Phone</strong>
+                                <a href="tel:@phone" class="contact-detail-link">@phone</a>
+                            </div>
+                        </div>
+                    }
+
+                    @if (!string.IsNullOrWhiteSpace(address))
+                    {
+                        <div class="contact-info-item">
+                            <span class="contact-info-icon" aria-hidden="true">
+                                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5">
+                                    <path d="M10 2a6 6 0 016 6c0 4-6 10-6 10S4 12 4 8a6 6 0 016-6z"/>
+                                    <circle cx="10" cy="8" r="2"/>
+                                </svg>
+                            </span>
+                            <div>
+                                <strong>Address</strong>
+                                <address class="contact-address">@address</address>
+                            </div>
+                        </div>
+                    }
+
+                    @if (linkedIn != null || twitter != null || facebook != null)
+                    {
+                        <div class="contact-social">
+                            <strong>Follow Us</strong>
+                            <div class="social-links">
+                                @if (linkedIn != null)
+                                {
+                                    <a href="@linkedIn.ToHtmlString()" class="social-link" target="_blank" rel="noopener" aria-label="LinkedIn">
+                                        <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M17 17h-3v-4.6c0-1.1-.4-1.9-1.4-1.9-.8 0-1.2.5-1.4 1-.1.2-.1.5-.1.8V17H8s.1-9 0-10h3v1.4c.4-.6 1.1-1.5 2.7-1.5 2 0 3.3 1.3 3.3 4.1V17zM4.4 5.6C3.4 5.6 2.7 5 2.7 4S3.5 2.4 4.4 2.4c1 0 1.6.6 1.6 1.6 0 .9-.6 1.6-1.6 1.6zM3 17V7h3v10H3z"/></svg>
+                                    </a>
+                                }
+                                @if (twitter != null)
+                                {
+                                    <a href="@twitter.ToHtmlString()" class="social-link" target="_blank" rel="noopener" aria-label="Twitter / X">
+                                        <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M17.3 3h-2.6L10 8.4 5.8 3H2.7L8.9 11.2 2.7 17h2.6l4.4-5 4.6 5h3L11.1 8.6 17.3 3z"/></svg>
+                                    </a>
+                                }
+                                @if (facebook != null)
+                                {
+                                    <a href="@facebook.ToHtmlString()" class="social-link" target="_blank" rel="noopener" aria-label="Facebook">
+                                        <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M17 1H3a2 2 0 00-2 2v14a2 2 0 002 2h7v-7H8V9h2V7c0-2.2 1.3-3.5 3.3-3.5.9 0 1.9.1 2.7.2V6h-1.8c-1 0-1.2.5-1.2 1.2V9h2.3l-.3 3H13v7h4a2 2 0 002-2V3a2 2 0 00-2-2z"/></svg>
+                                    </a>
+                                }
+                            </div>
+                        </div>
+                    }
+                </aside>
+
+                <!-- Contact Form -->
+                <div class="contact-form-col">
+                    <h2 class="contact-form-title">@formHeadline</h2>
+                    <form class="contact-form" id="contactForm" novalidate aria-label="Contact form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="cfName" class="form-label">Full Name <span aria-hidden="true">*</span></label>
+                                <input type="text" id="cfName" name="name" class="form-input" required autocomplete="name" />
+                                <span class="form-error" role="alert" id="cfNameError"></span>
+                            </div>
+                            <div class="form-group">
+                                <label for="cfEmail" class="form-label">Email Address <span aria-hidden="true">*</span></label>
+                                <input type="email" id="cfEmail" name="email" class="form-input" required autocomplete="email" />
+                                <span class="form-error" role="alert" id="cfEmailError"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="cfCompany" class="form-label">Company</label>
+                            <input type="text" id="cfCompany" name="company" class="form-input" autocomplete="organization" />
+                        </div>
+                        <div class="form-group">
+                            <label for="cfPhone" class="form-label">Phone Number</label>
+                            <input type="tel" id="cfPhone" name="phone" class="form-input" autocomplete="tel" />
+                        </div>
+                        <div class="form-group">
+                            <label for="cfSubject" class="form-label">Subject <span aria-hidden="true">*</span></label>
+                            <input type="text" id="cfSubject" name="subject" class="form-input" required />
+                            <span class="form-error" role="alert" id="cfSubjectError"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="cfMessage" class="form-label">Message <span aria-hidden="true">*</span></label>
+                            <textarea id="cfMessage" name="message" class="form-textarea" rows="6" required aria-describedby="cfMessageHint"></textarea>
+                            <span id="cfMessageHint" class="form-hint">Please describe how we can help you.</span>
+                            <span class="form-error" role="alert" id="cfMessageError"></span>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-checkbox">
+                                <input type="checkbox" id="cfConsent" name="consent" required />
+                                <span>I agree to the <a href="#" target="_blank" rel="noopener">Privacy Policy</a> <span aria-hidden="true">*</span></span>
+                            </label>
+                            <span class="form-error" role="alert" id="cfConsentError"></span>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-lg">Send Message</button>
+                        <div class="form-success" id="formSuccess" hidden role="alert">
+                            <span aria-hidden="true">&#10003;</span> @successMsg
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </section>
+
+        @if (!string.IsNullOrWhiteSpace(mapEmbed))
+        {
+            <section class="map-section" aria-label="Office location map">
+                <div class="map-embed-wrapper">
+                    @Html.Raw(mapEmbed)
+                </div>
+            </section>
+        }
+
+    </main>
+
+    @await Html.PartialAsync("_CorporateFooter", root)
+
+    <script>
+        document.getElementById('contactForm')?.addEventListener('submit', function (e) {
+            e.preventDefault();
+            let valid = true;
+            const required = ['cfName', 'cfEmail', 'cfSubject', 'cfMessage'];
+            required.forEach(id => {
+                const el = document.getElementById(id);
+                const err = document.getElementById(id + 'Error');
+                if (!el?.value.trim()) {
+                    if (err) err.textContent = 'This field is required.';
+                    el?.classList.add('input-error');
+                    valid = false;
+                } else {
+                    if (err) err.textContent = '';
+                    el?.classList.remove('input-error');
+                }
+            });
+            const consent = document.getElementById('cfConsent');
+            const consentErr = document.getElementById('cfConsentError');
+            if (!consent?.checked) {
+                if (consentErr) consentErr.textContent = 'You must agree to the Privacy Policy.';
+                valid = false;
+            } else {
+                if (consentErr) consentErr.textContent = '';
+            }
+            if (!valid) return;
+            // TODO: submit via fetch to your form handler endpoint
+            this.hidden = true;
+            document.getElementById('formSuccess').hidden = false;
+        });
+    </script>
+</body>
+</html>

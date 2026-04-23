@@ -1,0 +1,60 @@
+@using Umbraco.Extensions
+@using Umbraco.Forms.Web
+@using Umbraco.Forms.Web.Services
+@model Umbraco.Forms.Web.Models.FormViewModel
+@inject IFormThemeResolver FormThemeResolver
+@*
+    This view is used as the default render view for all forms, unless a theme is chosen, which contains a override of Render.cshtml.
+    Normally, you would not need to override this view, as you would have to replicate all functionality of this view seperately.
+*@
+
+@{
+    // Get the actual view to render the form
+    var formThemedView = FormThemeResolver.GetFormView(Model);
+
+    // Get the Script.cshtml view to render client-side assets
+    var formScriptView = FormThemeResolver.GetScriptView(Model);
+}
+
+@*
+    In case the form has been marked as submitted, the FormThemeResolver will return the Submitted.cshtml file and look for a custom view.
+    In case there is no view found, it will default to /Views/Partials/Forms/Themes/default/Submitted.cshtml, which will just display the standard message.
+*@
+@if (Model.SubmitHandled)
+{
+    await Html.RenderPartialAsync(formThemedView);
+}
+else
+{
+    // Standard form and wrapper
+    <div id="umbraco_form_@Model.FormClientId" class="umbraco-forms-form @Model.CssClass umbraco-forms-@Model.Theme">
+        @using (Html.BeginUmbracoForm<Umbraco.Forms.Web.Controllers.UmbracoFormsController>("HandleForm", null, Model.HtmlAttributes, method: FormMethod.Post, antiforgery: Model.RenderAntiForgeryToken))
+        {
+            // Standard form meta data
+            @Html.HiddenFor(x => Model.FormId, new { id = (string?)null })
+            @Html.HiddenFor(x => Model.FormName, new { id = (string?)null })
+            @Html.HiddenFor(x => Model.RecordId, new { id = (string?)null })
+            @Html.HiddenFor(x => Model.PreviousClicked, new { id = (string?)null })
+            @Html.HiddenFor(x => Model.Theme, new { id = (string?)null })
+            @Html.HiddenFor(x => Model.RedirectToPageId, new { id = (string?)null })
+
+            // These cannot use the HtmlHelper
+            <input type="hidden" name="FormStep" value="@Model.FormStep" />
+            <input type="hidden" name="RecordState" value="@Model.RecordState" />
+            @if (!string.IsNullOrEmpty(Model.AdditionalData))
+            {
+                <input type="hidden" name="AdditionalData" value="@Model.AdditionalData" />
+            }
+
+            // Render the form
+            await Html.RenderPartialAsync(formThemedView);
+        }
+    </div>
+}
+
+@* Form scripts *@
+@if (Model.RenderScriptFiles)
+{
+    // Render the Scripts.cshtml file to include standard conditionals and validation logic
+    await Html.RenderPartialAsync(formScriptView);
+}

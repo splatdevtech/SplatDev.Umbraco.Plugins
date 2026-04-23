@@ -1,0 +1,90 @@
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@{
+    Layout = null;
+    var root = Model.Root();
+    var confName = root?.Value<string>("confName") ?? "Conference";
+    var eventDate = root?.Value<DateTime?>("eventDate");
+    var location = root?.Value<string>("location") ?? string.Empty;
+
+    var pageTitle = Model.Value<string>("pageTitle") ?? "Register";
+    var intro = Model.Value<string>("intro") ?? string.Empty;
+    var registrationUrl = Model.Value<Umbraco.Cms.Core.Models.Link>("registrationUrl")
+        ?? root?.Value<Umbraco.Cms.Core.Models.Link>("registrationUrl");
+    var earlyBirdDeadline = Model.Value<DateTime?>("earlyBirdDeadline");
+    var earlyBirdStr = earlyBirdDeadline.HasValue ? earlyBirdDeadline.Value.ToString("MMMM d, yyyy") : string.Empty;
+    var eventDateStr = eventDate.HasValue ? eventDate.Value.ToString("MMMM d, yyyy") : string.Empty;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@pageTitle – @confName</title>
+    <link rel="stylesheet" href="/css/conference-theme.css" />
+</head>
+<body class="conf-registration-page">
+
+    <header class="conf-header">
+        <div class="conf-container conf-header__inner">
+            <a href="/" class="conf-header__brand"><span class="conf-header__name">@confName</span></a>
+        </div>
+    </header>
+
+    <main class="conf-main">
+        <div class="conf-container">
+
+            <div class="conf-page-header">
+                <h1 class="conf-page-header__title">@pageTitle</h1>
+                @if (!string.IsNullOrWhiteSpace(intro))
+                {
+                    <p class="conf-page-header__intro">@intro</p>
+                }
+            </div>
+
+            @if (!string.IsNullOrWhiteSpace(earlyBirdStr) && earlyBirdDeadline.HasValue && earlyBirdDeadline.Value > DateTime.UtcNow)
+            {
+                <div class="conf-alert conf-alert--accent">
+                    <strong>Early Bird Pricing</strong> ends @earlyBirdStr. Register now for the best price!
+                </div>
+            }
+
+            <div class="conf-registration-layout">
+                <div class="conf-registration-info">
+                    @if (!string.IsNullOrWhiteSpace(eventDateStr))
+                    {
+                        <div class="conf-info-card">
+                            <h3>Event Details</h3>
+                            <ul class="conf-info-list">
+                                <li><strong>Date:</strong> @eventDateStr</li>
+                                @if (!string.IsNullOrWhiteSpace(location))
+                                {
+                                    <li><strong>Location:</strong> @location</li>
+                                }
+                            </ul>
+                        </div>
+                    }
+                </div>
+                <div class="conf-registration-cta">
+                    @if (registrationUrl != null)
+                    {
+                        <div class="conf-register-box">
+                            <p class="conf-register-box__text">Secure your spot at @confName</p>
+                            <a href="@registrationUrl.Url" class="conf-btn conf-btn--hero conf-btn--full" target="@(registrationUrl.Target ?? "_self")">
+                                Register Now
+                            </a>
+                        </div>
+                    }
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="conf-footer">
+        <div class="conf-container conf-footer__inner">
+            <p class="conf-footer__name">@confName</p>
+        </div>
+    </footer>
+
+</body>
+</html>

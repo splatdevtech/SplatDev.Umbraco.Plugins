@@ -1,0 +1,24 @@
+@model FieldViewModel
+@using FormBuilder.Core.Extensions
+@using FormBuilder.Core.Models
+@using FormBuilder.Web.Extensions
+
+@{
+    var autocompleteAttribute = Model.GetSettingValue<string>("AutocompleteAttribute", string.Empty);
+    var numberOfRows = Model.GetSettingValue<int>("NumberOfRows", global::FormBuilder.Core.Providers.FieldTypes.Textarea.DefaultNumberOfRows);
+    var maxLength = Model.GetSettingValue<int>("MaximumLength", 0);
+}
+<textarea class="@Html.GetFormFieldClass(Model.FieldTypeName)"
+          name="@Model.Name"
+          id="@Model.Id"
+          data-umb="@Model.Id"
+          rows="@numberOfRows"
+          cols="20"
+@(string.IsNullOrEmpty(Model.PlaceholderText) == false ? $"placeholder=\"{Model.PlaceholderText}\"" : "")
+@(string.IsNullOrEmpty(autocompleteAttribute) == false ? $"autocomplete=\"{autocompleteAttribute}\"" : "")
+@(maxLength > 0 ? $"maxlength=\"{maxLength}\"" : "")
+@(Model.Mandatory || Model.Validate ? "data-val=\"true\"" : "")
+@(Model.Mandatory ? $"data-val-required=\"{Model.RequiredErrorMessage}\" aria-required=\"true\"" : "")
+@(Model.Validate ? $"data-val-regex=\"{Model.InvalidErrorMessage}\" data-val-regex-pattern=\"{Html.Raw(Model.Regex)}\"" : "")
+@(!string.IsNullOrEmpty(Model.ToolTip) ? $"aria-describedby=\"{(Model.Id)}_description\"" : "")">@Model.ValueAsHtmlString</textarea>
+

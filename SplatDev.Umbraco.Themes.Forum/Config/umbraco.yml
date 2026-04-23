@@ -1,0 +1,472 @@
+# Forum Theme – Umbraco Schema
+# Package: UmbracoCms.Themes.Forum v1.0.0
+# Plugin: SplatDev.Umbraco.Plugins.Yaml2Schema
+
+# ─────────────────────────────────────────────
+# DATA TYPES
+# ─────────────────────────────────────────────
+dataTypes:
+
+  # ── Text ──────────────────────────────────
+  - alias: textString
+    name: Text String
+    editorUiAlias: Umbraco.TextBox
+    config:
+      maxLength: 512
+
+  - alias: textStringShort
+    name: Text String (Short)
+    editorUiAlias: Umbraco.TextBox
+    config:
+      maxLength: 160
+
+  - alias: textArea
+    name: Text Area
+    editorUiAlias: Umbraco.TextArea
+    config:
+      maxChars: 2000
+
+  - alias: richTextEditor
+    name: Rich Text Editor
+    editorUiAlias: Umbraco.TinyMCE
+
+  # ── Media ─────────────────────────────────
+  - alias: imagePicker
+    name: Image Picker
+    editorUiAlias: Umbraco.MediaPicker3
+    config:
+      multiple: false
+      onlyImages: true
+
+  - alias: multiImagePicker
+    name: Multi Image Picker
+    editorUiAlias: Umbraco.MediaPicker3
+    config:
+      multiple: true
+      onlyImages: true
+
+  # ── Boolean ───────────────────────────────
+  - alias: toggle
+    name: Toggle
+    editorUiAlias: Umbraco.TrueFalse
+
+  # ── Numeric ───────────────────────────────
+  - alias: integerField
+    name: Integer
+    editorUiAlias: Umbraco.Integer
+
+  # ── Date ──────────────────────────────────
+  - alias: dateTimePicker
+    name: Date Time Picker
+    editorUiAlias: Umbraco.DateTime
+
+  # ── Pickers ───────────────────────────────
+  - alias: urlPicker
+    name: URL Picker
+    editorUiAlias: Umbraco.MultiUrlPicker
+    config:
+      maxNumberOfItems: 1
+
+  - alias: tags
+    name: Tags
+    editorUiAlias: Umbraco.Tags
+
+  # ── Dropdowns ─────────────────────────────
+  - alias: postStatus
+    name: Post Status
+    editorUiAlias: Umbraco.DropDown.Flexible
+    config:
+      multiple: false
+      items:
+        - Open
+        - Closed
+        - Pinned
+        - Archived
+
+  - alias: memberBadge
+    name: Member Badge
+    editorUiAlias: Umbraco.DropDown.Flexible
+    config:
+      multiple: false
+      items:
+        - New Member
+        - Member
+        - Regular
+        - Trusted
+        - Moderator
+        - Admin
+
+  # ── Block Lists ───────────────────────────
+  - alias: forumRulesBlockList
+    name: Forum Rules Block List
+    editorUiAlias: Umbraco.BlockList
+    valueType: NTEXT
+    config:
+      blocks:
+        - contentElementTypeAlias: forumRuleElement
+
+  - alias: moderatorsBlockList
+    name: Moderators Block List
+    editorUiAlias: Umbraco.BlockList
+    valueType: NTEXT
+    config:
+      blocks:
+        - contentElementTypeAlias: moderatorElement
+
+# ─────────────────────────────────────────────
+# DOCUMENT TYPES
+# ─────────────────────────────────────────────
+documentTypes:
+
+  # ── Element Types ─────────────────────────
+  - alias: forumRuleElement
+    name: Forum Rule
+    icon: icon-document
+    isElement: true
+    tabs:
+      - name: Content
+        properties:
+          - alias: ruleNumber
+            name: Rule Number
+            dataType: integerField
+          - alias: ruleTitle
+            name: Rule Title
+            dataType: textString
+          - alias: ruleText
+            name: Rule Text
+            dataType: textArea
+
+  - alias: moderatorElement
+    name: Moderator
+    icon: icon-user
+    isElement: true
+    tabs:
+      - name: Content
+        properties:
+          - alias: moderatorName
+            name: Moderator Name
+            dataType: textString
+          - alias: moderatorUsername
+            name: Username
+            dataType: textStringShort
+          - alias: since
+            name: Moderating Since
+            dataType: dateTimePicker
+
+  # ── Forum Root ────────────────────────────
+  - alias: forumRoot
+    name: Forum Root
+    icon: icon-home
+    allowAsRoot: true
+    allowedChildTypes:
+      - forumCategory
+      - forumAnnouncements
+      - forumPage
+    allowedTemplates:
+      - ForumRoot
+    defaultTemplate: ForumRoot
+    tabs:
+      - name: Forum Settings
+        properties:
+          - alias: forumName
+            name: Forum Name
+            dataType: textString
+            required: true
+            description: "The display name of the forum community"
+          - alias: tagline
+            name: Tagline
+            dataType: textStringShort
+            description: "Short tagline shown beneath the forum name"
+          - alias: logo
+            name: Logo
+            dataType: imagePicker
+          - alias: description
+            name: Description
+            dataType: richTextEditor
+            description: "Welcome message or about section"
+          - alias: registrationEnabled
+            name: Registration Enabled
+            dataType: toggle
+            description: "Allow new members to register"
+          - alias: moderationEnabled
+            name: Moderation Enabled
+            dataType: toggle
+            description: "Require mod approval for new posts"
+          - alias: rules
+            name: Forum Rules
+            dataType: forumRulesBlockList
+            description: "Community rules shown to all members"
+      - name: Contact
+        properties:
+          - alias: email
+            name: Contact Email
+            dataType: textStringShort
+          - alias: discordUrl
+            name: Discord URL
+            dataType: urlPicker
+          - alias: slackUrl
+            name: Slack URL
+            dataType: urlPicker
+
+  # ── Forum Category ────────────────────────
+  - alias: forumCategory
+    name: Forum Category
+    icon: icon-folder
+    allowedChildTypes:
+      - forumSubcategory
+      - forumThread
+    allowedTemplates:
+      - ForumCategory
+    defaultTemplate: ForumCategory
+    tabs:
+      - name: Content
+        properties:
+          - alias: categoryName
+            name: Category Name
+            dataType: textString
+            required: true
+          - alias: description
+            name: Description
+            dataType: textArea
+          - alias: icon
+            name: Icon CSS Class
+            dataType: textStringShort
+            description: "Icon class name, e.g. icon-chat"
+          - alias: color
+            name: Accent Color
+            dataType: textStringShort
+            description: "Hex color for category accent, e.g. #4a90d9"
+          - alias: sortOrder
+            name: Sort Order
+            dataType: integerField
+          - alias: isPrivate
+            name: Is Private
+            dataType: toggle
+            description: "Private categories are only visible to logged-in members"
+          - alias: moderators
+            name: Category Moderators
+            dataType: moderatorsBlockList
+
+  # ── Forum Subcategory ─────────────────────
+  - alias: forumSubcategory
+    name: Forum Subcategory
+    icon: icon-folder-close
+    allowedChildTypes:
+      - forumThread
+    allowedTemplates:
+      - ForumCategory
+    defaultTemplate: ForumCategory
+    tabs:
+      - name: Content
+        properties:
+          - alias: subcategoryName
+            name: Subcategory Name
+            dataType: textString
+            required: true
+          - alias: description
+            name: Description
+            dataType: textArea
+          - alias: parentCategory
+            name: Parent Category
+            dataType: urlPicker
+
+  # ── Forum Thread ──────────────────────────
+  - alias: forumThread
+    name: Forum Thread
+    icon: icon-chat
+    allowedChildTypes: []
+    allowedTemplates:
+      - ForumThread
+    defaultTemplate: ForumThread
+    tabs:
+      - name: Thread
+        properties:
+          - alias: title
+            name: Title
+            dataType: textString
+            required: true
+          - alias: body
+            name: Body
+            dataType: richTextEditor
+            required: true
+          - alias: authorUsername
+            name: Author Username
+            dataType: textStringShort
+          - alias: authorDisplayName
+            name: Author Display Name
+            dataType: textStringShort
+          - alias: createdDate
+            name: Created Date
+            dataType: dateTimePicker
+          - alias: lastReplyDate
+            name: Last Reply Date
+            dataType: dateTimePicker
+          - alias: replyCount
+            name: Reply Count
+            dataType: integerField
+          - alias: viewCount
+            name: View Count
+            dataType: integerField
+          - alias: status
+            name: Status
+            dataType: postStatus
+          - alias: isPinned
+            name: Is Pinned
+            dataType: toggle
+          - alias: tags
+            name: Tags
+            dataType: tags
+      - name: Media
+        properties:
+          - alias: attachments
+            name: Attachments
+            dataType: multiImagePicker
+
+  # ── Forum Page ────────────────────────────
+  - alias: forumPage
+    name: Forum Page
+    icon: icon-document
+    allowedChildTypes: []
+    allowedTemplates:
+      - ForumPage
+    defaultTemplate: ForumPage
+    tabs:
+      - name: Content
+        properties:
+          - alias: pageTitle
+            name: Page Title
+            dataType: textString
+            required: true
+          - alias: body
+            name: Body
+            dataType: richTextEditor
+
+  # ── Forum Announcements ───────────────────
+  - alias: forumAnnouncements
+    name: Forum Announcements
+    icon: icon-megaphone
+    allowedChildTypes:
+      - forumAnnouncement
+    allowedTemplates:
+      - ForumAnnouncements
+    defaultTemplate: ForumAnnouncements
+    tabs:
+      - name: Content
+        properties:
+          - alias: pageTitle
+            name: Page Title
+            dataType: textString
+            required: true
+
+  # ── Forum Announcement ────────────────────
+  - alias: forumAnnouncement
+    name: Forum Announcement
+    icon: icon-alert
+    allowedChildTypes: []
+    tabs:
+      - name: Content
+        properties:
+          - alias: title
+            name: Title
+            dataType: textString
+            required: true
+          - alias: body
+            name: Body
+            dataType: richTextEditor
+          - alias: publishDate
+            name: Publish Date
+            dataType: dateTimePicker
+          - alias: expiryDate
+            name: Expiry Date
+            dataType: dateTimePicker
+          - alias: priority
+            name: Priority
+            dataType: integerField
+            description: "Higher number = higher priority"
+          - alias: isPinned
+            name: Is Pinned
+            dataType: toggle
+
+  # ── Forum User Profile ────────────────────
+  - alias: forumUserProfile
+    name: Forum User Profile
+    icon: icon-user
+    allowedChildTypes: []
+    allowedTemplates:
+      - ForumUserProfile
+    defaultTemplate: ForumUserProfile
+    tabs:
+      - name: Profile
+        properties:
+          - alias: username
+            name: Username
+            dataType: textStringShort
+            required: true
+          - alias: displayName
+            name: Display Name
+            dataType: textStringShort
+          - alias: bio
+            name: Bio
+            dataType: textArea
+          - alias: avatar
+            name: Avatar
+            dataType: imagePicker
+          - alias: joinDate
+            name: Join Date
+            dataType: dateTimePicker
+          - alias: badge
+            name: Badge
+            dataType: memberBadge
+          - alias: isVerified
+            name: Is Verified
+            dataType: toggle
+      - name: Stats
+        properties:
+          - alias: postCount
+            name: Post Count
+            dataType: integerField
+          - alias: reputation
+            name: Reputation
+            dataType: integerField
+          - alias: lastActive
+            name: Last Active
+            dataType: dateTimePicker
+      - name: Social
+        properties:
+          - alias: website
+            name: Website
+            dataType: urlPicker
+          - alias: github
+            name: GitHub Username
+            dataType: textStringShort
+          - alias: twitter
+            name: Twitter / X Handle
+            dataType: textStringShort
+
+# ─────────────────────────────────────────────
+# TEMPLATES
+# ─────────────────────────────────────────────
+templates:
+  - alias: ForumRoot
+    name: Forum Root
+    filePath: "~/Views/ForumRoot.cshtml"
+
+  - alias: ForumCategory
+    name: Forum Category
+    filePath: "~/Views/ForumCategory.cshtml"
+
+  - alias: ForumThread
+    name: Forum Thread
+    filePath: "~/Views/ForumThread.cshtml"
+
+  - alias: ForumPage
+    name: Forum Page
+    filePath: "~/Views/ForumPage.cshtml"
+
+  - alias: ForumUserProfile
+    name: Forum User Profile
+    filePath: "~/Views/ForumUserProfile.cshtml"
+
+  - alias: ForumAnnouncements
+    name: Forum Announcements
+    filePath: "~/Views/ForumAnnouncements.cshtml"

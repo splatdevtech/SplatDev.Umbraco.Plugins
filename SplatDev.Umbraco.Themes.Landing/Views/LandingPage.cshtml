@@ -1,0 +1,480 @@
+@using Umbraco.Cms.Web.Common.PublishedModels
+@using Umbraco.Cms.Core.Models.PublishedContent
+@using Umbraco.Extensions
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@{
+    Layout = null; // Landing pages own their full HTML structure
+
+    var metaTitle = Model.Value<string>("metaTitle") ?? Model.Name;
+    var metaDescription = Model.Value<string>("metaDescription");
+    var canonical = Model.Value<string>("canonical") ?? Model.Url(mode: UrlMode.Absolute);
+
+    // Hero
+    var heroHeadline = Model.Value<string>("heroHeadline");
+    var heroSubheadline = Model.Value<string>("heroSubheadline");
+    var heroImage = Model.Value<IPublishedContent>("heroImage");
+    var heroCta1Text = Model.Value<string>("heroCta1Text");
+    var heroCta1Url = Model.Value<Umbraco.Cms.Core.Models.MultiUrlPicker.Link>("heroCta1Url");
+    var heroCta2Text = Model.Value<string>("heroCta2Text");
+    var heroCta2Url = Model.Value<Umbraco.Cms.Core.Models.MultiUrlPicker.Link>("heroCta2Url");
+    var heroVideoUrl = Model.Value<Umbraco.Cms.Core.Models.MultiUrlPicker.Link>("heroVideoUrl");
+
+    // Features
+    var featuresHeadline = Model.Value<string>("featuresHeadline");
+    var featuresSubtext = Model.Value<string>("featuresSubtext");
+    var featuresList = Model.Value<Umbraco.Cms.Core.Models.Blocks.BlockListModel>("featuresList");
+
+    // Social Proof
+    var trustLogosHeadline = Model.Value<string>("trustLogosHeadline");
+    var trustLogos = Model.Value<IEnumerable<IPublishedContent>>("trustLogos");
+    var testimonialsHeadline = Model.Value<string>("testimonialsHeadline");
+    var testimonialsList = Model.Value<Umbraco.Cms.Core.Models.Blocks.BlockListModel>("testimonialsList");
+    var countersHeadline = Model.Value<string>("countersHeadline");
+    var countersList = Model.Value<Umbraco.Cms.Core.Models.Blocks.BlockListModel>("countersList");
+
+    // Pricing
+    var pricingHeadline = Model.Value<string>("pricingHeadline");
+    var pricingSubtext = Model.Value<string>("pricingSubtext");
+    var showPricing = Model.Value<bool>("showPricing");
+    var pricingPlans = Model.Value<Umbraco.Cms.Core.Models.Blocks.BlockListModel>("pricingPlans");
+
+    // FAQ
+    var faqHeadline = Model.Value<string>("faqHeadline");
+    var faqList = Model.Value<Umbraco.Cms.Core.Models.Blocks.BlockListModel>("faqList");
+
+    // CTA
+    var ctaHeadline = Model.Value<string>("ctaHeadline");
+    var ctaText = Model.Value<string>("ctaText");
+    var ctaButtonText = Model.Value<string>("ctaButtonText");
+    var ctaButtonUrl = Model.Value<Umbraco.Cms.Core.Models.MultiUrlPicker.Link>("ctaButtonUrl");
+    var ctaBackground = Model.Value<IPublishedContent>("ctaBackground");
+
+    bool hasHeroCta1 = !string.IsNullOrWhiteSpace(heroCta1Text) && heroCta1Url != null;
+    bool hasHeroCta2 = !string.IsNullOrWhiteSpace(heroCta2Text) && heroCta2Url != null;
+    bool hasHeroVideo = heroVideoUrl != null && !string.IsNullOrWhiteSpace(heroVideoUrl.Url);
+}
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@metaTitle</title>
+    @if (!string.IsNullOrWhiteSpace(metaDescription))
+    {
+        <meta name="description" content="@metaDescription" />
+    }
+    <link rel="canonical" href="@canonical" />
+    <meta property="og:title" content="@metaTitle" />
+    @if (!string.IsNullOrWhiteSpace(metaDescription))
+    {
+        <meta property="og:description" content="@metaDescription" />
+    }
+    @if (heroImage != null)
+    {
+        <meta property="og:image" content="@heroImage.Url(mode: UrlMode.Absolute)" />
+    }
+    <link rel="stylesheet" href="/css/landing-theme.css" />
+</head>
+<body class="landing-page">
+
+    <header class="lp-header" role="banner">
+        <div class="lp-header__inner container">
+            <a class="lp-header__logo" href="/">Home</a>
+        </div>
+    </header>
+
+    <main id="main-content">
+
+        <!-- HERO SECTION -->
+        <section class="lp-hero @(hasHeroVideo ? "lp-hero--video" : "")"
+                 aria-label="Hero"
+                 @(heroImage != null && !hasHeroVideo ? $"style=\"background-image:url('{heroImage.Url()}')\"" : "")>
+            @if (hasHeroVideo)
+            {
+                <div class="lp-hero__video-wrapper" aria-hidden="true">
+                    <video class="lp-hero__video" autoplay muted loop playsinline
+                           poster="@(heroImage?.Url() ?? "")">
+                        <source src="@heroVideoUrl!.Url" type="video/mp4" />
+                    </video>
+                </div>
+            }
+            <div class="lp-hero__overlay" aria-hidden="true"></div>
+            <div class="lp-hero__content container">
+                @if (!string.IsNullOrWhiteSpace(heroHeadline))
+                {
+                    <h1 class="lp-hero__headline">@heroHeadline</h1>
+                }
+                @if (!string.IsNullOrWhiteSpace(heroSubheadline))
+                {
+                    <p class="lp-hero__subheadline">@heroSubheadline</p>
+                }
+                @if (hasHeroCta1 || hasHeroCta2)
+                {
+                    <div class="lp-hero__ctas">
+                        @if (hasHeroCta1)
+                        {
+                            <a class="btn btn--primary btn--lg lp-hero__cta"
+                               href="@heroCta1Url!.Url"
+                               @(heroCta1Url.Target == "_blank" ? "target=\"_blank\" rel=\"noopener noreferrer\"" : "")>
+                                @heroCta1Text
+                            </a>
+                        }
+                        @if (hasHeroCta2)
+                        {
+                            <a class="btn btn--outline btn--lg lp-hero__cta"
+                               href="@heroCta2Url!.Url"
+                               @(heroCta2Url.Target == "_blank" ? "target=\"_blank\" rel=\"noopener noreferrer\"" : "")>
+                                @heroCta2Text
+                            </a>
+                        }
+                    </div>
+                }
+            </div>
+        </section>
+
+        <!-- FEATURES SECTION -->
+        @if (featuresList != null && featuresList.Any())
+        {
+            <section class="lp-features" aria-label="Features">
+                <div class="container">
+                    @if (!string.IsNullOrWhiteSpace(featuresHeadline))
+                    {
+                        <h2 class="lp-section__headline">@featuresHeadline</h2>
+                    }
+                    @if (!string.IsNullOrWhiteSpace(featuresSubtext))
+                    {
+                        <p class="lp-section__subtext">@featuresSubtext</p>
+                    }
+                    <div class="lp-features__grid">
+                        @foreach (var item in featuresList)
+                        {
+                            var icon = item.Content.Value<string>("icon");
+                            var featureTitle = item.Content.Value<string>("title");
+                            var description = item.Content.Value<string>("description");
+
+                            <div class="feature-card">
+                                @if (!string.IsNullOrWhiteSpace(icon))
+                                {
+                                    <div class="feature-card__icon" aria-hidden="true">
+                                        <span class="@icon"></span>
+                                    </div>
+                                }
+                                @if (!string.IsNullOrWhiteSpace(featureTitle))
+                                {
+                                    <h3 class="feature-card__title">@featureTitle</h3>
+                                }
+                                @if (!string.IsNullOrWhiteSpace(description))
+                                {
+                                    <p class="feature-card__description">@description</p>
+                                }
+                            </div>
+                        }
+                    </div>
+                </div>
+            </section>
+        }
+
+        <!-- SOCIAL PROOF SECTION -->
+        @{
+            bool hasTrustLogos = trustLogos != null && trustLogos.Any();
+            bool hasTestimonials = testimonialsList != null && testimonialsList.Any();
+            bool hasCounters = countersList != null && countersList.Any();
+        }
+        @if (hasTrustLogos || hasTestimonials || hasCounters)
+        {
+            <section class="lp-social-proof" aria-label="Social proof">
+                <div class="container">
+
+                    @if (hasTrustLogos)
+                    {
+                        <div class="lp-trust-logos">
+                            @if (!string.IsNullOrWhiteSpace(trustLogosHeadline))
+                            {
+                                <p class="lp-trust-logos__headline">@trustLogosHeadline</p>
+                            }
+                            <div class="lp-trust-logos__grid" aria-label="Partner logos">
+                                @foreach (var logo in trustLogos!)
+                                {
+                                    <img class="lp-trust-logos__logo"
+                                         src="@logo.Url()"
+                                         alt="@logo.Name"
+                                         loading="lazy"
+                                         width="140" height="60" />
+                                }
+                            </div>
+                        </div>
+                    }
+
+                    @if (hasCounters)
+                    {
+                        <div class="lp-counters">
+                            @if (!string.IsNullOrWhiteSpace(countersHeadline))
+                            {
+                                <h2 class="lp-section__headline">@countersHeadline</h2>
+                            }
+                            <div class="lp-counters__grid">
+                                @foreach (var counter in countersList!)
+                                {
+                                    var cValue = counter.Content.Value<string>("value");
+                                    var cLabel = counter.Content.Value<string>("label");
+                                    var cSuffix = counter.Content.Value<string>("suffix");
+
+                                    <div class="counter-item">
+                                        <span class="counter-item__value js-counter"
+                                              data-target="@cValue">
+                                            @cValue@cSuffix
+                                        </span>
+                                        <span class="counter-item__label">@cLabel</span>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    }
+
+                    @if (hasTestimonials)
+                    {
+                        <div class="lp-testimonials">
+                            @if (!string.IsNullOrWhiteSpace(testimonialsHeadline))
+                            {
+                                <h2 class="lp-section__headline">@testimonialsHeadline</h2>
+                            }
+                            <div class="lp-testimonials__grid">
+                                @foreach (var item in testimonialsList!)
+                                {
+                                    var quote = item.Content.Value<string>("quote");
+                                    var tAuthor = item.Content.Value<string>("authorName");
+                                    var tRole = item.Content.Value<string>("authorRole");
+                                    var tPhoto = item.Content.Value<IPublishedContent>("authorPhoto");
+                                    var tRating = item.Content.Value<int>("rating");
+
+                                    <blockquote class="testimonial-card" itemscope itemtype="https://schema.org/Review">
+                                        @if (tRating > 0)
+                                        {
+                                            <div class="testimonial-card__stars" aria-label="@tRating out of 5 stars">
+                                                @for (int s = 1; s <= 5; s++)
+                                                {
+                                                    <span class="testimonial-card__star @(s <= tRating ? "testimonial-card__star--filled" : "")" aria-hidden="true">&#9733;</span>
+                                                }
+                                            </div>
+                                        }
+                                        @if (!string.IsNullOrWhiteSpace(quote))
+                                        {
+                                            <p class="testimonial-card__quote" itemprop="reviewBody">&ldquo;@quote&rdquo;</p>
+                                        }
+                                        <footer class="testimonial-card__footer">
+                                            @if (tPhoto != null)
+                                            {
+                                                <img class="testimonial-card__photo"
+                                                     src="@tPhoto.Url()"
+                                                     alt="@tAuthor"
+                                                     width="48" height="48"
+                                                     loading="lazy" />
+                                            }
+                                            <div class="testimonial-card__author">
+                                                @if (!string.IsNullOrWhiteSpace(tAuthor))
+                                                {
+                                                    <cite class="testimonial-card__name" itemprop="author">@tAuthor</cite>
+                                                }
+                                                @if (!string.IsNullOrWhiteSpace(tRole))
+                                                {
+                                                    <span class="testimonial-card__role">@tRole</span>
+                                                }
+                                            </div>
+                                        </footer>
+                                    </blockquote>
+                                }
+                            </div>
+                        </div>
+                    }
+
+                </div>
+            </section>
+        }
+
+        <!-- PRICING SECTION -->
+        @if (showPricing && pricingPlans != null && pricingPlans.Any())
+        {
+            <section class="lp-pricing" aria-label="Pricing">
+                <div class="container">
+                    @if (!string.IsNullOrWhiteSpace(pricingHeadline))
+                    {
+                        <h2 class="lp-section__headline">@pricingHeadline</h2>
+                    }
+                    @if (!string.IsNullOrWhiteSpace(pricingSubtext))
+                    {
+                        <p class="lp-section__subtext">@pricingSubtext</p>
+                    }
+                    <div class="lp-pricing__grid">
+                        @foreach (var plan in pricingPlans)
+                        {
+                            var planName = plan.Content.Value<string>("planName");
+                            var price = plan.Content.Value<string>("price");
+                            var pricePeriod = plan.Content.Value<string>("pricePeriod");
+                            var currency = plan.Content.Value<string>("currency");
+                            var highlighted = plan.Content.Value<bool>("highlighted");
+                            var features = plan.Content.Value<Umbraco.Cms.Core.Models.Blocks.BlockListModel>("features");
+                            var planCtaText = plan.Content.Value<string>("ctaText");
+                            var planCtaUrl = plan.Content.Value<Umbraco.Cms.Core.Models.MultiUrlPicker.Link>("ctaUrl");
+
+                            <div class="pricing-card @(highlighted ? "pricing-card--highlighted" : "")">
+                                @if (highlighted)
+                                {
+                                    <div class="pricing-card__badge">Most Popular</div>
+                                }
+                                <div class="pricing-card__header">
+                                    <h3 class="pricing-card__name">@planName</h3>
+                                    <div class="pricing-card__price-block">
+                                        @if (!string.IsNullOrWhiteSpace(currency))
+                                        {
+                                            <span class="pricing-card__currency">@currency</span>
+                                        }
+                                        <span class="pricing-card__price">@price</span>
+                                        @if (!string.IsNullOrWhiteSpace(pricePeriod))
+                                        {
+                                            <span class="pricing-card__period">@pricePeriod</span>
+                                        }
+                                    </div>
+                                </div>
+                                @if (features != null && features.Any())
+                                {
+                                    <ul class="pricing-card__features">
+                                        @foreach (var feat in features)
+                                        {
+                                            var featText = feat.Content.Value<string>("featureText");
+                                            var included = feat.Content.Value<bool>("included");
+                                            <li class="pricing-card__feature @(included ? "pricing-card__feature--included" : "pricing-card__feature--excluded")">
+                                                <span class="pricing-card__feature-icon" aria-hidden="true">
+                                                    @(included ? "✓" : "✗")
+                                                </span>
+                                                @featText
+                                            </li>
+                                        }
+                                    </ul>
+                                }
+                                @if (!string.IsNullOrWhiteSpace(planCtaText) && planCtaUrl != null)
+                                {
+                                    <div class="pricing-card__cta">
+                                        <a class="btn @(highlighted ? "btn--primary" : "btn--outline") btn--full"
+                                           href="@planCtaUrl.Url"
+                                           @(planCtaUrl.Target == "_blank" ? "target=\"_blank\" rel=\"noopener noreferrer\"" : "")>
+                                            @planCtaText
+                                        </a>
+                                    </div>
+                                }
+                            </div>
+                        }
+                    </div>
+                </div>
+            </section>
+        }
+
+        <!-- FAQ SECTION -->
+        @if (faqList != null && faqList.Any())
+        {
+            <section class="lp-faq" aria-label="Frequently Asked Questions">
+                <div class="container">
+                    @if (!string.IsNullOrWhiteSpace(faqHeadline))
+                    {
+                        <h2 class="lp-section__headline">@faqHeadline</h2>
+                    }
+                    <div class="faq-list" itemscope itemtype="https://schema.org/FAQPage">
+                        @{int faqIndex = 0;}
+                        @foreach (var item in faqList)
+                        {
+                            var question = item.Content.Value<string>("question");
+                            var answer = item.Content.Value<string>("answer");
+                            faqIndex++;
+                            <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+                                <label class="faq-item__question" for="faq-@faqIndex" itemprop="name">
+                                    @question
+                                    <span class="faq-item__icon" aria-hidden="true"></span>
+                                </label>
+                                <input class="faq-item__toggle" type="checkbox" id="faq-@faqIndex"
+                                       aria-expanded="false" role="button" />
+                                <div class="faq-item__answer" itemscope itemprop="acceptedAnswer"
+                                     itemtype="https://schema.org/Answer">
+                                    <div class="faq-item__answer-body" itemprop="text">
+                                        @answer
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </section>
+        }
+
+        <!-- CTA BANNER SECTION -->
+        @if (!string.IsNullOrWhiteSpace(ctaHeadline) || !string.IsNullOrWhiteSpace(ctaButtonText))
+        {
+            <section class="lp-cta-banner"
+                     aria-label="Call to action"
+                     @(ctaBackground != null ? $"style=\"background-image:url('{ctaBackground.Url()}')\"" : "")>
+                <div class="lp-cta-banner__overlay" aria-hidden="true"></div>
+                <div class="lp-cta-banner__content container">
+                    @if (!string.IsNullOrWhiteSpace(ctaHeadline))
+                    {
+                        <h2 class="lp-cta-banner__headline">@ctaHeadline</h2>
+                    }
+                    @if (!string.IsNullOrWhiteSpace(ctaText))
+                    {
+                        <p class="lp-cta-banner__text">@ctaText</p>
+                    }
+                    @if (!string.IsNullOrWhiteSpace(ctaButtonText) && ctaButtonUrl != null)
+                    {
+                        <a class="btn btn--primary btn--lg lp-cta-banner__btn"
+                           href="@ctaButtonUrl.Url"
+                           @(ctaButtonUrl.Target == "_blank" ? "target=\"_blank\" rel=\"noopener noreferrer\"" : "")>
+                            @ctaButtonText
+                        </a>
+                    }
+                </div>
+            </section>
+        }
+
+    </main>
+
+    <footer class="lp-footer" role="contentinfo">
+        <div class="container">
+            <p class="lp-footer__copy">&copy; @DateTime.Now.Year — All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Animate counters on scroll
+        (function () {
+            var counters = document.querySelectorAll('.js-counter');
+            if (!counters.length) return;
+
+            var observer = new IntersectionObserver(function (entries) {
+                entries.forEach(function (entry) {
+                    if (!entry.isIntersecting) return;
+                    var el = entry.target;
+                    var target = parseFloat(el.dataset.target);
+                    if (isNaN(target)) return;
+                    var start = 0;
+                    var duration = 1800;
+                    var startTime = null;
+                    function step(timestamp) {
+                        if (!startTime) startTime = timestamp;
+                        var progress = Math.min((timestamp - startTime) / duration, 1);
+                        el.textContent = Math.floor(progress * target).toLocaleString();
+                        if (progress < 1) requestAnimationFrame(step);
+                    }
+                    requestAnimationFrame(step);
+                    observer.unobserve(el);
+                });
+            }, { threshold: 0.3 });
+
+            counters.forEach(function (c) { observer.observe(c); });
+        })();
+
+        // FAQ accordion keyboard support
+        document.querySelectorAll('.faq-item__toggle').forEach(function (toggle) {
+            toggle.addEventListener('change', function () {
+                this.setAttribute('aria-expanded', this.checked ? 'true' : 'false');
+            });
+        });
+    </script>
+</body>
+</html>

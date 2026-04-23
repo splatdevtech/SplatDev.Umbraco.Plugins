@@ -1,0 +1,220 @@
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@{
+    Layout = null;
+    var root = Model.AncestorOrSelf<Umbraco.Cms.Core.Models.PublishedContent.IPublishedContent>(1) ?? Model;
+    var companyName = root.Value<string>("companyName") ?? "Company";
+    var logo = root.Value<Umbraco.Cms.Core.Models.PublishedContent.IPublishedContent>("logo");
+
+    var heroHeadline = Model.Value<string>("heroHeadline") ?? "About Us";
+    var heroText     = Model.Value<string>("heroText");
+    var heroImage    = Model.Value<Umbraco.Cms.Core.Models.PublishedContent.IPublishedContent>("heroImage");
+
+    var missionTitle = Model.Value<string>("missionTitle") ?? "Our Mission";
+    var missionText  = Model.Value<string>("missionText");
+    var visionTitle  = Model.Value<string>("visionTitle") ?? "Our Vision";
+    var visionText   = Model.Value<string>("visionText");
+
+    var historyTitle  = Model.Value<string>("historyTitle") ?? "Our Story";
+    var timelineItems = Model.Value<Umbraco.Cms.Core.Models.Blocks.BlockListModel>("timelineItems");
+
+    var leadershipTitle = Model.Value<string>("leadershipTitle") ?? "Our Leadership";
+    var leadershipText  = Model.Value<string>("leadershipText");
+
+    var metaTitle = Model.Value<string>("metaTitle") ?? heroHeadline;
+    var metaDesc  = Model.Value<string>("metaDescription");
+
+    // Team members from sibling teamPage
+    var teamPage = root.Children?.FirstOrDefault(c => c.ContentType.Alias == "teamPage");
+    var teamMembers = teamPage?.Value<Umbraco.Cms.Core.Models.Blocks.BlockListModel>("teamMembers");
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@metaTitle – @companyName</title>
+    @if (!string.IsNullOrWhiteSpace(metaDesc)) { <meta name="description" content="@metaDesc" /> }
+    <link rel="stylesheet" href="/css/corporate-theme.css" />
+</head>
+<body class="corporate-theme about-page">
+
+    <header class="site-header" role="banner">
+        <div class="container header-inner">
+            <a href="@root.Url()" class="site-logo-link" aria-label="@companyName home">
+                @if (logo != null) { <img src="@logo.Url()" alt="@companyName" class="site-logo" /> }
+                else { <span class="site-logo-text">@companyName</span> }
+            </a>
+            <nav class="main-nav" aria-label="Main navigation">
+                <ul>
+                    @foreach (var child in root.Children?.Where(c => !c.Value<bool>("hideFromNavigation"))
+                        ?? Enumerable.Empty<Umbraco.Cms.Core.Models.PublishedContent.IPublishedContent>())
+                    {
+                        <li><a href="@child.Url()" @(child.Id == Model.Id ? "aria-current='page'" : "")>@child.Name</a></li>
+                    }
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main id="main-content">
+
+        <!-- PAGE HERO -->
+        <section class="page-hero-section @(heroImage != null ? "page-hero-section--has-image" : "")"
+                 @(heroImage != null ? $"style=\"background-image:url('{heroImage.Url()}')\"" : "")
+                 aria-label="@heroHeadline">
+            @if (heroImage != null) { <div class="hero-overlay" aria-hidden="true"></div> }
+            <div class="container page-hero-content">
+                <nav class="breadcrumb" aria-label="Breadcrumb">
+                    <ol>
+                        <li><a href="@root.Url()">Home</a></li>
+                        <li aria-current="page">@heroHeadline</li>
+                    </ol>
+                </nav>
+                <h1 class="page-hero-headline">@heroHeadline</h1>
+                @if (!string.IsNullOrWhiteSpace(heroText))
+                {
+                    <p class="page-hero-subtext">@heroText</p>
+                }
+            </div>
+        </section>
+
+        <!-- MISSION / VISION -->
+        @if (!string.IsNullOrWhiteSpace(missionText) || !string.IsNullOrWhiteSpace(visionText))
+        {
+            <section class="mission-vision-section section" aria-label="Mission and Vision">
+                <div class="container">
+                    <div class="mission-vision-grid">
+                        @if (!string.IsNullOrWhiteSpace(missionText))
+                        {
+                            <div class="mv-card mv-card--mission">
+                                <div class="mv-card-icon" aria-hidden="true">
+                                    <svg width="36" height="36" viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="2">
+                                        <circle cx="18" cy="18" r="14"/>
+                                        <path d="M18 8v10l6 4"/>
+                                    </svg>
+                                </div>
+                                <h2 class="mv-card-title">@missionTitle</h2>
+                                <p class="mv-card-text">@missionText</p>
+                            </div>
+                        }
+                        @if (!string.IsNullOrWhiteSpace(visionText))
+                        {
+                            <div class="mv-card mv-card--vision">
+                                <div class="mv-card-icon" aria-hidden="true">
+                                    <svg width="36" height="36" viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M2 18s6-10 16-10 16 10 16 10-6 10-16 10S2 18 2 18z"/>
+                                        <circle cx="18" cy="18" r="4"/>
+                                    </svg>
+                                </div>
+                                <h2 class="mv-card-title">@visionTitle</h2>
+                                <p class="mv-card-text">@visionText</p>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </section>
+        }
+
+        <!-- TIMELINE / HISTORY -->
+        @if (timelineItems != null && timelineItems.Any())
+        {
+            <section class="timeline-section section section--gray" aria-label="@historyTitle">
+                <div class="container">
+                    <h2 class="section-title text-center">@historyTitle</h2>
+                    <ol class="timeline">
+                        @foreach (var item in timelineItems)
+                        {
+                            var year  = item.Content.Value<string>("year");
+                            var title = item.Content.Value<string>("title");
+                            var desc  = item.Content.Value<string>("description");
+                            <li class="timeline-item">
+                                <div class="timeline-marker" aria-hidden="true"></div>
+                                <div class="timeline-body">
+                                    @if (!string.IsNullOrWhiteSpace(year))
+                                    {
+                                        <span class="timeline-year">@year</span>
+                                    }
+                                    @if (!string.IsNullOrWhiteSpace(title))
+                                    {
+                                        <h3 class="timeline-title">@title</h3>
+                                    }
+                                    @if (!string.IsNullOrWhiteSpace(desc))
+                                    {
+                                        <p class="timeline-desc">@desc</p>
+                                    }
+                                </div>
+                            </li>
+                        }
+                    </ol>
+                </div>
+            </section>
+        }
+
+        <!-- LEADERSHIP TEAM PREVIEW -->
+        @if (teamMembers != null && teamMembers.Any())
+        {
+            <section class="team-preview-section section" aria-label="@leadershipTitle">
+                <div class="container">
+                    <div class="section-header text-center">
+                        <h2 class="section-title">@leadershipTitle</h2>
+                        @if (!string.IsNullOrWhiteSpace(leadershipText))
+                        {
+                            <p class="section-intro">@leadershipText</p>
+                        }
+                    </div>
+                    <div class="team-grid">
+                        @foreach (var member in teamMembers.Take(4))
+                        {
+                            var name   = member.Content.Value<string>("name") ?? "Team Member";
+                            var role   = member.Content.Value<string>("role");
+                            var photo  = member.Content.Value<Umbraco.Cms.Core.Models.PublishedContent.IPublishedContent>("photo");
+                            var bio    = member.Content.Value<string>("bio");
+                            var linkedin = member.Content.Value<Umbraco.Cms.Core.Models.PublishedContent.IHtmlEncodedString>("linkedIn");
+                            <div class="team-card">
+                                <div class="team-card-image-wrapper">
+                                    @if (photo != null)
+                                    {
+                                        <img src="@photo.Url()" alt="@name" class="team-card-image" loading="lazy" />
+                                    }
+                                    else
+                                    {
+                                        <div class="team-card-avatar-placeholder" aria-hidden="true">
+                                            <svg width="48" height="48" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5">
+                                                <circle cx="24" cy="16" r="10"/>
+                                                <path d="M4 44c0-11 9-18 20-18s20 7 20 18"/>
+                                            </svg>
+                                        </div>
+                                    }
+                                    @if (!string.IsNullOrWhiteSpace(bio))
+                                    {
+                                        <div class="team-card-bio-overlay">
+                                            <p class="team-card-bio">@bio</p>
+                                            @if (linkedin != null)
+                                            {
+                                                <a href="@linkedin.ToHtmlString()" class="linkedin-link" target="_blank" rel="noopener" aria-label="@name on LinkedIn">in</a>
+                                            }
+                                        </div>
+                                    }
+                                </div>
+                                <div class="team-card-body">
+                                    <h3 class="team-card-name">@name</h3>
+                                    @if (!string.IsNullOrWhiteSpace(role)) { <p class="team-card-role">@role</p> }
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    @if (teamPage != null)
+                    {
+                        <div class="text-center" style="margin-top:2.5rem">
+                            <a href="@teamPage.Url()" class="btn btn-outline">Meet the Full Team &rarr;</a>
+                        </div>
+                    }
+                </div>
+            </section>
+        }
+
+    </main>
+
+    @await Html.PartialAsync("_CorporateFooter", root)
+</body>
+</html>

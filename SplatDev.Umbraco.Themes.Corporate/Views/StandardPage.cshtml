@@ -1,0 +1,82 @@
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@{
+    Layout = null;
+    var root = Model.AncestorOrSelf<Umbraco.Cms.Core.Models.PublishedContent.IPublishedContent>(1) ?? Model;
+    var companyName = root.Value<string>("companyName") ?? "Company";
+    var logo = root.Value<Umbraco.Cms.Core.Models.PublishedContent.IPublishedContent>("logo");
+
+    var pageTitle   = Model.Value<string>("pageTitle") ?? Model.Name;
+    var bodyContent = Model.Value<Umbraco.Cms.Core.Models.PublishedContent.IHtmlEncodedString>("bodyContent");
+    var heroImage   = Model.Value<Umbraco.Cms.Core.Models.PublishedContent.IPublishedContent>("heroImage");
+
+    var metaTitle = Model.Value<string>("metaTitle") ?? pageTitle;
+    var metaDesc  = Model.Value<string>("metaDescription");
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@metaTitle – @companyName</title>
+    @if (!string.IsNullOrWhiteSpace(metaDesc)) { <meta name="description" content="@metaDesc" /> }
+    <link rel="stylesheet" href="/css/corporate-theme.css" />
+</head>
+<body class="corporate-theme standard-page">
+
+    <header class="site-header" role="banner">
+        <div class="container header-inner">
+            <a href="@root.Url()" class="site-logo-link" aria-label="@companyName home">
+                @if (logo != null) { <img src="@logo.Url()" alt="@companyName" class="site-logo" /> }
+                else { <span class="site-logo-text">@companyName</span> }
+            </a>
+            <nav class="main-nav" aria-label="Main navigation">
+                <ul>
+                    @foreach (var child in root.Children?.Where(c => !c.Value<bool>("hideFromNavigation"))
+                        ?? Enumerable.Empty<Umbraco.Cms.Core.Models.PublishedContent.IPublishedContent>())
+                    {
+                        <li><a href="@child.Url()">@child.Name</a></li>
+                    }
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main id="main-content">
+
+        <section class="page-hero-section page-hero-section--short @(heroImage != null ? "page-hero-section--has-image" : "")"
+                 @(heroImage != null ? $"style=\"background-image:url('{heroImage.Url()}')\"" : "")
+                 aria-label="@pageTitle">
+            @if (heroImage != null) { <div class="hero-overlay" aria-hidden="true"></div> }
+            <div class="container page-hero-content">
+                <nav class="breadcrumb" aria-label="Breadcrumb">
+                    <ol>
+                        <li><a href="@root.Url()">Home</a></li>
+                        @if (Model.Parent != null && Model.Parent.Id != root.Id)
+                        {
+                            <li><a href="@Model.Parent.Url()">@Model.Parent.Name</a></li>
+                        }
+                        <li aria-current="page">@pageTitle</li>
+                    </ol>
+                </nav>
+                <h1 class="page-hero-headline">@pageTitle</h1>
+            </div>
+        </section>
+
+        <div class="container standard-page-content section">
+            @if (bodyContent != null)
+            {
+                <div class="rich-text-content rich-text-content--wide">
+                    @Html.Raw(bodyContent.ToHtmlString())
+                </div>
+            }
+            else
+            {
+                <p class="no-content">Content coming soon.</p>
+            }
+        </div>
+
+    </main>
+
+    @await Html.PartialAsync("_CorporateFooter", root)
+</body>
+</html>

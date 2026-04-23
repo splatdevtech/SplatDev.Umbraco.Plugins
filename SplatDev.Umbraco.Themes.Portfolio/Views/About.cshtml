@@ -1,0 +1,240 @@
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@{
+    Layout = null;
+    var root        = Model.AncestorsOrSelf().FirstOrDefault(n => n.ContentType.Alias == "portfolioRoot");
+    var ownerName   = root?.Value<string>("yourName") ?? root?.Name ?? "Portfolio";
+    var accentColor = root?.Value<string>("accentColor") ?? "#6c63ff";
+
+    var headline       = Model.Value<string>("headline") ?? "About Me";
+    var bio            = Model.Value<Umbraco.Cms.Core.Strings.IHtmlEncodedString>("bio");
+    var photo          = Model.Value<Umbraco.Cms.Core.Models.MediaWithCrops>("photo");
+
+    var skillsTitle    = Model.Value<string>("skillsTitle") ?? "Skills";
+    var expTitle       = Model.Value<string>("experienceTitle") ?? "Experience";
+    var eduTitle       = Model.Value<string>("educationTitle") ?? "Education";
+    var awardsTitle    = Model.Value<string>("awardsTitle") ?? "Awards";
+    var processTitle   = Model.Value<string>("processTitle") ?? "My Process";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@headline | @ownerName</title>
+    <style>:root { --color-accent: @accentColor; }</style>
+    <link rel="stylesheet" href="/css/portfolio-theme.css" />
+</head>
+<body class="portfolio-layout" data-theme="light">
+
+    <header class="portfolio-header">
+        <div class="container portfolio-header__inner">
+            <a class="portfolio-header__logo" href="@(root?.Url() ?? "/")">@ownerName</a>
+            <nav class="portfolio-nav" aria-label="Main navigation">
+                <ul class="portfolio-nav__list">
+                    <li><a href="@(root?.Url() ?? "/")">Home</a></li>
+                    @{
+                        var projectsPage = root?.Children.FirstOrDefault(c => c.ContentType.Alias == "projectsListing");
+                        var contactPage  = root?.Children.FirstOrDefault(c => c.ContentType.Alias == "contactPage");
+                    }
+                    @if (projectsPage != null) { <li><a href="@projectsPage.Url()">Work</a></li> }
+                    <li><a href="@Model.Url()" aria-current="page">About</a></li>
+                    @if (contactPage != null) { <li><a href="@contactPage.Url()" class="nav-cta">Hire Me</a></li> }
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+
+        <!-- ── About Intro ────────────────────────────────────────────── -->
+        <section class="about-intro section" aria-labelledby="about-heading">
+            <div class="container about-intro__inner">
+                <div class="about-intro__text">
+                    <h1 id="about-heading" class="about-intro__headline">@headline</h1>
+                    @if (bio != null)
+                    {
+                        <div class="about-intro__bio richtext">@Html.Raw(bio)</div>
+                    }
+                </div>
+                @if (photo != null)
+                {
+                    <div class="about-intro__photo">
+                        <img src="@photo.MediaUrl()" alt="@ownerName" loading="eager" class="about-photo" />
+                    </div>
+                }
+            </div>
+        </section>
+
+        <!-- ── Skills ────────────────────────────────────────────────── -->
+        @{
+            var skills = Model.Value<IEnumerable<Umbraco.Cms.Core.Models.Blocks.BlockListItem>>("skills");
+        }
+        @if (skills != null && skills.Any())
+        {
+            <section class="skills-section section section--alt" aria-labelledby="skills-heading">
+                <div class="container">
+                    <h2 id="skills-heading" class="section-heading">@skillsTitle</h2>
+                    <div class="skills-grid">
+                        @foreach (var item in skills)
+                        {
+                            var skillName = item.Content.Value<string>("skillName") ?? string.Empty;
+                            var level     = Math.Clamp(item.Content.Value<int>("level"), 1, 5);
+                            var skillCat  = item.Content.Value<string>("category") ?? string.Empty;
+                            var pct       = level * 20;
+
+                            <div class="skill-item">
+                                <div class="skill-item__header">
+                                    <span class="skill-item__name">@skillName</span>
+                                    @if (!string.IsNullOrWhiteSpace(skillCat))
+                                    {
+                                        <span class="skill-item__cat">@skillCat</span>
+                                    }
+                                    <span class="skill-item__level">@level/5</span>
+                                </div>
+                                <div class="skill-bar" role="progressbar"
+                                     aria-valuenow="@pct"
+                                     aria-valuemin="0"
+                                     aria-valuemax="100"
+                                     aria-label="@skillName: @level out of 5">
+                                    <div class="skill-bar__fill" style="--skill-pct: @pct%;"></div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </section>
+        }
+
+        <!-- ── Experience Timeline ────────────────────────────────────── -->
+        @{
+            var experience = Model.Value<IEnumerable<Umbraco.Cms.Core.Models.Blocks.BlockListItem>>("experience");
+        }
+        @if (experience != null && experience.Any())
+        {
+            <section class="experience-section section" aria-labelledby="exp-heading">
+                <div class="container">
+                    <h2 id="exp-heading" class="section-heading">@expTitle</h2>
+                    <ol class="timeline" reversed>
+                        @foreach (var item in experience)
+                        {
+                            var jobTitle  = item.Content.Value<string>("jobTitle") ?? string.Empty;
+                            var company   = item.Content.Value<string>("company") ?? string.Empty;
+                            var period    = item.Content.Value<string>("period") ?? string.Empty;
+                            var desc      = item.Content.Value<string>("description") ?? string.Empty;
+                            var techs     = item.Content.Value<string>("technologies") ?? string.Empty;
+
+                            <li class="timeline__item">
+                                <div class="timeline__marker" aria-hidden="true"></div>
+                                <div class="timeline__content">
+                                    <div class="timeline__header">
+                                        <h3 class="timeline__title">@jobTitle</h3>
+                                        <span class="timeline__company">@company</span>
+                                        @if (!string.IsNullOrWhiteSpace(period))
+                                        {
+                                            <span class="timeline__period">@period</span>
+                                        }
+                                    </div>
+                                    @if (!string.IsNullOrWhiteSpace(desc))
+                                    {
+                                        <p class="timeline__desc">@desc</p>
+                                    }
+                                    @if (!string.IsNullOrWhiteSpace(techs))
+                                    {
+                                        <div class="timeline__techs">
+                                            @foreach (var t in techs.Split(',').Select(x => x.Trim()).Where(x => !string.IsNullOrWhiteSpace(x)))
+                                            {
+                                                <span class="tech-tag">@t</span>
+                                            }
+                                        </div>
+                                    }
+                                </div>
+                            </li>
+                        }
+                    </ol>
+                </div>
+            </section>
+        }
+
+        <!-- ── Education ─────────────────────────────────────────────── -->
+        @{
+            var education = Model.Value<IEnumerable<Umbraco.Cms.Core.Models.Blocks.BlockListItem>>("education");
+        }
+        @if (education != null && education.Any())
+        {
+            <section class="education-section section section--alt" aria-labelledby="edu-heading">
+                <div class="container">
+                    <h2 id="edu-heading" class="section-heading">@eduTitle</h2>
+                    <div class="edu-grid">
+                        @foreach (var item in education)
+                        {
+                            var degree      = item.Content.Value<string>("degree") ?? string.Empty;
+                            var institution = item.Content.Value<string>("institution") ?? string.Empty;
+                            var year        = item.Content.Value<int>("year");
+                            var desc        = item.Content.Value<string>("description") ?? string.Empty;
+
+                            <article class="edu-card card">
+                                <div class="edu-card__header">
+                                    <h3 class="edu-card__degree">@degree</h3>
+                                    <span class="edu-card__institution">@institution</span>
+                                    @if (year > 0)
+                                    {
+                                        <span class="edu-card__year">@year</span>
+                                    }
+                                </div>
+                                @if (!string.IsNullOrWhiteSpace(desc))
+                                {
+                                    <p class="edu-card__desc">@desc</p>
+                                }
+                            </article>
+                        }
+                    </div>
+                </div>
+            </section>
+        }
+
+        <!-- ── Awards ────────────────────────────────────────────────── -->
+        @{
+            var awards = Model.Value<IEnumerable<Umbraco.Cms.Core.Models.Blocks.BlockListItem>>("awards");
+        }
+        @if (awards != null && awards.Any())
+        {
+            <section class="awards-section section" aria-labelledby="awards-heading">
+                <div class="container">
+                    <h2 id="awards-heading" class="section-heading">@awardsTitle</h2>
+                    <ul class="awards-list">
+                        @foreach (var item in awards)
+                        {
+                            var awardName  = item.Content.Value<string>("awardName") ?? string.Empty;
+                            var org        = item.Content.Value<string>("organization") ?? string.Empty;
+                            var aYear      = item.Content.Value<int>("year");
+                            var desc       = item.Content.Value<string>("description") ?? string.Empty;
+
+                            <li class="award-item">
+                                <div class="award-item__icon" aria-hidden="true">🏆</div>
+                                <div class="award-item__content">
+                                    <h3 class="award-item__name">@awardName</h3>
+                                    <span class="award-item__meta">
+                                        @org@(aYear > 0 ? $", {aYear}" : "")
+                                    </span>
+                                    @if (!string.IsNullOrWhiteSpace(desc))
+                                    {
+                                        <p class="award-item__desc">@desc</p>
+                                    }
+                                </div>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </section>
+        }
+
+    </main>
+
+    <footer class="portfolio-footer">
+        <div class="container portfolio-footer__inner">
+            <p>&copy; @DateTime.UtcNow.Year @ownerName.</p>
+        </div>
+    </footer>
+
+</body>
+</html>

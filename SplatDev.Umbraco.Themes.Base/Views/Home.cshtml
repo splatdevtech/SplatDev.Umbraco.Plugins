@@ -1,0 +1,74 @@
+@using Umbraco.Cms.Core.Models.PublishedContent
+@using Umbraco.Extensions
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@{
+    Layout = "Shared/_Layout.cshtml";
+
+    var title = Model.HasValue("title") ? Model.Value<string>("title") : Model.Name;
+    var heroImage = Model.HasValue("heroImage") ? Model.Value<IPublishedContent>("heroImage") : null;
+    var featuredImage = Model.HasValue("featuredImage") ? Model.Value<IPublishedContent>("featuredImage") : null;
+    var introText = Model.HasValue("introText") ? Model.Value<string>("introText") : null;
+    var ctaTitle = Model.HasValue("ctaTitle") ? Model.Value<string>("ctaTitle") : null;
+    var ctaText = Model.HasValue("ctaText") ? Model.Value<string>("ctaText") : null;
+    var ctaUrl = Model.HasValue("ctaUrl") ? Model.Value<Umbraco.Cms.Core.Models.Link>("ctaUrl") : null;
+
+    // Use hero image or fall back to featured image for the banner background.
+    var bannerImage = heroImage ?? featuredImage;
+}
+
+@section header {
+    @await Html.PartialAsync("Shared/_Navigation", Model)
+}
+
+<!-- Hero Section -->
+<section class="hero@(bannerImage != null ? " hero--with-image" : "")"
+         @(bannerImage != null ? $"style=\"background-image: url('{bannerImage.Url()}')\"" : "")
+         aria-labelledby="hero-title">
+    <div class="hero__overlay" aria-hidden="true"></div>
+    <div class="container hero__content">
+        <h1 class="hero__title" id="hero-title">@title</h1>
+
+        @if (!string.IsNullOrWhiteSpace(introText))
+        {
+            <p class="hero__intro">@introText</p>
+        }
+
+        @if (ctaUrl != null && !string.IsNullOrWhiteSpace(ctaUrl.Url))
+        {
+            <div class="hero__actions">
+                <a class="btn btn--primary btn--lg"
+                   href="@ctaUrl.Url"
+                   @(ctaUrl.Target == "_blank" ? "target=\"_blank\" rel=\"noopener noreferrer\"" : "")>
+                    @(!string.IsNullOrWhiteSpace(ctaTitle) ? ctaTitle : ctaUrl.Name)
+                </a>
+            </div>
+        }
+    </div>
+</section>
+
+<!-- CTA Banner (shown when ctaTitle/ctaText are set separately from hero CTA) -->
+@if (!string.IsNullOrWhiteSpace(ctaTitle) && !string.IsNullOrWhiteSpace(ctaText))
+{
+    <section class="cta-section" aria-labelledby="cta-heading">
+        <div class="container cta-section__inner">
+            <div class="cta-section__text">
+                <h2 class="cta-section__title" id="cta-heading">@ctaTitle</h2>
+                <p class="cta-section__body">@ctaText</p>
+            </div>
+            @if (ctaUrl != null && !string.IsNullOrWhiteSpace(ctaUrl.Url))
+            {
+                <div class="cta-section__action">
+                    <a class="btn btn--primary"
+                       href="@ctaUrl.Url"
+                       @(ctaUrl.Target == "_blank" ? "target=\"_blank\" rel=\"noopener noreferrer\"" : "")>
+                        @ctaUrl.Name
+                    </a>
+                </div>
+            }
+        </div>
+    </section>
+}
+
+@section footer {
+    @await Html.PartialAsync("Shared/_Footer", Model)
+}

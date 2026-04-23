@@ -1,0 +1,5 @@
+@using FormBuilder.Core.Extensions
+@using FormBuilder.Core.Models
+@using FormBuilder.Web.Extensions
+@model FieldViewModel
+<input type="hidden" name="@Model.Name" id="@Model.Id" data-umb="@Model.Id" class="hidden" value="@Model.ValueAsHtmlString"/>

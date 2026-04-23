@@ -1,0 +1,136 @@
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@{
+    Layout = null;
+    var categoryName = Model.Value<string>("categoryName") ?? Model.Name;
+    var description  = Model.Value<string>("description") ?? string.Empty;
+    var catColor     = Model.Value<string>("color") ?? "#4a90d9";
+    var catIcon      = Model.Value<string>("icon") ?? "icon-folder";
+
+    var subcategories = Model.Children
+        .Where(c => c.ContentType.Alias == "forumSubcategory")
+        .OrderBy(c => c.Name);
+
+    var pinnedThreads = Model.Children
+        .Where(c => c.ContentType.Alias == "forumThread" && c.Value<bool>("isPinned"))
+        .OrderByDescending(c => c.Value<DateTime?>("lastReplyDate") ?? c.CreateDate);
+
+    var normalThreads = Model.Children
+        .Where(c => c.ContentType.Alias == "forumThread" && !c.Value<bool>("isPinned"))
+        .OrderByDescending(c => c.Value<DateTime?>("lastReplyDate") ?? c.CreateDate);
+
+    var forumRoot = Model.AncestorsOrSelf().FirstOrDefault(n => n.ContentType.Alias == "forumRoot");
+    var forumName = forumRoot?.Value<string>("forumName") ?? forumRoot?.Name ?? "Forum";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@categoryName | @forumName</title>
+    <link rel="stylesheet" href="/css/forum-theme.css" />
+</head>
+<body class="forum-layout">
+
+    <header class="forum-header">
+        <div class="forum-header__inner container">
+            <div class="forum-header__brand">
+                <a class="forum-header__home" href="@(forumRoot?.Url() ?? "/")">@forumName</a>
+                <span class="breadcrumb-sep" aria-hidden="true">/</span>
+                <h1 class="forum-header__title">@categoryName</h1>
+            </div>
+            <nav class="forum-header__nav">
+                <form class="forum-search" action="/search" method="get" role="search">
+                    <label for="forum-search-input" class="sr-only">Search</label>
+                    <input id="forum-search-input"
+                           class="forum-search__input"
+                           type="search"
+                           name="q"
+                           placeholder="Search threads…" />
+                    <button class="forum-search__btn" type="submit" aria-label="Submit search">
+                        <span aria-hidden="true">&#128269;</span>
+                    </button>
+                </form>
+            </nav>
+        </div>
+    </header>
+
+    <main class="forum-main container">
+
+        <div class="category-header" style="--category-color: @catColor;">
+            <span class="category-header__icon @catIcon" aria-hidden="true"></span>
+            <div class="category-header__text">
+                <h1 class="category-header__name">@categoryName</h1>
+                @if (!string.IsNullOrWhiteSpace(description))
+                {
+                    <p class="category-header__desc">@description</p>
+                }
+            </div>
+            <a class="btn btn--primary new-thread-btn" href="@Model.Url()new-thread">
+                + New Thread
+            </a>
+        </div>
+
+        @if (subcategories.Any())
+        {
+            <section class="subcategory-list" aria-labelledby="subcats-heading">
+                <h2 id="subcats-heading" class="section-title">Subcategories</h2>
+                <div class="subcategory-grid">
+                    @foreach (var sub in subcategories)
+                    {
+                        var subName = sub.Value<string>("subcategoryName") ?? sub.Name;
+                        var subDesc = sub.Value<string>("description") ?? string.Empty;
+                        var subCount = sub.Children.Count(c => c.ContentType.Alias == "forumThread");
+                        <article class="subcategory-card">
+                            <h3 class="subcategory-card__title">
+                                <a href="@sub.Url()">@subName</a>
+                            </h3>
+                            @if (!string.IsNullOrWhiteSpace(subDesc))
+                            {
+                                <p class="subcategory-card__desc">@subDesc</p>
+                            }
+                            <span class="stat-badge">@subCount thread@(subCount == 1 ? "" : "s")</span>
+                        </article>
+                    }
+                </div>
+            </section>
+        }
+
+        <section class="thread-list-section" aria-labelledby="threads-heading">
+            <h2 id="threads-heading" class="section-title">Threads</h2>
+
+            @if (!pinnedThreads.Any() && !normalThreads.Any())
+            {
+                <p class="empty-state">No threads yet. <a href="@Model.Url()new-thread">Start the first one!</a></p>
+            }
+
+            @if (pinnedThreads.Any())
+            {
+                <div class="thread-list thread-list--pinned" aria-label="Pinned threads">
+                    @foreach (var thread in pinnedThreads)
+                    {
+                        @await Html.PartialAsync("_ForumThreadRow", thread)
+                    }
+                </div>
+            }
+
+            @if (normalThreads.Any())
+            {
+                <div class="thread-list" aria-label="All threads">
+                    @foreach (var thread in normalThreads)
+                    {
+                        @await Html.PartialAsync("_ForumThreadRow", thread)
+                    }
+                </div>
+            }
+        </section>
+
+    </main>
+
+    <footer class="forum-footer">
+        <div class="container">
+            <p>&copy; @DateTime.UtcNow.Year @forumName</p>
+        </div>
+    </footer>
+
+</body>
+</html>

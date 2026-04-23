@@ -1,0 +1,56 @@
+@using Microsoft.AspNetCore.Mvc.ViewEngines
+@using Umbraco.Forms.Web.Services
+@model Umbraco.Forms.Web.Models.FormViewModel
+
+@inject IFormThemeResolver FormThemeResolver
+@inject ICompositeViewEngine CompositeViewEngine
+
+<div class="umbraco-forms-entry-summary">
+    <h4 class="umbraco-forms-caption">@Model.SummaryCaption</h4>
+
+    @{
+        var ignoreFields = new List<string>
+        {
+            "FieldType.Recaptcha2.cshtml",
+            "FieldType.Recaptcha3.cshtml",
+            "FieldType.RichText.cshtml",
+            "FieldType.Text.cshtml",
+            "FieldType.HiddenField.cshtml",
+            "FieldType.Password.cshtml"
+        };
+        var pageIndex = 0;
+        foreach (var page in Model.Pages)
+        {
+            <h5 class="umbraco-forms-entry-summary-page-caption">@Model.GetPageCaption(pageIndex)</h5>
+
+            foreach (var fieldset in page.Fieldsets)
+            {
+                @if (!string.IsNullOrWhiteSpace(fieldset.Caption))
+                {
+                    <h6 class="umbraco-forms-entry-summary-fieldset-caption">@fieldset.Caption</h6>
+                }
+                foreach (var container in fieldset.Containers)
+                {
+                    <dl class="umbraco-forms-entry-summary-entries">
+                        @foreach (var field in container.Fields.Where(x => x.FieldType is not null && ignoreFields.Contains(x.FieldType.FieldTypeViewName) == false))
+                        {
+                            <dt>@field.Caption</dt>
+                            <dd>
+                                @{
+                                    var fieldView = FormThemeResolver.GetReadOnlyFieldView(Model, field);
+                                    @if (!CompositeViewEngine.GetView(string.Empty, fieldView, isMainPage: false).Success)
+                                    {
+                                        fieldView = FormThemeResolver.GetGenericReadOnlyFieldView(Model);
+                                    }
+                                }
+                                @await Html.PartialAsync(fieldView, field)
+                            </dd>
+                        }
+                    </dl>
+                }
+            }
+
+            pageIndex++;
+        }
+    }
+</div>

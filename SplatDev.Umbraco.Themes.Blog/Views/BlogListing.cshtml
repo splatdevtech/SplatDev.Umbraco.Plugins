@@ -1,0 +1,150 @@
+@using Umbraco.Cms.Web.Common.PublishedModels
+@using Umbraco.Extensions
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@{
+    Layout = "_Layout";
+    var pageTitle = Model.Value<string>("pageTitle") ?? Model.Name;
+    var intro = Model.Value<string>("intro");
+    var showCategories = Model.Value<bool>("showCategories");
+    var showTags = Model.Value<bool>("showTags");
+    var showArchive = Model.Value<bool>("showArchive");
+
+    // Retrieve posts per page from root
+    var blogRoot = Model.AncestorOrSelf(1);
+    var postsPerPage = blogRoot?.Value<int>("postsPerPage");
+    if (postsPerPage is null or 0) postsPerPage = 10;
+
+    // Collect all blog posts under this listing
+    var allPosts = Model.Children()
+        .Where(x => x.ContentType.Alias == "blogPost")
+        .OrderByDescending(x => x.Value<DateTime>("publishDate") != default
+            ? x.Value<DateTime>("publishDate")
+            : x.CreateDate)
+        .ToList();
+
+    // Simple pagination via query string
+    int currentPage = 1;
+    if (int.TryParse(Context.Request.Query["page"], out var qp) && qp > 1)
+        currentPage = qp;
+
+    var totalPosts = allPosts.Count;
+    var totalPages = (int)Math.Ceiling((double)totalPosts / postsPerPage.Value);
+    var posts = allPosts.Skip((currentPage - 1) * postsPerPage.Value).Take(postsPerPage.Value).ToList();
+}
+
+<main class="blog-listing" itemscope itemtype="https://schema.org/Blog">
+    <header class="blog-listing__header">
+        <div class="blog-listing__header-inner container">
+            <h1 class="blog-listing__title" itemprop="name">@pageTitle</h1>
+            @if (!string.IsNullOrWhiteSpace(intro))
+            {
+                <p class="blog-listing__intro" itemprop="description">@intro</p>
+            }
+        </div>
+    </header>
+
+    <div class="blog-listing__body container">
+        <div class="blog-listing__content">
+            @if (posts.Any())
+            {
+                <div class="blog-listing__posts" role="feed">
+                    @foreach (var post in posts)
+                    {
+                        var postTitle = post.Value<string>("title") ?? post.Name;
+                        var excerpt = post.Value<string>("excerpt");
+                        var featuredImage = post.Value<Umbraco.Cms.Core.Models.PublishedContent.IPublishedContent>("featuredImage");
+                        var authorName = post.Value<string>("authorName");
+                        var publishDate = post.Value<DateTime>("publishDate") != default
+                            ? post.Value<DateTime>("publishDate")
+                            : post.CreateDate;
+                        var readTime = post.Value<int>("estimatedReadTime");
+                        var postUrl = post.Url();
+
+                        <article class="blog-card" itemscope itemtype="https://schema.org/BlogPosting">
+                            @if (featuredImage != null)
+                            {
+                                <a class="blog-card__image-link" href="@postUrl" tabindex="-1" aria-hidden="true">
+                                    <div class="blog-card__image" role="img"
+                                         aria-label="@postTitle"
+                                         style="background-image: url('@featuredImage.Url()')">
+                                    </div>
+                                </a>
+                            }
+                            <div class="blog-card__body">
+                                <div class="blog-card__meta">
+                                    <time class="blog-card__date" datetime="@publishDate.ToString("yyyy-MM-dd")" itemprop="datePublished">
+                                        @publishDate.ToString("MMMM d, yyyy")
+                                    </time>
+                                    @if (!string.IsNullOrWhiteSpace(authorName))
+                                    {
+                                        <span class="blog-card__meta-sep" aria-hidden="true">&bull;</span>
+                                        <span class="blog-card__author" itemprop="author">@authorName</span>
+                                    }
+                                    @if (readTime > 0)
+                                    {
+                                        <span class="blog-card__meta-sep" aria-hidden="true">&bull;</span>
+                                        <span class="blog-card__read-time">@readTime min read</span>
+                                    }
+                                </div>
+                                <h2 class="blog-card__title" itemprop="headline">
+                                    <a href="@postUrl" itemprop="url">@postTitle</a>
+                                </h2>
+                                @if (!string.IsNullOrWhiteSpace(excerpt))
+                                {
+                                    <p class="blog-card__excerpt" itemprop="description">@excerpt</p>
+                                }
+                                <a class="blog-card__read-more" href="@postUrl" aria-label="Read more about @postTitle">
+                                    Read More <span aria-hidden="true">&rarr;</span>
+                                </a>
+                            </div>
+                        </article>
+                    }
+                </div>
+
+                @if (totalPages > 1)
+                {
+                    <nav class="pagination" aria-label="Blog pagination">
+                        <ul class="pagination__list">
+                            @if (currentPage > 1)
+                            {
+                                <li class="pagination__item">
+                                    <a class="pagination__link pagination__link--prev" href="?page=@(currentPage - 1)" rel="prev">
+                                        <span aria-hidden="true">&larr;</span> Previous
+                                    </a>
+                                </li>
+                            }
+                            @for (int p = 1; p <= totalPages; p++)
+                            {
+                                var isCurrent = p == currentPage;
+                                <li class="pagination__item @(isCurrent ? "pagination__item--active" : "")">
+                                    <a class="pagination__link @(isCurrent ? "pagination__link--current" : "")"
+                                       href="?page=@p"
+                                       @(isCurrent ? "aria-current=\"page\"" : "")>@p</a>
+                                </li>
+                            }
+                            @if (currentPage < totalPages)
+                            {
+                                <li class="pagination__item">
+                                    <a class="pagination__link pagination__link--next" href="?page=@(currentPage + 1)" rel="next">
+                                        Next <span aria-hidden="true">&rarr;</span>
+                                    </a>
+                                </li>
+                            }
+                        </ul>
+                    </nav>
+                }
+            }
+            else
+            {
+                <div class="blog-listing__empty">
+                    <p>No posts have been published yet. Check back soon!</p>
+                </div>
+            }
+        </div>
+
+        @if (showCategories || showTags || showArchive)
+        {
+            @await Html.PartialAsync("_BlogSidebar", Model)
+        }
+    </div>
+</main>

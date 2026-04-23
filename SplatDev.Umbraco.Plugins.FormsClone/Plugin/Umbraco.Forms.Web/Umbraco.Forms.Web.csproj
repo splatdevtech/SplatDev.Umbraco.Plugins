@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+    <ItemGroup>
+        <PackageReference Include="EPPlus" Version="4.5.3.3" />
+        <PackageReference Include="Microsoft.Data.SqlClient" Version="5.2.2" />
+        <PackageReference Include="Umbraco.Cms.Web.Website" Version="*" />
+        <PackageReference Include="Umbraco.Cms.Core" Version="*" />
+        <PackageReference Include="Umbraco.Cms.Api.Common" Version="*" />
+        <PackageReference Include="Umbraco.Cms.Api.Management" Version="*" />
+        <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="*" />
+        <PackageReference Include="JsonLogic" Version="*" />
+    </ItemGroup>
+    <ItemGroup>
+      <ProjectReference Include="..\Umbraco.Forms.Core\Umbraco.Forms.Core.csproj" />
+    </ItemGroup>
+    <ItemGroup>
+      <Folder Include="Properties\" />
+    </ItemGroup>
+</Project>

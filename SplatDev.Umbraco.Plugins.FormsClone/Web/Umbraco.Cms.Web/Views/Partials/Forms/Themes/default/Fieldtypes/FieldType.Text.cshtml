@@ -1,0 +1,32 @@
+@model Umbraco.Forms.Web.Models.FieldViewModel
+
+@using Microsoft.Extensions.Options
+@using Umbraco.Forms.Core.Configuration
+@using Umbraco.Forms.Web
+
+@inject IOptionsSnapshot<TitleAndDescriptionSettings> Configuration
+
+@{
+    var settings = Model.AdditionalSettings;
+    var hasCaption = (settings.ContainsKey("Caption") && !string.IsNullOrEmpty(settings["Caption"]));
+    var hasBody = (settings.ContainsKey("BodyText") && !string.IsNullOrEmpty(settings["BodyText"]));
+    var captionTag = Model.GetSettingValue<string>("CaptionTag", "h2");
+}
+
+<div id="@Model.Id" data-umb="@Model.Id" class="@Html.GetFormFieldClass(Model.FieldTypeName)">
+    @if (hasCaption)
+    {
+        @Html.Raw("<" + captionTag + ">")@settings["Caption"]@Html.Raw("</" + captionTag + ">")
+    }
+    @if (hasBody)
+    {
+        if (Configuration.Value.AllowUnsafeHtmlRendering)
+        {
+            <p>@Html.Raw(settings["BodyText"].Replace("\r\n", "\n").Replace("\r", "\n").Replace("\n", "<br />"))</p>
+        }
+        else
+        {
+            <p>@settings["BodyText"]</p>
+        }
+    }
+</div>
