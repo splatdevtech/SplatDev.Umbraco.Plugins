@@ -3,7 +3,7 @@
     <TargetFrameworks>net8.0;net10.0</TargetFrameworks>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <PackageId>UmbracoCms.Plugins.MemberLogin</PackageId>
+    <PackageId>SplatDev.Umbraco.Plugins.MemberLogin</PackageId>
     <Version>2.0.0</Version>
     <Authors>SplatDev</Authors>
     <Description>Custom member login for Umbraco: login form, remember me, forgot password, lockout handling. Supports Umbraco 13 (net8.0) and Umbraco 17 (net10.0).</Description>

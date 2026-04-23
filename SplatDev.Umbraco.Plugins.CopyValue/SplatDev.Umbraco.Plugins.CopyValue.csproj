@@ -3,7 +3,7 @@
     <TargetFrameworks>net8.0;net10.0</TargetFrameworks>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <PackageId>UmbracoCms.Plugins.CopyValue</PackageId>
+    <PackageId>SplatDev.Umbraco.Plugins.CopyValue</PackageId>
     <Version>2.0.0</Version>
     <Authors>SplatDev</Authors>
     <Description>Copy property values between Umbraco content nodes — bulk copy, property mapping between different document types, and reusable mapping templates. Supports Umbraco 13 (net8.0) and Umbraco 17 (net10.0).</Description>

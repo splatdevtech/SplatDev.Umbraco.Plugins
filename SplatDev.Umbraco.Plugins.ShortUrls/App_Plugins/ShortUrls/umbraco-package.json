@@ -23,30 +23,34 @@
     },
     {
       "type": "localization",
-      "alias": "ShortUrls.Localization.En",
-      "name": "Short URLs English",
-      "integrityHash": null,
+      "alias": "SplatDev.ShortUrls.Localization.En",
+      "name": "ShortUrls — English",
       "meta": {
-        "culture": "en"
-      },
-      "translations": {
-        "shortUrls_dashboardLabel": "Short URLs",
-        "shortUrls_heading": "Short URLs",
-        "shortUrls_description": "Manage short URL redirects (/s/{code})"
+        "culture": "en",
+        "localizations": {
+          "section": {
+            "shortUrls_heading": "Short URLs",
+            "shortUrls_description": "Manage short URL redirects",
+            "shortUrls_create": "Create Short URL",
+            "shortUrls_shortCode": "Short Code"
+          }
+        }
       }
     },
     {
       "type": "localization",
-      "alias": "ShortUrls.Localization.PtBR",
-      "name": "Short URLs Portuguese (Brazil)",
-      "integrityHash": null,
+      "alias": "SplatDev.ShortUrls.Localization.PtBr",
+      "name": "ShortUrls — Português (Brasil)",
       "meta": {
-        "culture": "pt-BR"
-      },
-      "translations": {
-        "shortUrls_dashboardLabel": "URLs Curtas",
-        "shortUrls_heading": "URLs Curtas",
-        "shortUrls_description": "Gerencie redirecionamentos de URLs curtas (/s/{código})"
+        "culture": "pt-BR",
+        "localizations": {
+          "section": {
+            "shortUrls_heading": "URLs Curtas",
+            "shortUrls_description": "Gerenciar redirecionamentos de URLs curtas",
+            "shortUrls_create": "Criar URL Curta",
+            "shortUrls_shortCode": "Código Curto"
+          }
+        }
       }
     }
   ]

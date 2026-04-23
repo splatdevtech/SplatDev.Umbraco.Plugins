@@ -3,7 +3,7 @@
     <TargetFrameworks>net8.0;net10.0</TargetFrameworks>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <PackageId>UmbracoCms.Plugins.DefaultValue</PackageId>
+    <PackageId>SplatDev.Umbraco.Plugins.DefaultValue</PackageId>
     <Version>2.0.0</Version>
     <Authors>SplatDev</Authors>
     <Description>Set default values for Umbraco content properties by document type and property alias. Automatically populate properties when new content nodes are created. Supports Umbraco 13 (net8.0) and Umbraco 17 (net10.0).</Description>

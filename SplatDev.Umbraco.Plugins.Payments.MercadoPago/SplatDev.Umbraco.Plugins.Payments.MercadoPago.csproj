@@ -3,7 +3,7 @@
     <TargetFrameworks>net8.0;net10.0</TargetFrameworks>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <PackageId>UmbracoCms.Plugins.Payments.MercadoPago</PackageId>
+    <PackageId>SplatDev.Umbraco.Plugins.Payments.MercadoPago</PackageId>
     <Version>2.0.0</Version>
     <Authors>SplatDev</Authors>
     <Description>MercadoPago payment integration for Umbraco. Supports preference creation, payment status lookup, and webhook handling. Supports Umbraco 13 (net8.0) and Umbraco 17 (net10.0).</Description>

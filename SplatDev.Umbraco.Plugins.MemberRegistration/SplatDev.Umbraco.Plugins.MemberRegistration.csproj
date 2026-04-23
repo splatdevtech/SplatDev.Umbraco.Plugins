@@ -3,7 +3,7 @@
     <TargetFrameworks>net8.0;net10.0</TargetFrameworks>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <PackageId>UmbracoCms.Plugins.MemberRegistration</PackageId>
+    <PackageId>SplatDev.Umbraco.Plugins.MemberRegistration</PackageId>
     <Version>2.0.0</Version>
     <Authors>SplatDev</Authors>
     <Description>Member registration for Umbraco: registration form, email verification tokens, approval workflow. Supports Umbraco 13 (net8.0) and Umbraco 17 (net10.0).</Description>

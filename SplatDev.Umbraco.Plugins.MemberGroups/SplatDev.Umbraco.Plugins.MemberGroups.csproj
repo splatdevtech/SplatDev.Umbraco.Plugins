@@ -3,7 +3,7 @@
     <TargetFrameworks>net8.0;net10.0</TargetFrameworks>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <PackageId>UmbracoCms.Plugins.MemberGroups</PackageId>
+    <PackageId>SplatDev.Umbraco.Plugins.MemberGroups</PackageId>
     <Version>2.0.0</Version>
     <Authors>SplatDev</Authors>
     <Description>Member group management for Umbraco: assign/remove groups, bulk operations, group-based content access. Supports Umbraco 13 (net8.0) and Umbraco 17 (net10.0).</Description>

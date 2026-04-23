@@ -6,7 +6,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <AssemblyName>SplatDev.Umbraco.Plugins.CharLimit</AssemblyName>
     <RootNamespace>SplatDev.Umbraco.Plugins.CharLimit</RootNamespace>
-    <PackageId>UmbracoCms.Plugins.CharLimit</PackageId>
+    <PackageId>SplatDev.Umbraco.Plugins.CharLimit</PackageId>
     <Version>1.0.0</Version>
     <Authors>SplatDev</Authors>
     <Company>SplatDev Ltda</Company>

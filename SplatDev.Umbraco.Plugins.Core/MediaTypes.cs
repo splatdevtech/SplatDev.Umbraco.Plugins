@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace UmbracoCms.Plugins
+namespace SplatDev.Umbraco.Plugins
 {
     public static partial class Default
     {
