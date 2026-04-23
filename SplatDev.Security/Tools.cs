@@ -1,0 +1,194 @@
+﻿namespace SplatDev.Security
+{
+    using Google.Apis.Safebrowsing.v4.Data;
+
+    using Newtonsoft.Json;
+
+    using RestSharp;
+
+    using SplatDev.UrlShortening.Models;
+
+    using System;
+    using System.Text;
+    using System.Text.RegularExpressions;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using System.Web;
+    using System.Web.Security;
+
+    public static class Tools
+    {
+        private static readonly Regex _regex = new Regex("[^a-zA-Z0-9]");
+
+        /// <summary>
+        /// Checks the phish.
+        /// </summary>
+        /// <param name="apiKey">The API key.</param>
+        /// <param name="url">The URL.</param>
+        /// <param name="insights">if set to <c>true</c> [insights].</param>
+        /// <returns></returns>
+        public static async Task<CheckPhishResponse> CheckPhish(string apiKey, string url, bool insights = false)
+        {
+            var client = new RestClient(Constants.CHECK_PHISH_URL);
+            var request = new RestRequest("api/neo/scan", DataFormat.Json);
+            request.AddJsonBody(new { apiKey, urlInfo = new { url } });
+            await Task.FromResult(0);
+            var response = client.Post(request);
+
+            var job = JsonConvert.DeserializeObject<CheckPhishResponse>(response.Content);
+            //var response = await client.PostAsync<CheckPhishResponse>(request);
+
+            // check for finished
+            if (job == null || job.jobID == "none") return new CheckPhishResponse
+            {
+                status = "PENDING",
+                disposition = "clean"
+            };
+
+            Thread.Sleep(5 * 1000);
+            var requestStatus = new RestRequest("api/neo/scan/status", DataFormat.Json);
+            requestStatus.AddJsonBody(new { apiKey, job.jobID, insights });
+            var responseStatus = client.Post(requestStatus);
+
+            //var responseStatus = await client.PostAsync<CheckPhishResponse>(requestStatus);
+            //return responseStatus;
+
+            return JsonConvert.DeserializeObject<CheckPhishResponse>(responseStatus.Content);
+        }
+
+        /// <summary>
+        /// Checks the phish pending job.
+        /// </summary>
+        /// <param name="apiKey">The API key.</param>
+        /// <param name="jobId">The job identifier.</param>
+        /// <param name="insights">if set to <c>true</c> [insights].</param>
+        /// <returns></returns>
+        public static async Task<CheckPhishResponse> CheckPhishPendingJob(string apiKey, string jobId, bool insights = false)
+        {
+            var client = new RestClient(Constants.CHECK_PHISH_URL);
+            var requestStatus = new RestRequest("api/neo/scan/status", DataFormat.Json);
+            requestStatus.AddJsonBody(new { apiKey, jobID = jobId, insights });
+            var responseStatus = client.Post(requestStatus);
+            await Task.FromResult(0);
+            return JsonConvert.DeserializeObject<CheckPhishResponse>(responseStatus.Content);
+        }
+
+        /// <summary>
+        /// Encodes the authentication header.
+        /// </summary>
+        /// <param name="username">The username.</param>
+        /// <param name="password">The password.</param>
+        /// <returns></returns>
+        public static string EncodeAuthHeader(string username, string password)
+        {
+            var byteArray = Encoding.ASCII.GetBytes($"{username}:{password}");
+            return Convert.ToBase64String(byteArray);
+        }
+
+        /// <summary>
+        /// Decodes the authentication header.
+        /// </summary>
+        /// <param name="encoded">The encoded.</param>
+        /// <returns></returns>
+        public static Tuple<string, string> DecodeAuthHeader(string encoded)
+        {
+            Encoding encoding = Encoding.GetEncoding("iso-8859-1");
+            try
+            {
+                var decoded = encoding.GetString(Convert.FromBase64String(encoded));
+                int indexOf = decoded.IndexOf(":");
+                var username = decoded.Substring(0, indexOf);
+                var password = decoded.Substring(indexOf + 1);
+                Tuple<string, string> credentials = new Tuple<string, string>(username, password);
+                return credentials;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Googles the safe browing.
+        /// </summary>
+        /// <param name="apiKey">The API key.</param>
+        /// <param name="urls">The urls.</param>
+        /// <param name="clientId">The client identifier.</param>
+        /// <param name="clientVersion">The client version.</param>
+        /// <returns></returns>
+        public static async Task<GoogleSecuritySafebrowsingV4FindThreatMatchesResponse> GoogleSafeBrowing(string apiKey, string[] urls, string clientId = "dotnet-client", string clientVersion = "1.0.0")
+        {
+            GoogleSecuritySafebrowsingV4ThreatEntry[] entries = new GoogleSecuritySafebrowsingV4ThreatEntry[urls.Length];
+            for (int i = 0; i < urls.Length; i++)
+                entries[i] = new GoogleSecuritySafebrowsingV4ThreatEntry { Url = urls[i] };
+
+            var body = new GoogleSecuritySafebrowsingV4FindThreatMatchesRequest()
+            {
+                Client = new GoogleSecuritySafebrowsingV4ClientInfo
+                {
+                    ClientId = clientId,
+                    ClientVersion = clientVersion
+                },
+                ThreatInfo = new GoogleSecuritySafebrowsingV4ThreatInfo()
+                {
+                    ThreatTypes = new string[] { "Malware", "Social_Engineering", "Unwanted_Software", "Potentially_Harmful_Application" },
+                    PlatformTypes = new string[] { "Any_Platform" },
+                    ThreatEntryTypes = new string[] { "URL" },
+                    ThreatEntries = entries
+                }
+            };
+            var client = new RestClient(Constants.GOOGLE_SAFE_BROWSING);
+            var request = new RestRequest($"v4/threatMatches:find", DataFormat.Json)
+            {
+#pragma warning disable CS0618 // Type or member is obsolete
+                Body = new RequestBody("application/json", "", JsonConvert.SerializeObject(body, Resolvers.API_JSON_SETTINGS_LOWERCASE))
+            };
+            request.AddQueryParameter("key", apiKey, false);
+#pragma warning restore CS0618 // Type or member is obsolete
+            var response = await client.PostAsync<GoogleSecuritySafebrowsingV4FindThreatMatchesResponse>(request);
+            return response;
+        }
+
+        /// <summary>
+        /// Ips the quality score.
+        /// </summary>
+        /// <param name="apiKey">The API key.</param>
+        /// <param name="url">The URL.</param>
+        /// <returns></returns>
+        public static async Task<IpQualityScoreResponse> IpQualityScore(string apiKey, string url)
+        {
+            var client = new RestClient(Constants.IP_QUALITY_SCORE);
+            var request = new RestRequest($"json/url/{apiKey}/{HttpUtility.UrlEncode(url)}");
+            await Task.FromResult(0);
+            var response = await client.PostAsync<IpQualityScoreResponse>(request);
+            return response;
+        }
+
+        /// <summary>
+        /// Generates the password.
+        /// </summary>
+        /// <returns></returns>
+        public static async Task<string> GeneratePasswordAsync()
+        {
+            // Generate a password which we'll email the member
+            var password = Membership.GeneratePassword(10, 1);
+            await Task.FromResult(0);
+            return _regex.Replace(password, "9");
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="password"></param>
+        /// <returns></returns>
+        /// <![CDATA[Taken from http://stackoverflow.com/questions/212510/what-is-the-easiest-way-to-encrypt-a-password-when-i-save-it-to-the-registry]]>
+        public static async Task<string> EncrypPasswordAsync(string password, string salt = "cTNyf9@rxHVyKjQ%")
+        {
+            string saltedPassword = password + salt;
+            byte[] data = Encoding.ASCII.GetBytes(saltedPassword);
+            data = new System.Security.Cryptography.SHA256Managed().ComputeHash(data);
+            await Task.FromResult(0);
+            return Encoding.ASCII.GetString(data);
+        }
+    }
+}
