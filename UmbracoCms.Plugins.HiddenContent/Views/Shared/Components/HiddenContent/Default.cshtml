@@ -1,0 +1,28 @@
+@model bool
+
+<div class="hc-component">
+    @if (Model)
+    {
+        <div class="hc-hidden">
+            <span class="hc-icon">&#128683;</span>
+            <strong>Hidden from Navigation</strong>
+            <p>This node is hidden from navigation menus and sitemaps but remains accessible by direct URL.</p>
+        </div>
+    }
+    else
+    {
+        <div class="hc-visible">
+            <span class="hc-icon">&#128065;</span>
+            <strong>Visible in Navigation</strong>
+            <p>This node appears in navigation menus and sitemaps.</p>
+        </div>
+    }
+</div>
+
+<style>
+    .hc-component { font-family: sans-serif; }
+    .hc-hidden { background: #fef3c7; border: 1px solid #f59e0b; border-radius: 6px; padding: 1rem; }
+    .hc-visible { background: #d1fae5; border: 1px solid #10b981; border-radius: 6px; padding: 1rem; }
+    .hc-icon { font-size: 1.25rem; margin-right: 0.5rem; }
+    .hc-hidden p, .hc-visible p { margin: 0.4rem 0 0; font-size: 0.875rem; color: #374151; }
+</style>

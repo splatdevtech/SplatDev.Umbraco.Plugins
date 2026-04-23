@@ -1,0 +1,15 @@
+{
+  "javascript": ["/App_Plugins/MemberTypes/angular/membertypes.controller.js"],
+  "css": [],
+  "propertyEditors": [],
+  "gridEditors": [],
+  "dashboards": [
+    {
+      "alias": "MemberTypes.Dashboard",
+      "view": "/App_Plugins/MemberTypes/angular/membertypes.html",
+      "sections": ["member"],
+      "tab": "Member Types",
+      "access": [{"grant": "admin"}]
+    }
+  ]
+}

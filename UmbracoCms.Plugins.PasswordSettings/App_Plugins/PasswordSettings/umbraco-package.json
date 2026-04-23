@@ -1,0 +1,25 @@
+{
+  "$schema": "../../umbraco-package-schema.json",
+  "name": "UmbracoCms.Plugins.PasswordSettings",
+  "version": "2.0.0",
+  "extensions": [
+    {
+      "type": "dashboard",
+      "alias": "passwordsettings.dashboard",
+      "name": "Password Settings Dashboard",
+      "element": "/App_Plugins/PasswordSettings/dist/passwordsettings-dashboard.element.js",
+      "elementName": "passwordsettings-dashboard",
+      "weight": 100,
+      "meta": {
+        "label": "Password Settings",
+        "pathname": "passwordsettings"
+      },
+      "conditions": [
+        {
+          "alias": "Umb.Condition.SectionAlias",
+          "match": "Umb.Section.Content"
+        }
+      ]
+    }
+  ]
+}

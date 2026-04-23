@@ -1,0 +1,25 @@
+{
+  "$schema": "../../umbraco-package-schema.json",
+  "name": "UmbracoCms.Plugins.Restricted",
+  "version": "2.0.0",
+  "extensions": [
+    {
+      "type": "dashboard",
+      "alias": "restricted.dashboard",
+      "name": "Restricted Content Dashboard",
+      "element": "/App_Plugins/Restricted/dist/restricted-dashboard.element.js",
+      "elementName": "restricted-dashboard",
+      "weight": 100,
+      "meta": {
+        "label": "Restricted Content",
+        "pathname": "restricted"
+      },
+      "conditions": [
+        {
+          "alias": "Umb.Condition.SectionAlias",
+          "match": "Umb.Section.Content"
+        }
+      ]
+    }
+  ]
+}

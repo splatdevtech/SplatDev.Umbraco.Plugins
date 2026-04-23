@@ -1,0 +1,35 @@
+@model IEnumerable<string>
+
+<div class="restricted-component">
+    @if (ViewBag.IsRestricted == true)
+    {
+        <div class="restricted-notice">
+            <span class="restricted-icon">&#128274;</span>
+            <strong>Restricted Content</strong>
+            <p>This content requires membership in one of the following groups:</p>
+            <ul class="restricted-groups">
+                @foreach (var group in Model)
+                {
+                    <li>@group</li>
+                }
+            </ul>
+        </div>
+    }
+    else
+    {
+        <div class="restricted-open">
+            <span class="restricted-icon">&#128275;</span>
+            <strong>Public Content</strong>
+            <p>This content is accessible to all visitors.</p>
+        </div>
+    }
+</div>
+
+<style>
+    .restricted-component { font-family: sans-serif; }
+    .restricted-notice { background: #fef3c7; border: 1px solid #f59e0b; border-radius: 6px; padding: 1rem; }
+    .restricted-open { background: #d1fae5; border: 1px solid #10b981; border-radius: 6px; padding: 1rem; }
+    .restricted-icon { font-size: 1.25rem; margin-right: 0.5rem; }
+    .restricted-groups { list-style: disc; padding-left: 1.25rem; margin: 0.5rem 0 0; }
+    .restricted-groups li { padding: 0.15rem 0; font-size: 0.875rem; }
+</style>

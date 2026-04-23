@@ -1,0 +1,71 @@
+@{
+    var memberId = (int)ViewBag.MemberId;
+    var isEnabled = (bool)ViewBag.IsEnabled;
+}
+
+<div class="twofactor-component" data-member-id="@memberId">
+    <h3>Two-Factor Authentication</h3>
+    @if (isEnabled)
+    {
+        <p class="twofactor-status enabled">2FA is <strong>enabled</strong> for your account.</p>
+        <button class="btn-twofactor btn-danger" onclick="disable2FA(@memberId)">Disable 2FA</button>
+    }
+    else
+    {
+        <p class="twofactor-status disabled">2FA is <strong>not enabled</strong>.</p>
+        <button class="btn-twofactor btn-primary" onclick="setup2FA(@memberId)">Enable 2FA</button>
+    }
+
+    <div id="totp-setup-@memberId" class="totp-setup" style="display:none;">
+        <p>Enter the 6-digit code from your authenticator app to confirm setup:</p>
+        <input type="text" id="totp-code-@memberId" maxlength="6" placeholder="000000"
+               style="font-size:1.5rem;letter-spacing:0.3em;width:160px;text-align:center;" />
+        <button class="btn-twofactor btn-primary" style="margin-left:8px;"
+                onclick="verifyTotp(@memberId)">Verify</button>
+    </div>
+
+    <div id="twofactor-msg-@memberId" class="twofactor-msg" style="display:none;"></div>
+</div>
+
+<script>
+    function setup2FA(memberId) {
+        fetch('/umbraco/api/twofactor/SetupTotp?memberId=' + memberId, { method: 'POST' })
+            .then(r => r.json())
+            .then(data => {
+                document.getElementById('twofactor-msg-' + memberId).style.display = 'block';
+                document.getElementById('twofactor-msg-' + memberId).textContent =
+                    'TOTP secret generated. Key: ' + data.secretKey;
+                document.getElementById('totp-setup-' + memberId).style.display = 'block';
+            });
+    }
+
+    function verifyTotp(memberId) {
+        var code = document.getElementById('totp-code-' + memberId).value;
+        fetch('/umbraco/api/twofactor/VerifyTotp?memberId=' + memberId + '&code=' + code, { method: 'POST' })
+            .then(r => r.json())
+            .then(data => {
+                var msg = document.getElementById('twofactor-msg-' + memberId);
+                msg.textContent = data.valid ? '2FA enabled!' : 'Invalid code. Please try again.';
+                if (data.valid) location.reload();
+            });
+    }
+
+    function disable2FA(memberId) {
+        if (!confirm('Disable 2FA for your account?')) return;
+        fetch('/umbraco/api/twofactor/Disable?memberId=' + memberId, { method: 'POST' })
+            .then(() => location.reload());
+    }
+</script>
+
+<style>
+    .twofactor-component { padding: 1.5rem; background: #f9fafb; border-radius: 8px; max-width: 520px; }
+    .twofactor-component h3 { margin: 0 0 1rem; font-size: 1.1rem; }
+    .twofactor-status { margin-bottom: 1rem; }
+    .twofactor-status.enabled strong { color: #059669; }
+    .twofactor-status.disabled strong { color: #d97706; }
+    .btn-twofactor { padding: 0.5rem 1.25rem; border: none; border-radius: 6px; cursor: pointer; font-size: 0.95rem; }
+    .btn-primary { background: #1a73e8; color: #fff; }
+    .btn-danger { background: #dc2626; color: #fff; }
+    .totp-setup { margin-top: 1rem; padding: 1rem; background: #fff; border-radius: 6px; border: 1px solid #e5e7eb; }
+    .twofactor-msg { margin-top: 0.75rem; padding: 0.5rem 0.75rem; background: #eff6ff; border-radius: 4px; font-size: 0.875rem; }
+</style>

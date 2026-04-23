@@ -1,0 +1,25 @@
+{
+  "$schema": "../../umbraco-package-schema.json",
+  "name": "UmbracoCms.Plugins.CustomLogin",
+  "version": "2.0.0",
+  "extensions": [
+    {
+      "type": "dashboard",
+      "alias": "UmbracoCms.CustomLogin.Dashboard",
+      "name": "Custom Login Dashboard",
+      "element": "/App_Plugins/CustomLogin/dist/customlogin-dashboard.element.js",
+      "elementName": "customlogin-dashboard",
+      "weight": 100,
+      "meta": {
+        "label": "Custom Login",
+        "pathname": "customlogin"
+      },
+      "conditions": [
+        {
+          "alias": "Umb.Condition.SectionAlias",
+          "match": "Umb.Section.Settings"
+        }
+      ]
+    }
+  ]
+}

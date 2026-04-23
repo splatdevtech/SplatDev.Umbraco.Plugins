@@ -1,0 +1,59 @@
+<div ng-controller="CustomLoginDashboardController" class="customlogin-dashboard">
+    <div class="umb-panel-header">
+        <h1>Custom Login Settings</h1>
+        <p class="umb-panel-description">Configure the branded login page appearance and SSO integration.</p>
+    </div>
+
+    <div ng-if="loading" class="umb-loading">Loading...</div>
+
+    <div ng-if="!loading">
+        <div ng-if="message" class="alert alert-{{message.type === 'success' ? 'success' : 'danger'}}" style="margin-bottom:16px;">
+            {{message.text}}
+        </div>
+
+        <div class="umb-panel-body">
+            <div class="control-group">
+                <label class="control-label">Brand Name</label>
+                <div class="controls">
+                    <input type="text" ng-model="settings.brandName" class="umb-editor" placeholder="My Company" />
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">Logo URL</label>
+                <div class="controls">
+                    <input type="url" ng-model="settings.logoUrl" class="umb-editor" placeholder="https://example.com/logo.png" />
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">Background Color</label>
+                <div class="controls">
+                    <input type="color" ng-model="settings.backgroundColor" />
+                    <input type="text" ng-model="settings.backgroundColor" class="umb-editor" style="width:120px;margin-left:8px;" />
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">Accent Color</label>
+                <div class="controls">
+                    <input type="color" ng-model="settings.accentColor" />
+                    <input type="text" ng-model="settings.accentColor" class="umb-editor" style="width:120px;margin-left:8px;" />
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">Support Email</label>
+                <div class="controls">
+                    <input type="email" ng-model="settings.supportEmail" class="umb-editor" placeholder="support@example.com" />
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">Enable SSO</label>
+                <div class="controls">
+                    <input type="checkbox" ng-model="settings.enableSso" /> Enable Single Sign-On hook
+                </div>
+            </div>
+        </div>
+
+        <button class="btn btn-primary" ng-click="save()" ng-disabled="saving">
+            {{saving ? 'Saving...' : 'Save Settings'}}
+        </button>
+    </div>
+</div>

@@ -1,0 +1,15 @@
+{
+  "javascript": ["/App_Plugins/Restricted/angular/restricted.controller.js"],
+  "css": [],
+  "propertyEditors": [],
+  "gridEditors": [],
+  "dashboards": [
+    {
+      "alias": "Restricted.Dashboard",
+      "view": "/App_Plugins/Restricted/angular/restricted.html",
+      "sections": ["content"],
+      "tab": "Restricted Content",
+      "access": [{"grant": "admin"}]
+    }
+  ]
+}

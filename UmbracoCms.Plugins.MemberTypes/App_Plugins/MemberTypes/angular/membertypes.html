@@ -1,0 +1,55 @@
+<div ng-controller="MemberTypesDashboardController" class="membertypes-dashboard">
+    <div class="umb-panel-header">
+        <h1>Member Types</h1>
+        <p class="umb-panel-description">Manage custom member types and their properties.</p>
+    </div>
+
+    <div ng-if="loading" class="umb-loading">Loading...</div>
+
+    <!-- Detail view -->
+    <div ng-if="!loading && selectedType">
+        <button class="btn btn-default" ng-click="back()" style="margin-bottom:16px;">&larr; Back to list</button>
+        <h2>{{selectedType.name}} <small><code>{{selectedType.alias}}</code></small></h2>
+        <p>{{selectedType.description}}</p>
+        <h3>Properties</h3>
+        <table class="table" ng-if="selectedType.properties && selectedType.properties.length > 0">
+            <thead>
+                <tr><th>Name</th><th>Alias</th><th>Description</th><th>Mandatory</th></tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="prop in selectedType.properties">
+                    <td>{{prop.name}}</td>
+                    <td><code>{{prop.alias}}</code></td>
+                    <td>{{prop.description}}</td>
+                    <td>{{prop.mandatory ? 'Yes' : 'No'}}</td>
+                </tr>
+            </tbody>
+        </table>
+        <p ng-if="!selectedType.properties || selectedType.properties.length === 0">No properties defined.</p>
+    </div>
+
+    <!-- List view -->
+    <div ng-if="!loading && !selectedType">
+        <table class="table" ng-if="memberTypes.length > 0">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Alias</th>
+                    <th>Description</th>
+                    <th>Properties</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="type in memberTypes">
+                    <td><strong>{{type.name}}</strong></td>
+                    <td><code>{{type.alias}}</code></td>
+                    <td>{{type.description}}</td>
+                    <td>{{type.propertyCount}}</td>
+                    <td><a href="" ng-click="selectType(type)">View</a></td>
+                </tr>
+            </tbody>
+        </table>
+        <p ng-if="memberTypes.length === 0">No member types found.</p>
+    </div>
+</div>

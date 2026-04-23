@@ -1,0 +1,47 @@
+@using UmbracoCms.Plugins.PasswordSettings.Models
+@model PasswordPolicy
+
+<div class="password-settings-component">
+    @if (Model is null)
+    {
+        <p class="ps-notice">No password policy configured.</p>
+    }
+    else
+    {
+        <div class="ps-policy">
+            <h3>Password Requirements</h3>
+            <ul class="ps-rules">
+                <li>Minimum length: <strong>@Model.MinLength</strong> characters</li>
+                @if (Model.RequireUppercase)
+                {
+                    <li>At least one uppercase letter required</li>
+                }
+                @if (Model.RequireDigit)
+                {
+                    <li>At least one digit required</li>
+                }
+                @if (Model.RequireSpecial)
+                {
+                    <li>At least one special character required</li>
+                }
+                @if (Model.ExpirationDays > 0)
+                {
+                    <li>Password expires every <strong>@Model.ExpirationDays</strong> days</li>
+                }
+                @if (Model.HistoryCount > 0)
+                {
+                    <li>Cannot reuse the last <strong>@Model.HistoryCount</strong> passwords</li>
+                }
+            </ul>
+        </div>
+    }
+</div>
+
+<style>
+    .password-settings-component { font-family: sans-serif; }
+    .ps-policy { background: #f9fafb; border-radius: 6px; padding: 1rem; }
+    .ps-policy h3 { margin: 0 0 0.75rem; font-size: 1rem; font-weight: 600; }
+    .ps-rules { margin: 0; padding-left: 1.25rem; }
+    .ps-rules li { padding: 0.2rem 0; font-size: 0.9rem; color: #374151; }
+    .ps-notice { color: #6b7280; }
+</style>

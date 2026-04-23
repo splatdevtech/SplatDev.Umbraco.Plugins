@@ -1,0 +1,25 @@
+{
+  "$schema": "../../umbraco-package-schema.json",
+  "name": "UmbracoCms.Plugins.2fa",
+  "version": "2.0.0",
+  "extensions": [
+    {
+      "type": "dashboard",
+      "alias": "UmbracoCms.TwoFactor.Dashboard",
+      "name": "Two-Factor Authentication Dashboard",
+      "element": "/App_Plugins/2fa/dist/twofactor-dashboard.element.js",
+      "elementName": "twofactor-dashboard",
+      "weight": 100,
+      "meta": {
+        "label": "Two-Factor Auth",
+        "pathname": "twofactor"
+      },
+      "conditions": [
+        {
+          "alias": "Umb.Condition.SectionAlias",
+          "match": "Umb.Section.Members"
+        }
+      ]
+    }
+  ]
+}

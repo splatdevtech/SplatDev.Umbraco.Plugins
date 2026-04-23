@@ -1,0 +1,15 @@
+{
+  "javascript": ["/App_Plugins/HiddenContent/angular/hiddencontent.controller.js"],
+  "css": [],
+  "propertyEditors": [],
+  "gridEditors": [],
+  "dashboards": [
+    {
+      "alias": "HiddenContent.Dashboard",
+      "view": "/App_Plugins/HiddenContent/angular/hiddencontent.html",
+      "sections": ["content"],
+      "tab": "Hidden Content",
+      "access": [{"grant": "admin"}]
+    }
+  ]
+}

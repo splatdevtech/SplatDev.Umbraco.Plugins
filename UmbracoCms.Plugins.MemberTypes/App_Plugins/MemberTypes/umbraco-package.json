@@ -1,0 +1,25 @@
+{
+  "$schema": "../../umbraco-package-schema.json",
+  "name": "UmbracoCms.Plugins.MemberTypes",
+  "version": "2.0.0",
+  "extensions": [
+    {
+      "type": "dashboard",
+      "alias": "UmbracoCms.MemberTypes.Dashboard",
+      "name": "Member Types Dashboard",
+      "element": "/App_Plugins/MemberTypes/dist/membertypes-dashboard.element.js",
+      "elementName": "membertypes-dashboard",
+      "weight": 100,
+      "meta": {
+        "label": "Member Types",
+        "pathname": "membertypes"
+      },
+      "conditions": [
+        {
+          "alias": "Umb.Condition.SectionAlias",
+          "match": "Umb.Section.Members"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,41 @@
+@using Umbraco.Cms.Core.Models
+@model IEnumerable<IMemberType>
+
+<div class="membertypes-component">
+    <h2>Member Types</h2>
+    @if (!Model.Any())
+    {
+        <p class="membertypes-empty">No member types found.</p>
+    }
+    else
+    {
+        <table class="membertypes-table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Alias</th>
+                    <th>Description</th>
+                    <th>Properties</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var type in Model)
+                {
+                    <tr>
+                        <td><strong>@type.Name</strong></td>
+                        <td><code>@type.Alias</code></td>
+                        <td>@type.Description</td>
+                        <td>@type.PropertyTypes.Count()</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>
+
+<style>
+    .membertypes-table { width: 100%; border-collapse: collapse; }
+    .membertypes-table th, .membertypes-table td { padding: 0.5rem 0.75rem; border-bottom: 1px solid #e5e7eb; text-align: left; }
+    .membertypes-table th { background: #f9fafb; font-weight: 600; }
+    .membertypes-empty { color: #6b7280; }
+</style>

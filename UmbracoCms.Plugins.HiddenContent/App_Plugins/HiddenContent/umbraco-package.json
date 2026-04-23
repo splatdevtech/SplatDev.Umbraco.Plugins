@@ -1,0 +1,25 @@
+{
+  "$schema": "../../umbraco-package-schema.json",
+  "name": "UmbracoCms.Plugins.HiddenContent",
+  "version": "2.0.0",
+  "extensions": [
+    {
+      "type": "dashboard",
+      "alias": "hiddencontent.dashboard",
+      "name": "Hidden Content Dashboard",
+      "element": "/App_Plugins/HiddenContent/dist/hiddencontent-dashboard.element.js",
+      "elementName": "hiddencontent-dashboard",
+      "weight": 100,
+      "meta": {
+        "label": "Hidden Content",
+        "pathname": "hiddencontent"
+      },
+      "conditions": [
+        {
+          "alias": "Umb.Condition.SectionAlias",
+          "match": "Umb.Section.Content"
+        }
+      ]
+    }
+  ]
+}

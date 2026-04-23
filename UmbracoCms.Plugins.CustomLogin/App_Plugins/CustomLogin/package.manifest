@@ -1,0 +1,15 @@
+{
+  "javascript": ["/App_Plugins/CustomLogin/angular/customlogin.controller.js"],
+  "css": [],
+  "propertyEditors": [],
+  "gridEditors": [],
+  "dashboards": [
+    {
+      "alias": "CustomLogin.Dashboard",
+      "view": "/App_Plugins/CustomLogin/angular/customlogin.html",
+      "sections": ["settings"],
+      "tab": "Custom Login",
+      "access": [{"grant": "admin"}]
+    }
+  ]
+}

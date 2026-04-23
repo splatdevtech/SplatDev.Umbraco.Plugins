@@ -1,0 +1,15 @@
+{
+  "javascript": ["/App_Plugins/2fa/angular/twofactor.controller.js"],
+  "css": [],
+  "propertyEditors": [],
+  "gridEditors": [],
+  "dashboards": [
+    {
+      "alias": "TwoFactor.Dashboard",
+      "view": "/App_Plugins/2fa/angular/twofactor.html",
+      "sections": ["member"],
+      "tab": "Two-Factor Auth",
+      "access": [{"grant": "admin"}]
+    }
+  ]
+}

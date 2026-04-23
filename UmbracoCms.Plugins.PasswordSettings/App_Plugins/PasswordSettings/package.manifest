@@ -1,0 +1,15 @@
+{
+  "javascript": ["/App_Plugins/PasswordSettings/angular/passwordsettings.controller.js"],
+  "css": [],
+  "propertyEditors": [],
+  "gridEditors": [],
+  "dashboards": [
+    {
+      "alias": "PasswordSettings.Dashboard",
+      "view": "/App_Plugins/PasswordSettings/angular/passwordsettings.html",
+      "sections": ["content"],
+      "tab": "Password Settings",
+      "access": [{"grant": "admin"}]
+    }
+  ]
+}
