@@ -1,0 +1,92 @@
+<div ng-controller="ForumsDashboardController" class="forums-dashboard">
+    <div class="umb-panel-header">
+        <h1>Forums Manager</h1>
+        <p class="umb-panel-description">Manage discussion forum categories, threads and moderation.</p>
+    </div>
+
+    <ul class="nav nav-tabs" style="margin-bottom:16px;">
+        <li ng-class="{active: activeTab === 'categories'}">
+            <a href="" ng-click="setTab('categories')">Categories ({{categories.length}})</a>
+        </li>
+        <li ng-class="{active: activeTab === 'threads'}" ng-if="selectedCategory">
+            <a href="" ng-click="setTab('threads')">Threads in "{{selectedCategory.name}}" ({{totalThreads}})</a>
+        </li>
+    </ul>
+
+    <!-- Categories Tab -->
+    <div ng-show="activeTab === 'categories'">
+        <div ng-if="loading">Loading categories...</div>
+        <table class="table" ng-if="!loading && categories.length > 0">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Slug</th>
+                    <th>Description</th>
+                    <th>Sort Order</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="cat in categories">
+                    <td><strong>{{cat.name}}</strong></td>
+                    <td><code>{{cat.slug}}</code></td>
+                    <td>{{cat.description}}</td>
+                    <td>{{cat.sortOrder}}</td>
+                    <td>
+                        <button class="btn btn-xs btn-default" ng-click="selectCategory(cat)">View Threads</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <p ng-if="!loading && categories.length === 0">No categories found.</p>
+    </div>
+
+    <!-- Threads Tab -->
+    <div ng-show="activeTab === 'threads'">
+        <div ng-if="loading">Loading threads...</div>
+        <table class="table" ng-if="!loading && threads.length > 0">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Author</th>
+                    <th>Replies</th>
+                    <th>Views</th>
+                    <th>Created</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="thread in threads">
+                    <td>
+                        <span ng-if="thread.isPinned" style="color:#2563eb;" title="Pinned">&#128204;</span>
+                        <strong>{{thread.title}}</strong>
+                    </td>
+                    <td>{{thread.authorName}}</td>
+                    <td>{{thread.replyCount}}</td>
+                    <td>{{thread.viewCount}}</td>
+                    <td>{{formatDate(thread.createdAt)}}</td>
+                    <td>
+                        <span ng-if="thread.isLocked" style="color:#dc2626;">Locked</span>
+                        <span ng-if="!thread.isLocked" style="color:#16a34a;">Open</span>
+                    </td>
+                    <td>
+                        <button class="btn btn-xs btn-default" ng-click="lockThread(thread)">
+                            {{thread.isLocked ? 'Unlock' : 'Lock'}}
+                        </button>
+                        <button class="btn btn-xs btn-default" ng-click="pinThread(thread)">
+                            {{thread.isPinned ? 'Unpin' : 'Pin'}}
+                        </button>
+                        <button class="btn btn-xs btn-danger" ng-click="deleteThread(thread.id)">Delete</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <p ng-if="!loading && threads.length === 0">No threads found in this category.</p>
+        <div style="display:flex;gap:8px;margin-top:12px;" ng-if="totalThreads > pageSize">
+            <button class="btn btn-default" ng-click="prevPage()" ng-disabled="page === 1">Previous</button>
+            <span>Page {{page}}</span>
+            <button class="btn btn-default" ng-click="nextPage()" ng-disabled="page * pageSize >= totalThreads">Next</button>
+        </div>
+    </div>
+</div>

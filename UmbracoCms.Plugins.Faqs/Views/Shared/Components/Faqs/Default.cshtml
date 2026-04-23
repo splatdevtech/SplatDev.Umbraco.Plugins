@@ -1,0 +1,218 @@
+@using UmbracoCms.Plugins.Faqs.Models
+@model IEnumerable<FaqItem>
+
+<div class="faqs-component">
+    <div class="faqs-header">
+        <h2>Frequently Asked Questions</h2>
+
+        <!-- Search form -->
+        <form class="faqs-search" method="get" action="">
+            <input
+                type="search"
+                name="faqSearch"
+                placeholder="Search FAQs..."
+                class="faqs-search-input"
+                value="@(ViewBag.SearchQuery as string ?? "")"
+            />
+            <button type="submit" class="faqs-search-btn">Search</button>
+        </form>
+    </div>
+
+    @if (ViewBag.IsSearch is true && !string.IsNullOrEmpty(ViewBag.SearchQuery as string))
+    {
+        <p class="faqs-search-label">
+            Showing results for: <strong>@(ViewBag.SearchQuery)</strong>
+        </p>
+    }
+
+    @if (!Model.Any())
+    {
+        <p class="faqs-empty">No FAQs found.</p>
+    }
+    else if (ViewBag.IsSearch is true)
+    {
+        <!-- Flat search results accordion -->
+        <div class="faqs-accordion">
+            @foreach (var item in Model)
+            {
+                <details class="faqs-item">
+                    <summary class="faqs-question">@item.Question</summary>
+                    <div class="faqs-answer">@Html.Raw(item.Answer)</div>
+                </details>
+            }
+        </div>
+    }
+    else
+    {
+        <!-- Grouped by category -->
+        var categories = ViewBag.Categories as IEnumerable<FaqCategory>;
+        if (categories is not null)
+        {
+            @foreach (var category in categories)
+            {
+                var categoryItems = Model.Where(i => i.CategoryId == category.Id).ToList();
+                if (!categoryItems.Any()) continue;
+
+                <section class="faqs-category">
+                    <h3 class="faqs-category-title">@category.Name</h3>
+                    <div class="faqs-accordion">
+                        @foreach (var item in categoryItems)
+                        {
+                            <details class="faqs-item">
+                                <summary class="faqs-question">
+                                    <span>@item.Question</span>
+                                    <span class="faqs-chevron">&#8250;</span>
+                                </summary>
+                                <div class="faqs-answer">@Html.Raw(item.Answer)</div>
+                            </details>
+                        }
+                    </div>
+                </section>
+            }
+        }
+    }
+</div>
+
+<style>
+    .faqs-component {
+        max-width: 860px;
+        margin: 0 auto;
+        font-family: inherit;
+    }
+
+    .faqs-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-bottom: 24px;
+    }
+
+    .faqs-header h2 {
+        margin: 0;
+        font-size: 1.75rem;
+        font-weight: 700;
+    }
+
+    .faqs-search {
+        display: flex;
+        gap: 8px;
+    }
+
+    .faqs-search-input {
+        padding: 8px 12px;
+        border: 1px solid #d1d5db;
+        border-radius: 6px;
+        font-size: 0.9rem;
+        width: 220px;
+    }
+
+    .faqs-search-btn {
+        padding: 8px 16px;
+        background: #3b82f6;
+        color: #fff;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 0.9rem;
+    }
+
+    .faqs-search-btn:hover {
+        background: #2563eb;
+    }
+
+    .faqs-search-label {
+        margin: 0 0 16px;
+        font-size: 0.9rem;
+        color: #6b7280;
+    }
+
+    .faqs-category {
+        margin-bottom: 32px;
+    }
+
+    .faqs-category-title {
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin: 0 0 12px;
+        padding-bottom: 8px;
+        border-bottom: 2px solid #e5e7eb;
+        color: #374151;
+    }
+
+    .faqs-accordion {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+    }
+
+    .faqs-item {
+        border: 1px solid #e5e7eb;
+        border-radius: 6px;
+        overflow: hidden;
+        background: #fff;
+    }
+
+    .faqs-item[open] {
+        border-color: #3b82f6;
+    }
+
+    .faqs-question {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 14px 18px;
+        cursor: pointer;
+        font-weight: 500;
+        font-size: 1rem;
+        color: #111827;
+        list-style: none;
+        user-select: none;
+        gap: 12px;
+    }
+
+    .faqs-question::-webkit-details-marker {
+        display: none;
+    }
+
+    .faqs-item[open] .faqs-question {
+        background: #eff6ff;
+        color: #1d4ed8;
+    }
+
+    .faqs-chevron {
+        font-size: 1.4rem;
+        transition: transform 0.2s ease;
+        flex-shrink: 0;
+        line-height: 1;
+    }
+
+    .faqs-item[open] .faqs-chevron {
+        transform: rotate(90deg);
+    }
+
+    .faqs-answer {
+        padding: 0 18px 16px;
+        color: #374151;
+        font-size: 0.95rem;
+        line-height: 1.7;
+        border-top: 1px solid #e5e7eb;
+    }
+
+    .faqs-empty {
+        color: #6b7280;
+        text-align: center;
+        padding: 32px 0;
+    }
+
+    @@media (max-width: 580px) {
+        .faqs-header {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        .faqs-search-input {
+            width: 100%;
+        }
+    }
+</style>

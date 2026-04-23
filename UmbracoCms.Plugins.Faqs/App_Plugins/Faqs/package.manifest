@@ -1,0 +1,15 @@
+{
+  "javascript": ["/App_Plugins/Faqs/angular/faqs.controller.js"],
+  "css": [],
+  "propertyEditors": [],
+  "gridEditors": [],
+  "dashboards": [
+    {
+      "alias": "Faqs.Dashboard",
+      "view": "/App_Plugins/Faqs/angular/faqs.html",
+      "sections": ["settings"],
+      "tab": "FAQs",
+      "access": [{"grant": "admin"}]
+    }
+  ]
+}

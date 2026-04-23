@@ -1,0 +1,43 @@
+{
+  "$schema": "../../umbraco-package-schema.json",
+  "name": "Forums",
+  "version": "2.0.0",
+  "extensions": [
+    {
+      "type": "dashboard",
+      "alias": "UmbracoCms.Forums.Dashboard",
+      "name": "Forums Dashboard",
+      "element": "/App_Plugins/Forums/dist/forums-dashboard.element.js",
+      "elementName": "forums-dashboard",
+      "weight": 100,
+      "meta": {
+        "label": "Forums",
+        "pathname": "forums"
+      },
+      "conditions": [
+        {
+          "alias": "Umb.Condition.SectionAlias",
+          "match": "Umb.Section.Settings"
+        }
+      ]
+    },
+    {
+      "type": "localization",
+      "alias": "UmbracoCms.Forums.Localization.En",
+      "name": "Forums — English",
+      "meta": {
+        "culture": "en",
+        "localizations": {
+          "section": {
+            "forums_heading": "Forums",
+            "forums_description": "Manage discussion forums, threads, replies and moderation",
+            "forums_categories": "Categories",
+            "forums_threads": "Threads",
+            "forums_replies": "Replies",
+            "forums_moderation": "Moderation"
+          }
+        }
+      }
+    }
+  ]
+}

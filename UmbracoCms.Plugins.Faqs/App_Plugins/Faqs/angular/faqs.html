@@ -1,0 +1,113 @@
+<div ng-controller="FaqsDashboardController" class="faqs-dashboard">
+    <div class="umb-panel-header">
+        <h1>FAQs Manager</h1>
+        <p class="umb-panel-description">Manage frequently asked questions and categories from the Umbraco backoffice.</p>
+    </div>
+
+    <!-- Search bar -->
+    <div style="display:flex;gap:8px;margin-bottom:16px;">
+        <input type="text" class="umb-input" ng-model="searchQuery" placeholder="Search FAQs..." style="max-width:300px;" />
+        <button class="btn btn-default" ng-click="search()">Search</button>
+    </div>
+
+    <ul class="nav nav-tabs" style="margin-bottom:16px;">
+        <li ng-class="{active: activeTab === 'categories'}">
+            <a href="" ng-click="setTab('categories')">Categories ({{categories.length}})</a>
+        </li>
+        <li ng-class="{active: activeTab === 'items'}">
+            <a href="" ng-click="setTab('items')">All Items ({{totalItems}})</a>
+        </li>
+        <li ng-class="{active: activeTab === 'search'}" ng-if="searchResults.length > 0">
+            <a href="" ng-click="setTab('search')">Search Results ({{searchResults.length}})</a>
+        </li>
+    </ul>
+
+    <!-- Categories Tab -->
+    <div ng-show="activeTab === 'categories'">
+        <div ng-if="loading">Loading...</div>
+        <table class="table" ng-if="!loading && categories.length > 0">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Slug</th>
+                    <th>Sort Order</th>
+                    <th>Items</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="cat in categories">
+                    <td><strong>{{cat.name}}</strong></td>
+                    <td><code>{{cat.slug}}</code></td>
+                    <td>{{cat.sortOrder}}</td>
+                    <td>{{cat.items ? cat.items.length : 0}}</td>
+                    <td>
+                        <button class="btn btn-xs btn-danger" ng-click="deleteCategory(cat.id)">Delete</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <p ng-if="!loading && categories.length === 0">No categories found.</p>
+    </div>
+
+    <!-- Items Tab -->
+    <div ng-show="activeTab === 'items'">
+        <div ng-if="loading">Loading...</div>
+        <table class="table" ng-if="!loading && items.length > 0">
+            <thead>
+                <tr>
+                    <th>Question</th>
+                    <th>Category</th>
+                    <th>Sort Order</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="item in items">
+                    <td style="max-width:400px;">{{item.question}}</td>
+                    <td>{{getCategoryName(item.categoryId)}}</td>
+                    <td>{{item.sortOrder}}</td>
+                    <td>
+                        <span ng-if="item.isPublished" style="color:green;">Published</span>
+                        <span ng-if="!item.isPublished" style="color:orange;">Unpublished</span>
+                    </td>
+                    <td>
+                        <button class="btn btn-xs btn-default" ng-click="togglePublish(item)">
+                            {{item.isPublished ? 'Unpublish' : 'Publish'}}
+                        </button>
+                        <button class="btn btn-xs btn-danger" ng-click="deleteItem(item.id)">Delete</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <p ng-if="!loading && items.length === 0">No FAQ items found.</p>
+    </div>
+
+    <!-- Search Results Tab -->
+    <div ng-show="activeTab === 'search'">
+        <p style="color:#6b7280;margin-bottom:12px;">
+            Showing <strong>{{searchResults.length}}</strong> results for "{{searchQuery}}"
+        </p>
+        <table class="table" ng-if="searchResults.length > 0">
+            <thead>
+                <tr>
+                    <th>Question</th>
+                    <th>Category</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="item in searchResults">
+                    <td>{{item.question}}</td>
+                    <td>{{getCategoryName(item.categoryId)}}</td>
+                    <td>
+                        <span ng-if="item.isPublished" style="color:green;">Published</span>
+                        <span ng-if="!item.isPublished" style="color:orange;">Unpublished</span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <p ng-if="searchResults.length === 0">No results found.</p>
+    </div>
+</div>

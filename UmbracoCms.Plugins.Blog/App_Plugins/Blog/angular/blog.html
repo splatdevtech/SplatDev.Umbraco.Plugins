@@ -1,0 +1,84 @@
+<div ng-controller="BlogDashboardController" class="blog-dashboard">
+    <div class="umb-panel-header">
+        <h1>Blog Manager</h1>
+        <p class="umb-panel-description">Manage blog posts, categories and tags from the Umbraco backoffice.</p>
+    </div>
+
+    <ul class="nav nav-tabs" style="margin-bottom:16px;">
+        <li ng-class="{active: activeTab === 'posts'}">
+            <a href="" ng-click="setTab('posts')">Posts ({{totalPosts}})</a>
+        </li>
+        <li ng-class="{active: activeTab === 'categories'}">
+            <a href="" ng-click="setTab('categories')">Categories ({{categories.length}})</a>
+        </li>
+        <li ng-class="{active: activeTab === 'tags'}">
+            <a href="" ng-click="setTab('tags')">Tags ({{tags.length}})</a>
+        </li>
+    </ul>
+
+    <!-- Posts Tab -->
+    <div ng-show="activeTab === 'posts'">
+        <div ng-if="loading" class="umb-loading">Loading posts...</div>
+        <div ng-if="!loading">
+            <table class="table" ng-if="posts.length > 0">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Author</th>
+                        <th>Category</th>
+                        <th>Published</th>
+                        <th>Views</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="post in posts">
+                        <td><strong>{{post.title}}</strong></td>
+                        <td>{{post.authorName}}</td>
+                        <td>{{post.category ? post.category.name : '-'}}</td>
+                        <td>{{formatDate(post.publishedAt)}}</td>
+                        <td>{{post.viewCount}}</td>
+                        <td>
+                            <span ng-if="post.isPublished" style="color:green;">Published</span>
+                            <span ng-if="!post.isPublished" style="color:orange;">Draft</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <p ng-if="posts.length === 0">No posts found.</p>
+            <div style="display:flex;gap:8px;margin-top:12px;" ng-if="totalPosts > pageSize">
+                <button class="btn btn-default" ng-click="prevPage()" ng-disabled="page === 1">Previous</button>
+                <span>Page {{page}}</span>
+                <button class="btn btn-default" ng-click="nextPage()" ng-disabled="page * pageSize >= totalPosts">Next</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Categories Tab -->
+    <div ng-show="activeTab === 'categories'">
+        <table class="table" ng-if="categories.length > 0">
+            <thead>
+                <tr><th>Name</th><th>Slug</th><th>Description</th></tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="cat in categories">
+                    <td><strong>{{cat.name}}</strong></td>
+                    <td><code>{{cat.slug}}</code></td>
+                    <td>{{cat.description}}</td>
+                </tr>
+            </tbody>
+        </table>
+        <p ng-if="categories.length === 0">No categories found.</p>
+    </div>
+
+    <!-- Tags Tab -->
+    <div ng-show="activeTab === 'tags'">
+        <div class="tag-cloud" style="display:flex;gap:8px;flex-wrap:wrap;" ng-if="tags.length > 0">
+            <span ng-repeat="tag in tags"
+                  style="background:#f3f4f6;padding:4px 12px;border-radius:9999px;font-size:0.85rem;">
+                {{tag.name}}
+            </span>
+        </div>
+        <p ng-if="tags.length === 0">No tags found.</p>
+    </div>
+</div>

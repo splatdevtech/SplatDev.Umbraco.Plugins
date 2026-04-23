@@ -1,0 +1,15 @@
+{
+  "javascript": ["/App_Plugins/Blog/angular/blog.controller.js"],
+  "css": [],
+  "propertyEditors": [],
+  "gridEditors": [],
+  "dashboards": [
+    {
+      "alias": "Blog.Dashboard",
+      "view": "/App_Plugins/Blog/angular/blog.html",
+      "sections": ["settings"],
+      "tab": "Blog",
+      "access": [{"grant": "admin"}]
+    }
+  ]
+}

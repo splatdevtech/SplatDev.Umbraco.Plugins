@@ -1,0 +1,15 @@
+{
+  "javascript": ["/App_Plugins/Forums/angular/forums.controller.js"],
+  "css": [],
+  "propertyEditors": [],
+  "gridEditors": [],
+  "dashboards": [
+    {
+      "alias": "Forums.Dashboard",
+      "view": "/App_Plugins/Forums/angular/forums.html",
+      "sections": ["settings"],
+      "tab": "Forums",
+      "access": [{"grant": "admin"}]
+    }
+  ]
+}

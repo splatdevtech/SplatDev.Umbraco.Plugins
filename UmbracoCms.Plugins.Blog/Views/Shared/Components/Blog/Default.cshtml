@@ -1,0 +1,113 @@
+@using UmbracoCms.Plugins.Blog.Models
+@model IEnumerable<BlogPost>
+
+<div class="blog-component">
+    <div class="blog-layout">
+        <main class="blog-posts">
+            @if (!Model.Any())
+            {
+                <p class="blog-empty">No posts found.</p>
+            }
+            else
+            {
+                @foreach (var post in Model)
+                {
+                    <article class="blog-post-card">
+                        <header>
+                            <h2 class="blog-post-title">
+                                <a href="/blog/@post.Slug">@post.Title</a>
+                            </h2>
+                            <div class="blog-post-meta">
+                                <span class="blog-author">By @post.AuthorName</span>
+                                <span class="blog-date">@post.PublishedAt.ToString("MMMM d, yyyy")</span>
+                                @if (post.Category is not null)
+                                {
+                                    <span class="blog-category">
+                                        in <a href="/blog/category/@post.Category.Slug">@post.Category.Name</a>
+                                    </span>
+                                }
+                                <span class="blog-views">@post.ViewCount views</span>
+                            </div>
+                        </header>
+
+                        @if (!string.IsNullOrEmpty(post.Excerpt))
+                        {
+                            <p class="blog-excerpt">@post.Excerpt</p>
+                        }
+
+                        @if (post.BlogPostTags.Any())
+                        {
+                            <div class="blog-tags">
+                                @foreach (var postTag in post.BlogPostTags)
+                                {
+                                    <a class="blog-tag" href="/blog/tag/@postTag.BlogTag.Slug">@postTag.BlogTag.Name</a>
+                                }
+                            </div>
+                        }
+
+                        <a class="blog-read-more" href="/blog/@post.Slug">Read more &rarr;</a>
+                    </article>
+                }
+            }
+        </main>
+
+        <aside class="blog-sidebar">
+            @if (ViewBag.Categories is IEnumerable<BlogCategory> categories && categories.Any())
+            {
+                <section class="blog-widget">
+                    <h3>Categories</h3>
+                    <ul>
+                        @foreach (var cat in categories)
+                        {
+                            <li><a href="/blog/category/@cat.Slug">@cat.Name</a></li>
+                        }
+                    </ul>
+                </section>
+            }
+
+            @if (ViewBag.Tags is IEnumerable<BlogTag> tags && tags.Any())
+            {
+                <section class="blog-widget">
+                    <h3>Tags</h3>
+                    <div class="blog-tag-cloud">
+                        @foreach (var tag in tags)
+                        {
+                            <a class="blog-tag" href="/blog/tag/@tag.Slug">@tag.Name</a>
+                        }
+                    </div>
+                </section>
+            }
+
+            <section class="blog-widget">
+                <h3>RSS</h3>
+                <a href="/umbraco/api/blog/rss">Subscribe to RSS feed</a>
+            </section>
+        </aside>
+    </div>
+</div>
+
+<style>
+    .blog-layout { display: flex; gap: 2rem; }
+    .blog-posts { flex: 1; }
+    .blog-sidebar { width: 260px; flex-shrink: 0; }
+    .blog-post-card { padding: 1.5rem 0; border-bottom: 1px solid #e5e7eb; }
+    .blog-post-title { margin: 0 0 0.5rem; font-size: 1.5rem; }
+    .blog-post-title a { text-decoration: none; color: inherit; }
+    .blog-post-meta { display: flex; gap: 1rem; font-size: 0.875rem; color: #6b7280; margin-bottom: 0.75rem; flex-wrap: wrap; }
+    .blog-excerpt { color: #374151; margin: 0 0 0.75rem; }
+    .blog-tags { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 0.75rem; }
+    .blog-tag { background: #f3f4f6; padding: 2px 10px; border-radius: 9999px; font-size: 0.75rem; text-decoration: none; color: #374151; }
+    .blog-tag:hover { background: #e5e7eb; }
+    .blog-read-more { font-size: 0.875rem; font-weight: 600; text-decoration: none; }
+    .blog-empty { color: #6b7280; }
+    .blog-widget { background: #f9fafb; border-radius: 6px; padding: 1rem; margin-bottom: 1.5rem; }
+    .blog-widget h3 { margin: 0 0 0.75rem; font-size: 1rem; font-weight: 600; }
+    .blog-widget ul { list-style: none; margin: 0; padding: 0; }
+    .blog-widget ul li { padding: 0.25rem 0; }
+    .blog-widget ul li a { text-decoration: none; color: #374151; }
+    .blog-tag-cloud { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+    @@media (max-width: 640px) {
+        .blog-layout { flex-direction: column; }
+        .blog-sidebar { width: 100%; }
+    }
+</style>

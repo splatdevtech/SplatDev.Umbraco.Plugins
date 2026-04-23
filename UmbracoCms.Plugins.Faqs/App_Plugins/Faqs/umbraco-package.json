@@ -1,0 +1,42 @@
+{
+  "$schema": "../../umbraco-package-schema.json",
+  "name": "Faqs",
+  "version": "2.0.0",
+  "extensions": [
+    {
+      "type": "dashboard",
+      "alias": "UmbracoCms.Faqs.Dashboard",
+      "name": "FAQs Dashboard",
+      "element": "/App_Plugins/Faqs/dist/faqs-dashboard.element.js",
+      "elementName": "faqs-dashboard",
+      "weight": 100,
+      "meta": {
+        "label": "FAQs",
+        "pathname": "faqs"
+      },
+      "conditions": [
+        {
+          "alias": "Umb.Condition.SectionAlias",
+          "match": "Umb.Section.Settings"
+        }
+      ]
+    },
+    {
+      "type": "localization",
+      "alias": "UmbracoCms.Faqs.Localization.En",
+      "name": "FAQs — English",
+      "meta": {
+        "culture": "en",
+        "localizations": {
+          "section": {
+            "faqs_heading": "FAQs",
+            "faqs_description": "Manage frequently asked questions and categories",
+            "faqs_categories": "Categories",
+            "faqs_items": "FAQ Items",
+            "faqs_search": "Search FAQs"
+          }
+        }
+      }
+    }
+  ]
+}

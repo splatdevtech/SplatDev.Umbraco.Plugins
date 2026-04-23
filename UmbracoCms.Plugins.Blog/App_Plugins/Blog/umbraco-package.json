@@ -1,0 +1,43 @@
+{
+  "$schema": "../../umbraco-package-schema.json",
+  "name": "Blog",
+  "version": "2.0.0",
+  "extensions": [
+    {
+      "type": "dashboard",
+      "alias": "UmbracoCms.Blog.Dashboard",
+      "name": "Blog Dashboard",
+      "element": "/App_Plugins/Blog/dist/blog-dashboard.element.js",
+      "elementName": "blog-dashboard",
+      "weight": 100,
+      "meta": {
+        "label": "Blog",
+        "pathname": "blog"
+      },
+      "conditions": [
+        {
+          "alias": "Umb.Condition.SectionAlias",
+          "match": "Umb.Section.Settings"
+        }
+      ]
+    },
+    {
+      "type": "localization",
+      "alias": "UmbracoCms.Blog.Localization.En",
+      "name": "Blog — English",
+      "meta": {
+        "culture": "en",
+        "localizations": {
+          "section": {
+            "blog_heading": "Blog",
+            "blog_description": "Manage blog posts, categories, tags and comments",
+            "blog_posts": "Posts",
+            "blog_categories": "Categories",
+            "blog_tags": "Tags",
+            "blog_comments": "Comments"
+          }
+        }
+      }
+    }
+  ]
+}
