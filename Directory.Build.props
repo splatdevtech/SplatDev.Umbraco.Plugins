@@ -1,0 +1,11 @@
+<Project>
+  <PropertyGroup>
+    <Authors>SplatDev</Authors>
+    <Company>SplatDev Ltda</Company>
+    <Copyright>Copyright (c) SplatDev Ltda 2026</Copyright>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/SplatDev-Ltda/SplatDev.Umbraco.Core</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/SplatDev-Ltda/SplatDev.Umbraco.Core</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+  </PropertyGroup>
+</Project>

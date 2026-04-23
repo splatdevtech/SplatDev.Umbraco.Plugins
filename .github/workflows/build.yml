@@ -1,0 +1,31 @@
+name: Build & Test
+
+on:
+  push:
+    branches: [master, main]
+  pull_request:
+    branches: [master, main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        dotnet: ["8.0.x", "10.0.x"]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET ${{ matrix.dotnet }}
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: ${{ matrix.dotnet }}
+
+      - name: Restore dependencies
+        run: dotnet restore SplatDev.Core.sln
+
+      - name: Build
+        run: dotnet build SplatDev.Core.sln --no-restore -c Release
+
+      - name: Test
+        run: dotnet test SplatDev.Core.sln --no-build -c Release --verbosity normal
