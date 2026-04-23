@@ -1,0 +1,35 @@
+<div ng-controller="StarRatings.DashboardController as vm">
+    <umb-box>
+        <umb-box-header title="Star Ratings"></umb-box-header>
+        <umb-box-content>
+            <p>Top-rated content across the site.</p>
+
+            <div ng-if="vm.error" class="alert alert-danger">{{vm.error}}</div>
+
+            <div ng-if="vm.loading">
+                <umb-load-indicator></umb-load-indicator>
+            </div>
+
+            <table ng-if="!vm.loading && vm.topRated.length" class="table">
+                <thead>
+                    <tr>
+                        <th>Content Key</th>
+                        <th>Average Rating</th>
+                        <th>Total Votes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="item in vm.topRated">
+                        <td>{{item.contentKey}}</td>
+                        <td>{{item.averageRating | number:1}} &#9733;</td>
+                        <td>{{item.totalVotes}}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p ng-if="!vm.loading && !vm.topRated.length">No ratings recorded yet.</p>
+
+            <button class="btn btn-primary" ng-click="vm.load()" ng-disabled="vm.loading">Refresh</button>
+        </umb-box-content>
+    </umb-box>
+</div>

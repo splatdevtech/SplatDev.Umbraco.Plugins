@@ -1,0 +1,15 @@
+{
+  "javascript": ["/App_Plugins/StarRatings/angular/star-ratings.controller.js"],
+  "css": [],
+  "propertyEditors": [],
+  "gridEditors": [],
+  "dashboards": [
+    {
+      "alias": "StarRatings.Dashboard",
+      "view": "/App_Plugins/StarRatings/angular/star-ratings.html",
+      "sections": ["settings"],
+      "tab": "Star Ratings",
+      "access": [{ "grant": "admin" }]
+    }
+  ]
+}

@@ -1,0 +1,74 @@
+@model UmbracoCms.Plugins.StarRatings.Models.ContentRatingSummary
+@{
+    var contentKeyStr = Model.ContentKey.ToString();
+    var average = Model.AverageRating;
+    var roundedAverage = (int)Math.Round(average);
+}
+
+<div class="star-ratings" data-content-key="@contentKeyStr" id="star-ratings-@contentKeyStr">
+    <div class="star-ratings__display">
+        @for (int i = 1; i <= 5; i++)
+        {
+            <span class="star-ratings__star @(i <= roundedAverage ? "star-ratings__star--filled" : "star-ratings__star--empty")"
+                  data-value="@i"
+                  role="button"
+                  tabindex="0"
+                  aria-label="Rate @i out of 5 stars">&#9733;</span>
+        }
+        <span class="star-ratings__average">
+            @(Model.TotalVotes > 0
+                ? $"{average:F1} / 5 ({Model.TotalVotes} vote{(Model.TotalVotes == 1 ? "" : "s")})"
+                : "No ratings yet")
+        </span>
+    </div>
+    <div class="star-ratings__feedback" aria-live="polite"></div>
+</div>
+
+<style>
+    .star-ratings { display: inline-flex; flex-direction: column; gap: 4px; }
+    .star-ratings__display { display: flex; align-items: center; gap: 2px; }
+    .star-ratings__star { font-size: 1.5rem; cursor: pointer; transition: color 0.15s; color: #ccc; }
+    .star-ratings__star--filled { color: #f5a623; }
+    .star-ratings__star:hover,
+    .star-ratings__star:focus { color: #f5a623; outline: none; }
+    .star-ratings__average { margin-left: 8px; font-size: 0.875rem; color: #666; }
+    .star-ratings__feedback { font-size: 0.8rem; color: #28a745; min-height: 1.2em; }
+</style>
+
+<script>
+(function () {
+    var container = document.getElementById('star-ratings-@contentKeyStr');
+    if (!container) return;
+
+    var stars = container.querySelectorAll('.star-ratings__star');
+    var feedback = container.querySelector('.star-ratings__feedback');
+
+    stars.forEach(function (star) {
+        star.addEventListener('click', function () { vote(parseInt(star.dataset.value)); });
+        star.addEventListener('keydown', function (e) {
+            if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); vote(parseInt(star.dataset.value)); }
+        });
+    });
+
+    function vote(rating) {
+        fetch('/umbraco/api/starratings/Rate', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ contentKey: '@contentKeyStr', rating: rating })
+        })
+        .then(function (r) { return r.json(); })
+        .then(function (data) {
+            feedback.textContent = 'Thanks! New average: ' + data.average.toFixed(1) + ' / 5';
+            updateStars(Math.round(data.average));
+        })
+        .catch(function () { feedback.textContent = 'Could not save your rating.'; });
+    }
+
+    function updateStars(filled) {
+        stars.forEach(function (s, i) {
+            s.classList.toggle('star-ratings__star--filled', i < filled);
+            s.classList.toggle('star-ratings__star--empty', i >= filled);
+        });
+    }
+})();
+</script>

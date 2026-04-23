@@ -1,0 +1,15 @@
+{
+  "javascript": ["/App_Plugins/MostViewed/angular/most-viewed.controller.js"],
+  "css": [],
+  "propertyEditors": [],
+  "gridEditors": [],
+  "dashboards": [
+    {
+      "alias": "MostViewed.Dashboard",
+      "view": "/App_Plugins/MostViewed/angular/most-viewed.html",
+      "sections": ["settings"],
+      "tab": "Most Viewed",
+      "access": [{ "grant": "admin" }]
+    }
+  ]
+}

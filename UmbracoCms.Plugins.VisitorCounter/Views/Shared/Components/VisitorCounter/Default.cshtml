@@ -1,0 +1,30 @@
+@model UmbracoCms.Plugins.VisitorCounter.ViewComponents.VisitorCounterViewModel
+
+<div class="visitor-counter">
+    <div class="visitor-counter__stat visitor-counter__stat--total">
+        <span class="visitor-counter__label">Total Visits</span>
+        <span class="visitor-counter__value" data-odometer="@Model.TotalVisits">@Model.TotalVisits.ToString("N0")</span>
+    </div>
+    <div class="visitor-counter__stat visitor-counter__stat--unique">
+        <span class="visitor-counter__label">Unique Visitors</span>
+        <span class="visitor-counter__value">@Model.UniqueVisits.ToString("N0")</span>
+        <span class="visitor-counter__period">(last @Model.PeriodDays days)</span>
+    </div>
+</div>
+
+<style>
+    .visitor-counter { display: inline-flex; gap: 24px; flex-wrap: wrap; }
+    .visitor-counter__stat {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 16px 24px;
+        border-radius: 8px;
+        background: #f8f9fa;
+        border: 1px solid #e9ecef;
+        min-width: 140px;
+    }
+    .visitor-counter__label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: #6b7280; margin-bottom: 4px; }
+    .visitor-counter__value { font-size: 2rem; font-weight: 700; color: #111827; line-height: 1; }
+    .visitor-counter__period { font-size: 0.7rem; color: #9ca3af; margin-top: 4px; }
+</style>

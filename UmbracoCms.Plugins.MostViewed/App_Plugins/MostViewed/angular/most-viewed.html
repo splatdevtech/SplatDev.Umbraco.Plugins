@@ -1,0 +1,37 @@
+<div ng-controller="MostViewed.DashboardController as vm">
+    <umb-box>
+        <umb-box-header title="Most Viewed Pages"></umb-box-header>
+        <umb-box-content>
+            <p>Most-visited pages in the last {{vm.days}} days.</p>
+
+            <div ng-if="vm.error" class="alert alert-danger">{{vm.error}}</div>
+
+            <div ng-if="vm.loading">
+                <umb-load-indicator></umb-load-indicator>
+            </div>
+
+            <table ng-if="!vm.loading && vm.pages.length" class="table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Page</th>
+                        <th>URL</th>
+                        <th>Views</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="page in vm.pages">
+                        <td>{{$index + 1}}</td>
+                        <td>{{page.nodeName}}</td>
+                        <td><a href="{{page.nodeUrl}}" target="_blank">{{page.nodeUrl}}</a></td>
+                        <td>{{page.viewCount}}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p ng-if="!vm.loading && !vm.pages.length">No page views recorded yet.</p>
+
+            <button class="btn btn-primary" ng-click="vm.load()" ng-disabled="vm.loading">Refresh</button>
+        </umb-box-content>
+    </umb-box>
+</div>

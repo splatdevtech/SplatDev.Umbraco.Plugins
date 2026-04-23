@@ -1,0 +1,15 @@
+{
+  "javascript": ["/App_Plugins/VisitorCounter/angular/visitor-counter.controller.js"],
+  "css": [],
+  "propertyEditors": [],
+  "gridEditors": [],
+  "dashboards": [
+    {
+      "alias": "VisitorCounter.Dashboard",
+      "view": "/App_Plugins/VisitorCounter/angular/visitor-counter.html",
+      "sections": ["settings"],
+      "tab": "Visitor Counter",
+      "access": [{ "grant": "admin" }]
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "$schema": "../../umbraco-package-schema.json",
+  "name": "Visitor Counter",
+  "version": "2.0.0",
+  "extensions": [
+    {
+      "type": "dashboard",
+      "alias": "UmbracoCms.VisitorCounter.Dashboard",
+      "name": "Visitor Counter Dashboard",
+      "element": "/App_Plugins/VisitorCounter/dist/visitor-counter-dashboard.element.js",
+      "elementName": "visitor-counter-dashboard",
+      "weight": 100,
+      "meta": {
+        "label": "Visitor Counter",
+        "pathname": "visitor-counter"
+      },
+      "conditions": [
+        {
+          "alias": "Umb.Condition.SectionAlias",
+          "match": "Umb.Section.Settings"
+        }
+      ]
+    }
+  ]
+}

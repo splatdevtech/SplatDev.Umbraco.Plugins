@@ -1,0 +1,25 @@
+{
+  "$schema": "../../umbraco-package-schema.json",
+  "name": "Star Ratings",
+  "version": "2.0.0",
+  "extensions": [
+    {
+      "type": "dashboard",
+      "alias": "UmbracoCms.StarRatings.Dashboard",
+      "name": "Star Ratings Dashboard",
+      "element": "/App_Plugins/StarRatings/dist/star-ratings-dashboard.element.js",
+      "elementName": "star-ratings-dashboard",
+      "weight": 100,
+      "meta": {
+        "label": "Star Ratings",
+        "pathname": "star-ratings"
+      },
+      "conditions": [
+        {
+          "alias": "Umb.Condition.SectionAlias",
+          "match": "Umb.Section.Settings"
+        }
+      ]
+    }
+  ]
+}

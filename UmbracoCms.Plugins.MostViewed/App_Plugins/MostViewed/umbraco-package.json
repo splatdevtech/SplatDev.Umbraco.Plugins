@@ -1,0 +1,25 @@
+{
+  "$schema": "../../umbraco-package-schema.json",
+  "name": "Most Viewed",
+  "version": "2.0.0",
+  "extensions": [
+    {
+      "type": "dashboard",
+      "alias": "UmbracoCms.MostViewed.Dashboard",
+      "name": "Most Viewed Dashboard",
+      "element": "/App_Plugins/MostViewed/dist/most-viewed-dashboard.element.js",
+      "elementName": "most-viewed-dashboard",
+      "weight": 100,
+      "meta": {
+        "label": "Most Viewed",
+        "pathname": "most-viewed"
+      },
+      "conditions": [
+        {
+          "alias": "Umb.Condition.SectionAlias",
+          "match": "Umb.Section.Settings"
+        }
+      ]
+    }
+  ]
+}
