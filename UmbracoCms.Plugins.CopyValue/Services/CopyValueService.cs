@@ -111,6 +111,9 @@ public class CopyValueService : ICopyValueService
         // 4. Save and optionally publish the target
         if (publish)
         {
+#if NET10_0_OR_GREATER
+            _contentService.Save(target);
+#else
             var result = _contentService.SaveAndPublish(target);
             if (!result.Success)
             {
@@ -119,6 +122,7 @@ public class CopyValueService : ICopyValueService
                     targetContentId, result.Result);
                 return Task.FromResult(false);
             }
+#endif
         }
         else
         {

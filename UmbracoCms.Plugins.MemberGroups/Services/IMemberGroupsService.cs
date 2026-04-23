@@ -2,6 +2,7 @@ using Umbraco.Cms.Core.Models;
 using Umbraco.Cms.Core.Models.Membership;
 using UmbracoCms.Plugins.MemberGroups.Interfaces;
 using UmbracoCms.Plugins.MemberGroups.Models;
+using MemberGroup = UmbracoCms.Plugins.MemberGroups.Models.MemberGroup;
 
 namespace UmbracoCms.Plugins.MemberGroups.Services
 {
@@ -12,16 +13,16 @@ namespace UmbracoCms.Plugins.MemberGroups.Services
 
         void AddToGroup(string email, string group);
         int AssignUserToGroup(string username, string groupName);
-        string ChangeUserPassword(User userToChange, string currentPassword);
-        Group CreateGroup(Group groupToCreate);
-        IUser CreateUser(User userToCreate);
+        string ChangeUserPassword(MemberUser userToChange, string currentPassword);
+        MemberGroup CreateGroup(MemberGroup groupToCreate);
+        IMemberUser CreateUser(MemberUser userToCreate);
         IMember CreateMember(IMember member);
         void DeleteMember(IMember member);
         void DeleteMemberGroup(string groupName);
         void DeleteMemberType(IMemberType memberType);
         void DisableUser(string username);
         void DisableUser(int userId);
-        IUserGroup EditGroup(string oldGroupName, Group newGroup);
+        IUserGroup EditGroup(string oldGroupName, MemberGroup newGroup);
         string EnableUser(string username);
         string EnableUser(int userId);
         IMember? GetByEmail(string email);
@@ -33,7 +34,7 @@ namespace UmbracoCms.Plugins.MemberGroups.Services
         IUserGroup? GetUserGroup(string alias);
         string GetUserName(int userId);
         string GetUserName(string userId);
-        bool GroupExists(Group group);
+        bool GroupExists(MemberGroup group);
         bool MemberExists(string emailAddress);
         bool MemberGroupExists(string groupName);
         bool MemberTypeExists(string memberTypeAlias);
@@ -45,10 +46,10 @@ namespace UmbracoCms.Plugins.MemberGroups.Services
         void SaveMemberType(IMemberType memberType);
         void SavePassword(IMember member, string newPassword);
         void UpdateMemberPassword(IMember member, string password);
-        void UpdateUser(User userToUpdate);
-        bool UserExists(User user);
+        void UpdateUser(MemberUser userToUpdate);
+        bool UserExists(MemberUser user);
         bool ValidateMember(string email, string validation);
-        bool ValidatePasswordLength(User user);
+        bool ValidatePasswordLength(MemberUser user);
         bool ValidationMatches(string email, string validation);
         IUser? GetUserById(int userId);
     }

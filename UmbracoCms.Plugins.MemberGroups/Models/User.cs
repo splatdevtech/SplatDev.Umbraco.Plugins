@@ -4,13 +4,13 @@ using UmbracoCms.Plugins.MemberGroups.Enums;
 
 namespace UmbracoCms.Plugins.MemberGroups.Models
 {
-    public class User : IUser
+    public class MemberUser : IMemberUser
     {
         public int AssignedUmbracoUserId { get; set; }
         public Guid ClientGuid { get; set; }
         public string Email { get; set; } = string.Empty;
         public string Group { get; set; } = string.Empty;
-        UserTypes IUser.Group => UserTypes.Editor;
+        UserTypes IMemberUser.Group => UserTypes.Editor;
         public string Name { get; set; } = string.Empty;
         public string Password { get; set; } = string.Empty;
         public string StartContentNodeAlias { get; set; } = string.Empty;

@@ -1,5 +1,6 @@
 using Microsoft.Extensions.Logging;
 using Umbraco.Cms.Core.Models;
+using Umbraco.Cms.Core.Security;
 using Umbraco.Cms.Core.Services;
 using UmbracoCms.Plugins.MemberRegistration.Models;
 
@@ -9,17 +10,20 @@ public class MemberRegistrationService : IMemberRegistrationService
 {
     private readonly IMemberService _memberService;
     private readonly IMemberTypeService _memberTypeService;
+    private readonly IMemberManager _memberManager;
     private readonly MemberRegistrationDbContext _db;
     private readonly ILogger<MemberRegistrationService> _logger;
 
     public MemberRegistrationService(
         IMemberService memberService,
         IMemberTypeService memberTypeService,
+        IMemberManager memberManager,
         MemberRegistrationDbContext db,
         ILogger<MemberRegistrationService> logger)
     {
         _memberService = memberService;
         _memberTypeService = memberTypeService;
+        _memberManager = memberManager;
         _db = db;
         _logger = logger;
     }
@@ -42,12 +46,19 @@ public class MemberRegistrationService : IMemberRegistrationService
             var memberType = _memberTypeService.GetAll().FirstOrDefault(t => t.Alias == memberTypeAlias)
                           ?? _memberTypeService.GetAll().First();
 
-            var member = _memberService.CreateMember(username, email, name, memberType.Alias);
+            var member = _memberService.CreateMemberWithIdentity(username, email, name, memberType.Alias);
             member.IsApproved = false; // Require email verification
             member.IsLockedOut = false;
 
             _memberService.Save(member);
-            _memberService.SavePassword(member, password);
+
+            // Set password via IMemberManager (SavePassword was removed in Umbraco 13+)
+            var identityUser = await _memberManager.FindByEmailAsync(email);
+            if (identityUser is not null)
+            {
+                var passwordResetToken = await _memberManager.GeneratePasswordResetTokenAsync(identityUser);
+                await _memberManager.ResetPasswordAsync(identityUser, passwordResetToken, password);
+            }
 
             // Create verification token
             var token = new RegistrationToken

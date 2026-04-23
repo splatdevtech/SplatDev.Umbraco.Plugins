@@ -1,6 +1,7 @@
 using System;
 using System.Security.Cryptography;
 using Umbraco.Cms.Core.PublishedCache;
+using Umbraco.Extensions;
 
 namespace UmbracoCms.Plugins.MemberRegistration.Helpers
 {

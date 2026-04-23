@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace UmbracoCms.Plugins.MemberGroups.Models
 {
-    public class Group
+    public class MemberGroup
     {
         // Default Umbraco permission chars (previously from SplatDev.Html.Helpers.Default.Permission)
         public static class Permission
@@ -57,9 +57,9 @@ namespace UmbracoCms.Plugins.MemberGroups.Models
         public int? StartMediaId { get; set; }
         public Guid ClientGuid { get; set; }
 
-        public static implicit operator Group(string groupName)
+        public static implicit operator MemberGroup(string groupName)
         {
-            return new Group { Name = groupName };
+            return new MemberGroup { Name = groupName };
         }
 
         private static string Sanitize(string input) =>

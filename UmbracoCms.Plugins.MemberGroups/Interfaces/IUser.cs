@@ -2,7 +2,7 @@ using UmbracoCms.Plugins.MemberGroups.Enums;
 
 namespace UmbracoCms.Plugins.MemberGroups.Interfaces
 {
-    public interface IUser
+    public interface IMemberUser
     {
         string Email { get; }
         UserTypes Group { get; }

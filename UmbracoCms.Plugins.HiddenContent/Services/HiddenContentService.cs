@@ -48,8 +48,11 @@ public class HiddenContentService : IHiddenContentService
         }
 
         content.SetValue(NaviHideAlias, "1");
+#if NET10_0_OR_GREATER
         _contentService.Save(content);
-        _contentService.Publish(content, Array.Empty<string>());
+#else
+        _contentService.SaveAndPublish(content);
+#endif
         _logger.LogInformation("Node {NodeId} hidden from navigation.", nodeId);
         await Task.CompletedTask;
     }
@@ -64,8 +67,11 @@ public class HiddenContentService : IHiddenContentService
         }
 
         content.SetValue(NaviHideAlias, "0");
+#if NET10_0_OR_GREATER
         _contentService.Save(content);
-        _contentService.Publish(content, Array.Empty<string>());
+#else
+        _contentService.SaveAndPublish(content);
+#endif
         _logger.LogInformation("Node {NodeId} shown in navigation.", nodeId);
         await Task.CompletedTask;
     }

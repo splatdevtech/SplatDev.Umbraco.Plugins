@@ -2,6 +2,9 @@ using Microsoft.Extensions.Logging;
 using Umbraco.Cms.Core.Models;
 using Umbraco.Cms.Core.Security;
 using Umbraco.Cms.Core.Services;
+#if !NET10_0_OR_GREATER
+using Umbraco.Cms.Web.Common.Security;
+#endif
 
 namespace UmbracoCms.Plugins.MemberLogin.Services;
 
@@ -9,23 +12,49 @@ public class MemberLoginService : IMemberLoginService
 {
     private readonly IMemberService _memberService;
     private readonly IPublicAccessService _publicAccessService;
-    private readonly IMemberSignInManagerWrapper _signInManager;
+#if !NET10_0_OR_GREATER
+    private readonly IMemberSignInManager _signInManager;
+#endif
+    private readonly IMemberManager _memberManager;
     private readonly ILogger<MemberLoginService> _logger;
 
+#if NET10_0_OR_GREATER
     public MemberLoginService(
         IMemberService memberService,
         IPublicAccessService publicAccessService,
-        IMemberSignInManagerWrapper signInManager,
+        IMemberManager memberManager,
+        ILogger<MemberLoginService> logger)
+    {
+        _memberService = memberService;
+        _publicAccessService = publicAccessService;
+        _memberManager = memberManager;
+        _logger = logger;
+    }
+#else
+    public MemberLoginService(
+        IMemberService memberService,
+        IPublicAccessService publicAccessService,
+        IMemberSignInManager signInManager,
+        IMemberManager memberManager,
         ILogger<MemberLoginService> logger)
     {
         _memberService = memberService;
         _publicAccessService = publicAccessService;
         _signInManager = signInManager;
+        _memberManager = memberManager;
         _logger = logger;
     }
+#endif
 
     public async Task<LoginResult> LoginAsync(string username, string password, bool rememberMe)
     {
+#if NET10_0_OR_GREATER
+        // IMemberSignInManager was removed in Umbraco 17.
+        // A proper implementation should use the new authentication APIs.
+        throw new NotSupportedException(
+            "IMemberSignInManager is not available in Umbraco 17 (net10.0). " +
+            "Member sign-in must be implemented using the new authentication approach.");
+#else
         try
         {
             var member = _memberService.GetByUsername(username)
@@ -61,12 +90,21 @@ public class MemberLoginService : IMemberLoginService
             _logger.LogError(ex, "Error during login for {Username}.", username);
             return new LoginResult(false, false, "An error occurred during login.");
         }
+#endif
     }
 
     public async Task LogoutAsync()
     {
+#if NET10_0_OR_GREATER
+        // IMemberSignInManager was removed in Umbraco 17.
+        // A proper implementation should use the new authentication APIs.
+        throw new NotSupportedException(
+            "IMemberSignInManager is not available in Umbraco 17 (net10.0). " +
+            "Member sign-out must be implemented using the new authentication approach.");
+#else
         await _signInManager.SignOutAsync();
         _logger.LogInformation("Member signed out.");
+#endif
     }
 
     public async Task<bool> ForgotPasswordAsync(string email)
@@ -114,7 +152,16 @@ public class MemberLoginService : IMemberLoginService
             if (DateTime.TryParse(expiryStr, out var expiry) && expiry < DateTime.UtcNow)
                 return new ResetPasswordResult(false, "Reset token has expired.");
 
-            _memberService.SavePassword(member, newPassword);
+            // Set password via IMemberManager (SavePassword was removed in Umbraco 13+)
+            var identityUser = await _memberManager.FindByEmailAsync(email);
+            if (identityUser is null)
+                return new ResetPasswordResult(false, "Unable to update password.");
+
+            var resetToken = await _memberManager.GeneratePasswordResetTokenAsync(identityUser);
+            var passwordResult = await _memberManager.ResetPasswordAsync(identityUser, resetToken, newPassword);
+            if (!passwordResult.Succeeded)
+                return new ResetPasswordResult(false, "Password does not meet requirements.");
+
             member.SetValue("passwordResetToken", string.Empty);
             member.SetValue("passwordResetExpiry", string.Empty);
             member.IsLockedOut = false;

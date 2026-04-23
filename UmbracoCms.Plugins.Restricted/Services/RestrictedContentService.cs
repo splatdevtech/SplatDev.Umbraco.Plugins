@@ -1,4 +1,5 @@
 using Microsoft.Extensions.Logging;
+using Umbraco.Cms.Core;
 using Umbraco.Cms.Core.Models;
 using Umbraco.Cms.Core.Services;
 
@@ -36,19 +37,40 @@ public class RestrictedContentService : IRestrictedContentService
             return Task.CompletedTask;
         }
 
-        var existing = _publicAccessService.GetEntryForContent(nodeId.ToString());
+        // Resolve login and error pages to IContent
+        if (!int.TryParse(loginPageNodeId, out var loginId) || !int.TryParse(errorPageNodeId, out var errorId))
+        {
+            _logger.LogWarning("RestrictNodeAsync: loginPageNodeId or errorPageNodeId is not a valid integer.");
+            return Task.CompletedTask;
+        }
+
+        var loginContent = _contentService.GetById(loginId);
+        var errorContent = _contentService.GetById(errorId);
+        if (loginContent is null || errorContent is null)
+        {
+            _logger.LogWarning("RestrictNodeAsync: Login page {LoginId} or error page {ErrorId} not found.", loginId, errorId);
+            return Task.CompletedTask;
+        }
+
+        var existing = _publicAccessService.GetEntryForContent(content);
         if (existing is not null)
         {
             // Update existing entry — remove old rules and re-add
             _publicAccessService.Delete(existing);
         }
 
-        var entry = new PublicAccessEntry(
-            content,
-            loginPageNodeId,
-            errorPageNodeId,
-            memberGroups.Select(g => new PublicAccessRule(Guid.NewGuid(), g, Constants.Conventions.PublicAccess.MemberRoleRuleType))
-        );
+        var entryId = Guid.NewGuid();
+        var rules = memberGroups.Select(g =>
+        {
+            var rule = new PublicAccessRule(Guid.NewGuid(), entryId)
+            {
+                RuleType = Constants.Conventions.PublicAccess.MemberRoleRuleType,
+                RuleValue = g
+            };
+            return rule;
+        });
+
+        var entry = new PublicAccessEntry(content, loginContent, errorContent, rules);
 
         _publicAccessService.Save(entry);
         _logger.LogInformation("Node {NodeId} restricted to groups: {Groups}", nodeId, string.Join(", ", memberGroups));
@@ -57,7 +79,14 @@ public class RestrictedContentService : IRestrictedContentService
 
     public Task UnrestrictNodeAsync(int nodeId)
     {
-        var existing = _publicAccessService.GetEntryForContent(nodeId.ToString());
+        var content = _contentService.GetById(nodeId);
+        if (content is null)
+        {
+            _logger.LogWarning("UnrestrictNodeAsync: Content node {NodeId} not found.", nodeId);
+            return Task.CompletedTask;
+        }
+
+        var existing = _publicAccessService.GetEntryForContent(content);
         if (existing is not null)
         {
             _publicAccessService.Delete(existing);
@@ -68,7 +97,11 @@ public class RestrictedContentService : IRestrictedContentService
 
     public Task<IEnumerable<string>> GetRequiredGroupsAsync(int nodeId)
     {
-        var entry = _publicAccessService.GetEntryForContent(nodeId.ToString());
+        var content = _contentService.GetById(nodeId);
+        if (content is null)
+            return Task.FromResult(Enumerable.Empty<string>());
+
+        var entry = _publicAccessService.GetEntryForContent(content);
         if (entry is null)
             return Task.FromResult(Enumerable.Empty<string>());
 

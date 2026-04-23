@@ -42,7 +42,7 @@ namespace UmbracoCms.Plugins.MemberGroups.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateGroup([FromBody] Group groupToCreate)
+        public IActionResult CreateGroup([FromBody] MemberGroup groupToCreate)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -59,7 +59,7 @@ namespace UmbracoCms.Plugins.MemberGroups.Controllers
         }
 
         [HttpPost]
-        public IActionResult EditGroup([FromQuery] string oldName, [FromBody] Group newGroup)
+        public IActionResult EditGroup([FromQuery] string oldName, [FromBody] MemberGroup newGroup)
         {
             if (string.IsNullOrWhiteSpace(oldName))
                 return BadRequest(new { message = "Old group name is required." });
