@@ -1,0 +1,315 @@
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@{
+    Layout = null;
+    var productName = Model.Value<string>("productName") ?? Model.Name;
+    var sku = Model.Value<string>("sku");
+    var shortDescription = Model.Value<string>("shortDescription");
+    var fullDescription = Model.Value<Umbraco.Cms.Core.Models.PublishedContent.IHtmlEncodedString>("fullDescription");
+    var price = Model.Value<decimal>("price");
+    var salePrice = Model.Value<decimal>("salePrice");
+    var hasSale = salePrice > 0 && salePrice < price;
+    var stockStatus = Model.Value<string>("stockStatus") ?? "In Stock";
+    var stockQuantity = Model.Value<int>("stockQuantity");
+    var currency = Model.Value<string>("currency") ?? "USD";
+    var featuredImage = Model.Value<Umbraco.Cms.Core.Models.PublishedContent.IPublishedContent>("featuredImage");
+    var metaTitle = Model.Value<string>("metaTitle") ?? productName;
+    var metaDescription = Model.Value<string>("metaDescription") ?? shortDescription;
+    var inStock = stockStatus == "In Stock" || stockStatus == "Pre-order";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@metaTitle</title>
+    @if (!string.IsNullOrWhiteSpace(metaDescription))
+    {
+        <meta name="description" content="@metaDescription" />
+    }
+    <link rel="stylesheet" href="/css/commerce-theme.css" />
+</head>
+<body class="commerce-theme product-detail-page">
+
+    <header class="site-header">
+        <div class="container">
+            <nav class="breadcrumb" aria-label="Breadcrumb">
+                <ol>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="@(Model.Parent?.Url() ?? "/shop")">@(Model.Parent?.Name ?? "Shop")</a></li>
+                    <li aria-current="page">@productName</li>
+                </ol>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container product-detail-layout">
+
+        <div class="product-gallery-col">
+            <div class="product-featured-image">
+                @if (featuredImage != null)
+                {
+                    <img src="@featuredImage.Url()"
+                         alt="@productName"
+                         class="product-main-image"
+                         id="mainProductImage" />
+                }
+                else
+                {
+                    <div class="product-image-placeholder" aria-label="No image available">
+                        <svg width="80" height="80" viewBox="0 0 80 80" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                            <rect x="8" y="8" width="64" height="64" rx="6"/>
+                            <circle cx="28" cy="28" r="7"/>
+                            <path d="M8 52l18-18 12 12 10-10 24 24"/>
+                        </svg>
+                    </div>
+                }
+            </div>
+
+            @{
+                var gallery = Model.Value<Umbraco.Cms.Core.Models.Blocks.BlockListModel>("gallery");
+            }
+            @if (gallery != null && gallery.Any())
+            {
+                <div class="product-thumbnails" role="list" aria-label="Product image thumbnails">
+                    @if (featuredImage != null)
+                    {
+                        <button type="button" class="thumbnail-btn active"
+                                data-image="@featuredImage.Url()"
+                                aria-label="View main image">
+                            <img src="@featuredImage.Url()" alt="Main" loading="lazy" />
+                        </button>
+                    }
+                    @foreach (var block in gallery)
+                    {
+                        var imgContent = block.Content;
+                        var thumbImage = imgContent.Value<Umbraco.Cms.Core.Models.PublishedContent.IPublishedContent>("image");
+                        var altText = imgContent.Value<string>("altText") ?? productName;
+                        @if (thumbImage != null)
+                        {
+                            <button type="button" class="thumbnail-btn"
+                                    data-image="@thumbImage.Url()"
+                                    aria-label="View image: @altText">
+                                <img src="@thumbImage.Url()" alt="@altText" loading="lazy" />
+                            </button>
+                        }
+                    }
+                </div>
+            }
+        </div>
+
+        <div class="product-info-col">
+            <h1 class="product-title">@productName</h1>
+
+            @if (!string.IsNullOrWhiteSpace(sku))
+            {
+                <p class="product-sku">SKU: <span>@sku</span></p>
+            }
+
+            <div class="product-pricing-block">
+                @if (hasSale)
+                {
+                    <span class="price price--original" aria-label="Original price: @price.ToString("C")">@price.ToString("C")</span>
+                    <span class="price price--sale" aria-label="Sale price: @salePrice.ToString("C")">@salePrice.ToString("C")</span>
+                    <span class="savings-badge">Save @((price - salePrice).ToString("C"))</span>
+                }
+                else if (price > 0)
+                {
+                    <span class="price price--current">@price.ToString("C")</span>
+                }
+            </div>
+
+            <div class="stock-status-block">
+                @{
+                    var stockClass = stockStatus switch
+                    {
+                        "In Stock" => "stock-in",
+                        "Out of Stock" => "stock-out",
+                        "Pre-order" => "stock-preorder",
+                        "Discontinued" => "stock-discontinued",
+                        _ => "stock-in"
+                    };
+                }
+                <span class="stock-badge @stockClass" role="status">@stockStatus</span>
+                @if (inStock && stockQuantity > 0 && stockQuantity <= 10)
+                {
+                    <span class="low-stock-warning">Only @stockQuantity left!</span>
+                }
+            </div>
+
+            @if (!string.IsNullOrWhiteSpace(shortDescription))
+            {
+                <p class="product-short-description">@shortDescription</p>
+            }
+
+            @if (inStock)
+            {
+                <div class="add-to-cart-block">
+                    <div class="quantity-selector" role="group" aria-label="Quantity">
+                        <button type="button" class="qty-btn qty-decrease" aria-label="Decrease quantity">−</button>
+                        <input type="number" id="productQuantity" class="qty-input" value="1" min="1" max="@(stockQuantity > 0 ? stockQuantity : 99)" aria-label="Quantity" />
+                        <button type="button" class="qty-btn qty-increase" aria-label="Increase quantity">+</button>
+                    </div>
+                    <button type="button"
+                            class="btn btn-primary btn-lg btn-add-to-cart"
+                            data-product-id="@Model.Id"
+                            data-product-name="@productName"
+                            aria-label="Add @productName to cart">
+                        Add to Cart
+                    </button>
+                </div>
+                <button type="button" class="btn btn-outline btn-wishlist" aria-label="Add to wishlist">
+                    &#9825; Add to Wishlist
+                </button>
+            }
+            else
+            {
+                <button type="button" class="btn btn-secondary btn-lg" disabled aria-label="@stockStatus">
+                    @stockStatus
+                </button>
+            }
+        </div>
+    </main>
+
+    <section class="container product-tabs-section">
+        <div class="tabs" role="tablist" aria-label="Product information">
+            <button type="button" role="tab" class="tab-btn active" aria-selected="true" aria-controls="tab-description" id="tabBtn-description">
+                Description
+            </button>
+            <button type="button" role="tab" class="tab-btn" aria-selected="false" aria-controls="tab-specifications" id="tabBtn-specifications">
+                Specifications
+            </button>
+            <button type="button" role="tab" class="tab-btn" aria-selected="false" aria-controls="tab-reviews" id="tabBtn-reviews">
+                Reviews
+            </button>
+        </div>
+
+        <div class="tab-panels">
+            <div id="tab-description" role="tabpanel" aria-labelledby="tabBtn-description" class="tab-panel active">
+                @if (fullDescription != null)
+                {
+                    <div class="rich-text-content">@Html.Raw(fullDescription.ToHtmlString())</div>
+                }
+                else if (!string.IsNullOrWhiteSpace(shortDescription))
+                {
+                    <p>@shortDescription</p>
+                }
+                else
+                {
+                    <p class="no-content">No description available.</p>
+                }
+            </div>
+
+            <div id="tab-specifications" role="tabpanel" aria-labelledby="tabBtn-specifications" class="tab-panel">
+                @{
+                    var specifications = Model.Value<Umbraco.Cms.Core.Models.Blocks.BlockListModel>("specifications");
+                }
+                @if (specifications != null && specifications.Any())
+                {
+                    <table class="specs-table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Specification</th>
+                                <th scope="col">Value</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var spec in specifications)
+                            {
+                                var specName = spec.Content.Value<string>("specName");
+                                var specValue = spec.Content.Value<string>("specValue");
+                                <tr>
+                                    <td class="spec-name">@specName</td>
+                                    <td class="spec-value">@specValue</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
+                else
+                {
+                    <p class="no-content">No specifications listed.</p>
+                }
+            </div>
+
+            <div id="tab-reviews" role="tabpanel" aria-labelledby="tabBtn-reviews" class="tab-panel">
+                <div class="reviews-placeholder">
+                    <p>Customer reviews coming soon.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="container related-products-section">
+        <h2 class="section-heading">Related Products</h2>
+        <div class="products-grid">
+            @if (Model.Parent != null)
+            {
+                var siblings = Model.Parent.Children?
+                    .Where(c => c.Id != Model.Id && c.ContentType.Alias == "product")
+                    .Take(4) ?? Enumerable.Empty<Umbraco.Cms.Core.Models.PublishedContent.IPublishedContent>();
+                foreach (var related in siblings)
+                {
+                    var relName = related.Value<string>("productName") ?? related.Name;
+                    var relPrice = related.Value<decimal>("price");
+                    var relImage = related.Value<Umbraco.Cms.Core.Models.PublishedContent.IPublishedContent>("featuredImage");
+                    <article class="product-card">
+                        <a href="@related.Url()" class="product-card-link" aria-label="View @relName">
+                            <div class="product-card-image-wrapper">
+                                @if (relImage != null)
+                                {
+                                    <img src="@relImage.Url()" alt="@relName" class="product-card-image" loading="lazy" />
+                                }
+                            </div>
+                            <div class="product-card-body">
+                                <h3 class="product-card-name">@relName</h3>
+                                @if (relPrice > 0)
+                                {
+                                    <span class="price">@relPrice.ToString("C")</span>
+                                }
+                            </div>
+                        </a>
+                    </article>
+                }
+            }
+        </div>
+    </section>
+
+    <script>
+        // Gallery thumbnails
+        document.querySelectorAll('.thumbnail-btn').forEach(btn => {
+            btn.addEventListener('click', function () {
+                document.querySelectorAll('.thumbnail-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                const mainImg = document.getElementById('mainProductImage');
+                if (mainImg) mainImg.src = this.dataset.image;
+            });
+        });
+
+        // Quantity selector
+        const qtyInput = document.getElementById('productQuantity');
+        document.querySelector('.qty-decrease')?.addEventListener('click', () => {
+            if (qtyInput && parseInt(qtyInput.value) > 1) qtyInput.value = parseInt(qtyInput.value) - 1;
+        });
+        document.querySelector('.qty-increase')?.addEventListener('click', () => {
+            if (qtyInput) {
+                const max = parseInt(qtyInput.max) || 99;
+                if (parseInt(qtyInput.value) < max) qtyInput.value = parseInt(qtyInput.value) + 1;
+            }
+        });
+
+        // Tabs
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', function () {
+                document.querySelectorAll('.tab-btn').forEach(b => {
+                    b.classList.remove('active');
+                    b.setAttribute('aria-selected', 'false');
+                });
+                document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+                this.classList.add('active');
+                this.setAttribute('aria-selected', 'true');
+                document.getElementById(this.getAttribute('aria-controls'))?.classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>

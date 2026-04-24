@@ -1,0 +1,13 @@
+{
+  "id": "Form.Builder",
+  "name": "Form Builder",
+  "version": "15.0.1",
+  "extensions": [
+    {
+      "name": "Form Builder",
+      "alias": "FormBuilder.EntryPoint",
+      "type": "backofficeEntryPoint",
+      "js": "/App_Plugins/FormBuilder/form-builder.js"
+    }
+  ]
+}

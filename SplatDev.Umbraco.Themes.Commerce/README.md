@@ -1,0 +1,65 @@
+# UmbracoCms.Themes.Commerce
+
+E-commerce theme for Umbraco. Provides product grid, product detail, cart, checkout, and category browse pages.
+
+## Supported Umbraco Versions
+
+| Package version | Umbraco | .NET |
+|---|---|---|
+| 1.0.x | 13.x | net8.0 |
+| 1.0.x | 17.x | net10.0 |
+
+## Features
+
+- Auto-installs Umbraco content schema via embedded YAML on first startup
+- Document types: `shopRoot`, `productCategory`, `product`, `cartPage`, `checkoutPage`, `shopListing`
+- Element types: `productImageElement`, `productSpecElement`, `shippingOptionElement`
+- Data types: text fields, image pickers, decimal/integer, dropdowns for currency, stock status, product layout
+- Razor views for all page types with semantic HTML5
+- Responsive CSS (mobile-first, CSS custom properties, flexbox/grid)
+- JavaScript cart stored in localStorage (replace with your cart service)
+
+## Installation
+
+```
+dotnet add package UmbracoCms.Themes.Commerce
+```
+
+The composer runs automatically on `UmbracoApplicationStartedNotification`. A `.done` marker file is written to `config/themes/commerce/` after successful install to prevent re-runs.
+
+## Document Type Hierarchy
+
+```
+shopRoot (allowAsRoot)
+  ├── productCategory
+  │     ├── product
+  │     └── productCategory (nested)
+  ├── shopListing
+  ├── cartPage
+  └── checkoutPage
+```
+
+## Views
+
+| View | Template alias | Purpose |
+|---|---|---|
+| `ShopRoot.cshtml` | ShopRoot | Site entry with category grid |
+| `ShopListing.cshtml` | ShopListing | Product catalog with filters, sort, layout toggle |
+| `ProductCategory.cshtml` | ProductCategory | Category landing with sub-categories |
+| `Product.cshtml` | Product | Product detail with gallery, specs, related |
+| `CartPage.cshtml` | CartPage | Cart table with order summary |
+| `CheckoutPage.cshtml` | CheckoutPage | Multi-step checkout (shipping, payment, review) |
+
+## CSS
+
+`wwwroot/css/commerce-theme.css` — include in your layout or link directly:
+
+```html
+<link rel="stylesheet" href="/css/commerce-theme.css" />
+```
+
+## Dependencies
+
+- `SplatDev.Umbraco.Plugins.Yaml2Schema` >= 1.0.35
+- `UmbracoCms.Themes.Base` >= 1.0.0
+- `Umbraco.Cms.Core` / `Umbraco.Cms.Web.Common`

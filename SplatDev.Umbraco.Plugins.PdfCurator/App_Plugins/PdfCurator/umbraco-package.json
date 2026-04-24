@@ -23,29 +23,33 @@
     },
     {
       "type": "localization",
-      "alias": "SplatDev.PdfCurator.Localize.En",
-      "name": "PDF Curator English",
+      "alias": "SplatDev.PdfCurator.Localization.En",
+      "name": "PDF Curator — English",
       "meta": {
-        "culture": "en"
-      },
-      "js": "/App_Plugins/PdfCurator/dist/pdf-curator-dashboard.element.js",
-      "translations": {
-        "pdfCurator": {
-          "dashboardLabel": "PDF Curator"
+        "culture": "en",
+        "localizations": {
+          "section": {
+            "pdfCurator_heading": "PDF Curator",
+            "pdfCurator_description": "Manage PDF digital books and documents",
+            "pdfCurator_library": "Library",
+            "pdfCurator_upload": "Upload PDF"
+          }
         }
       }
     },
     {
       "type": "localization",
-      "alias": "SplatDev.PdfCurator.Localize.PtBr",
-      "name": "PDF Curator Portuguese (Brazil)",
+      "alias": "SplatDev.PdfCurator.Localization.PtBr",
+      "name": "PDF Curator — Português (Brasil)",
       "meta": {
-        "culture": "pt-BR"
-      },
-      "js": "/App_Plugins/PdfCurator/dist/pdf-curator-dashboard.element.js",
-      "translations": {
-        "pdfCurator": {
-          "dashboardLabel": "Curador de PDF"
+        "culture": "pt-BR",
+        "localizations": {
+          "section": {
+            "pdfCurator_heading": "Curador de PDF",
+            "pdfCurator_description": "Gerenciar PDFs e livros digitais",
+            "pdfCurator_library": "Biblioteca",
+            "pdfCurator_upload": "Enviar PDF"
+          }
         }
       }
     }

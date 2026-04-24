@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "System.Reflection.Helpers", "System.Reflection.Helpers\System.Reflection.Helpers.csproj", "{BE1AE722-54D6-4CF7-AF1E-6BF6E9DE0812}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SplatDev.Reflection.Helpers", "SplatDev.Reflection.Helpers\SplatDev.Reflection.Helpers.csproj", "{BE1AE722-54D6-4CF7-AF1E-6BF6E9DE0812}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SplatDev.Content", "SplatDev.Content\SplatDev.Content.csproj", "{706A5394-4EFF-4333-BD33-6D9F14EFA7C2}"
 EndProject
@@ -85,145 +85,143 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SplatDev.Umbraco.Plugins.OA
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SplatDev.Umbraco.Plugins.ShortUrls", "SplatDev.Umbraco.Plugins.ShortUrls\SplatDev.Umbraco.Plugins.ShortUrls.csproj", "{2BECDCEF-AE09-4AD5-9C41-20F36E9C7BDC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Umbraco.Plugins.Countries", "Umbraco.Plugins.Countries\Umbraco.Plugins.Countries.csproj", "{E0AE76A8-4A71-4C96-AC7C-7B2975E316F4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SplatDev.Umbraco.Plugins.Countries", "SplatDev.Umbraco.Plugins.Countries\SplatDev.Umbraco.Plugins.Countries.csproj", "{E0AE76A8-4A71-4C96-AC7C-7B2975E316F4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Umbraco.Plugins.CustomLogin", "Umbraco.Plugins.CustomLogin\Umbraco.Plugins.CustomLogin.csproj", "{FCA54D66-1B44-4F52-A3DA-B5E5B2F12575}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SplatDev.Umbraco.Plugins.RedirectManager", "SplatDev.Umbraco.Plugins.RedirectManager\SplatDev.Umbraco.Plugins.RedirectManager.csproj", "{D916C64C-AEC4-4396-8E57-54F9AF222916}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Umbraco.Plugins.RedirectManager", "Umbraco.Plugins.RedirectManager\Umbraco.Plugins.RedirectManager.csproj", "{D916C64C-AEC4-4396-8E57-54F9AF222916}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SplatDev.Umbraco.Plugins.Mailer", "SplatDev.Umbraco.Plugins.Mailer\SplatDev.Umbraco.Plugins.Mailer.csproj", "{554A7BF8-DC9B-4116-8DB3-9DA0CE5CFB8D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Umbraco.Plugins.Mailer", "Umbraco.Plugins.Mailer\Umbraco.Plugins.Mailer.csproj", "{554A7BF8-DC9B-4116-8DB3-9DA0CE5CFB8D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SplatDev.Umbraco.Plugins.CacheManager", "SplatDev.Umbraco.Plugins.CacheManager\SplatDev.Umbraco.Plugins.CacheManager.csproj", "{F112B4D7-9644-44D4-B9C7-D3023E6B96F2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Umbraco.Plugins.CacheManager", "Umbraco.Plugins.CacheManager\Umbraco.Plugins.CacheManager.csproj", "{F112B4D7-9644-44D4-B9C7-D3023E6B96F2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SplatDev.Umbraco.Plugins.Core", "SplatDev.Umbraco.Plugins.Core\SplatDev.Umbraco.Plugins.Core.csproj", "{13EE62D2-5266-4476-A5A2-8DCAB9B5CD19}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UmbracoCms.Plugins", "UmbracoCms.Plugins\UmbracoCms.Plugins.csproj", "{13EE62D2-5266-4476-A5A2-8DCAB9B5CD19}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SplatDev.Umbraco.Plugins.Yaml", "SplatDev.Umbraco.Plugins.Yaml", "{210D665A-2299-059D-70E0-4BD19FDFB120}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Umbraco-Yaml", "Umbraco-Yaml", "{210D665A-2299-059D-70E0-4BD19FDFB120}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SplatDev.Umbraco.Plugins.Schema2Yaml", "SplatDev.Umbraco.Plugins.Yaml\SplatDev.Umbraco.Plugins.Schema2Yaml\SplatDev.Umbraco.Plugins.Schema2Yaml.csproj", "{036F6C8A-BD81-47DF-A866-A66D5846E3DE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SplatDev.Umbraco.Plugins.Schema2Yaml", "Umbraco-Yaml\SplatDev.Umbraco.Plugins.Schema2Yaml\SplatDev.Umbraco.Plugins.Schema2Yaml.csproj", "{036F6C8A-BD81-47DF-A866-A66D5846E3DE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SplatDev.Umbraco.Plugins.Yaml2Schema", "SplatDev.Umbraco.Plugins.Yaml\SplatDev.Umbraco.Plugins.Yaml2Schema\SplatDev.Umbraco.Plugins.Yaml2Schema.csproj", "{0E127A7F-A2FC-4AB8-BF77-BF1E8029C60F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SplatDev.Umbraco.Plugins.Yaml2Schema", "Umbraco-Yaml\SplatDev.Umbraco.Plugins.Yaml2Schema\SplatDev.Umbraco.Plugins.Yaml2Schema.csproj", "{0E127A7F-A2FC-4AB8-BF77-BF1E8029C60F}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SplatDev.Umbraco.Plugins.FormBuilder", "SplatDev.Umbraco.Plugins.FormBuilder", "{6C4B1922-F2DE-298B-CF12-32C37B4B2A53}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Umbraco.FormBuilder", "Umbraco.FormBuilder", "{6C4B1922-F2DE-298B-CF12-32C37B4B2A53}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FormBuilder.Extension", "SplatDev.Umbraco.Plugins.FormBuilder\FormBuilder.Extension\FormBuilder.Extension.csproj", "{12C2763B-21DF-4FE5-9D57-B3A18566901E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FormBuilder.Extension", "Umbraco.FormBuilder\FormBuilder.Extension\FormBuilder.Extension.csproj", "{12C2763B-21DF-4FE5-9D57-B3A18566901E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SplatDev.Umbraco.Plugins.Blog", "SplatDev.Umbraco.Plugins.Blog\SplatDev.Umbraco.Plugins.Blog.csproj", "{288FCF5F-553F-4B16-99FF-E1A8D1185B66}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UmbracoCms.Plugins.Blog", "UmbracoCms.Plugins.Blog\UmbracoCms.Plugins.Blog.csproj", "{288FCF5F-553F-4B16-99FF-E1A8D1185B66}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SplatDev.Umbraco.Plugins.Forums", "SplatDev.Umbraco.Plugins.Forums\SplatDev.Umbraco.Plugins.Forums.csproj", "{5D2CA79D-AEC4-4B49-B7E1-D65598D086B7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UmbracoCms.Plugins.Forums", "UmbracoCms.Plugins.Forums\UmbracoCms.Plugins.Forums.csproj", "{5D2CA79D-AEC4-4B49-B7E1-D65598D086B7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SplatDev.Umbraco.Plugins.Faqs", "SplatDev.Umbraco.Plugins.Faqs\SplatDev.Umbraco.Plugins.Faqs.csproj", "{5FE36363-EAC0-49E1-ADB0-77EE3CDDDC00}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UmbracoCms.Plugins.Faqs", "UmbracoCms.Plugins.Faqs\UmbracoCms.Plugins.Faqs.csproj", "{5FE36363-EAC0-49E1-ADB0-77EE3CDDDC00}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SplatDev.Umbraco.Plugins.Surveys", "SplatDev.Umbraco.Plugins.Surveys\SplatDev.Umbraco.Plugins.Surveys.csproj", "{A3B97FED-60AD-43FB-9DE9-B359A842B550}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UmbracoCms.Plugins.Surveys", "UmbracoCms.Plugins.Surveys\UmbracoCms.Plugins.Surveys.csproj", "{A3B97FED-60AD-43FB-9DE9-B359A842B550}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SplatDev.Umbraco.Plugins.QuickPoll", "SplatDev.Umbraco.Plugins.QuickPoll\SplatDev.Umbraco.Plugins.QuickPoll.csproj", "{624B57BC-740D-4429-8597-3F0CD6064967}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UmbracoCms.Plugins.QuickPoll", "UmbracoCms.Plugins.QuickPoll\UmbracoCms.Plugins.QuickPoll.csproj", "{624B57BC-740D-4429-8597-3F0CD6064967}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SplatDev.Umbraco.Plugins.Rsvp", "SplatDev.Umbraco.Plugins.Rsvp\SplatDev.Umbraco.Plugins.Rsvp.csproj", "{712BCAD7-E5EF-4C08-AED7-72ACF62F69C9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UmbracoCms.Plugins.Rsvp", "UmbracoCms.Plugins.Rsvp\UmbracoCms.Plugins.Rsvp.csproj", "{712BCAD7-E5EF-4C08-AED7-72ACF62F69C9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SplatDev.Umbraco.Plugins.StarRatings", "SplatDev.Umbraco.Plugins.StarRatings\SplatDev.Umbraco.Plugins.StarRatings.csproj", "{5542030D-99CA-4044-8398-81830DE41350}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UmbracoCms.Plugins.StarRatings", "UmbracoCms.Plugins.StarRatings\UmbracoCms.Plugins.StarRatings.csproj", "{5542030D-99CA-4044-8398-81830DE41350}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SplatDev.Umbraco.Plugins.MostViewed", "SplatDev.Umbraco.Plugins.MostViewed\SplatDev.Umbraco.Plugins.MostViewed.csproj", "{69E6ED92-20C2-4FEF-A31D-2890266282BE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UmbracoCms.Plugins.MostViewed", "UmbracoCms.Plugins.MostViewed\UmbracoCms.Plugins.MostViewed.csproj", "{69E6ED92-20C2-4FEF-A31D-2890266282BE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SplatDev.Umbraco.Plugins.VisitorCounter", "SplatDev.Umbraco.Plugins.VisitorCounter\SplatDev.Umbraco.Plugins.VisitorCounter.csproj", "{A84B5013-B61C-495A-A7B5-85B144A8AF86}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UmbracoCms.Plugins.VisitorCounter", "UmbracoCms.Plugins.VisitorCounter\UmbracoCms.Plugins.VisitorCounter.csproj", "{A84B5013-B61C-495A-A7B5-85B144A8AF86}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SplatDev.Umbraco.Plugins.NewsTicker", "SplatDev.Umbraco.Plugins.NewsTicker\SplatDev.Umbraco.Plugins.NewsTicker.csproj", "{ED3E45B1-3888-4485-9F51-C579EA4C981E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UmbracoCms.Plugins.NewsTicker", "UmbracoCms.Plugins.NewsTicker\UmbracoCms.Plugins.NewsTicker.csproj", "{ED3E45B1-3888-4485-9F51-C579EA4C981E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SplatDev.Umbraco.Plugins.Newsletters", "SplatDev.Umbraco.Plugins.Newsletters\SplatDev.Umbraco.Plugins.Newsletters.csproj", "{52ED60B9-0CBE-422E-81CA-E4A06A7303F4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UmbracoCms.Plugins.Newsletters", "UmbracoCms.Plugins.Newsletters\UmbracoCms.Plugins.Newsletters.csproj", "{52ED60B9-0CBE-422E-81CA-E4A06A7303F4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SplatDev.Umbraco.Plugins.Tweets", "SplatDev.Umbraco.Plugins.Tweets\SplatDev.Umbraco.Plugins.Tweets.csproj", "{A5515F40-1DB6-43E9-B5A4-01C99C8FDEA9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UmbracoCms.Plugins.Tweets", "UmbracoCms.Plugins.Tweets\UmbracoCms.Plugins.Tweets.csproj", "{A5515F40-1DB6-43E9-B5A4-01C99C8FDEA9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SplatDev.Umbraco.Plugins.MemberLogin", "SplatDev.Umbraco.Plugins.MemberLogin\SplatDev.Umbraco.Plugins.MemberLogin.csproj", "{E125C8D0-54F0-4DD4-927C-88F19CCD43AB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UmbracoCms.Plugins.MemberLogin", "UmbracoCms.Plugins.MemberLogin\UmbracoCms.Plugins.MemberLogin.csproj", "{E125C8D0-54F0-4DD4-927C-88F19CCD43AB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SplatDev.Umbraco.Plugins.MemberRegistration", "SplatDev.Umbraco.Plugins.MemberRegistration\SplatDev.Umbraco.Plugins.MemberRegistration.csproj", "{54F14A58-DD56-40F3-8FEF-31902DA41FC8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UmbracoCms.Plugins.MemberRegistration", "UmbracoCms.Plugins.MemberRegistration\UmbracoCms.Plugins.MemberRegistration.csproj", "{54F14A58-DD56-40F3-8FEF-31902DA41FC8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SplatDev.Umbraco.Plugins.MemberGroups", "SplatDev.Umbraco.Plugins.MemberGroups\SplatDev.Umbraco.Plugins.MemberGroups.csproj", "{03A91BF5-6B1E-4FFB-B487-5C4EC60C186E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UmbracoCms.Plugins.MemberGroups", "UmbracoCms.Plugins.MemberGroups\UmbracoCms.Plugins.MemberGroups.csproj", "{03A91BF5-6B1E-4FFB-B487-5C4EC60C186E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SplatDev.Umbraco.Plugins.MemberTypes", "SplatDev.Umbraco.Plugins.MemberTypes\SplatDev.Umbraco.Plugins.MemberTypes.csproj", "{319CA1B9-A676-42A6-8338-F1FBFAFA7DBA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UmbracoCms.Plugins.MemberTypes", "UmbracoCms.Plugins.MemberTypes\UmbracoCms.Plugins.MemberTypes.csproj", "{319CA1B9-A676-42A6-8338-F1FBFAFA7DBA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SplatDev.Umbraco.Plugins.CustomLogin", "SplatDev.Umbraco.Plugins.CustomLogin\SplatDev.Umbraco.Plugins.CustomLogin.csproj", "{178D51EE-A66E-4429-9CAC-5B4AE9347EA8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UmbracoCms.Plugins.CustomLogin", "UmbracoCms.Plugins.CustomLogin\UmbracoCms.Plugins.CustomLogin.csproj", "{178D51EE-A66E-4429-9CAC-5B4AE9347EA8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SplatDev.Umbraco.Plugins.2fa", "SplatDev.Umbraco.Plugins.2fa\SplatDev.Umbraco.Plugins.2fa.csproj", "{F631EEE6-7970-424C-B11F-CDE6A60494F0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UmbracoCms.Plugins.2fa", "UmbracoCms.Plugins.2fa\UmbracoCms.Plugins.2fa.csproj", "{F631EEE6-7970-424C-B11F-CDE6A60494F0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SplatDev.Umbraco.Plugins.PasswordSettings", "SplatDev.Umbraco.Plugins.PasswordSettings\SplatDev.Umbraco.Plugins.PasswordSettings.csproj", "{DA59D601-093E-4E0F-B73F-11AB47B2CBE9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UmbracoCms.Plugins.PasswordSettings", "UmbracoCms.Plugins.PasswordSettings\UmbracoCms.Plugins.PasswordSettings.csproj", "{DA59D601-093E-4E0F-B73F-11AB47B2CBE9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SplatDev.Umbraco.Plugins.Restricted", "SplatDev.Umbraco.Plugins.Restricted\SplatDev.Umbraco.Plugins.Restricted.csproj", "{9D521DAC-9F53-4337-A0C2-21F3A27C2811}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UmbracoCms.Plugins.Restricted", "UmbracoCms.Plugins.Restricted\UmbracoCms.Plugins.Restricted.csproj", "{9D521DAC-9F53-4337-A0C2-21F3A27C2811}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SplatDev.Umbraco.Plugins.HiddenContent", "SplatDev.Umbraco.Plugins.HiddenContent\SplatDev.Umbraco.Plugins.HiddenContent.csproj", "{C4E43993-415B-42BE-9AD1-F34259E51D87}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UmbracoCms.Plugins.HiddenContent", "UmbracoCms.Plugins.HiddenContent\UmbracoCms.Plugins.HiddenContent.csproj", "{C4E43993-415B-42BE-9AD1-F34259E51D87}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SplatDev.Umbraco.Plugins.OnOff", "SplatDev.Umbraco.Plugins.OnOff\SplatDev.Umbraco.Plugins.OnOff.csproj", "{E9531C23-B757-4F57-A616-F5B4FC5D4F18}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UmbracoCms.Plugins.OnOff", "UmbracoCms.Plugins.OnOff\UmbracoCms.Plugins.OnOff.csproj", "{E9531C23-B757-4F57-A616-F5B4FC5D4F18}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SplatDev.Umbraco.Plugins.DefaultValue", "SplatDev.Umbraco.Plugins.DefaultValue\SplatDev.Umbraco.Plugins.DefaultValue.csproj", "{2C5E25C8-945B-4EF8-A7CA-267DCA089A1C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UmbracoCms.Plugins.DefaultValue", "UmbracoCms.Plugins.DefaultValue\UmbracoCms.Plugins.DefaultValue.csproj", "{2C5E25C8-945B-4EF8-A7CA-267DCA089A1C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SplatDev.Umbraco.Plugins.CopyValue", "SplatDev.Umbraco.Plugins.CopyValue\SplatDev.Umbraco.Plugins.CopyValue.csproj", "{AC985AA1-044B-4B9A-964D-3D40495A65E8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UmbracoCms.Plugins.CopyValue", "UmbracoCms.Plugins.CopyValue\UmbracoCms.Plugins.CopyValue.csproj", "{AC985AA1-044B-4B9A-964D-3D40495A65E8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SplatDev.Umbraco.Plugins.Analytics", "SplatDev.Umbraco.Plugins.Analytics\SplatDev.Umbraco.Plugins.Analytics.csproj", "{D974744C-1607-43EB-B868-6217790239A6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UmbracoCms.Plugins.Analytics", "UmbracoCms.Plugins.Analytics\UmbracoCms.Plugins.Analytics.csproj", "{D974744C-1607-43EB-B868-6217790239A6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SplatDev.Umbraco.Plugins.AdminBar", "SplatDev.Umbraco.Plugins.AdminBar\SplatDev.Umbraco.Plugins.AdminBar.csproj", "{FACFFB04-B569-4B5B-8ECB-EA647B3214B1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UmbracoCms.Plugins.AdminBar", "UmbracoCms.Plugins.AdminBar\UmbracoCms.Plugins.AdminBar.csproj", "{FACFFB04-B569-4B5B-8ECB-EA647B3214B1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SplatDev.Umbraco.Plugins.Backups", "SplatDev.Umbraco.Plugins.Backups\SplatDev.Umbraco.Plugins.Backups.csproj", "{A399E25D-B63A-4D79-8E5B-65A99FD140C4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UmbracoCms.Plugins.Backups", "UmbracoCms.Plugins.Backups\UmbracoCms.Plugins.Backups.csproj", "{A399E25D-B63A-4D79-8E5B-65A99FD140C4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SplatDev.Umbraco.Plugins.DictionaryManager", "SplatDev.Umbraco.Plugins.DictionaryManager\SplatDev.Umbraco.Plugins.DictionaryManager.csproj", "{4DAC7ECC-ABDF-4AFF-9990-78DE4DF7C5D4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UmbracoCms.Plugins.DictionaryManager", "UmbracoCms.Plugins.DictionaryManager\UmbracoCms.Plugins.DictionaryManager.csproj", "{4DAC7ECC-ABDF-4AFF-9990-78DE4DF7C5D4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SplatDev.Umbraco.Plugins.ExamineExtensions", "SplatDev.Umbraco.Plugins.ExamineExtensions\SplatDev.Umbraco.Plugins.ExamineExtensions.csproj", "{11984F59-6498-43A6-A7B8-AEBB522944DA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UmbracoCms.Plugins.ExamineExtensions", "UmbracoCms.Plugins.ExamineExtensions\UmbracoCms.Plugins.ExamineExtensions.csproj", "{11984F59-6498-43A6-A7B8-AEBB522944DA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SplatDev.Umbraco.Plugins.Dropzone", "SplatDev.Umbraco.Plugins.Dropzone\SplatDev.Umbraco.Plugins.Dropzone.csproj", "{DA34AE40-41AC-44FD-A221-217F3AE4E512}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UmbracoCms.Plugins.Dropzone", "UmbracoCms.Plugins.Dropzone\UmbracoCms.Plugins.Dropzone.csproj", "{DA34AE40-41AC-44FD-A221-217F3AE4E512}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SplatDev.Umbraco.Plugins.Exif", "SplatDev.Umbraco.Plugins.Exif\SplatDev.Umbraco.Plugins.Exif.csproj", "{0B4F2063-45B2-42A7-B115-4FDEBEC9DA2B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UmbracoCms.Plugins.Exif", "UmbracoCms.Plugins.Exif\UmbracoCms.Plugins.Exif.csproj", "{0B4F2063-45B2-42A7-B115-4FDEBEC9DA2B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SplatDev.Umbraco.Plugins.PhotoGallery", "SplatDev.Umbraco.Plugins.PhotoGallery\SplatDev.Umbraco.Plugins.PhotoGallery.csproj", "{632DCDC9-B554-43F2-B9CD-B2A364D6C886}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UmbracoCms.Plugins.PhotoGallery", "UmbracoCms.Plugins.PhotoGallery\UmbracoCms.Plugins.PhotoGallery.csproj", "{632DCDC9-B554-43F2-B9CD-B2A364D6C886}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SplatDev.Umbraco.Plugins.Slider", "SplatDev.Umbraco.Plugins.Slider\SplatDev.Umbraco.Plugins.Slider.csproj", "{39638C85-2F4B-417F-A46C-24831F83E0AB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UmbracoCms.Plugins.Slider", "UmbracoCms.Plugins.Slider\UmbracoCms.Plugins.Slider.csproj", "{39638C85-2F4B-417F-A46C-24831F83E0AB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SplatDev.Umbraco.Plugins.SvgViewer", "SplatDev.Umbraco.Plugins.SvgViewer\SplatDev.Umbraco.Plugins.SvgViewer.csproj", "{ECBC7612-753E-4948-A93A-59CFDF0CB682}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UmbracoCms.Plugins.SvgViewer", "UmbracoCms.Plugins.SvgViewer\UmbracoCms.Plugins.SvgViewer.csproj", "{ECBC7612-753E-4948-A93A-59CFDF0CB682}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SplatDev.Umbraco.Plugins.LazyLoad", "SplatDev.Umbraco.Plugins.LazyLoad\SplatDev.Umbraco.Plugins.LazyLoad.csproj", "{960757DA-3BBB-47CA-9968-183C012ADD3E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UmbracoCms.Plugins.LazyLoad", "UmbracoCms.Plugins.LazyLoad\UmbracoCms.Plugins.LazyLoad.csproj", "{960757DA-3BBB-47CA-9968-183C012ADD3E}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UmbracoCms.Plugins.CharLimit", "UmbracoCms.Plugins.CharLimit\UmbracoCms.Plugins.CharLimit.csproj", "{CDE41A56-675E-43BA-94C6-EBFFF7D7897B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SplatDev.Umbraco.Plugins.CharLimit", "SplatDev.Umbraco.Plugins.CharLimit\SplatDev.Umbraco.Plugins.CharLimit.csproj", "{CDE41A56-675E-43BA-94C6-EBFFF7D7897B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SplatDev.Plugins.BackupVault", "SplatDev.Umbraco.Plugins.BackupManager\v13.12.1\SplatDev.Plugins.BackupVault\SplatDev.Plugins.BackupVault.csproj", "{61856043-43DC-45B9-B1C3-05682E1EE4F2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SplatDev.uPlugins.Backups", "SplatDev.Umbraco.Plugins.BackupManager\v13.12.1\SplatDev.uPlugins.Backups\SplatDev.uPlugins.Backups.csproj", "{7E956726-D00B-451E-8FFE-1A4ABEFF735B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UmbracoCms.Plugins.WhatsApp", "UmbracoCms.Plugins.WhatsApp\UmbracoCms.Plugins.WhatsApp.csproj", "{39E86E52-7CDC-4F46-9182-85CBA8276E89}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SplatDev.Umbraco.Plugins.WhatsApp", "SplatDev.Umbraco.Plugins.WhatsApp\SplatDev.Umbraco.Plugins.WhatsApp.csproj", "{39E86E52-7CDC-4F46-9182-85CBA8276E89}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UmbracoCms.Plugins.ToastNotifications", "UmbracoCms.Plugins.ToastNotifications\UmbracoCms.Plugins.ToastNotifications.csproj", "{47AFA051-2F48-48B1-81E6-AB72C9174F99}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SplatDev.Umbraco.Plugins.ToastNotifications", "SplatDev.Umbraco.Plugins.ToastNotifications\SplatDev.Umbraco.Plugins.ToastNotifications.csproj", "{47AFA051-2F48-48B1-81E6-AB72C9174F99}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UmbracoCms.Plugins.LiveVideo", "UmbracoCms.Plugins.LiveVideo\UmbracoCms.Plugins.LiveVideo.csproj", "{A2EFA6FA-D56B-4A77-BB20-EF9358544FD9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SplatDev.Umbraco.Plugins.LiveVideo", "SplatDev.Umbraco.Plugins.LiveVideo\SplatDev.Umbraco.Plugins.LiveVideo.csproj", "{A2EFA6FA-D56B-4A77-BB20-EF9358544FD9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UmbracoCms.Plugins.VideoPreview", "UmbracoCms.Plugins.VideoPreview\UmbracoCms.Plugins.VideoPreview.csproj", "{A22EC79E-BA35-4756-9DD9-1E56C255F3F1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SplatDev.Umbraco.Plugins.VideoPreview", "SplatDev.Umbraco.Plugins.VideoPreview\SplatDev.Umbraco.Plugins.VideoPreview.csproj", "{A22EC79E-BA35-4756-9DD9-1E56C255F3F1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UmbracoCms.Plugins.Smtp", "UmbracoCms.Plugins.Smtp\UmbracoCms.Plugins.Smtp.csproj", "{6B50AF50-B20B-4808-850E-ED43AECE84F4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SplatDev.Umbraco.Plugins.Smtp", "SplatDev.Umbraco.Plugins.Smtp\SplatDev.Umbraco.Plugins.Smtp.csproj", "{6B50AF50-B20B-4808-850E-ED43AECE84F4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UmbracoCms.Plugins.PropertiesReport", "UmbracoCms.Plugins.PropertiesReport\UmbracoCms.Plugins.PropertiesReport.csproj", "{ADB06E84-6C92-4AA4-B8DC-DC0646E4A73B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SplatDev.Umbraco.Plugins.PropertiesReport", "SplatDev.Umbraco.Plugins.PropertiesReport\SplatDev.Umbraco.Plugins.PropertiesReport.csproj", "{ADB06E84-6C92-4AA4-B8DC-DC0646E4A73B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UmbracoCms.Plugins.Settings", "UmbracoCms.Plugins.Settings\UmbracoCms.Plugins.Settings.csproj", "{9C57F50A-8619-4E86-99A7-82EC2A95356F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SplatDev.Umbraco.Plugins.Settings", "SplatDev.Umbraco.Plugins.Settings\SplatDev.Umbraco.Plugins.Settings.csproj", "{9C57F50A-8619-4E86-99A7-82EC2A95356F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UmbracoCms.Plugins.RdpManager", "UmbracoCms.Plugins.RdpManager\UmbracoCms.Plugins.RdpManager.csproj", "{D456376D-C9C7-4806-A6FE-A5B4396814FC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SplatDev.Umbraco.Plugins.RdpManager", "SplatDev.Umbraco.Plugins.RdpManager\SplatDev.Umbraco.Plugins.RdpManager.csproj", "{D456376D-C9C7-4806-A6FE-A5B4396814FC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UmbracoCms.Plugins.SocialMedia.Share", "UmbracoCms.Plugins.SocialMedia.Share\UmbracoCms.Plugins.SocialMedia.Share.csproj", "{FBFCBCBA-5F27-4E35-B3F6-5009F1B9EBC0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SplatDev.Umbraco.Plugins.SocialMedia.Share", "SplatDev.Umbraco.Plugins.SocialMedia.Share\SplatDev.Umbraco.Plugins.SocialMedia.Share.csproj", "{FBFCBCBA-5F27-4E35-B3F6-5009F1B9EBC0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UmbracoCms.Plugins.SocialMedia.Login", "UmbracoCms.Plugins.SocialMedia.Login\UmbracoCms.Plugins.SocialMedia.Login.csproj", "{F73A50D0-3290-4A9D-8868-B96DA8E10B90}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SplatDev.Umbraco.Plugins.SocialMedia.Login", "SplatDev.Umbraco.Plugins.SocialMedia.Login\SplatDev.Umbraco.Plugins.SocialMedia.Login.csproj", "{F73A50D0-3290-4A9D-8868-B96DA8E10B90}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UmbracoCms.Plugins.SocialMedia.Channels", "UmbracoCms.Plugins.SocialMedia.Channels\UmbracoCms.Plugins.SocialMedia.Channels.csproj", "{BEA253E9-A65B-4E59-86EE-846533596DAD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SplatDev.Umbraco.Plugins.SocialMedia.Channels", "SplatDev.Umbraco.Plugins.SocialMedia.Channels\SplatDev.Umbraco.Plugins.SocialMedia.Channels.csproj", "{BEA253E9-A65B-4E59-86EE-846533596DAD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UmbracoCms.Plugins.Payments.MercadoPago", "UmbracoCms.Plugins.Payments.MercadoPago\UmbracoCms.Plugins.Payments.MercadoPago.csproj", "{DCC7C92D-256D-4E1C-A10E-B28C7133A74F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SplatDev.Umbraco.Plugins.Payments.MercadoPago", "SplatDev.Umbraco.Plugins.Payments.MercadoPago\SplatDev.Umbraco.Plugins.Payments.MercadoPago.csproj", "{DCC7C92D-256D-4E1C-A10E-B28C7133A74F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UmbracoCms.Plugins.Payments.PagSeguro", "UmbracoCms.Plugins.Payments.PagSeguro\UmbracoCms.Plugins.Payments.PagSeguro.csproj", "{F78E7100-76C5-410C-B07B-CCA73EAE900B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SplatDev.Umbraco.Plugins.Payments.PagSeguro", "SplatDev.Umbraco.Plugins.Payments.PagSeguro\SplatDev.Umbraco.Plugins.Payments.PagSeguro.csproj", "{F78E7100-76C5-410C-B07B-CCA73EAE900B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UmbracoCms.Plugins.ShopCart", "UmbracoCms.Plugins.ShopCart\UmbracoCms.Plugins.ShopCart.csproj", "{8EB6C5C5-3BB6-44C5-8C75-CB4C9745CB77}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SplatDev.Umbraco.Plugins.ShopCart", "SplatDev.Umbraco.Plugins.ShopCart\SplatDev.Umbraco.Plugins.ShopCart.csproj", "{8EB6C5C5-3BB6-44C5-8C75-CB4C9745CB77}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UmbracoCms.Plugins.Gdrp", "UmbracoCms.Plugins.Gdrp\UmbracoCms.Plugins.Gdrp.csproj", "{630D85AB-59F3-4F68-BDAF-268C454CA95B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SplatDev.Umbraco.Plugins.Gdrp", "SplatDev.Umbraco.Plugins.Gdrp\SplatDev.Umbraco.Plugins.Gdrp.csproj", "{630D85AB-59F3-4F68-BDAF-268C454CA95B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UmbracoCms.Plugins.JsonRpc", "UmbracoCms.Plugins.JsonRpc\UmbracoCms.Plugins.JsonRpc.csproj", "{E34D3842-2651-46C5-9F9B-0BE856C1F469}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SplatDev.Umbraco.Plugins.JsonRpc", "SplatDev.Umbraco.Plugins.JsonRpc\SplatDev.Umbraco.Plugins.JsonRpc.csproj", "{E34D3842-2651-46C5-9F9B-0BE856C1F469}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UmbracoCms.Tools.PackageActions", "UmbracoCms.Tools.PackageActions\UmbracoCms.Tools.PackageActions.csproj", "{A1234567-0001-0001-0001-000000000001}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SplatDev.Umbraco.Tools.PackageActions", "SplatDev.Umbraco.Tools.PackageActions\SplatDev.Umbraco.Tools.PackageActions.csproj", "{A1234567-0001-0001-0001-000000000001}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UmbracoCms.Tools.Packager", "UmbracoCms.Tools.Packager\UmbracoCms.Tools.Packager.csproj", "{A1234567-0002-0002-0002-000000000002}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SplatDev.Umbraco.Tools.Packager", "SplatDev.Umbraco.Tools.Packager\SplatDev.Umbraco.Tools.Packager.csproj", "{A1234567-0002-0002-0002-000000000002}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UmbracoCms.Tools.T4.Plugins", "UmbracoCms.Tools.T4.Plugins\UmbracoCms.Tools.T4.Plugins.csproj", "{A1234567-0003-0003-0003-000000000003}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SplatDev.Umbraco.Tools.T4.Plugins", "SplatDev.Umbraco.Tools.T4.Plugins\SplatDev.Umbraco.Tools.T4.Plugins.csproj", "{A1234567-0003-0003-0003-000000000003}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UmbracoCms.Tools.T4.Themes", "UmbracoCms.Tools.T4.Themes\UmbracoCms.Tools.T4.Themes.csproj", "{A1234567-0004-0004-0004-000000000004}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SplatDev.Umbraco.Tools.T4.Themes", "SplatDev.Umbraco.Tools.T4.Themes\SplatDev.Umbraco.Tools.T4.Themes.csproj", "{A1234567-0004-0004-0004-000000000004}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UmbracoCms.Tools.Tests", "UmbracoCms.Tools.Tests\UmbracoCms.Tools.Tests.csproj", "{A1234567-0005-0005-0005-000000000005}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SplatDev.Umbraco.Tools.Tests", "SplatDev.Umbraco.Tools.Tests\SplatDev.Umbraco.Tools.Tests.csproj", "{A1234567-0005-0005-0005-000000000005}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

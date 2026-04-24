@@ -1,0 +1,355 @@
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@{
+    Layout = null;
+    var root = Model.Root();
+    var confName = root?.Value<string>("confName") ?? Model.Value<string>("confName") ?? "Conference";
+    var tagline = root?.Value<string>("tagline") ?? string.Empty;
+    var eventDate = root?.Value<DateTime?>("eventDate");
+    var endDate = root?.Value<DateTime?>("endDate");
+    var location = root?.Value<string>("location") ?? string.Empty;
+    var registrationUrl = root?.Value<Umbraco.Cms.Core.Models.Link>("registrationUrl");
+
+    var headline = Model.Value<string>("headline") ?? confName;
+    var subtext = Model.Value<string>("subtext") ?? tagline;
+    var heroImage = Model.Value<Umbraco.Cms.Core.Models.PublishedContent.IPublishedContent>("heroImage");
+    var countdownVisible = Model.Value<bool>("countdownVisible");
+
+    var aboutTitle = Model.Value<string>("aboutTitle") ?? string.Empty;
+    var aboutText = Model.Value<IHtmlContent>("aboutText");
+    var aboutImage = Model.Value<Umbraco.Cms.Core.Models.PublishedContent.IPublishedContent>("aboutImage");
+
+    var attendeesCount = Model.Value<int>("attendeesCount");
+    var speakersCount = Model.Value<int>("speakersCount");
+    var sessionsCount = Model.Value<int>("sessionsCount");
+    var sponsorsCount = Model.Value<int>("sponsorsCount");
+
+    var scheduleHeadline = Model.Value<string>("scheduleHeadline") ?? "Event Schedule";
+    var sponsorsHeadline = Model.Value<string>("sponsorsHeadline") ?? "Our Sponsors";
+
+    var speakersPage = Model.Root()?.Children?.FirstOrDefault(x => x.ContentType.Alias == "speakersListing");
+    var schedulePage = Model.Root()?.Children?.FirstOrDefault(x => x.ContentType.Alias == "schedulePage");
+    var sponsorsPage = Model.Root()?.Children?.FirstOrDefault(x => x.ContentType.Alias == "sponsorsPage");
+
+    var eventDateStr = eventDate.HasValue ? eventDate.Value.ToString("MMMM d, yyyy") : string.Empty;
+    var eventDateIso = eventDate.HasValue ? eventDate.Value.ToString("yyyy-MM-ddTHH:mm:ss") : string.Empty;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@headline</title>
+    <meta name="description" content="@subtext" />
+    <link rel="stylesheet" href="/css/conference-theme.css" />
+</head>
+<body class="conf-home">
+
+    <!-- ========== HEADER ========== -->
+    <header class="conf-header">
+        <div class="conf-container conf-header__inner">
+            <a href="/" class="conf-header__brand">
+                @if (heroImage != null)
+                {
+                    <img src="@heroImage.Url()" alt="@confName logo" class="conf-header__logo" />
+                }
+                else
+                {
+                    <span class="conf-header__name">@confName</span>
+                }
+            </a>
+            <nav class="conf-nav" aria-label="Main navigation">
+                <ul class="conf-nav__list">
+                    @if (speakersPage != null)
+                    {
+                        <li><a href="@speakersPage.Url()">Speakers</a></li>
+                    }
+                    @if (schedulePage != null)
+                    {
+                        <li><a href="@schedulePage.Url()">Schedule</a></li>
+                    }
+                    @{
+                        var venuePage = Model.Root()?.Children?.FirstOrDefault(x => x.ContentType.Alias == "venuePage");
+                    }
+                    @if (venuePage != null)
+                    {
+                        <li><a href="@venuePage.Url()">Venue</a></li>
+                    }
+                    @if (sponsorsPage != null)
+                    {
+                        <li><a href="@sponsorsPage.Url()">Sponsors</a></li>
+                    }
+                </ul>
+            </nav>
+            @if (registrationUrl != null)
+            {
+                <a href="@registrationUrl.Url" class="conf-btn conf-btn--primary conf-header__cta" target="@(registrationUrl.Target ?? "_self")">Register Now</a>
+            }
+        </div>
+    </header>
+
+    <!-- ========== HERO ========== -->
+    <section class="conf-hero@(heroImage != null ? " conf-hero--image" : "")"
+             @(heroImage != null ? $"style=\"background-image:url('{heroImage.Url()}')\"" : "")>
+        <div class="conf-hero__overlay"></div>
+        <div class="conf-container conf-hero__content">
+            <h1 class="conf-hero__title">@headline</h1>
+            @if (!string.IsNullOrWhiteSpace(subtext))
+            {
+                <p class="conf-hero__subtitle">@subtext</p>
+            }
+            @if (!string.IsNullOrWhiteSpace(eventDateStr))
+            {
+                <p class="conf-hero__meta">
+                    <span class="conf-hero__date">@eventDateStr</span>
+                    @if (!string.IsNullOrWhiteSpace(location))
+                    {
+                        <span class="conf-hero__separator">|</span>
+                        <span class="conf-hero__location">@location</span>
+                    }
+                </p>
+            }
+
+            @if (countdownVisible && eventDate.HasValue && eventDate.Value > DateTime.UtcNow)
+            {
+                <div class="conf-countdown" data-target="@eventDateIso" id="conf-countdown">
+                    <div class="conf-countdown__unit">
+                        <span class="conf-countdown__number" id="cd-days">00</span>
+                        <span class="conf-countdown__label">Days</span>
+                    </div>
+                    <div class="conf-countdown__unit">
+                        <span class="conf-countdown__number" id="cd-hours">00</span>
+                        <span class="conf-countdown__label">Hours</span>
+                    </div>
+                    <div class="conf-countdown__unit">
+                        <span class="conf-countdown__number" id="cd-minutes">00</span>
+                        <span class="conf-countdown__label">Minutes</span>
+                    </div>
+                    <div class="conf-countdown__unit">
+                        <span class="conf-countdown__number" id="cd-seconds">00</span>
+                        <span class="conf-countdown__label">Seconds</span>
+                    </div>
+                </div>
+            }
+
+            @if (registrationUrl != null)
+            {
+                <div class="conf-hero__actions">
+                    <a href="@registrationUrl.Url" class="conf-btn conf-btn--hero" target="@(registrationUrl.Target ?? "_self")">Register Now</a>
+                    @if (schedulePage != null)
+                    {
+                        <a href="@schedulePage.Url()" class="conf-btn conf-btn--outline">View Schedule</a>
+                    }
+                </div>
+            }
+        </div>
+    </section>
+
+    <!-- ========== STATS ========== -->
+    @if (attendeesCount > 0 || speakersCount > 0 || sessionsCount > 0 || sponsorsCount > 0)
+    {
+        <section class="conf-stats">
+            <div class="conf-container">
+                <div class="conf-stats__grid">
+                    @if (attendeesCount > 0)
+                    {
+                        <div class="conf-stats__item">
+                            <span class="conf-stats__number">@attendeesCount.ToString("N0")</span>
+                            <span class="conf-stats__label">Attendees</span>
+                        </div>
+                    }
+                    @if (speakersCount > 0)
+                    {
+                        <div class="conf-stats__item">
+                            <span class="conf-stats__number">@speakersCount</span>
+                            <span class="conf-stats__label">Speakers</span>
+                        </div>
+                    }
+                    @if (sessionsCount > 0)
+                    {
+                        <div class="conf-stats__item">
+                            <span class="conf-stats__number">@sessionsCount</span>
+                            <span class="conf-stats__label">Sessions</span>
+                        </div>
+                    }
+                    @if (sponsorsCount > 0)
+                    {
+                        <div class="conf-stats__item">
+                            <span class="conf-stats__number">@sponsorsCount</span>
+                            <span class="conf-stats__label">Sponsors</span>
+                        </div>
+                    }
+                </div>
+            </div>
+        </section>
+    }
+
+    <!-- ========== ABOUT ========== -->
+    @if (!string.IsNullOrWhiteSpace(aboutTitle) || aboutText != null)
+    {
+        <section class="conf-section conf-about">
+            <div class="conf-container conf-about__inner">
+                <div class="conf-about__text">
+                    @if (!string.IsNullOrWhiteSpace(aboutTitle))
+                    {
+                        <h2 class="conf-section__title">@aboutTitle</h2>
+                    }
+                    @if (aboutText != null)
+                    {
+                        <div class="conf-prose">@aboutText</div>
+                    }
+                    @if (registrationUrl != null)
+                    {
+                        <a href="@registrationUrl.Url" class="conf-btn conf-btn--primary">Get Your Ticket</a>
+                    }
+                </div>
+                @if (aboutImage != null)
+                {
+                    <div class="conf-about__image">
+                        <img src="@aboutImage.Url()" alt="About @confName" loading="lazy" />
+                    </div>
+                }
+            </div>
+        </section>
+    }
+
+    <!-- ========== SPEAKERS PREVIEW ========== -->
+    @if (speakersPage != null)
+    {
+        var featuredSpeakers = speakersPage.Children?.Take(6);
+        if (featuredSpeakers != null && featuredSpeakers.Any())
+        {
+            <section class="conf-section conf-speakers-preview">
+                <div class="conf-container">
+                    <h2 class="conf-section__title">Featured Speakers</h2>
+                    <div class="conf-speaker-grid">
+                        @foreach (var sp in featuredSpeakers)
+                        {
+                            var photo = sp.Value<Umbraco.Cms.Core.Models.PublishedContent.IPublishedContent>("photo");
+                            var fullName = sp.Value<string>("fullName") ?? sp.Name;
+                            var jobTitle = sp.Value<string>("jobTitle") ?? string.Empty;
+                            var company = sp.Value<string>("company") ?? string.Empty;
+                            <a href="@sp.Url()" class="conf-speaker-card">
+                                <div class="conf-speaker-card__photo">
+                                    @if (photo != null)
+                                    {
+                                        <img src="@photo.Url()" alt="@fullName" loading="lazy" />
+                                    }
+                                    else
+                                    {
+                                        <div class="conf-speaker-card__placeholder">@fullName[0]</div>
+                                    }
+                                </div>
+                                <div class="conf-speaker-card__info">
+                                    <h3 class="conf-speaker-card__name">@fullName</h3>
+                                    @if (!string.IsNullOrWhiteSpace(jobTitle))
+                                    {
+                                        <p class="conf-speaker-card__title">@jobTitle</p>
+                                    }
+                                    @if (!string.IsNullOrWhiteSpace(company))
+                                    {
+                                        <p class="conf-speaker-card__company">@company</p>
+                                    }
+                                </div>
+                            </a>
+                        }
+                    </div>
+                    <div class="conf-section__action">
+                        <a href="@speakersPage.Url()" class="conf-btn conf-btn--outline">View All Speakers</a>
+                    </div>
+                </div>
+            </section>
+        }
+    }
+
+    <!-- ========== SCHEDULE PREVIEW ========== -->
+    @if (schedulePage != null)
+    {
+        <section class="conf-section conf-schedule-preview conf-section--dark">
+            <div class="conf-container">
+                <h2 class="conf-section__title">@scheduleHeadline</h2>
+                <div class="conf-section__action">
+                    <a href="@schedulePage.Url()" class="conf-btn conf-btn--primary">View Full Schedule</a>
+                </div>
+            </div>
+        </section>
+    }
+
+    <!-- ========== SPONSORS ========== -->
+    @if (sponsorsPage != null)
+    {
+        <section class="conf-section conf-sponsors-preview">
+            <div class="conf-container">
+                <h2 class="conf-section__title">@sponsorsHeadline</h2>
+                <p class="conf-section__subtitle">Thank you to all our sponsors for making this event possible.</p>
+                <div class="conf-section__action">
+                    <a href="@sponsorsPage.Url()" class="conf-btn conf-btn--outline">See All Sponsors</a>
+                </div>
+            </div>
+        </section>
+    }
+
+    <!-- ========== REGISTRATION CTA ========== -->
+    @if (registrationUrl != null)
+    {
+        <section class="conf-section conf-cta">
+            <div class="conf-container conf-cta__inner">
+                <div class="conf-cta__text">
+                    <h2 class="conf-cta__title">Ready to Join Us?</h2>
+                    @if (!string.IsNullOrWhiteSpace(eventDateStr))
+                    {
+                        <p class="conf-cta__date">@eventDateStr@(!string.IsNullOrWhiteSpace(location) ? $" · {location}" : "")</p>
+                    }
+                </div>
+                <a href="@registrationUrl.Url" class="conf-btn conf-btn--hero" target="@(registrationUrl.Target ?? "_self")">Register Now</a>
+            </div>
+        </section>
+    }
+
+    <!-- ========== FOOTER ========== -->
+    <footer class="conf-footer">
+        <div class="conf-container conf-footer__inner">
+            <p class="conf-footer__name">@confName</p>
+            @if (!string.IsNullOrWhiteSpace(eventDateStr))
+            {
+                <p class="conf-footer__date">@eventDateStr@(!string.IsNullOrWhiteSpace(location) ? $" | {location}" : "")</p>
+            }
+            @{
+                var footerEmail = root?.Value<string>("email") ?? string.Empty;
+                var footerHashtag = root?.Value<string>("twitterHashtag") ?? string.Empty;
+            }
+            @if (!string.IsNullOrWhiteSpace(footerEmail))
+            {
+                <p><a href="mailto:@footerEmail">@footerEmail</a></p>
+            }
+            @if (!string.IsNullOrWhiteSpace(footerHashtag))
+            {
+                <p class="conf-footer__hashtag">#@footerHashtag</p>
+            }
+        </div>
+    </footer>
+
+    @if (countdownVisible && eventDate.HasValue)
+    {
+        <script>
+        (function() {
+            var target = new Date("@eventDateIso").getTime();
+            function tick() {
+                var now = Date.now();
+                var diff = target - now;
+                if (diff <= 0) { document.getElementById('conf-countdown').style.display = 'none'; return; }
+                var d = Math.floor(diff / 86400000);
+                var h = Math.floor((diff % 86400000) / 3600000);
+                var m = Math.floor((diff % 3600000) / 60000);
+                var s = Math.floor((diff % 60000) / 1000);
+                document.getElementById('cd-days').textContent = String(d).padStart(2,'0');
+                document.getElementById('cd-hours').textContent = String(h).padStart(2,'0');
+                document.getElementById('cd-minutes').textContent = String(m).padStart(2,'0');
+                document.getElementById('cd-seconds').textContent = String(s).padStart(2,'0');
+            }
+            tick();
+            setInterval(tick, 1000);
+        })();
+        </script>
+    }
+</body>
+</html>

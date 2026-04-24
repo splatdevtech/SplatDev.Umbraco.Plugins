@@ -1,0 +1,45 @@
+@model FieldViewModel
+@using FormBuilder.Core.Extensions
+@using FormBuilder.Core.Models
+@using FormBuilder.Core.Services.Interfaces
+@using FormBuilder.Web.Extensions
+
+@inject IPlaceholderParsingService PlaceholderParsingService
+
+@{
+    var ariaLabel = Model.GetSettingValue<string>("AriaLabel", string.Empty);
+    if (!string.IsNullOrWhiteSpace(ariaLabel))
+    {
+        ariaLabel = ariaLabel.ParsePlaceHolders(PlaceholderParsingService, false);
+    }
+
+    string val = Model.Values?.LastOrDefault()?.ToString() ?? string.Empty;
+    if (Model.ValueAsObject is not null && !Equals(Model.ValueAsObject, string.Empty))
+    {
+        try
+        {
+            DateTime d;
+            d = (DateTime)Model.ValueAsObject;
+            val = d.ToShortDateString();
+        }
+        catch
+        {
+            //ignore
+        }
+    }
+}
+
+<input type="hidden" name="@Model.Name" id="@(Model.Id)_1" class="datepickerfieldshadow" value="@val" data-umb="@Model.Id" />
+<input type="text"
+       name="@Model.Name"
+       id="@(Model.Id)"
+       class="datepickerfield"
+       autocomplete="off"
+       value="@val"
+@(string.IsNullOrEmpty(Model.PlaceholderText) == false ? $"placeholder=\"{Model.PlaceholderText}\"" : "")
+@(Model.Mandatory || Model.Validate ? "data-val=\"true\"" : "")
+@(Model.Mandatory ? $"data-val-required=\"{Model.RequiredErrorMessage}\" aria-required=\"true\"" : "")
+@(Model.Validate ? $"data-val-regex=\"{Model.InvalidErrorMessage}\" data-val-regex-pattern=\"{Model.Regex}\"" : "")
+@(string.IsNullOrWhiteSpace(ariaLabel) == false ? $"aria-label=\"{ariaLabel}\"" : "")
+@(!string.IsNullOrEmpty(Model.ToolTip) ? $"aria-describedby=\"{(Model.Id)}_description\"" : "") />
+/>

@@ -1,0 +1,122 @@
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@{
+    Layout = null;
+    var root = Model.Root();
+    var confName = root?.Value<string>("confName") ?? "Conference";
+    var registrationUrl = root?.Value<Umbraco.Cms.Core.Models.Link>("registrationUrl");
+
+    var pageTitle = Model.Value<string>("pageTitle") ?? "Schedule";
+    var intro = Model.Value<string>("intro") ?? string.Empty;
+
+    // Session type filter options
+    var sessionTypes = new[] { "Keynote", "Workshop", "Panel", "Lightning Talk", "Networking" };
+    var difficultyLevels = new[] { "Beginner", "Intermediate", "Advanced" };
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@pageTitle – @confName</title>
+    <link rel="stylesheet" href="/css/conference-theme.css" />
+</head>
+<body class="conf-schedule-page">
+
+    <header class="conf-header">
+        <div class="conf-container conf-header__inner">
+            <a href="/" class="conf-header__brand"><span class="conf-header__name">@confName</span></a>
+            @if (registrationUrl != null)
+            {
+                <a href="@registrationUrl.Url" class="conf-btn conf-btn--primary conf-header__cta" target="@(registrationUrl.Target ?? "_self")">Register Now</a>
+            }
+        </div>
+    </header>
+
+    <main class="conf-main">
+        <div class="conf-container">
+
+            <div class="conf-page-header">
+                <h1 class="conf-page-header__title">@pageTitle</h1>
+                @if (!string.IsNullOrWhiteSpace(intro))
+                {
+                    <p class="conf-page-header__intro">@intro</p>
+                }
+            </div>
+
+            <!-- Filters -->
+            <div class="conf-schedule-filters" id="schedule-filters">
+                <div class="conf-schedule-filters__group">
+                    <span class="conf-schedule-filters__label">Type:</span>
+                    <button class="conf-filter-btn conf-filter-btn--active" data-filter-type="type" data-value="all">All</button>
+                    @foreach (var t in sessionTypes)
+                    {
+                        <button class="conf-filter-btn" data-filter-type="type" data-value="@t.ToLower().Replace(" ", "-")">@t</button>
+                    }
+                </div>
+                <div class="conf-schedule-filters__group">
+                    <span class="conf-schedule-filters__label">Level:</span>
+                    <button class="conf-filter-btn conf-filter-btn--active" data-filter-type="level" data-value="all">All</button>
+                    @foreach (var l in difficultyLevels)
+                    {
+                        <button class="conf-filter-btn" data-filter-type="level" data-value="@l.ToLower()">@l</button>
+                    }
+                </div>
+            </div>
+
+            <!-- Schedule Grid (data injected via block list rendering) -->
+            <div class="conf-schedule" id="conf-schedule">
+                <div class="conf-schedule__empty-state">
+                    <p>The schedule will be published soon. Check back later!</p>
+                    @if (registrationUrl != null)
+                    {
+                        <a href="@registrationUrl.Url" class="conf-btn conf-btn--primary">Register to Get Updates</a>
+                    }
+                </div>
+            </div>
+
+            <div class="conf-schedule__legend">
+                @foreach (var t in sessionTypes)
+                {
+                    <span class="conf-session-badge conf-session-badge--@t.ToLower().Replace(" ", "-")">@t</span>
+                }
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="conf-footer">
+        <div class="conf-container conf-footer__inner">
+            <p class="conf-footer__name">@confName</p>
+        </div>
+    </footer>
+
+    <script>
+    (function() {
+        var filters = { type: 'all', level: 'all' };
+
+        document.querySelectorAll('.conf-filter-btn').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                var filterType = this.getAttribute('data-filter-type');
+                var value = this.getAttribute('data-value');
+                filters[filterType] = value;
+
+                // Update active state
+                document.querySelectorAll('.conf-filter-btn[data-filter-type="' + filterType + '"]').forEach(function(b) {
+                    b.classList.toggle('conf-filter-btn--active', b === btn);
+                });
+
+                applyFilters();
+            });
+        });
+
+        function applyFilters() {
+            document.querySelectorAll('.conf-session').forEach(function(session) {
+                var typeMatch = filters.type === 'all' || session.getAttribute('data-type') === filters.type;
+                var levelMatch = filters.level === 'all' || session.getAttribute('data-level') === filters.level;
+                session.style.display = (typeMatch && levelMatch) ? '' : 'none';
+            });
+        }
+    })();
+    </script>
+</body>
+</html>

@@ -1,0 +1,167 @@
+{
+  "formWorkflows": {
+    "onSubmit": [],
+    "onApprove": [],
+    "onReject": []
+  },
+  "path": "",
+  "name": "Contact form",
+  "created": "2025-04-04T22:19:47.4509382",
+  "createdBy": -1,
+  "createdByName": "Administrator",
+  "updated": "2025-04-04T22:19:47.4509382",
+  "updatedBy": -1,
+  "updatedByName": "Administrator",
+  "pages": [
+    {
+      "fieldSets": [
+        {
+          "caption": null,
+          "sortOrder": 0,
+          "id": "d7efbab8-ce99-4435-9d19-1a307be522c4",
+          "page": "c1ad4d0e-8b14-4acf-8548-c222d5fbfcae",
+          "containers": [
+            {
+              "id": "611bfe6f-65b7-4a8e-82a0-873c71fa35b2",
+              "caption": null,
+              "width": 12,
+              "fields": [
+                {
+                  "caption": "Name",
+                  "tooltip": null,
+                  "cssClass": null,
+                  "alias": "name",
+                  "id": "f677067f-96e6-4f78-b53a-35feb2adc24d",
+                  "fieldTypeId": "3f92e01b-29e2-4a30-bf33-9df5580ed52c",
+                  "prevalueSourceId": "00000000-0000-0000-0000-000000000000",
+                  "dataSourceFieldKey": null,
+                  "containsSensitiveData": false,
+                  "mandatory": false,
+                  "regex": null,
+                  "requiredErrorMessage": null,
+                  "invalidErrorMessage": null,
+                  "condition": null,
+                  "settings": {
+                    "DefaultValue": ""
+                  },
+                  "preValues": [],
+                  "allowedUploadTypes": null,
+                  "allowMultipleFileUploads": true
+                },
+                {
+                  "caption": "Email",
+                  "tooltip": null,
+                  "cssClass": null,
+                  "alias": "email",
+                  "id": "520a9b56-c473-4c67-9f93-d3e627767a29",
+                  "fieldTypeId": "3f92e01b-29e2-4a30-bf33-9df5580ed52c",
+                  "prevalueSourceId": "00000000-0000-0000-0000-000000000000",
+                  "dataSourceFieldKey": null,
+                  "containsSensitiveData": false,
+                  "mandatory": false,
+                  "regex": null,
+                  "requiredErrorMessage": null,
+                  "invalidErrorMessage": null,
+                  "condition": null,
+                  "settings": {
+                    "DefaultValue": "",
+                    "FieldType": "email"
+                  },
+                  "preValues": [],
+                  "allowedUploadTypes": null,
+                  "allowMultipleFileUploads": true
+                },
+                {
+                  "caption": "Message",
+                  "tooltip": null,
+                  "cssClass": null,
+                  "alias": "message",
+                  "id": "024959fa-36d5-4664-8890-ce4d6546108c",
+                  "fieldTypeId": "023f09ac-1445-4bcb-b8fa-ab49f33bd046",
+                  "prevalueSourceId": "00000000-0000-0000-0000-000000000000",
+                  "dataSourceFieldKey": null,
+                  "containsSensitiveData": false,
+                  "mandatory": false,
+                  "regex": null,
+                  "requiredErrorMessage": null,
+                  "invalidErrorMessage": null,
+                  "condition": null,
+                  "settings": {
+                    "DefaultValue": ""
+                  },
+                  "preValues": [],
+                  "allowedUploadTypes": null,
+                  "allowMultipleFileUploads": true
+                },
+                {
+                  "caption": "Consent for storing submitted data",
+                  "tooltip": null,
+                  "cssClass": null,
+                  "alias": "dataConsent",
+                  "id": "dbda3cf1-4cb1-4a94-bb4d-8ddbee75a4df",
+                  "fieldTypeId": "a72c9df9-3847-47cf-afb8-b86773fd12cd",
+                  "prevalueSourceId": "00000000-0000-0000-0000-000000000000",
+                  "dataSourceFieldKey": null,
+                  "containsSensitiveData": false,
+                  "mandatory": true,
+                  "regex": null,
+                  "requiredErrorMessage": "Consent is required to store and process the data in this form.",
+                  "invalidErrorMessage": null,
+                  "condition": null,
+                  "settings": {
+                    "AcceptCopy": "Yes, I give permission to store and process my data"
+                  },
+                  "preValues": [],
+                  "allowedUploadTypes": null,
+                  "allowMultipleFileUploads": true
+                }
+              ]
+            }
+          ],
+          "condition": null
+        }
+      ],
+      "caption": "Contact Us",
+      "sortOrder": 0,
+      "id": "c1ad4d0e-8b14-4acf-8548-c222d5fbfcae",
+      "form": "00000000-0000-0000-0000-000000000000",
+      "buttonCondition": null
+    }
+  ],
+  "validationRules": [],
+  "id": "6704ae93-5630-4e3e-8731-3ace916e654c",
+  "unique": "6704ae93-5630-4e3e-8731-3ace916e654c",
+  "parentUnique": null,
+  "entityType": "form",
+  "fieldIndicationType": "MarkMandatoryFields",
+  "indicator": "*",
+  "showValidationSummary": false,
+  "hideFieldValidation": false,
+  "requiredErrorMessage": "Please provide a value for {0}",
+  "invalidErrorMessage": "Please provide a valid value for {0}",
+  "messageOnSubmit": "Thank you",
+  "messageOnSubmitIsHtml": false,
+  "goToPageOnSubmit": "0",
+  "xPathOnSubmit": null,
+  "manualApproval": false,
+  "storeRecordsLocally": true,
+  "autocompleteAttribute": "",
+  "displayDefaultFields": true,
+  "selectedDisplayFields": [],
+  "daysToRetainSubmittedRecordsFor": 0,
+  "daysToRetainApprovedRecordsFor": 0,
+  "daysToRetainRejectedRecordsFor": 0,
+  "cssClass": null,
+  "disableDefaultStylesheet": false,
+  "datasource": null,
+  "submitLabel": "Submit",
+  "nextLabel": "Next",
+  "prevLabel": "Prev",
+  "folderId": null,
+  "nodeId": 1061,
+  "showPagingOnMultiPageForms": "None",
+  "pagingDetailsFormat": "Page {0} of {1}",
+  "pageCaptionFormat": "Page {0}",
+  "showSummaryPageOnMultiPageForms": false,
+  "summaryLabel": "Summary of Entry"
+}

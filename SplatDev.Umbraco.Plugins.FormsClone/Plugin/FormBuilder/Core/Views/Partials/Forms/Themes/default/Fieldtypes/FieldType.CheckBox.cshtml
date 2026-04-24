@@ -1,0 +1,18 @@
+@using FormBuilder.Core.Extensions
+@using FormBuilder.Core.Models
+@using FormBuilder.Web.Extensions
+@model FieldViewModel
+@{
+    var caption = string.Empty;
+    Model.AdditionalSettings.TryGetValue("Caption", out caption);
+}
+
+<input type="checkbox" name="@Model.Name" id="@Model.Id" value="true" data-umb="@Model.Id"
+@(Model.Mandatory ? $"data-val=\"true\" data-val-requiredcb=\"{Model.RequiredErrorMessage}\" aria-required=\"true\"" : "")
+@(Model.ContainsValue(true) || Model.ContainsValue("true") || Model.ContainsValue("on") ? "checked=\"checked\"" : "")
+@(!string.IsNullOrEmpty(Model.ToolTip) ? $"aria-describedby=\"{Model.Id}_description\"" : "") />
+<input type="hidden" name="@Model.Name" value="false" />
+@if (!string.IsNullOrEmpty(caption))
+{
+    <label for="@Model.Id">@caption</label>
+}

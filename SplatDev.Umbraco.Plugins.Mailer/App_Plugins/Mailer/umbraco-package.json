@@ -1,0 +1,57 @@
+{
+  "$schema": "../../umbraco-package-schema.json",
+  "name": "Mailer",
+  "version": "1.0.0",
+  "extensions": [
+    {
+      "type": "dashboard",
+      "alias": "Mailer.Dashboard",
+      "name": "Mailer Dashboard",
+      "element": "/App_Plugins/Mailer/dist/mailer-dashboard.element.js",
+      "elementName": "mailer-dashboard",
+      "weight": 100,
+      "meta": {
+        "label": "#mailer_dashboardLabel",
+        "pathname": "mailer"
+      },
+      "conditions": [
+        {
+          "alias": "Umb.Condition.SectionAlias",
+          "match": "Umb.Section.Settings"
+        }
+      ]
+    },
+    {
+      "type": "localization",
+      "alias": "SplatDev.Mailer.Localization.En",
+      "name": "Mailer — English",
+      "meta": {
+        "culture": "en",
+        "localizations": {
+          "section": {
+            "mailer_heading": "Mailer",
+            "mailer_description": "Microsoft Graph email service",
+            "mailer_sendTest": "Send Test Email",
+            "mailer_email": "Email Address"
+          }
+        }
+      }
+    },
+    {
+      "type": "localization",
+      "alias": "SplatDev.Mailer.Localization.PtBr",
+      "name": "Mailer — Português (Brasil)",
+      "meta": {
+        "culture": "pt-BR",
+        "localizations": {
+          "section": {
+            "mailer_heading": "Mailer",
+            "mailer_description": "Serviço de e-mail Microsoft Graph",
+            "mailer_sendTest": "Enviar E-mail de Teste",
+            "mailer_email": "Endereço de E-mail"
+          }
+        }
+      }
+    }
+  ]
+}

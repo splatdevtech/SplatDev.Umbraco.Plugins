@@ -1,0 +1,20 @@
+@using FormBuilder.Core.Extensions
+@using FormBuilder.Core.Models
+@using FormBuilder.Web.Extensions
+@model FormViewModel
+
+@if (Model.MessageOnSubmitIsHtml)
+{
+    <div class="formbuilder-forms-submitmessage-html">
+        @Model.GetMessageOnSubmit()
+    </div>
+}
+else
+{
+    <div>
+        <span class="formbuilder-forms-submitmessage">
+            @Model.GetMessageOnSubmit()
+        </span>
+    </div>
+}
+@await Html.PartialAsync("Forms/Themes/default/ScrollToFormScript")

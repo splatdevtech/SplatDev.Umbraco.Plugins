@@ -1,0 +1,108 @@
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@{
+    Layout = null;
+    var shopName = Model.Value<string>("shopName") ?? "Shop";
+    var shopTagline = Model.Value<string>("shopTagline");
+    var shopLogo = Model.Value<Umbraco.Cms.Core.Models.PublishedContent.IPublishedContent>("shopLogo");
+    var metaTitle = Model.Value<string>("metaTitle") ?? shopName;
+    var metaDescription = Model.Value<string>("metaDescription");
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@metaTitle</title>
+    @if (!string.IsNullOrWhiteSpace(metaDescription))
+    {
+        <meta name="description" content="@metaDescription" />
+    }
+    <link rel="stylesheet" href="/css/commerce-theme.css" />
+</head>
+<body class="commerce-theme shop-root-page">
+
+    <header class="site-header">
+        <div class="container header-inner">
+            <a href="@Model.Url()" class="site-logo-link" aria-label="@shopName home">
+                @if (shopLogo != null)
+                {
+                    <img src="@shopLogo.Url()" alt="@shopName logo" class="site-logo" />
+                }
+                else
+                {
+                    <span class="site-logo-text">@shopName</span>
+                }
+            </a>
+            <nav class="main-nav" aria-label="Main navigation">
+                <ul>
+                    @foreach (var child in Model.Children ?? Enumerable.Empty<Umbraco.Cms.Core.Models.PublishedContent.IPublishedContent>())
+                    {
+                        <li><a href="@child.Url()">@child.Name</a></li>
+                    }
+                </ul>
+            </nav>
+            <div class="header-actions">
+                <a href="/cart" class="header-cart-btn" aria-label="View cart">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                        <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+                        <line x1="3" y1="6" x2="21" y2="6"/>
+                        <path d="M16 10a4 4 0 01-8 0"/>
+                    </svg>
+                    <span class="cart-count" id="cartCount">0</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="shop-hero">
+            <div class="container">
+                <h1 class="shop-hero-title">@shopName</h1>
+                @if (!string.IsNullOrWhiteSpace(shopTagline))
+                {
+                    <p class="shop-hero-tagline">@shopTagline</p>
+                }
+                <a href="/shop" class="btn btn-primary btn-lg">Browse Products</a>
+            </div>
+        </section>
+
+        <section class="container featured-categories">
+            <h2 class="section-heading">Shop by Category</h2>
+            <div class="categories-grid">
+                @foreach (var cat in Model.Children?.Where(c => c.ContentType.Alias == "productCategory")
+                    ?? Enumerable.Empty<Umbraco.Cms.Core.Models.PublishedContent.IPublishedContent>())
+                {
+                    var catName = cat.Value<string>("categoryName") ?? cat.Name;
+                    var catImage = cat.Value<Umbraco.Cms.Core.Models.PublishedContent.IPublishedContent>("image");
+                    <a href="@cat.Url()" class="category-card">
+                        @if (catImage != null)
+                        {
+                            <img src="@catImage.Url()" alt="@catName" class="category-card-image" loading="lazy" />
+                        }
+                        <div class="category-card-overlay">
+                            <span class="category-card-name">@catName</span>
+                        </div>
+                    </a>
+                }
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <p>&copy; @DateTime.Now.Year @shopName. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        (function () {
+            try {
+                const cart = JSON.parse(localStorage.getItem('commerce_cart') || '[]');
+                const count = cart.reduce((a, i) => a + i.qty, 0);
+                const el = document.getElementById('cartCount');
+                if (el) el.textContent = count;
+            } catch {}
+        })();
+    </script>
+</body>
+</html>

@@ -1,0 +1,38 @@
+@model Umbraco.Forms.Web.Models.FormViewModel
+
+@using Umbraco.Forms.Core
+@using Umbraco.Forms.Web
+@using System.Text.Json
+
+@{
+    Html.AddFormThemeScriptFile("~/App_Plugins/UmbracoForms/assets/themes/default/umbracoforms.min.js");
+}
+
+<div class="umbraco-forms-form-config umbraco-forms-hidden"
+     data-id="@Model.FormClientId"
+     data-serialized-page-button-conditions="@JsonSerializer.Serialize(Model.PageButtonConditions, FormsJsonSerializerOptions.Default)"
+     data-serialized-fieldset-conditions="@JsonSerializer.Serialize(Model.FieldsetConditions, FormsJsonSerializerOptions.Default)"
+     data-serialized-field-conditions="@JsonSerializer.Serialize(Model.FieldConditions, FormsJsonSerializerOptions.Default)"
+     data-serialized-fields-not-displayed="@JsonSerializer.Serialize(Model.GetFieldsNotDisplayed(Model.FormElementHtmlIdPrefix), FormsJsonSerializerOptions.Default)"
+     data-trigger-conditions-check-on="@Model.TriggerConditionsCheckOn"
+     data-form-element-html-id-prefix="@Model.FormElementHtmlIdPrefix"
+     data-disable-validation-dependency-check="@Model.DisableClientSideValidationDependencyCheck.ToString().ToLower()"></div>
+
+@*
+If the current page of the form has any Partial view files attached to render
+Likely used by events and third parties adding tracking or other 3rd party functionality to a form
+*@
+@{
+    if (Model.CurrentPage != null && Model.CurrentPage.PartialViewFiles.Any())
+    {
+        foreach (var partial in Model.CurrentPage.PartialViewFiles)
+        {
+            @await Html.PartialAsync(partial.Value)
+        }
+    }
+}
+
+@* Render references to JavaScript files needed by fields on the current page*@
+@Html.RenderFormsScripts(Url, Model, Model.JavaScriptTagAttributes)
+@Html.RenderFormsStylesheets(Url, Model)
+

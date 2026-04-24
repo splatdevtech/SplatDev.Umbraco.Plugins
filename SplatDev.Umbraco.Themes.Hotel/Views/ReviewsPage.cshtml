@@ -1,0 +1,112 @@
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@{
+    Layout = null;
+    var root = Model.Root();
+    var hotelName = root?.Value<string>("hotelName") ?? "Hotel";
+    var bookingUrl = root?.Value<Umbraco.Cms.Core.Models.Link>("bookingUrl");
+
+    var pageTitle = Model.Value<string>("pageTitle") ?? "Guest Reviews";
+    var intro = Model.Value<string>("intro") ?? string.Empty;
+    var averageRating = Model.Value<decimal?>("averageRating");
+    var totalReviews = Model.Value<int?>("totalReviews");
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@pageTitle – @hotelName</title>
+    <link rel="stylesheet" href="/css/hotel-theme.css" />
+</head>
+<body class="hotel-reviews-page">
+
+    <header class="hotel-header hotel-header--solid" id="hotel-header">
+        <div class="hotel-container hotel-header__inner">
+            <a href="/" class="hotel-header__brand"><span class="hotel-header__name">@hotelName</span></a>
+            @if (bookingUrl != null)
+            {
+                <a href="@bookingUrl.Url" class="hotel-btn hotel-btn--book hotel-header__book">Book Now</a>
+            }
+        </div>
+    </header>
+
+    <main class="hotel-main">
+
+        <div class="hotel-page-hero hotel-page-hero--compact">
+            <div class="hotel-container">
+                <h1 class="hotel-page-hero__title">@pageTitle</h1>
+                @if (!string.IsNullOrWhiteSpace(intro))
+                {
+                    <p class="hotel-page-hero__subtitle">@intro</p>
+                }
+            </div>
+        </div>
+
+        <div class="hotel-container">
+
+            <!-- Rating Summary -->
+            @if (averageRating.HasValue && averageRating.Value > 0)
+            {
+                <div class="hotel-rating-hero">
+                    <div class="hotel-rating-hero__score-box">
+                        <span class="hotel-rating-hero__number">@averageRating.Value.ToString("F1")</span>
+                        <span class="hotel-rating-hero__max">/5</span>
+                    </div>
+                    <div class="hotel-rating-hero__details">
+                        <div class="hotel-stars hotel-stars--lg">
+                            @{
+                                int fullStars = (int)Math.Floor(averageRating.Value);
+                                bool hasHalf = (averageRating.Value - fullStars) >= 0.5m;
+                            }
+                            @for (int s = 0; s < fullStars; s++) { <span class="hotel-star hotel-star--filled">&#9733;</span> }
+                            @if (hasHalf) { <span class="hotel-star hotel-star--half">&#9733;</span> }
+                            @for (int s = 0; s < (5 - fullStars - (hasHalf ? 1 : 0)); s++) { <span class="hotel-star">&#9733;</span> }
+                        </div>
+                        @if (totalReviews.HasValue && totalReviews.Value > 0)
+                        {
+                            <p class="hotel-rating-hero__count">Based on @totalReviews.Value.ToString("N0") reviews</p>
+                        }
+                    </div>
+                </div>
+
+                <!-- Rating distribution bars (visual only) -->
+                <div class="hotel-rating-bars">
+                    @for (int star = 5; star >= 1; star--)
+                    {
+                        <div class="hotel-rating-bar">
+                            <span class="hotel-rating-bar__label">@star &#9733;</span>
+                            <div class="hotel-rating-bar__track">
+                                <div class="hotel-rating-bar__fill" style="width:@(star == (int)Math.Round(averageRating.Value) ? "70" : star == 5 ? "60" : "30")%"></div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+
+            <!-- Review Cards -->
+            <div class="hotel-review-cards" id="review-cards">
+                <!-- Review items are managed via Block List in the back-office -->
+                <div class="hotel-reviews-placeholder">
+                    <p>Guest reviews will be displayed here once added in the back-office.</p>
+                    @if (bookingUrl != null)
+                    {
+                        <a href="@bookingUrl.Url" class="hotel-btn hotel-btn--primary" style="margin-top:1.5rem">Book Your Stay</a>
+                    }
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="hotel-footer">
+        <div class="hotel-container hotel-footer__inner">
+            <div class="hotel-footer__brand"><span class="hotel-footer__name">@hotelName</span></div>
+        </div>
+        <div class="hotel-footer__bottom">
+            <div class="hotel-container"><p>&copy; @DateTime.Now.Year @hotelName. All rights reserved.</p></div>
+        </div>
+    </footer>
+
+</body>
+</html>

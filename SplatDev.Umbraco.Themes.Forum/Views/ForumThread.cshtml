@@ -1,0 +1,160 @@
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@{
+    Layout = null;
+    var title           = Model.Value<string>("title") ?? Model.Name;
+    var body            = Model.Value<Umbraco.Cms.Core.Strings.IHtmlEncodedString>("body");
+    var authorUsername  = Model.Value<string>("authorUsername") ?? "anonymous";
+    var authorDisplay   = Model.Value<string>("authorDisplayName") ?? authorUsername;
+    var createdDate     = Model.Value<DateTime?>("createdDate") ?? Model.CreateDate;
+    var lastReplyDate   = Model.Value<DateTime?>("lastReplyDate");
+    var replyCount      = Model.Value<int>("replyCount");
+    var viewCount       = Model.Value<int>("viewCount");
+    var status          = Model.Value<string>("status") ?? "Open";
+    var isPinned        = Model.Value<bool>("isPinned");
+    var attachments     = Model.Value<IEnumerable<Umbraco.Cms.Core.Models.MediaWithCrops>>("attachments");
+
+    var category   = Model.Parent;
+    var forumRoot  = Model.AncestorsOrSelf().FirstOrDefault(n => n.ContentType.Alias == "forumRoot");
+    var forumName  = forumRoot?.Value<string>("forumName") ?? forumRoot?.Name ?? "Forum";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@title | @forumName</title>
+    <link rel="stylesheet" href="/css/forum-theme.css" />
+</head>
+<body class="forum-layout">
+
+    <header class="forum-header">
+        <div class="forum-header__inner container">
+            <nav class="forum-breadcrumb" aria-label="Breadcrumb">
+                <a href="@(forumRoot?.Url() ?? "/")">@forumName</a>
+                @if (category != null)
+                {
+                    <span class="breadcrumb-sep" aria-hidden="true">/</span>
+                    <a href="@category.Url()">@(category.Value<string>("categoryName") ?? category.Name)</a>
+                }
+                <span class="breadcrumb-sep" aria-hidden="true">/</span>
+                <span class="breadcrumb-current" aria-current="page">@title</span>
+            </nav>
+        </div>
+    </header>
+
+    <main class="forum-main container">
+
+        <div class="thread-header">
+            <div class="thread-header__meta">
+                @if (isPinned)
+                {
+                    <span class="thread-badge thread-badge--pinned">📌 Pinned</span>
+                }
+                <span class="thread-badge thread-badge--status thread-badge--status-@status.ToLower().Replace(" ", "-")">@status</span>
+            </div>
+            <h1 class="thread-header__title">@title</h1>
+            <p class="thread-header__info">
+                Started by <strong>@authorDisplay</strong> on
+                <time datetime="@createdDate.ToString("yyyy-MM-ddTHH:mm:ssZ")">@createdDate.ToString("MMMM d, yyyy")</time>
+                &mdash;
+                <span>@replyCount @(replyCount == 1 ? "reply" : "replies")</span> &middot;
+                <span>@viewCount @(viewCount == 1 ? "view" : "views")</span>
+            </p>
+        </div>
+
+        <div class="thread-tools">
+            <button class="btn btn--ghost btn--sm" type="button">Subscribe</button>
+            <button class="btn btn--ghost btn--sm" type="button">Bookmark</button>
+            <button class="btn btn--ghost btn--sm btn--danger" type="button">Report</button>
+        </div>
+
+        <article class="post-card post-card--op" aria-label="Original post">
+            <aside class="post-card__author">
+                <div class="author-avatar author-avatar--placeholder" aria-hidden="true">
+                    @authorDisplay.Substring(0, 1).ToUpper()
+                </div>
+                <div class="author-meta">
+                    <span class="author-name">@authorDisplay</span>
+                    <span class="author-username">@@authorUsername</span>
+                </div>
+            </aside>
+            <div class="post-card__body">
+                <div class="post-card__content richtext">
+                    @if (body != null) { @Html.Raw(body) }
+                </div>
+
+                @if (attachments != null && attachments.Any())
+                {
+                    <div class="post-card__attachments">
+                        <h3 class="attachments-label">Attachments</h3>
+                        <div class="attachment-grid">
+                            @foreach (var att in attachments)
+                            {
+                                <figure class="attachment-item">
+                                    <img src="@att.MediaUrl()" alt="@att.Value<string>("altText")" loading="lazy" />
+                                </figure>
+                            }
+                        </div>
+                    </div>
+                }
+
+                <footer class="post-card__footer">
+                    <time class="post-card__date"
+                          datetime="@createdDate.ToString("yyyy-MM-ddTHH:mm:ssZ")">
+                        @createdDate.ToString("MMM d, yyyy 'at' HH:mm")
+                    </time>
+                </footer>
+            </div>
+        </article>
+
+        @if (replyCount > 0)
+        {
+            <section class="reply-list" aria-labelledby="replies-heading">
+                <h2 id="replies-heading" class="section-title">
+                    @replyCount @(replyCount == 1 ? "Reply" : "Replies")
+                </h2>
+                <p class="empty-state empty-state--info">
+                    Replies are stored and rendered dynamically via the forum member service.
+                </p>
+            </section>
+        }
+
+        @if (status == "Open")
+        {
+            <section class="reply-form card" aria-labelledby="reply-form-heading">
+                <h2 id="reply-form-heading" class="section-title">Post a Reply</h2>
+                <form class="reply-form__form" method="post" action="@Model.Url()reply">
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" name="threadId" value="@Model.Id" />
+                    <div class="form-group">
+                        <label class="form-label" for="reply-body">Your Reply</label>
+                        <textarea id="reply-body"
+                                  class="form-textarea"
+                                  name="body"
+                                  rows="6"
+                                  placeholder="Write your reply here…"
+                                  required></textarea>
+                    </div>
+                    <div class="form-actions">
+                        <button class="btn btn--primary" type="submit">Post Reply</button>
+                    </div>
+                </form>
+            </section>
+        }
+        else
+        {
+            <div class="thread-closed-notice">
+                <p>This thread is <strong>@status</strong> and is not accepting new replies.</p>
+            </div>
+        }
+
+    </main>
+
+    <footer class="forum-footer">
+        <div class="container">
+            <p>&copy; @DateTime.UtcNow.Year @forumName</p>
+        </div>
+    </footer>
+
+</body>
+</html>

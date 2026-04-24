@@ -1,0 +1,164 @@
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@{
+    Layout = null;
+    var root = Model.Root();
+    var hotelName = root?.Value<string>("hotelName") ?? "Hotel";
+    var bookingUrl = root?.Value<Umbraco.Cms.Core.Models.Link>("bookingUrl");
+
+    var pageTitle = Model.Value<string>("pageTitle") ?? "Gallery";
+    var intro = Model.Value<string>("intro") ?? string.Empty;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@pageTitle – @hotelName</title>
+    <link rel="stylesheet" href="/css/hotel-theme.css" />
+</head>
+<body class="hotel-gallery-page">
+
+    <header class="hotel-header hotel-header--solid" id="hotel-header">
+        <div class="hotel-container hotel-header__inner">
+            <a href="/" class="hotel-header__brand"><span class="hotel-header__name">@hotelName</span></a>
+            @if (bookingUrl != null)
+            {
+                <a href="@bookingUrl.Url" class="hotel-btn hotel-btn--book hotel-header__book">Book Now</a>
+            }
+        </div>
+    </header>
+
+    <main class="hotel-main">
+
+        <div class="hotel-page-hero hotel-page-hero--compact">
+            <div class="hotel-container">
+                <h1 class="hotel-page-hero__title">@pageTitle</h1>
+                @if (!string.IsNullOrWhiteSpace(intro))
+                {
+                    <p class="hotel-page-hero__subtitle">@intro</p>
+                }
+            </div>
+        </div>
+
+        <div class="hotel-container">
+
+            <!-- Category filter tabs -->
+            <div class="hotel-gallery-tabs" id="gallery-tabs">
+                <button class="hotel-gallery-tab hotel-gallery-tab--active" data-cat="all">All</button>
+                <button class="hotel-gallery-tab" data-cat="rooms">Rooms</button>
+                <button class="hotel-gallery-tab" data-cat="lobby">Lobby</button>
+                <button class="hotel-gallery-tab" data-cat="dining">Dining</button>
+                <button class="hotel-gallery-tab" data-cat="pool">Pool &amp; Spa</button>
+                <button class="hotel-gallery-tab" data-cat="exterior">Exterior</button>
+            </div>
+
+            <!-- Gallery Grid -->
+            <div class="hotel-gallery-grid" id="gallery-grid">
+                <!-- Gallery items are managed via Block List in the back-office.
+                     The CSS classes below are ready for dynamically rendered items. -->
+                <div class="hotel-gallery-placeholder">
+                    <p>Gallery images will be displayed here once added in the back-office.</p>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Lightbox Overlay -->
+    <div class="hotel-lightbox" id="hotel-lightbox" role="dialog" aria-modal="true" aria-label="Photo lightbox" style="display:none">
+        <button class="hotel-lightbox__close" id="lightbox-close" aria-label="Close lightbox">&times;</button>
+        <button class="hotel-lightbox__prev" id="lightbox-prev" aria-label="Previous photo">&#8249;</button>
+        <div class="hotel-lightbox__content">
+            <img src="" alt="" id="lightbox-img" class="hotel-lightbox__image" />
+            <p id="lightbox-caption" class="hotel-lightbox__caption"></p>
+        </div>
+        <button class="hotel-lightbox__next" id="lightbox-next" aria-label="Next photo">&#8250;</button>
+    </div>
+
+    <footer class="hotel-footer">
+        <div class="hotel-container hotel-footer__inner">
+            <div class="hotel-footer__brand"><span class="hotel-footer__name">@hotelName</span></div>
+        </div>
+        <div class="hotel-footer__bottom">
+            <div class="hotel-container"><p>&copy; @DateTime.Now.Year @hotelName. All rights reserved.</p></div>
+        </div>
+    </footer>
+
+    <script>
+    (function() {
+        // Category tabs
+        document.querySelectorAll('.hotel-gallery-tab').forEach(function(tab) {
+            tab.addEventListener('click', function() {
+                var cat = this.getAttribute('data-cat');
+                document.querySelectorAll('.hotel-gallery-tab').forEach(function(t) {
+                    t.classList.toggle('hotel-gallery-tab--active', t === tab);
+                });
+                document.querySelectorAll('.hotel-gallery-item').forEach(function(item) {
+                    var itemCat = item.getAttribute('data-category') || 'all';
+                    item.style.display = (cat === 'all' || itemCat === cat) ? '' : 'none';
+                });
+            });
+        });
+
+        // Lightbox
+        var lightbox = document.getElementById('hotel-lightbox');
+        var lbImg = document.getElementById('lightbox-img');
+        var lbCaption = document.getElementById('lightbox-caption');
+        var images = [];
+        var currentIndex = 0;
+
+        function openLightbox(idx) {
+            if (!lightbox || images.length === 0) return;
+            currentIndex = idx;
+            lbImg.src = images[idx].src;
+            lbImg.alt = images[idx].alt;
+            lbCaption.textContent = images[idx].caption;
+            lightbox.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            if (!lightbox) return;
+            lightbox.style.display = 'none';
+            document.body.style.overflow = '';
+        }
+
+        document.addEventListener('click', function(e) {
+            if (e.target.closest('.hotel-gallery-item')) {
+                var item = e.target.closest('.hotel-gallery-item');
+                var img = item.querySelector('img');
+                if (img) {
+                    images = Array.from(document.querySelectorAll('.hotel-gallery-item img')).map(function(i) {
+                        return { src: i.src, alt: i.alt, caption: i.getAttribute('data-caption') || '' };
+                    });
+                    var idx = Array.from(document.querySelectorAll('.hotel-gallery-item img')).indexOf(img);
+                    openLightbox(idx);
+                }
+            }
+        });
+
+        var closeBtn = document.getElementById('lightbox-close');
+        var prevBtn = document.getElementById('lightbox-prev');
+        var nextBtn = document.getElementById('lightbox-next');
+        if (closeBtn) closeBtn.addEventListener('click', closeLightbox);
+        if (prevBtn) prevBtn.addEventListener('click', function() {
+            currentIndex = (currentIndex - 1 + images.length) % images.length;
+            openLightbox(currentIndex);
+        });
+        if (nextBtn) nextBtn.addEventListener('click', function() {
+            currentIndex = (currentIndex + 1) % images.length;
+            openLightbox(currentIndex);
+        });
+        if (lightbox) lightbox.addEventListener('click', function(e) {
+            if (e.target === lightbox) closeLightbox();
+        });
+        document.addEventListener('keydown', function(e) {
+            if (!lightbox || lightbox.style.display === 'none') return;
+            if (e.key === 'Escape') closeLightbox();
+            if (e.key === 'ArrowLeft' && prevBtn) prevBtn.click();
+            if (e.key === 'ArrowRight' && nextBtn) nextBtn.click();
+        });
+    })();
+    </script>
+</body>
+</html>

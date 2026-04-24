@@ -1,0 +1,7 @@
+@using FormBuilder.Core.Extensions
+@using FormBuilder.Core.Models
+@using FormBuilder.Web.Extensions
+@model FieldViewModel
+@{
+    @(Model.ContainsValue(true) || Model.ContainsValue("true") || Model.ContainsValue("on") ? "Agreed" : "Not agreed")
+}

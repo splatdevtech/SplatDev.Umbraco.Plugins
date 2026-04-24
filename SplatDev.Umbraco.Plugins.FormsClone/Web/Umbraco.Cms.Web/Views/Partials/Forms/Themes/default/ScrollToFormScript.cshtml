@@ -1,0 +1,5 @@
+@model Umbraco.Forms.Web.Models.FormViewModel
+@if (!ViewData.ModelState.IsValid || Model.SubmitHandled || Model.PageHandled)
+{
+    <div id="umbraco-forms-form-submitted" data-form-client-id="@Model.FormClientId" class="umbraco-forms-hidden"></div>
+}

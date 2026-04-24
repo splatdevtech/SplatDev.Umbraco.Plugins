@@ -1,0 +1,16 @@
+@using FormBuilder.Core.Extensions
+@using FormBuilder.Core.Models
+@using FormBuilder.Core.Providers.FieldTypes
+@using FormBuilder.Web.Extensions
+@model FieldViewModel
+
+@{
+    @foreach (string filePath in Model.Values)
+    {
+        var fileName = filePath.Split(new[] { FileUpload.EncryptedFilePathAndFileNameSeparator }, StringSplitOptions.None).Last();
+        <div>@fileName</div>
+    }
+}
+
+
+

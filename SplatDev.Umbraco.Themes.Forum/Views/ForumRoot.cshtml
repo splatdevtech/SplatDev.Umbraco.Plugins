@@ -1,0 +1,192 @@
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@{
+    Layout = null;
+    var forumName    = Model.Value<string>("forumName") ?? Model.Name;
+    var tagline      = Model.Value<string>("tagline") ?? string.Empty;
+    var description  = Model.Value<Umbraco.Cms.Core.Strings.IHtmlEncodedString>("description");
+    var categories   = Model.Children.Where(c => c.ContentType.Alias == "forumCategory");
+    var announcements = Model.Children.FirstOrDefault(c => c.ContentType.Alias == "forumAnnouncements");
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@forumName</title>
+    <link rel="stylesheet" href="/css/forum-theme.css" />
+</head>
+<body class="forum-layout">
+
+    <header class="forum-header">
+        <div class="forum-header__inner container">
+            <div class="forum-header__brand">
+                <h1 class="forum-header__title">
+                    <a href="@Model.Url()">@forumName</a>
+                </h1>
+                @if (!string.IsNullOrWhiteSpace(tagline))
+                {
+                    <p class="forum-header__tagline">@tagline</p>
+                }
+            </div>
+            <nav class="forum-header__nav">
+                <form class="forum-search" action="/search" method="get" role="search">
+                    <label for="forum-search-input" class="sr-only">Search</label>
+                    <input id="forum-search-input"
+                           class="forum-search__input"
+                           type="search"
+                           name="q"
+                           placeholder="Search threads…" />
+                    <button class="forum-search__btn" type="submit" aria-label="Submit search">
+                        <span aria-hidden="true">&#128269;</span>
+                    </button>
+                </form>
+            </nav>
+        </div>
+    </header>
+
+    <main class="forum-main container">
+
+        @if (description != null)
+        {
+            <section class="forum-welcome card">
+                <div class="forum-welcome__body">@Html.Raw(description)</div>
+            </section>
+        }
+
+        @if (announcements != null)
+        {
+            var pinnedAnnouncements = announcements.Children
+                .Where(a => a.Value<bool>("isPinned"))
+                .OrderByDescending(a => a.Value<int>("priority"))
+                .Take(3);
+
+            if (pinnedAnnouncements.Any())
+            {
+                <section class="forum-announcements" aria-labelledby="announcements-heading">
+                    <h2 id="announcements-heading" class="section-title section-title--alert">
+                        Announcements
+                    </h2>
+                    <ul class="announcement-list">
+                        @foreach (var ann in pinnedAnnouncements)
+                        {
+                            var annTitle   = ann.Value<string>("title") ?? ann.Name;
+                            var publishDate = ann.Value<DateTime?>("publishDate");
+                            <li class="announcement-list__item announcement-list__item--pinned">
+                                <span class="announcement-badge">📌 Pinned</span>
+                                <a class="announcement-list__link" href="@ann.Url()">@annTitle</a>
+                                @if (publishDate.HasValue)
+                                {
+                                    <time class="announcement-list__date"
+                                          datetime="@publishDate.Value.ToString("yyyy-MM-dd")">
+                                        @publishDate.Value.ToString("MMM d, yyyy")
+                                    </time>
+                                }
+                            </li>
+                        }
+                    </ul>
+                </section>
+            }
+        }
+
+        <section class="forum-categories" aria-labelledby="categories-heading">
+            <h2 id="categories-heading" class="section-title">Discussion Categories</h2>
+
+            @if (!categories.Any())
+            {
+                <p class="empty-state">No categories have been created yet.</p>
+            }
+            else
+            {
+                <div class="category-grid">
+                    @foreach (var category in categories.OrderBy(c => c.Value<int>("sortOrder")))
+                    {
+                        var catName    = category.Value<string>("categoryName") ?? category.Name;
+                        var catDesc    = category.Value<string>("description") ?? string.Empty;
+                        var catIcon    = category.Value<string>("icon") ?? "icon-folder";
+                        var catColor   = category.Value<string>("color") ?? "#4a90d9";
+                        var threadCount = category.Children
+                            .Count(c => c.ContentType.Alias == "forumThread");
+                        var lastThread  = category.Children
+                            .Where(c => c.ContentType.Alias == "forumThread")
+                            .OrderByDescending(c => c.Value<DateTime?>("lastReplyDate") ?? c.CreateDate)
+                            .FirstOrDefault();
+
+                        <article class="category-card" style="--category-color: @catColor;">
+                            <div class="category-card__icon">
+                                <span class="@catIcon" aria-hidden="true"></span>
+                            </div>
+                            <div class="category-card__body">
+                                <h3 class="category-card__title">
+                                    <a href="@category.Url()">@catName</a>
+                                </h3>
+                                @if (!string.IsNullOrWhiteSpace(catDesc))
+                                {
+                                    <p class="category-card__desc">@catDesc</p>
+                                }
+                            </div>
+                            <div class="category-card__stats">
+                                <span class="stat-badge">@threadCount thread@(threadCount == 1 ? "" : "s")</span>
+                                @if (lastThread != null)
+                                {
+                                    var lastActivity = lastThread.Value<DateTime?>("lastReplyDate") ?? lastThread.CreateDate;
+                                    <span class="stat-date">
+                                        Last post
+                                        <time datetime="@lastActivity.ToString("yyyy-MM-ddTHH:mm:ssZ")">
+                                            @lastActivity.ToString("MMM d")
+                                        </time>
+                                    </span>
+                                }
+                            </div>
+                        </article>
+                    }
+                </div>
+            }
+        </section>
+
+    </main>
+
+    <aside class="forum-sidebar container">
+        <div class="sidebar-widget card">
+            <h3 class="sidebar-widget__title">Recent Activity</h3>
+            @{
+                var recentThreads = categories
+                    .SelectMany(c => c.Children.Where(t => t.ContentType.Alias == "forumThread"))
+                    .OrderByDescending(t => t.Value<DateTime?>("lastReplyDate") ?? t.CreateDate)
+                    .Take(5);
+            }
+            @if (!recentThreads.Any())
+            {
+                <p class="empty-state">No recent activity.</p>
+            }
+            else
+            {
+                <ul class="recent-list">
+                    @foreach (var thread in recentThreads)
+                    {
+                        var tTitle  = thread.Value<string>("title") ?? thread.Name;
+                        var tAuthor = thread.Value<string>("authorDisplayName")
+                                   ?? thread.Value<string>("authorUsername")
+                                   ?? "Anonymous";
+                        var tDate   = thread.Value<DateTime?>("lastReplyDate") ?? thread.CreateDate;
+                        <li class="recent-list__item">
+                            <a class="recent-list__link" href="@thread.Url()">@tTitle</a>
+                            <span class="recent-list__meta">by @tAuthor &middot;
+                                <time datetime="@tDate.ToString("yyyy-MM-dd")">
+                                    @tDate.ToString("MMM d")
+                                </time>
+                            </span>
+                        </li>
+                    }
+                </ul>
+            }
+        </div>
+    </aside>
+
+    <footer class="forum-footer">
+        <div class="container">
+            <p>&copy; @DateTime.UtcNow.Year @forumName</p>
+        </div>
+    </footer>
+
+</body>
+</html>

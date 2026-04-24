@@ -1,0 +1,360 @@
+# UmbracoCms.Themes.Base – Umbraco Schema
+# Version: 1.0.0
+# Plugin: SplatDev.Umbraco.Plugins.Yaml2Schema
+# Foundation theme schema – required by all other UmbracoCms themes.
+
+# ─────────────────────────────────────────────
+# DATA TYPES
+# ─────────────────────────────────────────────
+dataTypes:
+
+  # ── Text ──────────────────────────────────
+  - alias: textString
+    name: Text String
+    editorUiAlias: Umbraco.TextBox
+    config:
+      maxLength: 512
+
+  - alias: textStringShort
+    name: Text String (Short)
+    editorUiAlias: Umbraco.TextBox
+    config:
+      maxLength: 160
+
+  - alias: textArea
+    name: Text Area
+    editorUiAlias: Umbraco.TextArea
+    config:
+      maxChars: 2000
+
+  - alias: richTextEditor
+    name: Rich Text Editor
+    editorUiAlias: Umbraco.RichText
+    config:
+      editor:
+        toolbar:
+          - bold
+          - italic
+          - underline
+          - alignleft
+          - aligncenter
+          - alignright
+          - bullist
+          - numlist
+          - outdent
+          - indent
+          - link
+          - image
+          - code
+          - styleselect
+          - formatselect
+
+  # ── Media ─────────────────────────────────
+  - alias: imagePicker
+    name: Image Picker
+    editorUiAlias: Umbraco.MediaPicker3
+    config:
+      multiple: false
+      onlyImages: true
+
+  - alias: multiImagePicker
+    name: Multi Image Picker
+    editorUiAlias: Umbraco.MediaPicker3
+    config:
+      multiple: true
+      onlyImages: true
+
+  # ── Toggle / Boolean ──────────────────────
+  - alias: toggle
+    name: Toggle
+    editorUiAlias: Umbraco.TrueFalse
+
+  # ── URL / Links ───────────────────────────
+  - alias: urlPicker
+    name: URL Picker
+    editorUiAlias: Umbraco.MultiUrlPicker
+    config:
+      maxNumberOfItems: 1
+
+  - alias: multiUrlPicker
+    name: Multi URL Picker
+    editorUiAlias: Umbraco.MultiUrlPicker
+    config:
+      maxNumberOfItems: 10
+
+  # ── Color ─────────────────────────────────
+  - alias: colorPicker
+    name: Color Picker
+    editorUiAlias: Umbraco.ColorPicker
+    config:
+      useLabel: true
+      items:
+        - value: "#1a1a2e"
+          label: "Primary Dark"
+        - value: "#16213e"
+          label: "Primary"
+        - value: "#0f3460"
+          label: "Primary Light"
+        - value: "#e94560"
+          label: "Accent"
+        - value: "#ffffff"
+          label: "White"
+        - value: "#f8f9fa"
+          label: "Off White"
+        - value: "#333333"
+          label: "Dark"
+        - value: "#666666"
+          label: "Medium"
+        - value: "#999999"
+          label: "Light"
+
+  # ── Block Lists ───────────────────────────
+  - alias: navItemBlockList
+    name: Navigation Items Block List
+    editorUiAlias: Umbraco.BlockList
+    valueType: NTEXT
+    config:
+      blocks:
+        - contentElementTypeAlias: navItemElement
+
+  - alias: footerColumnBlockList
+    name: Footer Columns Block List
+    editorUiAlias: Umbraco.BlockList
+    valueType: NTEXT
+    config:
+      blocks:
+        - contentElementTypeAlias: footerColumnElement
+
+# ─────────────────────────────────────────────
+# DOCUMENT TYPES
+# ─────────────────────────────────────────────
+documentTypes:
+
+  # ── Element Types ─────────────────────────
+
+  - alias: navItemElement
+    name: Navigation Item
+    icon: icon-navigation
+    isElement: true
+    tabs:
+      - name: Content
+        properties:
+          - alias: label
+            name: Label
+            dataType: textString
+            required: true
+            description: "Display label for the navigation item"
+          - alias: url
+            name: URL
+            dataType: urlPicker
+            required: true
+            description: "Target URL for the navigation item"
+          - alias: openInNewTab
+            name: Open in New Tab
+            dataType: toggle
+            description: "If enabled, the link opens in a new browser tab"
+
+  - alias: footerColumnElement
+    name: Footer Column
+    icon: icon-layout
+    isElement: true
+    tabs:
+      - name: Content
+        properties:
+          - alias: heading
+            name: Heading
+            dataType: textString
+            required: true
+            description: "Column heading displayed in the footer"
+          - alias: links
+            name: Links
+            dataType: multiUrlPicker
+            description: "List of links shown under this footer column"
+
+  # ── Base Page (abstract parent for all pages) ─
+  - alias: basePage
+    name: Base Page
+    icon: icon-document
+    allowAsRoot: false
+    allowedChildTypes: []
+    update: true
+    tabs:
+      - name: Content
+        properties:
+          - alias: title
+            name: Title
+            dataType: textString
+            required: true
+            description: "Main page title displayed in the content area"
+          - alias: metaTitle
+            name: Meta Title
+            dataType: textStringShort
+            description: "Overrides the page title in search results. Leave blank to use the page name."
+          - alias: metaDescription
+            name: Meta Description
+            dataType: textStringShort
+            description: "Short description for search engines (max 160 characters)"
+          - alias: heroImage
+            name: Hero Image
+            dataType: imagePicker
+            description: "Featured image shown at the top of the page"
+      - name: Navigation
+        properties:
+          - alias: hideFromMenu
+            name: Hide from Menu
+            dataType: toggle
+            description: "If enabled, this page will not appear in navigation menus"
+          - alias: menuTitle
+            name: Menu Title
+            dataType: textString
+            description: "Override label shown in menus. Leave blank to use the page name."
+      - name: SEO
+        properties:
+          - alias: canonical
+            name: Canonical URL
+            dataType: textString
+            description: "Specify a canonical URL to avoid duplicate content issues"
+          - alias: noIndex
+            name: No Index
+            dataType: toggle
+            description: "If enabled, search engines will not index this page"
+
+  # ── Site Root ─────────────────────────────
+  - alias: siteRoot
+    name: Site Root
+    icon: icon-home
+    allowAsRoot: true
+    allowedChildTypes:
+      - homePage
+      - standardPage
+    update: true
+    allowedTemplates:
+      - home
+    defaultTemplate: home
+    tabs:
+      - name: Site Settings
+        properties:
+          - alias: siteName
+            name: Site Name
+            dataType: textString
+            required: true
+            description: "The name of the website, used throughout the site"
+          - alias: siteTagline
+            name: Tagline
+            dataType: textString
+            description: "Short tagline or slogan shown in the browser tab and header"
+          - alias: siteLogo
+            name: Logo
+            dataType: imagePicker
+            description: "Site logo displayed in the header"
+          - alias: siteEmail
+            name: Contact Email
+            dataType: textString
+            description: "Primary contact email address"
+          - alias: copyright
+            name: Copyright Text
+            dataType: textString
+            description: "Copyright text shown in the footer (e.g. © 2026 My Company)"
+      - name: Social
+        properties:
+          - alias: linkedIn
+            name: LinkedIn URL
+            dataType: urlPicker
+            description: "Link to the LinkedIn profile or company page"
+          - alias: twitter
+            name: Twitter / X URL
+            dataType: urlPicker
+            description: "Link to the Twitter/X profile"
+          - alias: facebook
+            name: Facebook URL
+            dataType: urlPicker
+            description: "Link to the Facebook page"
+          - alias: instagram
+            name: Instagram URL
+            dataType: urlPicker
+            description: "Link to the Instagram profile"
+      - name: Navigation
+        properties:
+          - alias: headerCta
+            name: Header CTA
+            dataType: urlPicker
+            description: "Primary call-to-action button displayed in the header navigation"
+
+  # ── Home Page ─────────────────────────────
+  - alias: homePage
+    name: Home Page
+    icon: icon-home
+    allowAsRoot: false
+    allowedChildTypes:
+      - standardPage
+    update: true
+    allowedTemplates:
+      - home
+    defaultTemplate: home
+    compositions:
+      - basePage
+    tabs:
+      - name: Hero
+        properties:
+          - alias: introText
+            name: Intro Text
+            dataType: textArea
+            description: "Introductory paragraph displayed beneath the hero title"
+          - alias: featuredImage
+            name: Featured Image
+            dataType: imagePicker
+            description: "Large feature image shown in the hero section"
+          - alias: ctaTitle
+            name: CTA Title
+            dataType: textString
+            description: "Headline text for the call-to-action section"
+          - alias: ctaText
+            name: CTA Text
+            dataType: textArea
+            description: "Supporting text for the call-to-action"
+          - alias: ctaUrl
+            name: CTA URL
+            dataType: urlPicker
+            description: "URL for the call-to-action button"
+
+  # ── Standard Page ─────────────────────────
+  - alias: standardPage
+    name: Standard Page
+    icon: icon-document
+    allowAsRoot: false
+    allowedChildTypes:
+      - standardPage
+    update: true
+    allowedTemplates:
+      - standardPage
+    defaultTemplate: standardPage
+    compositions:
+      - basePage
+    tabs:
+      - name: Content
+        properties:
+          - alias: bodyContent
+            name: Body Content
+            dataType: richTextEditor
+            description: "Main content area for the page"
+          - alias: sidebar
+            name: Sidebar Content
+            dataType: richTextEditor
+            description: "Optional sidebar content displayed beside the main content"
+
+# ─────────────────────────────────────────────
+# TEMPLATES
+# ─────────────────────────────────────────────
+templates:
+
+  - alias: home
+    name: Home
+    filePath: ~/Views/Home.cshtml
+
+  - alias: standardPage
+    name: Standard Page
+    filePath: ~/Views/StandardPage.cshtml
+
+  - alias: notFoundPage
+    name: Not Found Page
+    filePath: ~/Views/NotFoundPage.cshtml

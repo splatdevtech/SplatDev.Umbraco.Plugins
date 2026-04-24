@@ -1,0 +1,12 @@
+﻿@using Umbraco.Cms.Web.Common.PublishedModels
+@using Umbraco.Cms.Web.Common
+@using Umbraco.Forms.Web
+@using Umbraco.Forms.Web.Extensions
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<Home>
+@{
+    Layout = "layout.cshtml";
+}
+@if (Model.Form is not null)
+{
+    @await Component.InvokeAsync("RenderForm", new { formId = @Model.Form, theme = @Model.Theme })
+}

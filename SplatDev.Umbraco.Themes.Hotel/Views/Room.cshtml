@@ -1,0 +1,207 @@
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@{
+    Layout = null;
+    var root = Model.Root();
+    var hotelName = root?.Value<string>("hotelName") ?? "Hotel";
+    var globalBookingUrl = root?.Value<Umbraco.Cms.Core.Models.Link>("bookingUrl");
+
+    var roomName = Model.Value<string>("roomName") ?? Model.Name;
+    var roomCode = Model.Value<string>("roomCode") ?? string.Empty;
+    var bedType = Model.Value<string>("bedType") ?? string.Empty;
+    var maxOccupancy = Model.Value<int?>("maxOccupancy");
+    var squareMeters = Model.Value<decimal?>("squareMeters");
+    var view = Model.Value<string>("view") ?? string.Empty;
+    var shortDesc = Model.Value<string>("shortDescription") ?? string.Empty;
+    var fullDesc = Model.Value<IHtmlContent>("fullDescription");
+    var featuredImage = Model.Value<Umbraco.Cms.Core.Models.PublishedContent.IPublishedContent>("featuredImage");
+    var pricePerNight = Model.Value<decimal?>("pricePerNight");
+    var currency = Model.Value<string>("currency") ?? "USD";
+    var breakfastIncluded = Model.Value<bool>("breakfastIncluded");
+    var taxesIncluded = Model.Value<bool>("taxesIncluded");
+    var isAvailable = Model.Value<bool>("available");
+    var bookingUrl = Model.Value<Umbraco.Cms.Core.Models.Link>("bookingUrl") ?? globalBookingUrl;
+
+    var roomsListing = Model.Parent;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@roomName – @hotelName</title>
+    @if (!string.IsNullOrWhiteSpace(shortDesc))
+    {
+        <meta name="description" content="@shortDesc" />
+    }
+    <link rel="stylesheet" href="/css/hotel-theme.css" />
+</head>
+<body class="hotel-room-detail">
+
+    <header class="hotel-header hotel-header--solid" id="hotel-header">
+        <div class="hotel-container hotel-header__inner">
+            <a href="/" class="hotel-header__brand"><span class="hotel-header__name">@hotelName</span></a>
+            @if (globalBookingUrl != null)
+            {
+                <a href="@globalBookingUrl.Url" class="hotel-btn hotel-btn--book hotel-header__book">Book Now</a>
+            }
+        </div>
+    </header>
+
+    <main class="hotel-main">
+
+        <!-- Featured Image -->
+        @if (featuredImage != null)
+        {
+            <div class="hotel-room-hero" style="background-image:url('@featuredImage.Url()')">
+                <div class="hotel-room-hero__overlay"></div>
+                <div class="hotel-container hotel-room-hero__content">
+                    <h1 class="hotel-room-hero__name">@roomName</h1>
+                    @if (!string.IsNullOrWhiteSpace(bedType))
+                    {
+                        <p class="hotel-room-hero__type">@bedType Bed</p>
+                    }
+                </div>
+            </div>
+        }
+
+        <div class="hotel-container">
+
+            <!-- Breadcrumb -->
+            <nav class="hotel-breadcrumb" aria-label="Breadcrumb">
+                <a href="/">Home</a>
+                <span aria-hidden="true"> / </span>
+                @if (roomsListing != null)
+                {
+                    <a href="@roomsListing.Url()">Rooms</a>
+                    <span aria-hidden="true"> / </span>
+                }
+                <span aria-current="page">@roomName</span>
+            </nav>
+
+            @if (featuredImage == null)
+            {
+                <h1 class="hotel-room-detail__title">@roomName</h1>
+            }
+
+            <div class="hotel-room-detail__layout">
+
+                <!-- Main Content -->
+                <div class="hotel-room-detail__main">
+
+                    <!-- Specs -->
+                    <div class="hotel-room-specs">
+                        @if (!string.IsNullOrWhiteSpace(bedType))
+                        {
+                            <div class="hotel-room-spec">
+                                <span class="hotel-room-spec__icon">&#127760;</span>
+                                <div>
+                                    <span class="hotel-room-spec__label">Bed Type</span>
+                                    <span class="hotel-room-spec__value">@bedType</span>
+                                </div>
+                            </div>
+                        }
+                        @if (maxOccupancy.HasValue)
+                        {
+                            <div class="hotel-room-spec">
+                                <span class="hotel-room-spec__icon">&#128100;</span>
+                                <div>
+                                    <span class="hotel-room-spec__label">Max Occupancy</span>
+                                    <span class="hotel-room-spec__value">@maxOccupancy guests</span>
+                                </div>
+                            </div>
+                        }
+                        @if (squareMeters.HasValue && squareMeters.Value > 0)
+                        {
+                            <div class="hotel-room-spec">
+                                <span class="hotel-room-spec__icon">&#9632;</span>
+                                <div>
+                                    <span class="hotel-room-spec__label">Room Size</span>
+                                    <span class="hotel-room-spec__value">@squareMeters.Value.ToString("F0") m²</span>
+                                </div>
+                            </div>
+                        }
+                        @if (!string.IsNullOrWhiteSpace(view))
+                        {
+                            <div class="hotel-room-spec">
+                                <span class="hotel-room-spec__icon">&#127758;</span>
+                                <div>
+                                    <span class="hotel-room-spec__label">View</span>
+                                    <span class="hotel-room-spec__value">@view</span>
+                                </div>
+                            </div>
+                        }
+                    </div>
+
+                    <!-- Description -->
+                    @if (fullDesc != null)
+                    {
+                        <div class="hotel-room-detail__description hotel-prose">
+                            @fullDesc
+                        </div>
+                    }
+                    else if (!string.IsNullOrWhiteSpace(shortDesc))
+                    {
+                        <p class="hotel-room-detail__short-desc">@shortDesc</p>
+                    }
+
+                </div>
+
+                <!-- Sidebar: Booking Box -->
+                <aside class="hotel-room-sidebar">
+                    <div class="hotel-booking-box">
+                        @if (pricePerNight.HasValue && pricePerNight.Value > 0)
+                        {
+                            <div class="hotel-booking-box__price">
+                                <span class="hotel-booking-box__from">from</span>
+                                <span class="hotel-booking-box__amount">@currency @pricePerNight.Value.ToString("N0")</span>
+                                <span class="hotel-booking-box__per">/night</span>
+                            </div>
+                        }
+                        <ul class="hotel-booking-box__inclusions">
+                            @if (breakfastIncluded) { <li class="hotel-inclusion hotel-inclusion--yes">Breakfast included</li> }
+                            @if (taxesIncluded) { <li class="hotel-inclusion hotel-inclusion--yes">Taxes &amp; fees included</li> }
+                        </ul>
+                        @if (isAvailable && bookingUrl != null)
+                        {
+                            <a href="@bookingUrl.Url" class="hotel-btn hotel-btn--primary hotel-btn--full hotel-booking-box__cta" target="@(bookingUrl.Target ?? "_self")">
+                                Book This Room
+                            </a>
+                        }
+                        else if (!isAvailable)
+                        {
+                            <div class="hotel-booking-box__unavailable">Currently Unavailable</div>
+                            @if (globalBookingUrl != null)
+                            {
+                                <a href="@globalBookingUrl.Url" class="hotel-btn hotel-btn--outline hotel-btn--full" style="margin-top:.75rem">Check Other Dates</a>
+                            }
+                        }
+                        @if (!string.IsNullOrWhiteSpace(roomCode))
+                        {
+                            <p class="hotel-booking-box__code">Room Code: @roomCode</p>
+                        }
+                    </div>
+                </aside>
+
+            </div>
+
+            <!-- Back to listing -->
+            @if (roomsListing != null)
+            {
+                <div class="hotel-back-link">
+                    <a href="@roomsListing.Url()" class="hotel-btn hotel-btn--outline">&larr; All Rooms</a>
+                </div>
+            }
+        </div>
+    </main>
+
+    <footer class="hotel-footer">
+        <div class="hotel-container hotel-footer__inner">
+            <div class="hotel-footer__brand"><span class="hotel-footer__name">@hotelName</span></div>
+        </div>
+        <div class="hotel-footer__bottom">
+            <div class="hotel-container"><p>&copy; @DateTime.Now.Year @hotelName. All rights reserved.</p></div>
+        </div>
+    </footer>
+
+</body>
+</html>

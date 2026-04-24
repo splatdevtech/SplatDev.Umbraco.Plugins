@@ -1,0 +1,95 @@
+@using Umbraco.Cms.Core.Models.PublishedContent
+@using Umbraco.Extensions
+@model IPublishedContent
+
+@{
+    // Walk up to the site root to read shared settings.
+    var siteRoot = Model?.Root();
+    var siteName = siteRoot?.Value<string>("siteName") ?? "My Site";
+    var siteLogo = siteRoot?.Value<IPublishedContent>("siteLogo");
+    var headerCta = siteRoot?.Value<Umbraco.Cms.Core.Models.Link>("headerCta");
+
+    // Build a flat top-level navigation from the site root's children.
+    var topNavItems = siteRoot?
+        .Children()
+        .Where(c => c.IsVisible() && c.Value<bool>("hideFromMenu") == false)
+        .ToList()
+        ?? new System.Collections.Generic.List<IPublishedContent>();
+}
+
+<header class="site-header" role="banner">
+    <nav class="site-nav container" aria-label="Main navigation">
+
+        <!-- Logo / Site name -->
+        <a class="site-nav__logo" href="/" aria-label="@siteName – Home">
+            @if (siteLogo != null)
+            {
+                <img src="@siteLogo.Url()"
+                     alt="@siteName logo"
+                     width="160"
+                     height="48"
+                     loading="eager" />
+            }
+            else
+            {
+                <span class="site-nav__logo-text">@siteName</span>
+            }
+        </a>
+
+        <!-- Hamburger toggle (screen-reader accessible) -->
+        <button class="site-nav__toggle"
+                id="nav-toggle"
+                aria-controls="primary-menu"
+                aria-expanded="false"
+                type="button">
+            <span class="site-nav__toggle-bar" aria-hidden="true"></span>
+            <span class="site-nav__toggle-bar" aria-hidden="true"></span>
+            <span class="site-nav__toggle-bar" aria-hidden="true"></span>
+            <span class="sr-only">Toggle navigation</span>
+        </button>
+
+        <!-- Primary menu -->
+        <ul class="site-nav__menu"
+            id="primary-menu"
+            role="menubar"
+            aria-label="Primary menu">
+            @foreach (var item in topNavItems)
+            {
+                var isActive = Model?.Id == item.Id || (Model?.Path.Contains("," + item.Id + ",") ?? false);
+                var menuLabel = item.HasValue("menuTitle") ? item.Value<string>("menuTitle") : item.Name;
+                <li class="site-nav__item" role="none">
+                    <a class="site-nav__link@(isActive ? " is-active" : "")"
+                       href="@item.Url()"
+                       role="menuitem"
+                       @(isActive ? "aria-current=\"page\"" : "")>
+                        @menuLabel
+                    </a>
+                </li>
+            }
+        </ul>
+
+        <!-- Header CTA button -->
+        @if (headerCta != null && !string.IsNullOrWhiteSpace(headerCta.Url))
+        {
+            <a class="btn btn--primary site-nav__cta"
+               href="@headerCta.Url"
+               @(headerCta.Target == "_blank" ? "target=\"_blank\" rel=\"noopener noreferrer\"" : "")>
+                @headerCta.Name
+            </a>
+        }
+
+    </nav>
+</header>
+
+<script>
+    (function () {
+        var toggle = document.getElementById('nav-toggle');
+        var menu = document.getElementById('primary-menu');
+        if (!toggle || !menu) { return; }
+        toggle.addEventListener('click', function () {
+            var expanded = toggle.getAttribute('aria-expanded') === 'true';
+            toggle.setAttribute('aria-expanded', String(!expanded));
+            menu.classList.toggle('is-open', !expanded);
+        });
+    }());
+</script>

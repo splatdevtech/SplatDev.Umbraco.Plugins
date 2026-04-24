@@ -1,0 +1,50 @@
+@using Umbraco.Cms.Web.Common.PublishedModels
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    @{
+        var pageTitle = ViewBag.Title as string ?? Model?.Name ?? "Page";
+        var metaTitle = Model?.HasValue("metaTitle") == true ? Model.Value<string>("metaTitle") : null;
+        var metaDescription = Model?.HasValue("metaDescription") == true ? Model.Value<string>("metaDescription") : null;
+        var noIndex = Model?.HasValue("noIndex") == true && Model.Value<bool>("noIndex");
+        var canonical = Model?.HasValue("canonical") == true ? Model.Value<string>("canonical") : null;
+        var displayTitle = !string.IsNullOrWhiteSpace(metaTitle) ? metaTitle : pageTitle;
+    }
+
+    <title>@displayTitle</title>
+
+    @if (!string.IsNullOrWhiteSpace(metaDescription))
+    {
+        <meta name="description" content="@metaDescription" />
+    }
+
+    @if (noIndex)
+    {
+        <meta name="robots" content="noindex, nofollow" />
+    }
+
+    @if (!string.IsNullOrWhiteSpace(canonical))
+    {
+        <link rel="canonical" href="@canonical" />
+    }
+
+    <link rel="stylesheet" href="/css/themes/base/base-theme.min.css" />
+
+    @RenderSection("head", required: false)
+</head>
+<body>
+    @RenderSection("header", required: false)
+
+    <main id="main-content" tabindex="-1">
+        @RenderBody()
+    </main>
+
+    @RenderSection("footer", required: false)
+
+    @RenderSection("scripts", required: false)
+</body>
+</html>

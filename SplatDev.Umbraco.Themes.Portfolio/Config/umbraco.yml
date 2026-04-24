@@ -1,0 +1,774 @@
+# Portfolio Theme – Umbraco Schema
+# Package: UmbracoCms.Themes.Portfolio v1.0.0
+# Plugin: SplatDev.Umbraco.Plugins.Yaml2Schema
+
+# ─────────────────────────────────────────────
+# DATA TYPES
+# ─────────────────────────────────────────────
+dataTypes:
+
+  # ── Text ──────────────────────────────────
+  - alias: textString
+    name: Text String
+    editorUiAlias: Umbraco.TextBox
+    config:
+      maxLength: 512
+
+  - alias: textStringShort
+    name: Text String (Short)
+    editorUiAlias: Umbraco.TextBox
+    config:
+      maxLength: 160
+
+  - alias: textArea
+    name: Text Area
+    editorUiAlias: Umbraco.TextArea
+    config:
+      maxChars: 2000
+
+  - alias: richTextEditor
+    name: Rich Text Editor
+    editorUiAlias: Umbraco.TinyMCE
+
+  # ── Media ─────────────────────────────────
+  - alias: imagePicker
+    name: Image Picker
+    editorUiAlias: Umbraco.MediaPicker3
+    config:
+      multiple: false
+      onlyImages: true
+
+  - alias: multiImagePicker
+    name: Multi Image Picker
+    editorUiAlias: Umbraco.MediaPicker3
+    config:
+      multiple: true
+      onlyImages: true
+
+  # ── Pickers ───────────────────────────────
+  - alias: urlPicker
+    name: URL Picker
+    editorUiAlias: Umbraco.MultiUrlPicker
+    config:
+      maxNumberOfItems: 1
+
+  - alias: multiUrlPicker
+    name: Multi URL Picker
+    editorUiAlias: Umbraco.MultiUrlPicker
+
+  # ── Boolean ───────────────────────────────
+  - alias: toggle
+    name: Toggle
+    editorUiAlias: Umbraco.TrueFalse
+
+  # ── Numeric ───────────────────────────────
+  - alias: integerField
+    name: Integer
+    editorUiAlias: Umbraco.Integer
+
+  # ── Dropdowns ─────────────────────────────
+  - alias: skillLevel
+    name: Skill Level (1-5)
+    editorUiAlias: Umbraco.Integer
+    config:
+      min: 1
+      max: 5
+
+  - alias: projectStatus
+    name: Project Status
+    editorUiAlias: Umbraco.DropDown.Flexible
+    config:
+      multiple: false
+      items:
+        - In Progress
+        - Completed
+        - On Hold
+        - Concept
+
+  - alias: projectCategory
+    name: Project Category
+    editorUiAlias: Umbraco.DropDown.Flexible
+    config:
+      multiple: false
+      items:
+        - Web Design
+        - UI/UX
+        - Branding
+        - Mobile
+        - Print
+        - Photography
+        - Video
+        - 3D
+        - Illustration
+
+  - alias: mediaType
+    name: Media Type
+    editorUiAlias: Umbraco.DropDown.Flexible
+    config:
+      multiple: false
+      items:
+        - Image
+        - Video
+        - Prototype
+
+  - alias: heroStyle
+    name: Hero Style
+    editorUiAlias: Umbraco.DropDown.Flexible
+    config:
+      multiple: false
+      items:
+        - Minimal
+        - Bold
+        - Creative
+
+  # ── Block Lists ───────────────────────────
+  - alias: skillsBlockList
+    name: Skills Block List
+    editorUiAlias: Umbraco.BlockList
+    valueType: NTEXT
+    config:
+      blocks:
+        - contentElementTypeAlias: skillElement
+
+  - alias: technologiesBlockList
+    name: Technologies Block List
+    editorUiAlias: Umbraco.BlockList
+    valueType: NTEXT
+    config:
+      blocks:
+        - contentElementTypeAlias: technologyElement
+
+  - alias: testimonialsBlockList
+    name: Testimonials Block List
+    editorUiAlias: Umbraco.BlockList
+    valueType: NTEXT
+    config:
+      blocks:
+        - contentElementTypeAlias: testimonialElement
+
+  - alias: servicesBlockList
+    name: Services Block List
+    editorUiAlias: Umbraco.BlockList
+    valueType: NTEXT
+    config:
+      blocks:
+        - contentElementTypeAlias: serviceItem
+
+  - alias: processBlockList
+    name: Process Block List
+    editorUiAlias: Umbraco.BlockList
+    valueType: NTEXT
+    config:
+      blocks:
+        - contentElementTypeAlias: processStep
+
+  - alias: awardsBlockList
+    name: Awards Block List
+    editorUiAlias: Umbraco.BlockList
+    valueType: NTEXT
+    config:
+      blocks:
+        - contentElementTypeAlias: awardElement
+
+  - alias: experienceBlockList
+    name: Experience Block List
+    editorUiAlias: Umbraco.BlockList
+    valueType: NTEXT
+    config:
+      blocks:
+        - contentElementTypeAlias: experienceElement
+
+  - alias: educationBlockList
+    name: Education Block List
+    editorUiAlias: Umbraco.BlockList
+    valueType: NTEXT
+    config:
+      blocks:
+        - contentElementTypeAlias: educationElement
+
+  - alias: projectMediaBlockList
+    name: Project Media Block List
+    editorUiAlias: Umbraco.BlockList
+    valueType: NTEXT
+    config:
+      blocks:
+        - contentElementTypeAlias: projectMediaElement
+
+# ─────────────────────────────────────────────
+# DOCUMENT TYPES
+# ─────────────────────────────────────────────
+documentTypes:
+
+  # ── Element Types ─────────────────────────
+  - alias: skillElement
+    name: Skill
+    icon: icon-star
+    isElement: true
+    tabs:
+      - name: Content
+        properties:
+          - alias: skillName
+            name: Skill Name
+            dataType: textStringShort
+          - alias: level
+            name: Level (1–5)
+            dataType: skillLevel
+          - alias: category
+            name: Category
+            dataType: textStringShort
+            description: "e.g. Frontend, Backend, Design"
+
+  - alias: technologyElement
+    name: Technology
+    icon: icon-settings
+    isElement: true
+    tabs:
+      - name: Content
+        properties:
+          - alias: techName
+            name: Technology Name
+            dataType: textStringShort
+          - alias: techIcon
+            name: Icon
+            dataType: imagePicker
+          - alias: proficiency
+            name: Proficiency (1–5)
+            dataType: integerField
+
+  - alias: testimonialElement
+    name: Testimonial
+    icon: icon-chat
+    isElement: true
+    tabs:
+      - name: Content
+        properties:
+          - alias: quote
+            name: Quote
+            dataType: textArea
+          - alias: clientName
+            name: Client Name
+            dataType: textStringShort
+          - alias: clientTitle
+            name: Client Title
+            dataType: textStringShort
+          - alias: clientCompany
+            name: Company
+            dataType: textStringShort
+          - alias: clientPhoto
+            name: Client Photo
+            dataType: imagePicker
+
+  - alias: serviceItem
+    name: Service Item
+    icon: icon-document
+    isElement: true
+    tabs:
+      - name: Content
+        properties:
+          - alias: title
+            name: Title
+            dataType: textStringShort
+          - alias: description
+            name: Description
+            dataType: textArea
+          - alias: price
+            name: Starting Price
+            dataType: textStringShort
+            description: "e.g. From $500"
+          - alias: icon
+            name: Icon CSS Class / Emoji
+            dataType: textStringShort
+
+  - alias: processStep
+    name: Process Step
+    icon: icon-item
+    isElement: true
+    tabs:
+      - name: Content
+        properties:
+          - alias: stepNumber
+            name: Step Number
+            dataType: integerField
+          - alias: title
+            name: Title
+            dataType: textStringShort
+          - alias: description
+            name: Description
+            dataType: textArea
+          - alias: icon
+            name: Icon
+            dataType: textStringShort
+
+  - alias: awardElement
+    name: Award
+    icon: icon-medal
+    isElement: true
+    tabs:
+      - name: Content
+        properties:
+          - alias: awardName
+            name: Award Name
+            dataType: textStringShort
+          - alias: organization
+            name: Organization
+            dataType: textStringShort
+          - alias: year
+            name: Year
+            dataType: integerField
+          - alias: description
+            name: Description
+            dataType: textArea
+
+  - alias: experienceElement
+    name: Experience
+    icon: icon-building
+    isElement: true
+    tabs:
+      - name: Content
+        properties:
+          - alias: jobTitle
+            name: Job Title
+            dataType: textStringShort
+          - alias: company
+            name: Company
+            dataType: textStringShort
+          - alias: period
+            name: Period
+            dataType: textStringShort
+            description: "e.g. Jan 2022 – Present"
+          - alias: description
+            name: Description
+            dataType: textArea
+          - alias: technologies
+            name: Technologies Used
+            dataType: textStringShort
+            description: "Comma-separated: React, TypeScript, Node.js"
+
+  - alias: educationElement
+    name: Education
+    icon: icon-graduation
+    isElement: true
+    tabs:
+      - name: Content
+        properties:
+          - alias: degree
+            name: Degree / Qualification
+            dataType: textStringShort
+          - alias: institution
+            name: Institution
+            dataType: textStringShort
+          - alias: year
+            name: Year
+            dataType: integerField
+          - alias: description
+            name: Description
+            dataType: textArea
+
+  - alias: projectMediaElement
+    name: Project Media
+    icon: icon-picture
+    isElement: true
+    tabs:
+      - name: Content
+        properties:
+          - alias: mediaFile
+            name: Media File
+            dataType: imagePicker
+          - alias: mediaType
+            name: Media Type
+            dataType: mediaType
+          - alias: caption
+            name: Caption
+            dataType: textStringShort
+
+  # ── Base Page ─────────────────────────────
+  - alias: basePage
+    name: Base Page
+    icon: icon-document
+    allowAsRoot: false
+    allowedChildTypes: []
+    update: true
+    tabs:
+      - name: SEO
+        properties:
+          - alias: metaTitle
+            name: Meta Title
+            dataType: textStringShort
+          - alias: metaDescription
+            name: Meta Description
+            dataType: textStringShort
+          - alias: ogImage
+            name: OG Image
+            dataType: imagePicker
+          - alias: hideFromNavigation
+            name: Hide from Navigation
+            dataType: toggle
+
+  # ── Portfolio Root ────────────────────────
+  - alias: portfolioRoot
+    name: Portfolio Root
+    icon: icon-home
+    allowAsRoot: true
+    allowedChildTypes:
+      - portfolioHome
+      - projectsListing
+      - aboutPage
+      - servicesPage
+      - contactPage
+    tabs:
+      - name: Profile
+        properties:
+          - alias: yourName
+            name: Your Name
+            dataType: textString
+            required: true
+          - alias: title
+            name: Professional Title
+            dataType: textStringShort
+            description: "e.g. Full-Stack Developer & UI Designer"
+          - alias: bio
+            name: Bio
+            dataType: richTextEditor
+          - alias: photo
+            name: Photo
+            dataType: imagePicker
+          - alias: resumeUrl
+            name: Resume / CV URL
+            dataType: urlPicker
+          - alias: availableForWork
+            name: Available for Work
+            dataType: toggle
+      - name: Branding
+        properties:
+          - alias: logo
+            name: Logo
+            dataType: imagePicker
+          - alias: favicon
+            name: Favicon
+            dataType: imagePicker
+          - alias: accentColor
+            name: Accent Color
+            dataType: textStringShort
+            description: "Hex color, e.g. #6c63ff"
+      - name: Contact
+        properties:
+          - alias: email
+            name: Email
+            dataType: textStringShort
+          - alias: phone
+            name: Phone
+            dataType: textStringShort
+          - alias: linkedIn
+            name: LinkedIn URL
+            dataType: urlPicker
+          - alias: github
+            name: GitHub URL
+            dataType: urlPicker
+          - alias: twitter
+            name: Twitter / X URL
+            dataType: urlPicker
+          - alias: dribbble
+            name: Dribbble URL
+            dataType: urlPicker
+          - alias: behance
+            name: Behance URL
+            dataType: urlPicker
+
+  # ── Portfolio Home ────────────────────────
+  - alias: portfolioHome
+    name: Portfolio Home
+    icon: icon-home
+    allowedChildTypes: []
+    allowedTemplates:
+      - PortfolioHome
+    defaultTemplate: PortfolioHome
+    compositions:
+      - basePage
+    tabs:
+      - name: Hero
+        properties:
+          - alias: heroHeadline
+            name: Hero Headline
+            dataType: textString
+            required: true
+            description: "Large attention-grabbing headline"
+          - alias: heroSubtext
+            name: Hero Subtext
+            dataType: textArea
+          - alias: heroImage
+            name: Hero Image
+            dataType: imagePicker
+          - alias: ctaText
+            name: CTA Button Text
+            dataType: textStringShort
+          - alias: ctaUrl
+            name: CTA Button URL
+            dataType: urlPicker
+          - alias: heroStyle
+            name: Hero Style
+            dataType: heroStyle
+      - name: About Preview
+        properties:
+          - alias: aboutShort
+            name: About (Short)
+            dataType: textArea
+            description: "Brief intro for the homepage"
+          - alias: aboutPhoto
+            name: About Photo
+            dataType: imagePicker
+          - alias: skills
+            name: Skills Preview
+            dataType: skillsBlockList
+      - name: Work Preview
+        properties:
+          - alias: workHeadline
+            name: Work Section Headline
+            dataType: textStringShort
+          - alias: featuredProjects
+            name: Featured Projects
+            dataType: multiUrlPicker
+            description: "Select 3–6 project pages to feature"
+      - name: Services Preview
+        properties:
+          - alias: servicesTitle
+            name: Services Section Title
+            dataType: textStringShort
+          - alias: services
+            name: Services
+            dataType: servicesBlockList
+      - name: Testimonials
+        properties:
+          - alias: testimonials
+            name: Testimonials
+            dataType: testimonialsBlockList
+
+  # ── Projects Listing ──────────────────────
+  - alias: projectsListing
+    name: Projects Listing
+    icon: icon-folder
+    allowedChildTypes:
+      - project
+    allowedTemplates:
+      - ProjectsListing
+    defaultTemplate: ProjectsListing
+    compositions:
+      - basePage
+    tabs:
+      - name: Content
+        properties:
+          - alias: pageTitle
+            name: Page Title
+            dataType: textString
+          - alias: intro
+            name: Intro Text
+            dataType: textArea
+          - alias: defaultFilter
+            name: Default Filter
+            dataType: projectCategory
+            description: "Category active on load (leave blank for 'All')"
+
+  # ── Project ───────────────────────────────
+  - alias: project
+    name: Project
+    icon: icon-picture
+    allowedChildTypes: []
+    allowedTemplates:
+      - Project
+    defaultTemplate: Project
+    compositions:
+      - basePage
+    tabs:
+      - name: Project Info
+        properties:
+          - alias: projectTitle
+            name: Project Title
+            dataType: textString
+            required: true
+          - alias: client
+            name: Client
+            dataType: textStringShort
+          - alias: year
+            name: Year
+            dataType: integerField
+          - alias: category
+            name: Category
+            dataType: projectCategory
+          - alias: status
+            name: Status
+            dataType: projectStatus
+          - alias: description
+            name: Description
+            dataType: richTextEditor
+          - alias: challenge
+            name: The Challenge
+            dataType: textArea
+          - alias: solution
+            name: The Solution
+            dataType: textArea
+      - name: Media
+        properties:
+          - alias: featuredImage
+            name: Featured Image
+            dataType: imagePicker
+            required: true
+          - alias: gallery
+            name: Gallery
+            dataType: projectMediaBlockList
+      - name: Technical
+        properties:
+          - alias: technologies
+            name: Technologies
+            dataType: technologiesBlockList
+          - alias: liveUrl
+            name: Live URL
+            dataType: urlPicker
+          - alias: sourceUrl
+            name: Source Code URL
+            dataType: urlPicker
+
+  # ── About Page ────────────────────────────
+  - alias: aboutPage
+    name: About Page
+    icon: icon-user
+    allowedChildTypes: []
+    allowedTemplates:
+      - About
+    defaultTemplate: About
+    compositions:
+      - basePage
+    tabs:
+      - name: About
+        properties:
+          - alias: headline
+            name: Headline
+            dataType: textString
+          - alias: bio
+            name: Bio
+            dataType: richTextEditor
+          - alias: photo
+            name: Primary Photo
+            dataType: imagePicker
+          - alias: photos
+            name: Additional Photos
+            dataType: multiImagePicker
+      - name: Skills
+        properties:
+          - alias: skillsTitle
+            name: Skills Section Title
+            dataType: textStringShort
+          - alias: skills
+            name: Skills
+            dataType: skillsBlockList
+      - name: Experience
+        properties:
+          - alias: experienceTitle
+            name: Experience Section Title
+            dataType: textStringShort
+          - alias: experience
+            name: Experience
+            dataType: experienceBlockList
+      - name: Education
+        properties:
+          - alias: educationTitle
+            name: Education Section Title
+            dataType: textStringShort
+          - alias: education
+            name: Education
+            dataType: educationBlockList
+      - name: Awards
+        properties:
+          - alias: awardsTitle
+            name: Awards Section Title
+            dataType: textStringShort
+          - alias: awards
+            name: Awards
+            dataType: awardsBlockList
+      - name: Process
+        properties:
+          - alias: processTitle
+            name: Process Section Title
+            dataType: textStringShort
+          - alias: steps
+            name: Process Steps
+            dataType: processBlockList
+
+  # ── Services Page ─────────────────────────
+  - alias: servicesPage
+    name: Services Page
+    icon: icon-settings
+    allowedChildTypes: []
+    allowedTemplates:
+      - Services
+    defaultTemplate: Services
+    compositions:
+      - basePage
+    tabs:
+      - name: Content
+        properties:
+          - alias: pageTitle
+            name: Page Title
+            dataType: textString
+          - alias: intro
+            name: Intro Text
+            dataType: textArea
+          - alias: services
+            name: Services
+            dataType: servicesBlockList
+
+  # ── Contact Page ──────────────────────────
+  - alias: contactPage
+    name: Contact Page
+    icon: icon-message
+    allowedChildTypes: []
+    allowedTemplates:
+      - Contact
+    defaultTemplate: Contact
+    compositions:
+      - basePage
+    tabs:
+      - name: Content
+        properties:
+          - alias: pageTitle
+            name: Page Title
+            dataType: textString
+          - alias: tagline
+            name: Tagline
+            dataType: textStringShort
+          - alias: email
+            name: Contact Email
+            dataType: textStringShort
+          - alias: availability
+            name: Availability Note
+            dataType: textArea
+            description: "e.g. Currently accepting freelance projects"
+          - alias: formHeadline
+            name: Form Headline
+            dataType: textStringShort
+
+# ─────────────────────────────────────────────
+# TEMPLATES
+# ─────────────────────────────────────────────
+templates:
+  - alias: PortfolioHome
+    name: Portfolio Home
+    filePath: "~/Views/PortfolioHome.cshtml"
+
+  - alias: ProjectsListing
+    name: Projects Listing
+    filePath: "~/Views/ProjectsListing.cshtml"
+
+  - alias: Project
+    name: Project
+    filePath: "~/Views/Project.cshtml"
+
+  - alias: About
+    name: About
+    filePath: "~/Views/About.cshtml"
+
+  - alias: Services
+    name: Services
+    filePath: "~/Views/Services.cshtml"
+
+  - alias: Contact
+    name: Contact
+    filePath: "~/Views/Contact.cshtml"

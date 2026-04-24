@@ -1,0 +1,57 @@
+{
+  "$schema": "../../umbraco-package-schema.json",
+  "name": "OAuth",
+  "version": "1.0.0",
+  "extensions": [
+    {
+      "type": "dashboard",
+      "alias": "SplatDev.OAuth.Dashboard",
+      "name": "OAuth Dashboard",
+      "element": "/App_Plugins/OAuth/dist/oauth-dashboard.element.js",
+      "elementName": "oauth-dashboard",
+      "weight": 100,
+      "meta": {
+        "label": "#oauth_dashboardLabel",
+        "pathname": "oauth"
+      },
+      "conditions": [
+        {
+          "alias": "Umb.Condition.SectionAlias",
+          "match": "Umb.Section.Settings"
+        }
+      ]
+    },
+    {
+      "type": "localization",
+      "alias": "SplatDev.OAuth.Localization.En",
+      "name": "OAuth — English",
+      "meta": {
+        "culture": "en",
+        "localizations": {
+          "section": {
+            "oauth_heading": "OAuth Configuration",
+            "oauth_description": "Configure external login providers (Google, Facebook, X)",
+            "oauth_clientId": "Client ID",
+            "oauth_clientSecret": "Client Secret"
+          }
+        }
+      }
+    },
+    {
+      "type": "localization",
+      "alias": "SplatDev.OAuth.Localization.PtBr",
+      "name": "OAuth — Português (Brasil)",
+      "meta": {
+        "culture": "pt-BR",
+        "localizations": {
+          "section": {
+            "oauth_heading": "Configuração OAuth",
+            "oauth_description": "Configurar provedores de login externos (Google, Facebook, X)",
+            "oauth_clientId": "ID do Cliente",
+            "oauth_clientSecret": "Segredo do Cliente"
+          }
+        }
+      }
+    }
+  ]
+}

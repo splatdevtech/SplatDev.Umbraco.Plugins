@@ -1,0 +1,427 @@
+# UmbracoCms.Themes.Commerce – Umbraco Schema
+# Version: 1.0.0
+# Plugin: SplatDev.Umbraco.Plugins.Yaml2Schema
+
+# ─────────────────────────────────────────────
+# DATA TYPES
+# ─────────────────────────────────────────────
+dataTypes:
+
+  # Text
+  - alias: textString
+    name: Text String
+    editorUiAlias: Umbraco.TextBox
+    config:
+      maxLength: 512
+
+  - alias: textStringShort
+    name: Text String (Short)
+    editorUiAlias: Umbraco.TextBox
+    config:
+      maxLength: 160
+
+  - alias: textArea
+    name: Text Area
+    editorUiAlias: Umbraco.TextArea
+    config:
+      maxChars: 2000
+
+  - alias: richTextEditor
+    name: Rich Text Editor
+    editorUiAlias: Umbraco.TinyMCE
+
+  # Media
+  - alias: imagePicker
+    name: Image Picker
+    editorUiAlias: Umbraco.MediaPicker3
+    config:
+      multiple: false
+      onlyImages: true
+
+  - alias: multiImagePicker
+    name: Multi Image Picker
+    editorUiAlias: Umbraco.MediaPicker3
+    config:
+      multiple: true
+      onlyImages: true
+
+  # Link
+  - alias: urlPicker
+    name: URL Picker
+    editorUiAlias: Umbraco.MultiUrlPicker
+    config:
+      maxNumberOfItems: 1
+
+  # Toggle
+  - alias: toggle
+    name: Toggle
+    editorUiAlias: Umbraco.TrueFalse
+
+  # Numeric
+  - alias: integerField
+    name: Integer
+    editorUiAlias: Umbraco.Integer
+
+  - alias: decimalField
+    name: Decimal
+    editorUiAlias: Umbraco.Decimal
+
+  # Commerce-specific dropdowns
+  - alias: currencyDropdown
+    name: Currency
+    editorUiAlias: Umbraco.DropDown.Flexible
+    config:
+      multiple: false
+      items:
+        - USD
+        - EUR
+        - GBP
+        - BRL
+
+  - alias: stockStatus
+    name: Stock Status
+    editorUiAlias: Umbraco.DropDown.Flexible
+    config:
+      multiple: false
+      items:
+        - In Stock
+        - Out of Stock
+        - Pre-order
+        - Discontinued
+
+  - alias: productLayout
+    name: Product Layout
+    editorUiAlias: Umbraco.DropDown.Flexible
+    config:
+      multiple: false
+      items:
+        - Grid
+        - List
+
+  # Block Lists
+  - alias: productImageBlockList
+    name: Product Image Block List
+    editorUiAlias: Umbraco.BlockList
+    valueType: NTEXT
+    config:
+      blocks:
+        - contentElementTypeAlias: productImageElement
+
+  - alias: productSpecBlockList
+    name: Product Specification Block List
+    editorUiAlias: Umbraco.BlockList
+    valueType: NTEXT
+    config:
+      blocks:
+        - contentElementTypeAlias: productSpecElement
+
+  - alias: shippingOptionBlockList
+    name: Shipping Option Block List
+    editorUiAlias: Umbraco.BlockList
+    valueType: NTEXT
+    config:
+      blocks:
+        - contentElementTypeAlias: shippingOptionElement
+
+# ─────────────────────────────────────────────
+# DOCUMENT TYPES
+# ─────────────────────────────────────────────
+documentTypes:
+
+  # ── Element Types ─────────────────────────
+
+  - alias: productImageElement
+    name: Product Image
+    icon: icon-picture
+    isElement: true
+    tabs:
+      - name: Content
+        properties:
+          - alias: image
+            name: Image
+            dataType: imagePicker
+          - alias: altText
+            name: Alt Text
+            dataType: textStringShort
+
+  - alias: productSpecElement
+    name: Product Specification
+    icon: icon-list
+    isElement: true
+    tabs:
+      - name: Content
+        properties:
+          - alias: specName
+            name: Specification Name
+            dataType: textString
+          - alias: specValue
+            name: Specification Value
+            dataType: textString
+
+  - alias: shippingOptionElement
+    name: Shipping Option
+    icon: icon-shipping
+    isElement: true
+    tabs:
+      - name: Content
+        properties:
+          - alias: name
+            name: Name
+            dataType: textString
+          - alias: price
+            name: Price
+            dataType: decimalField
+          - alias: estimatedDays
+            name: Estimated Days
+            dataType: textStringShort
+
+  # ── Shop Root ─────────────────────────────
+  - alias: shopRoot
+    name: Shop Root
+    icon: icon-shopping-cart
+    allowAsRoot: true
+    allowedChildTypes:
+      - productCategory
+      - shopListing
+      - cartPage
+      - checkoutPage
+    update: true
+    allowedTemplates:
+      - ShopRoot
+    defaultTemplate: ShopRoot
+    tabs:
+      - name: Shop Settings
+        properties:
+          - alias: shopName
+            name: Shop Name
+            dataType: textString
+            required: true
+          - alias: shopTagline
+            name: Tagline
+            dataType: textStringShort
+          - alias: shopLogo
+            name: Shop Logo
+            dataType: imagePicker
+          - alias: currency
+            name: Default Currency
+            dataType: currencyDropdown
+          - alias: taxIncluded
+            name: Tax Included in Prices
+            dataType: toggle
+          - alias: freeShippingThreshold
+            name: Free Shipping Threshold
+            dataType: decimalField
+      - name: SEO
+        properties:
+          - alias: metaTitle
+            name: Meta Title
+            dataType: textStringShort
+          - alias: metaDescription
+            name: Meta Description
+            dataType: textStringShort
+
+  # ── Product Category ──────────────────────
+  - alias: productCategory
+    name: Product Category
+    icon: icon-folder
+    allowAsRoot: false
+    allowedChildTypes:
+      - product
+      - productCategory
+    update: true
+    allowedTemplates:
+      - ProductCategory
+    defaultTemplate: ProductCategory
+    tabs:
+      - name: Content
+        properties:
+          - alias: categoryName
+            name: Category Name
+            dataType: textString
+            required: true
+          - alias: description
+            name: Description
+            dataType: textArea
+          - alias: image
+            name: Category Image
+            dataType: imagePicker
+          - alias: parentCategory
+            name: Parent Category
+            dataType: urlPicker
+      - name: Display
+        properties:
+          - alias: sortOrder
+            name: Sort Order
+            dataType: integerField
+          - alias: featuredProduct
+            name: Featured Product
+            dataType: urlPicker
+
+  # ── Product ───────────────────────────────
+  - alias: product
+    name: Product
+    icon: icon-tag
+    allowAsRoot: false
+    allowedChildTypes: []
+    update: true
+    allowedTemplates:
+      - Product
+    defaultTemplate: Product
+    tabs:
+      - name: Product
+        properties:
+          - alias: productName
+            name: Product Name
+            dataType: textString
+            required: true
+          - alias: sku
+            name: SKU
+            dataType: textStringShort
+            required: true
+          - alias: shortDescription
+            name: Short Description
+            dataType: textArea
+          - alias: fullDescription
+            name: Full Description
+            dataType: richTextEditor
+      - name: Media
+        properties:
+          - alias: featuredImage
+            name: Featured Image
+            dataType: imagePicker
+          - alias: gallery
+            name: Gallery
+            dataType: productImageBlockList
+      - name: Pricing
+        properties:
+          - alias: price
+            name: Price
+            dataType: decimalField
+            required: true
+          - alias: salePrice
+            name: Sale Price
+            dataType: decimalField
+          - alias: currency
+            name: Currency
+            dataType: currencyDropdown
+          - alias: stockStatus
+            name: Stock Status
+            dataType: stockStatus
+          - alias: stockQuantity
+            name: Stock Quantity
+            dataType: integerField
+      - name: Specs
+        properties:
+          - alias: specifications
+            name: Specifications
+            dataType: productSpecBlockList
+      - name: SEO
+        properties:
+          - alias: metaTitle
+            name: Meta Title
+            dataType: textStringShort
+          - alias: metaDescription
+            name: Meta Description
+            dataType: textStringShort
+
+  # ── Cart Page ─────────────────────────────
+  - alias: cartPage
+    name: Cart Page
+    icon: icon-shopping-cart
+    allowAsRoot: false
+    allowedChildTypes: []
+    update: true
+    allowedTemplates:
+      - CartPage
+    defaultTemplate: CartPage
+    tabs:
+      - name: Content
+        properties:
+          - alias: pageTitle
+            name: Page Title
+            dataType: textString
+          - alias: emptyCartMessage
+            name: Empty Cart Message
+            dataType: textArea
+
+  # ── Checkout Page ─────────────────────────
+  - alias: checkoutPage
+    name: Checkout Page
+    icon: icon-credit-card
+    allowAsRoot: false
+    allowedChildTypes: []
+    update: true
+    allowedTemplates:
+      - CheckoutPage
+    defaultTemplate: CheckoutPage
+    tabs:
+      - name: Content
+        properties:
+          - alias: pageTitle
+            name: Page Title
+            dataType: textString
+          - alias: successHeadline
+            name: Success Headline
+            dataType: textString
+          - alias: successMessage
+            name: Success Message
+            dataType: textArea
+
+  # ── Shop Listing ──────────────────────────
+  - alias: shopListing
+    name: Shop Listing
+    icon: icon-list
+    allowAsRoot: false
+    allowedChildTypes: []
+    update: true
+    allowedTemplates:
+      - ShopListing
+    defaultTemplate: ShopListing
+    tabs:
+      - name: Content
+        properties:
+          - alias: pageTitle
+            name: Page Title
+            dataType: textString
+          - alias: intro
+            name: Introduction Text
+            dataType: textArea
+      - name: Display
+        properties:
+          - alias: defaultLayout
+            name: Default Layout
+            dataType: productLayout
+          - alias: productsPerPage
+            name: Products Per Page
+            dataType: integerField
+          - alias: showFilters
+            name: Show Filters
+            dataType: toggle
+
+# ─────────────────────────────────────────────
+# TEMPLATES
+# ─────────────────────────────────────────────
+templates:
+  - alias: ShopRoot
+    name: Shop Root
+    path: ~/Views/ShopRoot.cshtml
+
+  - alias: ProductCategory
+    name: Product Category
+    path: ~/Views/ProductCategory.cshtml
+
+  - alias: Product
+    name: Product
+    path: ~/Views/Product.cshtml
+
+  - alias: CartPage
+    name: Cart Page
+    path: ~/Views/CartPage.cshtml
+
+  - alias: CheckoutPage
+    name: Checkout Page
+    path: ~/Views/CheckoutPage.cshtml
+
+  - alias: ShopListing
+    name: Shop Listing
+    path: ~/Views/ShopListing.cshtml

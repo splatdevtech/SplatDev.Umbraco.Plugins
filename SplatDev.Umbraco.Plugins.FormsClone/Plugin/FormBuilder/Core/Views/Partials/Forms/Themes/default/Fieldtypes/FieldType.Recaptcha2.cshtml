@@ -1,0 +1,36 @@
+@using System.Linq
+@using FormBuilder
+@using FormBuilder.Core
+@using FormBuilder.Core.Configuration
+@using FormBuilder.Core.Models
+@using FormBuilder.Extension.Forms.Core
+@using Microsoft.Extensions.Options
+
+@inject IOptionsSnapshot<Recaptcha2Settings> configuration
+
+@model FieldViewModel
+@{
+    var siteKey = configuration.Value.PublicKey;
+    var theme = "clean";
+    var themeSetting = Model.AdditionalSettings.FirstOrDefault(x => x.Key == "Theme");
+    if (themeSetting.Value != "")
+    {
+        theme = themeSetting.Value;
+    }
+    var size = "normal";
+    var sizeSetting = Model.AdditionalSettings.FirstOrDefault(x => x.Key == "Size");
+    if (sizeSetting.Value != "")
+    {
+        size = sizeSetting.Value;
+    }
+
+    if (!string.IsNullOrEmpty(siteKey))
+    {
+        <script src="https://www.google.com/recaptcha/api.js" async defer type="application/javascript"></script>
+        <div class="g-recaptcha" data-sitekey="@siteKey" data-theme="@theme" data-size="@size"></div>
+    }
+    else
+    {
+        <p class="error">ERROR: ReCaptcha v2 is missing the Site Key. Please update the configuration to include a value at: @(Constants.Configuration.SectionKeys.FieldTypes.Recaptcha2):PublicKey</p>
+    }
+}

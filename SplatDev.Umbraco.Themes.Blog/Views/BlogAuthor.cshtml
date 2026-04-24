@@ -1,0 +1,52 @@
+@using Umbraco.Cms.Web.Common.PublishedModels
+@using Umbraco.Extensions
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@{
+    Layout = "_Layout";
+    var fullName = Model.Value<string>("fullName") ?? Model.Name;
+    var bio = Model.Value<Microsoft.AspNetCore.Html.IHtmlContent>("bio");
+    var photo = Model.Value<Umbraco.Cms.Core.Models.PublishedContent.IPublishedContent>("photo");
+    var email = Model.Value<string>("email");
+    var twitterUrl = Model.Value<Umbraco.Cms.Core.Models.MultiUrlPicker.Link>("twitterUrl");
+    var linkedInUrl = Model.Value<Umbraco.Cms.Core.Models.MultiUrlPicker.Link>("linkedInUrl");
+}
+
+<main class="blog-author container" itemscope itemtype="https://schema.org/Person">
+    <div class="author-profile">
+        @if (photo != null)
+        {
+            <img class="author-profile__photo"
+                 src="@photo.Url()"
+                 alt="@fullName"
+                 width="160" height="160"
+                 loading="lazy"
+                 itemprop="image" />
+        }
+        <div class="author-profile__info">
+            <h1 class="author-profile__name" itemprop="name">@fullName</h1>
+            @if (bio != null)
+            {
+                <div class="author-profile__bio" itemprop="description">@bio</div>
+            }
+            <div class="author-profile__links">
+                @if (!string.IsNullOrWhiteSpace(email))
+                {
+                    <a class="author-profile__link author-profile__link--email"
+                       href="mailto:@email" itemprop="email">@email</a>
+                }
+                @if (twitterUrl != null)
+                {
+                    <a class="author-profile__link author-profile__link--twitter"
+                       href="@twitterUrl.Url" target="_blank" rel="noopener noreferrer"
+                       itemprop="sameAs">Twitter</a>
+                }
+                @if (linkedInUrl != null)
+                {
+                    <a class="author-profile__link author-profile__link--linkedin"
+                       href="@linkedInUrl.Url" target="_blank" rel="noopener noreferrer"
+                       itemprop="sameAs">LinkedIn</a>
+                }
+            </div>
+        </div>
+    </div>
+</main>

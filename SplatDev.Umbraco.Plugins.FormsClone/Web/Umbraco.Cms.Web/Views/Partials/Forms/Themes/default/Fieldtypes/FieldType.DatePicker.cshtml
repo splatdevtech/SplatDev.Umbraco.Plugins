@@ -1,0 +1,40 @@
+@model Umbraco.Forms.Web.Models.FieldViewModel
+@using Umbraco.Forms.Core.Services
+@using Umbraco.Forms.Web
+@using Umbraco.Forms.Core.Extensions
+
+@inject IPlaceholderParsingService PlaceholderParsingService
+
+@{
+    var ariaLabel = Model.GetSettingValue<string>("AriaLabel", string.Empty);
+    if (!string.IsNullOrWhiteSpace(ariaLabel))
+    {
+        ariaLabel = ariaLabel.ParsePlaceHolders(PlaceholderParsingService, false);
+    }
+
+    string val = Model.Values?.LastOrDefault()?.ToString() ?? string.Empty;
+    if (Model.ValueAsObject != null && !Equals(Model.ValueAsObject, string.Empty))
+    {
+        try
+        {
+            DateTime d;
+            d = (DateTime) Model.ValueAsObject;
+            val = d.ToShortDateString();
+        }
+        catch {
+            //ignore
+        }
+    }
+}
+
+<input type="hidden" name="@Model.Name" id="@(Model.Id)_1" class="datepickerfieldshadow" value="@val" data-umb="@Model.Id"  />
+<input type="text"
+       name="@Model.Name"
+       id="@(Model.Id)"
+       class="datepickerfield"
+       autocomplete="off"
+       value="@val"
+       @{if (Model.Mandatory) { <text> data-val="true" data-val-required="@Model.RequiredErrorMessage" </text> }}
+       @{if (string.IsNullOrWhiteSpace(Model.PlaceholderText) == false){<text>placeholder="@Model.PlaceholderText"</text>}}
+       @{if (string.IsNullOrWhiteSpace(ariaLabel) == false){<text>aria-label="@ariaLabel"</text>}}
+       @{if (!string.IsNullOrWhiteSpace(Model.ToolTip)) { <text> aria-describedby="@(Model.Id)_description" </text> } }/>

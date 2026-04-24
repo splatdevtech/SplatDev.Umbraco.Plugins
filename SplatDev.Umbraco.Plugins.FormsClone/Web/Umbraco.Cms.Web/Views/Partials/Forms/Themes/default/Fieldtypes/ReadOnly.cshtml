@@ -1,0 +1,25 @@
+@using Umbraco.Forms.Web
+@using Umbraco.Forms.Web.Models
+@model Umbraco.Forms.Web.Models.FieldViewModel
+
+@string.Join(", ", Model.Values.Select(x => GetDisplayValue(x)))
+
+@functions
+{
+    string GetDisplayValue(object value)
+    {
+        string? stringValue = value.ToString();
+        if (string.IsNullOrWhiteSpace(stringValue))
+        {
+            return string.Empty;
+        }
+
+        if (!Model.PreValues.Any())
+        {
+            return stringValue;
+        }
+
+        PrevalueViewModel? matchingPrevalue = Model.PreValues.FirstOrDefault(x => x.Value == stringValue);
+        return !string.IsNullOrWhiteSpace(matchingPrevalue?.Caption) ? matchingPrevalue.Caption : stringValue;
+    }
+}

@@ -1,0 +1,23 @@
+@using Umbraco.Extensions
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@{
+    Layout = "_Layout";
+    var categoryName = Model.Value<string>("categoryName") ?? Model.Name;
+    var description = Model.Value<string>("description");
+}
+
+<main class="blog-category container">
+    <header class="blog-category__header">
+        <h1 class="blog-category__title">@categoryName</h1>
+        @if (!string.IsNullOrWhiteSpace(description))
+        {
+            <p class="blog-category__description">@description</p>
+        }
+    </header>
+
+    <div class="blog-category__body">
+        <p class="blog-category__info">
+            Showing all posts in <strong>@categoryName</strong>.
+        </p>
+    </div>
+</main>

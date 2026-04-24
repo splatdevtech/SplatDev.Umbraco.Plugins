@@ -1,0 +1,166 @@
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@{
+    Layout = null;
+    var username    = Model.Value<string>("username") ?? Model.Name;
+    var displayName = Model.Value<string>("displayName") ?? username;
+    var bio         = Model.Value<string>("bio") ?? string.Empty;
+    var avatar      = Model.Value<Umbraco.Cms.Core.Models.MediaWithCrops>("avatar");
+    var joinDate    = Model.Value<DateTime?>("joinDate") ?? Model.CreateDate;
+    var badge       = Model.Value<string>("badge") ?? "Member";
+    var isVerified  = Model.Value<bool>("isVerified");
+    var postCount   = Model.Value<int>("postCount");
+    var reputation  = Model.Value<int>("reputation");
+    var lastActive  = Model.Value<DateTime?>("lastActive");
+    var website     = Model.Value<Umbraco.Cms.Core.Models.Link>("website");
+    var github      = Model.Value<string>("github") ?? string.Empty;
+    var twitter     = Model.Value<string>("twitter") ?? string.Empty;
+
+    var forumRoot = Model.AncestorsOrSelf().FirstOrDefault(n => n.ContentType.Alias == "forumRoot");
+    var forumName = forumRoot?.Value<string>("forumName") ?? forumRoot?.Name ?? "Forum";
+
+    var badgeCssClass = badge.ToLower().Replace(" ", "-");
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@displayName | @forumName</title>
+    <link rel="stylesheet" href="/css/forum-theme.css" />
+</head>
+<body class="forum-layout">
+
+    <header class="forum-header">
+        <div class="forum-header__inner container">
+            <a class="forum-header__home" href="@(forumRoot?.Url() ?? "/")">@forumName</a>
+        </div>
+    </header>
+
+    <main class="forum-main container">
+
+        <div class="profile-layout">
+
+            <section class="profile-card card" aria-labelledby="profile-heading">
+                <div class="profile-card__avatar">
+                    @if (avatar != null)
+                    {
+                        <img src="@avatar.MediaUrl()" alt="@displayName avatar" class="avatar avatar--lg" loading="lazy" />
+                    }
+                    else
+                    {
+                        <div class="avatar avatar--lg avatar--placeholder" aria-hidden="true">
+                            @displayName.Substring(0, 1).ToUpper()
+                        </div>
+                    }
+                </div>
+
+                <div class="profile-card__info">
+                    <h1 id="profile-heading" class="profile-card__name">
+                        @displayName
+                        @if (isVerified)
+                        {
+                            <span class="verified-badge" title="Verified member" aria-label="Verified">✓</span>
+                        }
+                    </h1>
+                    <p class="profile-card__username">@@username</p>
+                    <span class="member-badge member-badge--@badgeCssClass">@badge</span>
+                </div>
+
+                @if (!string.IsNullOrWhiteSpace(bio))
+                {
+                    <div class="profile-card__bio">
+                        <p>@bio</p>
+                    </div>
+                }
+
+                <dl class="profile-card__dates">
+                    <dt>Member since</dt>
+                    <dd>
+                        <time datetime="@joinDate.ToString("yyyy-MM-dd")">
+                            @joinDate.ToString("MMMM yyyy")
+                        </time>
+                    </dd>
+                    @if (lastActive.HasValue)
+                    {
+                        <dt>Last active</dt>
+                        <dd>
+                            <time datetime="@lastActive.Value.ToString("yyyy-MM-dd")">
+                                @lastActive.Value.ToString("MMM d, yyyy")
+                            </time>
+                        </dd>
+                    }
+                </dl>
+
+                @if (!string.IsNullOrWhiteSpace(github) || !string.IsNullOrWhiteSpace(twitter) || website != null)
+                {
+                    <div class="profile-card__social">
+                        @if (website != null)
+                        {
+                            <a class="social-link social-link--website"
+                               href="@website.Url"
+                               target="_blank"
+                               rel="noopener noreferrer"
+                               aria-label="Personal website">
+                                🌐 Website
+                            </a>
+                        }
+                        @if (!string.IsNullOrWhiteSpace(github))
+                        {
+                            <a class="social-link social-link--github"
+                               href="https://github.com/@github"
+                               target="_blank"
+                               rel="noopener noreferrer"
+                               aria-label="GitHub profile">
+                                GitHub
+                            </a>
+                        }
+                        @if (!string.IsNullOrWhiteSpace(twitter))
+                        {
+                            <a class="social-link social-link--twitter"
+                               href="https://twitter.com/@twitter"
+                               target="_blank"
+                               rel="noopener noreferrer"
+                               aria-label="Twitter / X profile">
+                                &#64;@twitter
+                            </a>
+                        }
+                    </div>
+                }
+            </section>
+
+            <div class="profile-content">
+
+                <section class="profile-stats card" aria-labelledby="stats-heading">
+                    <h2 id="stats-heading" class="section-title">Stats</h2>
+                    <dl class="stats-grid">
+                        <div class="stats-grid__item">
+                            <dt class="stats-grid__label">Posts</dt>
+                            <dd class="stats-grid__value">@postCount.ToString("N0")</dd>
+                        </div>
+                        <div class="stats-grid__item">
+                            <dt class="stats-grid__label">Reputation</dt>
+                            <dd class="stats-grid__value">@reputation.ToString("N0")</dd>
+                        </div>
+                    </dl>
+                </section>
+
+                <section class="profile-posts card" aria-labelledby="recent-posts-heading">
+                    <h2 id="recent-posts-heading" class="section-title">Recent Posts</h2>
+                    <p class="empty-state empty-state--info">
+                        Recent posts are rendered dynamically from the member service.
+                    </p>
+                </section>
+
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="forum-footer">
+        <div class="container">
+            <p>&copy; @DateTime.UtcNow.Year @forumName</p>
+        </div>
+    </footer>
+
+</body>
+</html>

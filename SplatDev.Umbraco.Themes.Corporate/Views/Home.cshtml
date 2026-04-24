@@ -1,0 +1,357 @@
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@{
+    Layout = null;
+    var root = Model.AncestorOrSelf<Umbraco.Cms.Core.Models.PublishedContent.IPublishedContent>(1)
+               ?? Model;
+    var companyName = root.Value<string>("companyName") ?? "Company";
+    var tagline     = root.Value<string>("tagline");
+    var logo        = root.Value<Umbraco.Cms.Core.Models.PublishedContent.IPublishedContent>("logo");
+    var headerCta   = root.Value<string>("headerCtaText");
+    var headerCtaUrl= root.Value<Umbraco.Cms.Core.Models.PublishedContent.IHtmlEncodedString>("headerCtaUrl");
+
+    var heroHeadline     = Model.Value<string>("heroHeadline") ?? companyName;
+    var heroSubtext      = Model.Value<string>("heroSubtext");
+    var heroImage        = Model.Value<Umbraco.Cms.Core.Models.PublishedContent.IPublishedContent>("heroImage");
+    var heroCtaText      = Model.Value<string>("heroCtaText") ?? "Get Started";
+    var heroCtaUrl       = Model.Value<Umbraco.Cms.Core.Models.PublishedContent.IHtmlEncodedString>("heroCtaUrl");
+    var heroCtaSecText   = Model.Value<string>("heroCtaSecondaryText");
+    var heroCtaSecUrl    = Model.Value<Umbraco.Cms.Core.Models.PublishedContent.IHtmlEncodedString>("heroCtaSecondaryUrl");
+
+    var aboutTitle  = Model.Value<string>("aboutTitle");
+    var aboutText   = Model.Value<string>("aboutText");
+    var aboutImage  = Model.Value<Umbraco.Cms.Core.Models.PublishedContent.IPublishedContent>("aboutImage");
+    var aboutCtaUrl = Model.Value<Umbraco.Cms.Core.Models.PublishedContent.IHtmlEncodedString>("aboutCtaUrl");
+
+    var servicesHeadline = Model.Value<string>("servicesHeadline") ?? "Our Services";
+    var servicesIntro    = Model.Value<string>("servicesIntro");
+
+    var statsHeadline  = Model.Value<string>("statsHeadline");
+    var statsList      = Model.Value<Umbraco.Cms.Core.Models.Blocks.BlockListModel>("statsList");
+
+    var testimonialHeadline = Model.Value<string>("testimonialsHeadline") ?? "What Our Clients Say";
+    var testimonials        = Model.Value<Umbraco.Cms.Core.Models.Blocks.BlockListModel>("testimonialsList");
+
+    var ctaHeadline = Model.Value<string>("ctaHeadline");
+    var ctaText     = Model.Value<string>("ctaText");
+    var ctaBtnText  = Model.Value<string>("ctaButtonText") ?? "Contact Us";
+    var ctaBtnUrl   = Model.Value<Umbraco.Cms.Core.Models.PublishedContent.IHtmlEncodedString>("ctaButtonUrl");
+
+    var metaTitle  = Model.Value<string>("metaTitle") ?? companyName;
+    var metaDesc   = Model.Value<string>("metaDescription") ?? tagline;
+
+    // Services children (from servicesPage child node)
+    var servicesPage = root.Children?.FirstOrDefault(c => c.ContentType.Alias == "servicesPage");
+    var serviceItems = servicesPage?.Value<Umbraco.Cms.Core.Models.Blocks.BlockListModel>("servicesGrid");
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@metaTitle</title>
+    @if (!string.IsNullOrWhiteSpace(metaDesc)) { <meta name="description" content="@metaDesc" /> }
+    <link rel="stylesheet" href="/css/corporate-theme.css" />
+</head>
+<body class="corporate-theme home-page">
+
+    <header class="site-header" role="banner">
+        <div class="container header-inner">
+            <a href="@root.Url()" class="site-logo-link" aria-label="@companyName home">
+                @if (logo != null)
+                {
+                    <img src="@logo.Url()" alt="@companyName" class="site-logo" />
+                }
+                else
+                {
+                    <span class="site-logo-text">@companyName</span>
+                }
+            </a>
+            <nav class="main-nav" aria-label="Main navigation">
+                <ul>
+                    @foreach (var child in root.Children?.Where(c => !c.Value<bool>("hideFromNavigation"))
+                        ?? Enumerable.Empty<Umbraco.Cms.Core.Models.PublishedContent.IPublishedContent>())
+                    {
+                        <li><a href="@child.Url()">@child.Name</a></li>
+                    }
+                </ul>
+            </nav>
+            @if (!string.IsNullOrWhiteSpace(headerCta))
+            {
+                <a href="@(headerCtaUrl?.ToHtmlString() ?? "#contact")" class="btn btn-primary header-cta">@headerCta</a>
+            }
+            <button type="button" class="mobile-menu-toggle" aria-label="Toggle menu" aria-expanded="false">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </header>
+
+    <main id="main-content">
+
+        <!-- HERO -->
+        <section class="hero-section"
+                 @(heroImage != null ? $"style=\"background-image:url('{heroImage.Url()}')\"" : "")
+                 aria-label="Hero">
+            <div class="hero-overlay" aria-hidden="true"></div>
+            <div class="container hero-content">
+                <h1 class="hero-headline">@heroHeadline</h1>
+                @if (!string.IsNullOrWhiteSpace(heroSubtext))
+                {
+                    <p class="hero-subtext">@heroSubtext</p>
+                }
+                <div class="hero-ctas">
+                    @if (!string.IsNullOrWhiteSpace(heroCtaText))
+                    {
+                        <a href="@(heroCtaUrl?.ToHtmlString() ?? "#")" class="btn btn-primary btn-lg">@heroCtaText</a>
+                    }
+                    @if (!string.IsNullOrWhiteSpace(heroCtaSecText))
+                    {
+                        <a href="@(heroCtaSecUrl?.ToHtmlString() ?? "#")" class="btn btn-outline-white btn-lg">@heroCtaSecText</a>
+                    }
+                </div>
+            </div>
+        </section>
+
+        <!-- ABOUT PREVIEW -->
+        @if (!string.IsNullOrWhiteSpace(aboutTitle) || !string.IsNullOrWhiteSpace(aboutText))
+        {
+            <section class="about-preview-section section" aria-label="About us preview">
+                <div class="container about-preview-inner">
+                    @if (aboutImage != null)
+                    {
+                        <div class="about-preview-image-col">
+                            <img src="@aboutImage.Url()" alt="@aboutTitle" class="about-preview-image" loading="lazy" />
+                        </div>
+                    }
+                    <div class="about-preview-text-col">
+                        @if (!string.IsNullOrWhiteSpace(aboutTitle))
+                        {
+                            <h2 class="section-title">@aboutTitle</h2>
+                        }
+                        @if (!string.IsNullOrWhiteSpace(aboutText))
+                        {
+                            <p class="section-text">@aboutText</p>
+                        }
+                        @if (aboutCtaUrl != null)
+                        {
+                            <a href="@aboutCtaUrl.ToHtmlString()" class="btn btn-outline">Learn More &rarr;</a>
+                        }
+                    </div>
+                </div>
+            </section>
+        }
+
+        <!-- SERVICES PREVIEW -->
+        @if (serviceItems != null && serviceItems.Any())
+        {
+            <section class="services-preview-section section section--gray" aria-label="Services">
+                <div class="container">
+                    <div class="section-header text-center">
+                        <h2 class="section-title">@servicesHeadline</h2>
+                        @if (!string.IsNullOrWhiteSpace(servicesIntro))
+                        {
+                            <p class="section-intro">@servicesIntro</p>
+                        }
+                    </div>
+                    <div class="services-preview-grid">
+                        @foreach (var svc in serviceItems.Take(3))
+                        {
+                            var svcName  = svc.Content.Value<string>("serviceName") ?? "Service";
+                            var svcDesc  = svc.Content.Value<string>("shortDescription");
+                            var svcIcon  = svc.Content.Value<string>("icon");
+                            var svcCat   = svc.Content.Value<string>("category");
+                            <div class="service-card">
+                                <div class="service-card-icon" aria-hidden="true">
+                                    @if (!string.IsNullOrWhiteSpace(svcIcon))
+                                    {
+                                        <span class="service-icon-char">@svcIcon</span>
+                                    }
+                                    else
+                                    {
+                                        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2">
+                                            <rect x="4" y="4" width="24" height="24" rx="4"/>
+                                            <path d="M12 16h8M16 12v8"/>
+                                        </svg>
+                                    }
+                                </div>
+                                @if (!string.IsNullOrWhiteSpace(svcCat))
+                                {
+                                    <span class="service-category-tag">@svcCat</span>
+                                }
+                                <h3 class="service-card-title">@svcName</h3>
+                                @if (!string.IsNullOrWhiteSpace(svcDesc))
+                                {
+                                    <p class="service-card-text">@svcDesc</p>
+                                }
+                            </div>
+                        }
+                    </div>
+                    @if (servicesPage != null)
+                    {
+                        <div class="text-center" style="margin-top:2.5rem">
+                            <a href="@servicesPage.Url()" class="btn btn-outline">View All Services &rarr;</a>
+                        </div>
+                    }
+                </div>
+            </section>
+        }
+
+        <!-- STATS -->
+        @if (statsList != null && statsList.Any())
+        {
+            <section class="stats-section section" aria-label="Company statistics">
+                <div class="container">
+                    @if (!string.IsNullOrWhiteSpace(statsHeadline))
+                    {
+                        <h2 class="section-title text-center">@statsHeadline</h2>
+                    }
+                    <div class="stats-row">
+                        @foreach (var stat in statsList)
+                        {
+                            var statValue = stat.Content.Value<string>("value") ?? "0";
+                            var statLabel = stat.Content.Value<string>("label");
+                            var statDesc  = stat.Content.Value<string>("description");
+                            <div class="stat-item">
+                                <span class="stat-value js-counter" data-target="@statValue">@statValue</span>
+                                @if (!string.IsNullOrWhiteSpace(statLabel)) { <span class="stat-label">@statLabel</span> }
+                                @if (!string.IsNullOrWhiteSpace(statDesc))  { <span class="stat-desc">@statDesc</span>  }
+                            </div>
+                        }
+                    </div>
+                </div>
+            </section>
+        }
+
+        <!-- TESTIMONIALS -->
+        @if (testimonials != null && testimonials.Any())
+        {
+            <section class="testimonials-section section section--gray" aria-label="Testimonials">
+                <div class="container">
+                    <h2 class="section-title text-center">@testimonialHeadline</h2>
+                    <div class="testimonials-track" id="testimonialsTrack">
+                        @foreach (var t in testimonials)
+                        {
+                            var quote   = t.Content.Value<string>("quote");
+                            var author  = t.Content.Value<string>("author");
+                            var role    = t.Content.Value<string>("role");
+                            var company = t.Content.Value<string>("company");
+                            var photo   = t.Content.Value<Umbraco.Cms.Core.Models.PublishedContent.IPublishedContent>("photo");
+                            var rating  = t.Content.Value<int>("rating");
+                            <blockquote class="testimonial-card">
+                                @if (rating > 0)
+                                {
+                                    <div class="star-rating" aria-label="Rating: @rating out of 5">
+                                        @for (int s = 1; s <= 5; s++)
+                                        {
+                                            <span class="star @(s <= rating ? "star--filled" : "star--empty")" aria-hidden="true">&#9733;</span>
+                                        }
+                                    </div>
+                                }
+                                @if (!string.IsNullOrWhiteSpace(quote))
+                                {
+                                    <p class="testimonial-quote">&ldquo;@quote&rdquo;</p>
+                                }
+                                <footer class="testimonial-author">
+                                    @if (photo != null)
+                                    {
+                                        <img src="@photo.Url()" alt="@author" class="testimonial-photo" loading="lazy" />
+                                    }
+                                    <div>
+                                        @if (!string.IsNullOrWhiteSpace(author)) { <cite class="author-name">@author</cite> }
+                                        @if (!string.IsNullOrWhiteSpace(role) || !string.IsNullOrWhiteSpace(company))
+                                        {
+                                            <span class="author-role">@(role)@(!string.IsNullOrWhiteSpace(role) && !string.IsNullOrWhiteSpace(company) ? ", " : "")@(company)</span>
+                                        }
+                                    </div>
+                                </footer>
+                            </blockquote>
+                        }
+                    </div>
+                    @if (testimonials.Count() > 1)
+                    {
+                        <div class="testimonials-nav" aria-label="Testimonials navigation">
+                            <button type="button" class="testimonial-prev" aria-label="Previous testimonial">&lsaquo;</button>
+                            <button type="button" class="testimonial-next" aria-label="Next testimonial">&rsaquo;</button>
+                        </div>
+                    }
+                </div>
+            </section>
+        }
+
+        <!-- CTA BANNER -->
+        @if (!string.IsNullOrWhiteSpace(ctaHeadline))
+        {
+            <section class="cta-banner-section section" aria-label="Call to action">
+                <div class="container cta-banner-inner">
+                    <div class="cta-banner-text">
+                        <h2 class="cta-banner-headline">@ctaHeadline</h2>
+                        @if (!string.IsNullOrWhiteSpace(ctaText))
+                        {
+                            <p class="cta-banner-body">@ctaText</p>
+                        }
+                    </div>
+                    @if (!string.IsNullOrWhiteSpace(ctaBtnText))
+                    {
+                        <a href="@(ctaBtnUrl?.ToHtmlString() ?? "#contact")" class="btn btn-primary btn-lg">@ctaBtnText</a>
+                    }
+                </div>
+            </section>
+        }
+
+    </main>
+
+    @await Html.PartialAsync("_CorporateFooter", root)
+
+    <script src="/js/corporate-theme.js" defer></script>
+    <script>
+        // Mobile nav toggle
+        document.querySelector('.mobile-menu-toggle')?.addEventListener('click', function () {
+            const expanded = this.getAttribute('aria-expanded') === 'true';
+            this.setAttribute('aria-expanded', String(!expanded));
+            document.querySelector('.main-nav')?.classList.toggle('main-nav--open');
+        });
+
+        // Testimonials simple carousel
+        (function () {
+            const track = document.getElementById('testimonialsTrack');
+            if (!track) return;
+            const cards = Array.from(track.children);
+            if (cards.length <= 1) return;
+            let current = 0;
+            function show(idx) {
+                cards.forEach((c, i) => { c.hidden = i !== idx; c.setAttribute('aria-hidden', String(i !== idx)); });
+            }
+            show(0);
+            document.querySelector('.testimonial-prev')?.addEventListener('click', () => { current = (current - 1 + cards.length) % cards.length; show(current); });
+            document.querySelector('.testimonial-next')?.addEventListener('click', () => { current = (current + 1) % cards.length; show(current); });
+        })();
+
+        // Stats counter animation
+        (function () {
+            const counters = document.querySelectorAll('.js-counter');
+            if (!counters.length) return;
+            const obs = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    if (!entry.isIntersecting) return;
+                    const el = entry.target;
+                    const raw = el.dataset.target?.replace(/[^\d.]/g, '') || '0';
+                    const target = parseFloat(raw);
+                    if (isNaN(target)) return;
+                    const duration = 1800;
+                    const start = performance.now();
+                    const original = el.dataset.target;
+                    function step(now) {
+                        const progress = Math.min((now - start) / duration, 1);
+                        const ease = 1 - Math.pow(1 - progress, 3);
+                        el.textContent = (target * ease).toFixed(target % 1 !== 0 ? 1 : 0) + (original?.replace(/[\d.,]/g, '') || '');
+                        if (progress < 1) requestAnimationFrame(step);
+                        else el.textContent = original;
+                    }
+                    requestAnimationFrame(step);
+                    obs.unobserve(el);
+                });
+            }, { threshold: .3 });
+            counters.forEach(c => obs.observe(c));
+        })();
+    </script>
+</body>
+</html>

@@ -1,0 +1,34 @@
+@using FormBuilder.Core.Extensions
+@using FormBuilder.Core.Models
+@using FormBuilder.Core.Providers.FieldTypes
+@using FormBuilder.Web.Extensions
+@model FieldViewModel
+
+@{
+    var isValid = (Model.Mandatory && Model.Values is not null && Model.Values.Any()) || (!Model.Mandatory);
+    if (Model.AdditionalSettings.TryGetValue("SelectedFilesListHeading", out string? selectedFilesLabel) == false ||
+        string.IsNullOrWhiteSpace(selectedFilesLabel))
+    {
+        selectedFilesLabel = "Current file(s)";
+    }
+}
+<input type="file" name="@Model.Name" id="@Model.Id" data-umb="@Model.Id" @(Model.AllowMultipleFileUploads ? "multiple" : string.Empty)
+       data-val="@(isValid == false ? "true" : null)"
+       data-val-required="@(isValid == false ? Model.RequiredErrorMessage : null)"
+@(!string.IsNullOrEmpty(Model.ToolTip) ? $"aria-describedby=\"{(Model.Id)}_description\"" : "") />
+
+@if (Model.Values is not null && Model.Values.Any())
+{
+    <p>
+        <strong>@selectedFilesLabel:</strong><br />
+        @foreach (string filePath in Model.Values)
+        {
+            var fileName = filePath.Split(new[] { FileUpload.EncryptedFilePathAndFileNameSeparator }, StringSplitOptions.None).Last();
+
+            <a>@fileName</a>
+
+            <br />
+            <input type="hidden" name="@(Model.Name)_file_@(fileName)" value="@filePath" />
+        }
+    </p>
+}

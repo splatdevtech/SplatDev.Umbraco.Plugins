@@ -1,0 +1,13 @@
+@model Umbraco.Forms.Web.Models.FieldViewModel
+@{
+       var acceptCopy = string.Empty;
+       Model.AdditionalSettings.TryGetValue("AcceptCopy", out acceptCopy);
+}
+<input type="checkbox" name="@Model.Name" id="@Model.Id" value="true" data-umb="@Model.Id"
+       @if (Model.Mandatory) { <text> data-val="true" data-val-required="@Model.RequiredErrorMessage" data-rule-required="true" data-msg-required="@Model.RequiredErrorMessage" aria-required="true"</text> }
+       @if (Model.ContainsValue(true) || Model.ContainsValue("true") || Model.ContainsValue("on")) { <text>checked="checked"</text> }
+       @if (!string.IsNullOrEmpty(Model.ToolTip)) { <text> aria-describedby="@(Model.Id)_description" </text> }                                                                                                                                                                 
+/>
+<input type="hidden" name="@Model.Id" value="false" />
+
+<label for="@Model.Id">@acceptCopy</label>

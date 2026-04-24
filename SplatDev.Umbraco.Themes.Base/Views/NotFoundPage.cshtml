@@ -1,0 +1,26 @@
+@using Umbraco.Extensions
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@{
+    Layout = "Shared/_Layout.cshtml";
+    ViewBag.Title = "Page Not Found";
+    Response.StatusCode = 404;
+}
+
+@section header {
+    @await Html.PartialAsync("Shared/_Navigation", Model)
+}
+
+<section class="not-found" aria-labelledby="not-found-title">
+    <div class="container not-found__content">
+        <span class="not-found__code" aria-hidden="true">404</span>
+        <h1 class="not-found__title" id="not-found-title">Page Not Found</h1>
+        <p class="not-found__message">
+            The page you were looking for doesn't exist or has been moved.
+        </p>
+        <a class="btn btn--primary" href="/">Return to Home</a>
+    </div>
+</section>
+
+@section footer {
+    @await Html.PartialAsync("Shared/_Footer", Model)
+}

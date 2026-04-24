@@ -1,0 +1,318 @@
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@{
+    Layout = null;
+    var pageTitle = Model.Value<string>("pageTitle") ?? "Checkout";
+    var successHeadline = Model.Value<string>("successHeadline") ?? "Order Placed!";
+    var successMessage = Model.Value<string>("successMessage") ?? "Thank you for your purchase. You will receive a confirmation email shortly.";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@pageTitle</title>
+    <link rel="stylesheet" href="/css/commerce-theme.css" />
+</head>
+<body class="commerce-theme checkout-page">
+
+    <header class="site-header">
+        <div class="container">
+            <nav class="breadcrumb" aria-label="Breadcrumb">
+                <ol>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/cart">Cart</a></li>
+                    <li aria-current="page">@pageTitle</li>
+                </ol>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container checkout-layout">
+        <h1 class="page-title">@pageTitle</h1>
+
+        @* Checkout steps indicator *@
+        <nav class="checkout-steps" aria-label="Checkout steps">
+            <ol>
+                <li class="step active" data-step="1">
+                    <span class="step-number">1</span>
+                    <span class="step-label">Shipping</span>
+                </li>
+                <li class="step" data-step="2">
+                    <span class="step-number">2</span>
+                    <span class="step-label">Payment</span>
+                </li>
+                <li class="step" data-step="3">
+                    <span class="step-number">3</span>
+                    <span class="step-label">Review</span>
+                </li>
+            </ol>
+        </nav>
+
+        <div class="checkout-wrapper">
+
+            <div class="checkout-form-col">
+
+                @* Step 1 – Shipping Address *@
+                <section class="checkout-step-panel active" id="step1Panel" aria-labelledby="step1Heading">
+                    <h2 id="step1Heading" class="checkout-section-title">Shipping Address</h2>
+                    <form class="checkout-form" id="shippingForm" novalidate>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="firstName" class="form-label">First Name <span aria-hidden="true">*</span></label>
+                                <input type="text" id="firstName" name="firstName" class="form-input" required autocomplete="given-name" />
+                                <span class="form-error" id="firstNameError" role="alert"></span>
+                            </div>
+                            <div class="form-group">
+                                <label for="lastName" class="form-label">Last Name <span aria-hidden="true">*</span></label>
+                                <input type="text" id="lastName" name="lastName" class="form-input" required autocomplete="family-name" />
+                                <span class="form-error" id="lastNameError" role="alert"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email" class="form-label">Email Address <span aria-hidden="true">*</span></label>
+                            <input type="email" id="email" name="email" class="form-input" required autocomplete="email" />
+                            <span class="form-error" id="emailError" role="alert"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="phone" class="form-label">Phone Number</label>
+                            <input type="tel" id="phone" name="phone" class="form-input" autocomplete="tel" />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="address1" class="form-label">Address Line 1 <span aria-hidden="true">*</span></label>
+                            <input type="text" id="address1" name="address1" class="form-input" required autocomplete="address-line1" />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="address2" class="form-label">Address Line 2</label>
+                            <input type="text" id="address2" name="address2" class="form-input" autocomplete="address-line2" />
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="city" class="form-label">City <span aria-hidden="true">*</span></label>
+                                <input type="text" id="city" name="city" class="form-input" required autocomplete="address-level2" />
+                            </div>
+                            <div class="form-group">
+                                <label for="state" class="form-label">State / Province</label>
+                                <input type="text" id="state" name="state" class="form-input" autocomplete="address-level1" />
+                            </div>
+                            <div class="form-group form-group--sm">
+                                <label for="zip" class="form-label">Postal Code <span aria-hidden="true">*</span></label>
+                                <input type="text" id="zip" name="zip" class="form-input" required autocomplete="postal-code" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="country" class="form-label">Country <span aria-hidden="true">*</span></label>
+                            <select id="country" name="country" class="form-select" required autocomplete="country-name">
+                                <option value="">Select country…</option>
+                                <option value="US">United States</option>
+                                <option value="GB">United Kingdom</option>
+                                <option value="CA">Canada</option>
+                                <option value="AU">Australia</option>
+                                <option value="BR">Brazil</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-checkbox">
+                                <input type="checkbox" id="sameAsBilling" name="sameAsBilling" checked />
+                                <span>Billing address same as shipping</span>
+                            </label>
+                        </div>
+
+                        <h3 class="checkout-subsection-title">Shipping Method</h3>
+                        <div class="shipping-options" role="radiogroup" aria-label="Shipping options">
+                            <label class="shipping-option">
+                                <input type="radio" name="shippingMethod" value="standard" checked />
+                                <div class="shipping-option-info">
+                                    <span class="shipping-option-name">Standard Shipping</span>
+                                    <span class="shipping-option-eta">5–7 business days</span>
+                                </div>
+                                <span class="shipping-option-price">Free</span>
+                            </label>
+                            <label class="shipping-option">
+                                <input type="radio" name="shippingMethod" value="express" />
+                                <div class="shipping-option-info">
+                                    <span class="shipping-option-name">Express Shipping</span>
+                                    <span class="shipping-option-eta">2–3 business days</span>
+                                </div>
+                                <span class="shipping-option-price">$12.99</span>
+                            </label>
+                            <label class="shipping-option">
+                                <input type="radio" name="shippingMethod" value="overnight" />
+                                <div class="shipping-option-info">
+                                    <span class="shipping-option-name">Overnight Shipping</span>
+                                    <span class="shipping-option-eta">Next business day</span>
+                                </div>
+                                <span class="shipping-option-price">$24.99</span>
+                            </label>
+                        </div>
+
+                        <button type="button" class="btn btn-primary btn-lg" id="continueToPaymentBtn">
+                            Continue to Payment &rarr;
+                        </button>
+                    </form>
+                </section>
+
+                @* Step 2 – Payment *@
+                <section class="checkout-step-panel" id="step2Panel" aria-labelledby="step2Heading" hidden>
+                    <h2 id="step2Heading" class="checkout-section-title">Payment Method</h2>
+                    <div class="payment-options" role="radiogroup" aria-label="Payment methods">
+                        <label class="payment-option active">
+                            <input type="radio" name="paymentMethod" value="card" checked />
+                            <span>Credit / Debit Card</span>
+                        </label>
+                        <label class="payment-option">
+                            <input type="radio" name="paymentMethod" value="paypal" />
+                            <span>PayPal</span>
+                        </label>
+                    </div>
+
+                    <div class="payment-card-form" id="cardForm">
+                        <div class="form-group">
+                            <label for="cardNumber" class="form-label">Card Number</label>
+                            <input type="text" id="cardNumber" class="form-input" placeholder="1234 5678 9012 3456" maxlength="19" autocomplete="cc-number" />
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="cardExpiry" class="form-label">Expiry Date</label>
+                                <input type="text" id="cardExpiry" class="form-input" placeholder="MM / YY" maxlength="7" autocomplete="cc-exp" />
+                            </div>
+                            <div class="form-group form-group--sm">
+                                <label for="cardCvv" class="form-label">CVV</label>
+                                <input type="text" id="cardCvv" class="form-input" placeholder="123" maxlength="4" autocomplete="cc-csc" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="cardName" class="form-label">Name on Card</label>
+                            <input type="text" id="cardName" class="form-input" autocomplete="cc-name" />
+                        </div>
+                    </div>
+
+                    <div class="checkout-step-actions">
+                        <button type="button" class="btn btn-ghost" id="backToShippingBtn">&larr; Back</button>
+                        <button type="button" class="btn btn-primary btn-lg" id="continueToReviewBtn">
+                            Review Order &rarr;
+                        </button>
+                    </div>
+                </section>
+
+                @* Step 3 – Review *@
+                <section class="checkout-step-panel" id="step3Panel" aria-labelledby="step3Heading" hidden>
+                    <h2 id="step3Heading" class="checkout-section-title">Review Your Order</h2>
+                    <div class="order-review" id="orderReview">
+                        <p class="review-placeholder">Your order details will appear here.</p>
+                    </div>
+                    <div class="checkout-step-actions">
+                        <button type="button" class="btn btn-ghost" id="backToPaymentBtn">&larr; Back</button>
+                        <button type="button" class="btn btn-primary btn-lg" id="placeOrderBtn">
+                            Place Order
+                        </button>
+                    </div>
+                </section>
+
+                @* Success State *@
+                <section class="checkout-success" id="checkoutSuccess" hidden aria-labelledby="successHeading">
+                    <div class="success-icon" aria-hidden="true">&#10003;</div>
+                    <h2 id="successHeading" class="success-headline">@successHeadline</h2>
+                    <p class="success-message">@successMessage</p>
+                    <a href="/shop" class="btn btn-primary">Continue Shopping</a>
+                </section>
+            </div>
+
+            @* Order Summary sidebar *@
+            <aside class="checkout-order-summary" aria-label="Order summary">
+                <div class="order-summary-card">
+                    <h2 class="order-summary-title">Order Summary</h2>
+                    <div id="checkoutCartItems" class="checkout-cart-items">
+                        <p class="loading-text">Loading cart…</p>
+                    </div>
+                    <dl class="order-summary-lines">
+                        <div class="summary-line">
+                            <dt>Subtotal</dt>
+                            <dd id="checkoutSubtotal">$0.00</dd>
+                        </div>
+                        <div class="summary-line">
+                            <dt>Shipping</dt>
+                            <dd id="checkoutShipping">Free</dd>
+                        </div>
+                        <div class="summary-line">
+                            <dt>Tax (10%)</dt>
+                            <dd id="checkoutTax">$0.00</dd>
+                        </div>
+                        <div class="summary-line summary-line--total">
+                            <dt>Total</dt>
+                            <dd id="checkoutTotal">$0.00</dd>
+                        </div>
+                    </dl>
+                    <div class="trust-badges">
+                        <span class="trust-badge">&#128274; Secure &amp; Encrypted</span>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </main>
+
+    <script>
+        (function () {
+            const cartKey = 'commerce_cart';
+            function getCart() { try { return JSON.parse(localStorage.getItem(cartKey) || '[]'); } catch { return []; } }
+            function fmt(n) { return '$' + parseFloat(n).toFixed(2); }
+
+            function renderSummary() {
+                const cart = getCart();
+                const itemsEl = document.getElementById('checkoutCartItems');
+                if (!itemsEl) return;
+                if (cart.length === 0) {
+                    itemsEl.innerHTML = '<p>No items in cart.</p>';
+                } else {
+                    let sub = 0;
+                    itemsEl.innerHTML = cart.map(i => {
+                        const lt = i.price * i.qty;
+                        sub += lt;
+                        return `<div class="checkout-cart-row"><span>${i.name} × ${i.qty}</span><span>${fmt(lt)}</span></div>`;
+                    }).join('');
+                    const tax = sub * 0.1;
+                    document.getElementById('checkoutSubtotal').textContent = fmt(sub);
+                    document.getElementById('checkoutTax').textContent = fmt(tax);
+                    document.getElementById('checkoutTotal').textContent = fmt(sub + tax);
+                }
+            }
+
+            function goToStep(step) {
+                [1, 2, 3].forEach(s => {
+                    const panel = document.getElementById('step' + s + 'Panel');
+                    const stepEl = document.querySelector('[data-step="' + s + '"]');
+                    if (panel) { panel.hidden = s !== step; }
+                    if (stepEl) { stepEl.classList.toggle('active', s === step); stepEl.classList.toggle('done', s < step); }
+                });
+            }
+
+            document.getElementById('continueToPaymentBtn')?.addEventListener('click', () => goToStep(2));
+            document.getElementById('backToShippingBtn')?.addEventListener('click', () => goToStep(1));
+            document.getElementById('continueToReviewBtn')?.addEventListener('click', () => {
+                const cart = getCart();
+                const reviewEl = document.getElementById('orderReview');
+                if (reviewEl) {
+                    let sub = cart.reduce((a, i) => a + i.price * i.qty, 0);
+                    reviewEl.innerHTML = `<div class="review-items">${cart.map(i => `<div class="review-row"><span>${i.name}</span><span>×${i.qty}</span><span>${fmt(i.price * i.qty)}</span></div>`).join('')}</div><p class="review-total">Total: ${fmt(sub * 1.1)}</p>`;
+                }
+                goToStep(3);
+            });
+            document.getElementById('backToPaymentBtn')?.addEventListener('click', () => goToStep(2));
+            document.getElementById('placeOrderBtn')?.addEventListener('click', () => {
+                localStorage.removeItem(cartKey);
+                document.getElementById('step3Panel').hidden = true;
+                document.getElementById('checkoutSuccess').hidden = false;
+                document.querySelector('.checkout-steps').hidden = true;
+            });
+
+            renderSummary();
+        })();
+    </script>
+</body>
+</html>

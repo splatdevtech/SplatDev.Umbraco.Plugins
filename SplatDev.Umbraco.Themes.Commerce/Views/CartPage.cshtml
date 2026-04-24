@@ -1,0 +1,218 @@
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@{
+    Layout = null;
+    var pageTitle = Model.Value<string>("pageTitle") ?? "Shopping Cart";
+    var emptyCartMessage = Model.Value<string>("emptyCartMessage") ?? "Your cart is empty. Continue shopping to add items.";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@pageTitle</title>
+    <link rel="stylesheet" href="/css/commerce-theme.css" />
+</head>
+<body class="commerce-theme cart-page">
+
+    <header class="site-header">
+        <div class="container">
+            <nav class="breadcrumb" aria-label="Breadcrumb">
+                <ol>
+                    <li><a href="/">Home</a></li>
+                    <li aria-current="page">@pageTitle</li>
+                </ol>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container cart-layout">
+        <h1 class="page-title">@pageTitle</h1>
+
+        <div class="cart-wrapper" id="cartWrapper">
+
+            @* Cart has items – shown when JS populates the cart *@
+            <div class="cart-items-section" id="cartItemsSection">
+                <table class="cart-table" aria-label="Cart items">
+                    <thead>
+                        <tr>
+                            <th scope="col" class="col-product">Product</th>
+                            <th scope="col" class="col-price">Price</th>
+                            <th scope="col" class="col-qty">Quantity</th>
+                            <th scope="col" class="col-subtotal">Subtotal</th>
+                            <th scope="col" class="col-remove">
+                                <span class="sr-only">Remove</span>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody id="cartTableBody">
+                        @* Cart rows injected by JavaScript *@
+                        <tr class="cart-row cart-placeholder-row">
+                            <td colspan="5" class="cart-empty-cell">
+                                <div class="cart-empty-state">
+                                    <svg width="64" height="64" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                                        <path d="M4 8h8l8 32h28l6-22H20"/>
+                                        <circle cx="26" cy="50" r="3"/>
+                                        <circle cx="46" cy="50" r="3"/>
+                                    </svg>
+                                    <p>@emptyCartMessage</p>
+                                    <a href="/shop" class="btn btn-primary">Continue Shopping</a>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="cart-actions">
+                    <a href="/shop" class="btn btn-outline">
+                        &larr; Continue Shopping
+                    </a>
+                    <button type="button" class="btn btn-ghost" id="clearCartBtn">
+                        Clear Cart
+                    </button>
+                </div>
+            </div>
+
+            <aside class="order-summary" aria-label="Order summary">
+                <div class="order-summary-card">
+                    <h2 class="order-summary-title">Order Summary</h2>
+
+                    <dl class="order-summary-lines">
+                        <div class="summary-line">
+                            <dt>Subtotal</dt>
+                            <dd id="summarySubtotal">$0.00</dd>
+                        </div>
+                        <div class="summary-line">
+                            <dt>Shipping</dt>
+                            <dd id="summaryShipping">Calculated at checkout</dd>
+                        </div>
+                        <div class="summary-line">
+                            <dt>Tax</dt>
+                            <dd id="summaryTax">$0.00</dd>
+                        </div>
+                        <div class="summary-line summary-line--total">
+                            <dt>Total</dt>
+                            <dd id="summaryTotal">$0.00</dd>
+                        </div>
+                    </dl>
+
+                    <div class="coupon-section">
+                        <label for="couponCode" class="coupon-label">Coupon Code</label>
+                        <div class="coupon-input-group">
+                            <input type="text" id="couponCode" class="form-input" placeholder="Enter coupon code" aria-label="Coupon code" />
+                            <button type="button" class="btn btn-outline btn-sm" id="applyCouponBtn">Apply</button>
+                        </div>
+                    </div>
+
+                    <a href="/checkout" class="btn btn-primary btn-lg btn-full" id="checkoutBtn">
+                        Proceed to Checkout
+                    </a>
+
+                    <div class="trust-badges">
+                        <span class="trust-badge">&#128274; Secure Checkout</span>
+                        <span class="trust-badge">&#10003; Free Returns</span>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </main>
+
+    <script>
+        // Minimal cart demo – replace with your cart service integration
+        (function () {
+            const cartKey = 'commerce_cart';
+
+            function getCart() {
+                try { return JSON.parse(localStorage.getItem(cartKey) || '[]'); } catch { return []; }
+            }
+
+            function saveCart(cart) {
+                localStorage.setItem(cartKey, JSON.stringify(cart));
+            }
+
+            function formatPrice(n) {
+                return '$' + parseFloat(n).toFixed(2);
+            }
+
+            function renderCart() {
+                const cart = getCart();
+                const tbody = document.getElementById('cartTableBody');
+                if (!tbody) return;
+
+                if (cart.length === 0) {
+                    tbody.innerHTML = `<tr class="cart-row cart-placeholder-row">
+                        <td colspan="5" class="cart-empty-cell">
+                            <div class="cart-empty-state">
+                                <p>@emptyCartMessage</p>
+                                <a href="/shop" class="btn btn-primary">Continue Shopping</a>
+                            </div>
+                        </td>
+                    </tr>`;
+                    document.getElementById('summarySubtotal').textContent = '$0.00';
+                    document.getElementById('summaryTotal').textContent = '$0.00';
+                    return;
+                }
+
+                let subtotal = 0;
+                tbody.innerHTML = cart.map((item, idx) => {
+                    const lineTotal = item.price * item.qty;
+                    subtotal += lineTotal;
+                    return `<tr class="cart-row" data-idx="${idx}">
+                        <td class="col-product">
+                            <div class="cart-product-info">
+                                ${item.image ? `<img src="${item.image}" alt="${item.name}" class="cart-product-thumb" />` : ''}
+                                <span class="cart-product-name">${item.name}</span>
+                            </div>
+                        </td>
+                        <td class="col-price">${formatPrice(item.price)}</td>
+                        <td class="col-qty">
+                            <div class="quantity-selector quantity-selector--sm">
+                                <button class="qty-btn qty-decrease" data-idx="${idx}">−</button>
+                                <input class="qty-input" type="number" value="${item.qty}" min="1" max="99" data-idx="${idx}" readonly />
+                                <button class="qty-btn qty-increase" data-idx="${idx}">+</button>
+                            </div>
+                        </td>
+                        <td class="col-subtotal">${formatPrice(lineTotal)}</td>
+                        <td class="col-remove">
+                            <button class="btn-remove-item" data-idx="${idx}" aria-label="Remove ${item.name}">&#10005;</button>
+                        </td>
+                    </tr>`;
+                }).join('');
+
+                const tax = subtotal * 0.1;
+                document.getElementById('summarySubtotal').textContent = formatPrice(subtotal);
+                document.getElementById('summaryTax').textContent = formatPrice(tax);
+                document.getElementById('summaryTotal').textContent = formatPrice(subtotal + tax);
+
+                // Bind row events
+                tbody.querySelectorAll('.qty-decrease').forEach(btn => {
+                    btn.addEventListener('click', function () {
+                        const cart = getCart();
+                        const i = parseInt(this.dataset.idx);
+                        if (cart[i].qty > 1) { cart[i].qty--; saveCart(cart); renderCart(); }
+                    });
+                });
+                tbody.querySelectorAll('.qty-increase').forEach(btn => {
+                    btn.addEventListener('click', function () {
+                        const cart = getCart();
+                        const i = parseInt(this.dataset.idx);
+                        cart[i].qty++; saveCart(cart); renderCart();
+                    });
+                });
+                tbody.querySelectorAll('.btn-remove-item').forEach(btn => {
+                    btn.addEventListener('click', function () {
+                        const cart = getCart();
+                        cart.splice(parseInt(this.dataset.idx), 1);
+                        saveCart(cart); renderCart();
+                    });
+                });
+            }
+
+            document.getElementById('clearCartBtn')?.addEventListener('click', function () {
+                if (confirm('Remove all items from cart?')) { saveCart([]); renderCart(); }
+            });
+
+            renderCart();
+        })();
+    </script>
+</body>
+</html>

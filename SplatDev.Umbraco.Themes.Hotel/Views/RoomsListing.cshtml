@@ -1,0 +1,271 @@
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@{
+    Layout = null;
+    var root = Model.Root();
+    var hotelName = root?.Value<string>("hotelName") ?? "Hotel";
+    var bookingUrl = root?.Value<Umbraco.Cms.Core.Models.Link>("bookingUrl");
+
+    var pageTitle = Model.Value<string>("pageTitle") ?? "Rooms & Suites";
+    var intro = Model.Value<string>("intro") ?? string.Empty;
+
+    var rooms = Model.Children?.Where(x => x.ContentType.Alias == "room") ?? Enumerable.Empty<Umbraco.Cms.Core.Models.PublishedContent.IPublishedContent>();
+    var bedTypes = new[] { "Single", "Double", "Queen", "King", "Twin", "Suite" };
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@pageTitle – @hotelName</title>
+    <link rel="stylesheet" href="/css/hotel-theme.css" />
+</head>
+<body class="hotel-rooms-listing">
+
+    <header class="hotel-header hotel-header--solid" id="hotel-header">
+        <div class="hotel-container hotel-header__inner">
+            <a href="/" class="hotel-header__brand"><span class="hotel-header__name">@hotelName</span></a>
+            @if (bookingUrl != null)
+            {
+                <a href="@bookingUrl.Url" class="hotel-btn hotel-btn--book hotel-header__book">Book Now</a>
+            }
+        </div>
+    </header>
+
+    <main class="hotel-main">
+
+        <div class="hotel-page-hero hotel-page-hero--compact">
+            <div class="hotel-container">
+                <h1 class="hotel-page-hero__title">@pageTitle</h1>
+                @if (!string.IsNullOrWhiteSpace(intro))
+                {
+                    <p class="hotel-page-hero__subtitle">@intro</p>
+                }
+            </div>
+        </div>
+
+        <div class="hotel-container hotel-rooms-layout">
+
+            <!-- Filters Sidebar -->
+            <aside class="hotel-rooms-filters" id="rooms-filters">
+                <h2 class="hotel-rooms-filters__title">Filter Rooms</h2>
+
+                <div class="hotel-filter-group">
+                    <h3 class="hotel-filter-group__label">Bed Type</h3>
+                    <div class="hotel-filter-checks">
+                        @foreach (var bt in bedTypes)
+                        {
+                            <label class="hotel-filter-check">
+                                <input type="checkbox" class="hotel-filter-check__input" data-filter="bed" value="@bt.ToLower()" />
+                                <span>@bt</span>
+                            </label>
+                        }
+                    </div>
+                </div>
+
+                <div class="hotel-filter-group">
+                    <h3 class="hotel-filter-group__label">Guests</h3>
+                    <div class="hotel-filter-checks">
+                        @for (int g = 1; g <= 4; g++)
+                        {
+                            <label class="hotel-filter-check">
+                                <input type="checkbox" class="hotel-filter-check__input" data-filter="occupancy" value="@g" />
+                                <span>@g+</span>
+                            </label>
+                        }
+                    </div>
+                </div>
+
+                <div class="hotel-filter-group">
+                    <h3 class="hotel-filter-group__label">Max Price / Night</h3>
+                    <div class="hotel-filter-price">
+                        <input type="range" id="price-range" min="0" max="2000" step="50" value="2000" class="hotel-filter-range" />
+                        <p class="hotel-filter-price__display">Up to <strong id="price-display">2000</strong></p>
+                    </div>
+                </div>
+
+                <button class="hotel-btn hotel-btn--outline hotel-btn--sm hotel-rooms-filters__reset" id="filter-reset">
+                    Reset Filters
+                </button>
+            </aside>
+
+            <!-- Room Grid -->
+            <section class="hotel-rooms-grid" id="rooms-grid">
+                @if (rooms.Any())
+                {
+                    @foreach (var room in rooms)
+                    {
+                        var roomName = room.Value<string>("roomName") ?? room.Name;
+                        var featuredImage = room.Value<Umbraco.Cms.Core.Models.PublishedContent.IPublishedContent>("featuredImage");
+                        var shortDesc = room.Value<string>("shortDescription") ?? string.Empty;
+                        var price = room.Value<decimal?>("pricePerNight");
+                        var currency = room.Value<string>("currency") ?? "USD";
+                        var bedTypeVal = room.Value<string>("bedType") ?? string.Empty;
+                        var maxOccupancy = room.Value<int?>("maxOccupancy");
+                        var squareMeters = room.Value<decimal?>("squareMeters");
+                        var view = room.Value<string>("view") ?? string.Empty;
+                        var isAvailable = room.Value<bool>("available");
+                        var roomBookingUrl = room.Value<Umbraco.Cms.Core.Models.Link>("bookingUrl") ?? bookingUrl;
+                        var breakfastIncluded = room.Value<bool>("breakfastIncluded");
+
+                        <article class="hotel-room-card hotel-room-card--list"
+                                 data-bed="@bedTypeVal.ToLower()"
+                                 data-occupancy="@(maxOccupancy ?? 1)"
+                                 data-price="@(price ?? 0)">
+                            <a href="@room.Url()" class="hotel-room-card__image-link">
+                                @if (featuredImage != null)
+                                {
+                                    <img src="@featuredImage.Url()" alt="@roomName" class="hotel-room-card__image" loading="lazy" />
+                                }
+                                else
+                                {
+                                    <div class="hotel-room-card__image hotel-room-card__image--placeholder"></div>
+                                }
+                                @if (!isAvailable)
+                                {
+                                    <div class="hotel-room-card__unavailable-badge">Fully Booked</div>
+                                }
+                            </a>
+                            <div class="hotel-room-card__body">
+                                <div class="hotel-room-card__meta">
+                                    @if (!string.IsNullOrWhiteSpace(bedTypeVal))
+                                    {
+                                        <span class="hotel-room-card__badge">@bedTypeVal</span>
+                                    }
+                                    @if (!string.IsNullOrWhiteSpace(view))
+                                    {
+                                        <span class="hotel-room-card__badge hotel-room-card__badge--view">@view View</span>
+                                    }
+                                </div>
+                                <h2 class="hotel-room-card__name">
+                                    <a href="@room.Url()">@roomName</a>
+                                </h2>
+                                @if (!string.IsNullOrWhiteSpace(shortDesc))
+                                {
+                                    <p class="hotel-room-card__desc">@shortDesc</p>
+                                }
+                                <div class="hotel-room-card__specs">
+                                    @if (maxOccupancy.HasValue)
+                                    {
+                                        <span class="hotel-room-card__spec">
+                                            <svg viewBox="0 0 20 20" width="14" height="14" fill="currentColor"><path d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"/></svg>
+                                            @maxOccupancy guests
+                                        </span>
+                                    }
+                                    @if (squareMeters.HasValue && squareMeters.Value > 0)
+                                    {
+                                        <span class="hotel-room-card__spec">
+                                            <svg viewBox="0 0 20 20" width="14" height="14" fill="currentColor"><path fill-rule="evenodd" d="M3 4a1 1 0 011-1h4a1 1 0 010 2H6.414l2.293 2.293a1 1 0 11-1.414 1.414L5 6.414V8a1 1 0 01-2 0V4zm9 1a1 1 0 010-2h4a1 1 0 011 1v4a1 1 0 01-2 0V6.414l-2.293 2.293a1 1 0 11-1.414-1.414L13.586 5H12zm-9 7a1 1 0 012 0v1.586l2.293-2.293a1 1 0 111.414 1.414L6.414 15H8a1 1 0 010 2H4a1 1 0 01-1-1v-4zm13-1a1 1 0 011 1v4a1 1 0 01-1 1h-4a1 1 0 010-2h1.586l-2.293-2.293a1 1 0 111.414-1.414L15 13.586V12a1 1 0 011-1z" clip-rule="evenodd"/></svg>
+                                            @squareMeters.Value.ToString("F0") m²
+                                        </span>
+                                    }
+                                    @if (breakfastIncluded)
+                                    {
+                                        <span class="hotel-room-card__spec hotel-room-card__spec--green">Breakfast included</span>
+                                    }
+                                </div>
+                                <div class="hotel-room-card__footer">
+                                    @if (price.HasValue && price.Value > 0)
+                                    {
+                                        <div class="hotel-room-card__price">
+                                            <span class="hotel-room-card__price-from">from</span>
+                                            <span class="hotel-room-card__price-amount">@currency @price.Value.ToString("N0")</span>
+                                            <span class="hotel-room-card__price-per">/night</span>
+                                        </div>
+                                    }
+                                    <div class="hotel-room-card__actions">
+                                        <a href="@room.Url()" class="hotel-btn hotel-btn--outline hotel-btn--sm">Details</a>
+                                        @if (isAvailable && roomBookingUrl != null)
+                                        {
+                                            <a href="@roomBookingUrl.Url" class="hotel-btn hotel-btn--primary hotel-btn--sm" target="@(roomBookingUrl.Target ?? "_self")">Book Now</a>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+                    }
+                }
+                else
+                {
+                    <div class="hotel-empty">
+                        <p>No rooms are currently listed. Please check back soon.</p>
+                    </div>
+                }
+                <div class="hotel-rooms-no-results" id="rooms-no-results" style="display:none">
+                    <p>No rooms match your filters. Try adjusting your search.</p>
+                    <button class="hotel-btn hotel-btn--outline" id="filter-reset-inline">Reset Filters</button>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <footer class="hotel-footer">
+        <div class="hotel-container hotel-footer__inner">
+            <div class="hotel-footer__brand"><span class="hotel-footer__name">@hotelName</span></div>
+        </div>
+        <div class="hotel-footer__bottom">
+            <div class="hotel-container"><p>&copy; @DateTime.Now.Year @hotelName. All rights reserved.</p></div>
+        </div>
+    </footer>
+
+    <script>
+    (function() {
+        var filters = { bed: [], occupancy: [], maxPrice: 99999 };
+
+        // Price range
+        var priceRange = document.getElementById('price-range');
+        var priceDisplay = document.getElementById('price-display');
+        if (priceRange) {
+            priceRange.addEventListener('input', function() {
+                filters.maxPrice = parseInt(this.value);
+                priceDisplay.textContent = this.value;
+                applyFilters();
+            });
+        }
+
+        // Checkboxes
+        document.querySelectorAll('.hotel-filter-check__input').forEach(function(cb) {
+            cb.addEventListener('change', function() {
+                var type = this.getAttribute('data-filter');
+                var val = this.value;
+                if (this.checked) { filters[type].push(val); }
+                else { filters[type] = filters[type].filter(function(v){ return v !== val; }); }
+                applyFilters();
+            });
+        });
+
+        // Reset
+        function resetFilters() {
+            filters = { bed: [], occupancy: [], maxPrice: 99999 };
+            document.querySelectorAll('.hotel-filter-check__input').forEach(function(cb) { cb.checked = false; });
+            if (priceRange) { priceRange.value = priceRange.max; priceDisplay.textContent = priceRange.max; }
+            applyFilters();
+        }
+        var resetBtn = document.getElementById('filter-reset');
+        var resetInline = document.getElementById('filter-reset-inline');
+        if (resetBtn) resetBtn.addEventListener('click', resetFilters);
+        if (resetInline) resetInline.addEventListener('click', resetFilters);
+
+        function applyFilters() {
+            var cards = document.querySelectorAll('.hotel-room-card--list');
+            var visible = 0;
+            cards.forEach(function(card) {
+                var bed = card.getAttribute('data-bed') || '';
+                var occ = parseInt(card.getAttribute('data-occupancy') || '1');
+                var price = parseFloat(card.getAttribute('data-price') || '0');
+
+                var bedOk = filters.bed.length === 0 || filters.bed.includes(bed);
+                var occOk = filters.occupancy.length === 0 || filters.occupancy.some(function(o){ return occ >= parseInt(o); });
+                var priceOk = price === 0 || price <= filters.maxPrice;
+
+                var show = bedOk && occOk && priceOk;
+                card.style.display = show ? '' : 'none';
+                if (show) visible++;
+            });
+            var noResults = document.getElementById('rooms-no-results');
+            if (noResults) noResults.style.display = visible === 0 ? '' : 'none';
+        }
+    })();
+    </script>
+</body>
+</html>

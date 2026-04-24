@@ -1,0 +1,154 @@
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@{
+    Layout = null;
+    var categoryName = Model.Value<string>("categoryName") ?? Model.Name;
+    var description = Model.Value<string>("description");
+    var categoryImage = Model.Value<Umbraco.Cms.Core.Models.PublishedContent.IPublishedContent>("image");
+    var sortOrder = Model.Value<int>("sortOrder");
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@categoryName</title>
+    @if (!string.IsNullOrWhiteSpace(description))
+    {
+        <meta name="description" content="@description" />
+    }
+    <link rel="stylesheet" href="/css/commerce-theme.css" />
+</head>
+<body class="commerce-theme product-category-page">
+
+    <header class="site-header">
+        <div class="container">
+            <nav class="breadcrumb" aria-label="Breadcrumb">
+                <ol>
+                    <li><a href="/">Home</a></li>
+                    @if (Model.Parent != null && Model.Parent.ContentType.Alias != "shopRoot")
+                    {
+                        <li><a href="@Model.Parent.Url()">@Model.Parent.Name</a></li>
+                    }
+                    <li aria-current="page">@categoryName</li>
+                </ol>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+
+        <div class="category-header">
+            @if (categoryImage != null)
+            {
+                <div class="category-banner">
+                    <img src="@categoryImage.Url()" alt="@categoryName" class="category-banner-image" />
+                    <div class="category-banner-overlay">
+                        <h1 class="category-banner-title">@categoryName</h1>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <h1 class="page-title">@categoryName</h1>
+            }
+            @if (!string.IsNullOrWhiteSpace(description))
+            {
+                <p class="category-description">@description</p>
+            }
+        </div>
+
+        @{
+            var subCategories = Model.Children?
+                .Where(c => c.ContentType.Alias == "productCategory")
+                ?? Enumerable.Empty<Umbraco.Cms.Core.Models.PublishedContent.IPublishedContent>();
+        }
+        @if (subCategories.Any())
+        {
+            <section class="subcategories-section">
+                <h2 class="section-heading">Sub-categories</h2>
+                <div class="categories-grid">
+                    @foreach (var sub in subCategories)
+                    {
+                        var subName = sub.Value<string>("categoryName") ?? sub.Name;
+                        var subImage = sub.Value<Umbraco.Cms.Core.Models.PublishedContent.IPublishedContent>("image");
+                        <a href="@sub.Url()" class="category-card">
+                            @if (subImage != null)
+                            {
+                                <img src="@subImage.Url()" alt="@subName" class="category-card-image" loading="lazy" />
+                            }
+                            <div class="category-card-overlay">
+                                <span class="category-card-name">@subName</span>
+                            </div>
+                        </a>
+                    }
+                </div>
+            </section>
+        }
+
+        <section class="products-section">
+            <h2 class="section-heading">Products</h2>
+            <div class="products-grid">
+                @foreach (var product in Model.Children?.Where(c => c.ContentType.Alias == "product")
+                    ?? Enumerable.Empty<Umbraco.Cms.Core.Models.PublishedContent.IPublishedContent>())
+                {
+                    var productName = product.Value<string>("productName") ?? product.Name;
+                    var price = product.Value<decimal>("price");
+                    var salePrice = product.Value<decimal>("salePrice");
+                    var hasSale = salePrice > 0 && salePrice < price;
+                    var stockStatus = product.Value<string>("stockStatus") ?? "In Stock";
+                    var featuredImage = product.Value<Umbraco.Cms.Core.Models.PublishedContent.IPublishedContent>("featuredImage");
+
+                    <article class="product-card">
+                        <a href="@product.Url()" class="product-card-link" aria-label="View @productName">
+                            <div class="product-card-image-wrapper">
+                                @if (featuredImage != null)
+                                {
+                                    <img src="@featuredImage.Url()" alt="@productName" class="product-card-image" loading="lazy" />
+                                }
+                                @if (hasSale)
+                                {
+                                    <span class="product-badge product-badge--sale">Sale</span>
+                                }
+                                @if (stockStatus == "Out of Stock")
+                                {
+                                    <span class="product-badge product-badge--out-of-stock">Out of Stock</span>
+                                }
+                            </div>
+                            <div class="product-card-body">
+                                <h3 class="product-card-name">@productName</h3>
+                                <div class="product-card-pricing">
+                                    @if (hasSale)
+                                    {
+                                        <span class="price price--original">@price.ToString("C")</span>
+                                        <span class="price price--sale">@salePrice.ToString("C")</span>
+                                    }
+                                    else if (price > 0)
+                                    {
+                                        <span class="price">@price.ToString("C")</span>
+                                    }
+                                </div>
+                            </div>
+                        </a>
+                        <div class="product-card-actions">
+                            <button type="button"
+                                    class="btn btn-primary btn-add-to-cart @(stockStatus == "Out of Stock" ? "btn-disabled" : "")"
+                                    data-product-id="@product.Id"
+                                    data-product-name="@productName"
+                                    @(stockStatus == "Out of Stock" ? "disabled" : "")>
+                                @(stockStatus == "Out of Stock" ? "Out of Stock" : "Add to Cart")
+                            </button>
+                        </div>
+                    </article>
+                }
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <p>&copy; @DateTime.Now.Year. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>

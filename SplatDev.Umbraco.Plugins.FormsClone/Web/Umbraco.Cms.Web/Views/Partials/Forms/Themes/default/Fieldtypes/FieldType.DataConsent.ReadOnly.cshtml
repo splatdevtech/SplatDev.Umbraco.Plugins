@@ -1,0 +1,4 @@
+@model Umbraco.Forms.Web.Models.FieldViewModel
+@{
+    @(Model.ContainsValue(true) || Model.ContainsValue("true") || Model.ContainsValue("on") ? "Agreed" : "Not agreed")
+}

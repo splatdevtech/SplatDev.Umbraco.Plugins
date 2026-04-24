@@ -1,0 +1,238 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
+	<PropertyGroup>
+		<TargetFramework>net9.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<StaticWebAssetBasePath>/</StaticWebAssetBasePath>
+		<AddRazorSupportForMvc>true</AddRazorSupportForMvc>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<PackageId>FormBuilder</PackageId>
+		<Product>FormBuilder Plugin</Product>
+		<Title>FormBuilder Plugin for Umbraco 15</Title>
+	</PropertyGroup>
+	<PropertyGroup>
+		<EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="EPPlus" Version="4.5.3.3" />
+		<PackageReference Include="Microsoft.Data.SqlClient" Version="5.2.2" />
+		<PackageReference Include="Umbraco.Cms.Web.Website" Version="*" />
+		<PackageReference Include="Umbraco.Cms.Api.Common" Version="*" />
+		<PackageReference Include="Umbraco.Cms.Api.Management" Version="*" />
+		<PackageReference Include="Microsoft.AspNetCore.Mvc" Version="*" />
+		<PackageReference Include="JsonLogic" Version="*" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<!-- Dont include the client folder as part of packaging nuget build -->
+		<Content Remove="Client\**" />
+
+		<!-- However make the Umbraco-package.json included for dotnet pack or nuget package and visible to the solution -->
+		<Content Include="Client\public\umbraco-package.json">
+		  <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+		  <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+		</Content>
+		<Content Include="Client\scripts\assets\aspnet-client-validation\dist\aspnet-validation.css" />
+		<Content Include="Client\scripts\assets\aspnet-client-validation\dist\aspnet-validation.js" />
+		<Content Include="Client\scripts\assets\aspnet-client-validation\dist\aspnet-validation.min.js" />
+		<Content Include="Client\scripts\assets\aspnet-client-validation\dist\aspnet-validation.min.js.map" />
+		<Content Include="Client\scripts\assets\datepicker.init.js" />
+		<Content Include="Client\scripts\assets\datepicker.init.min.js" />
+		<Content Include="Client\scripts\assets\defaultform.css" />
+		<Content Include="Client\scripts\assets\defaultform.min.css" />
+		<Content Include="Client\scripts\assets\Email-Example\sample-image.jpg" />
+		<Content Include="Client\scripts\assets\Email-Example\umbraco-logo.png" />
+		<Content Include="Client\scripts\assets\form-builder-conditions.js" />
+		<Content Include="Client\scripts\assets\form-builder-conditions.min.js" />
+		<Content Include="Client\scripts\assets\json-logic-js\logic.min.js" />
+		<Content Include="Client\scripts\assets\moment\min\moment-with-locales.min.js" />
+		<Content Include="Client\scripts\assets\pikaday\pikaday.css" />
+		<Content Include="Client\scripts\assets\pikaday\pikaday.js" />
+		<Content Include="Client\scripts\assets\pikaday\pikaday.min.css" />
+		<Content Include="Client\scripts\assets\pikaday\pikaday.min.js" />
+		<Content Include="Client\scripts\assets\recaptcha.v3.init.js" />
+		<Content Include="Client\scripts\assets\recaptcha.v3.init.min.js" />
+		<Content Include="Client\scripts\assets\themes\bootstrap3-horizontal\style.css" />
+		<Content Include="Client\scripts\assets\themes\bootstrap3-horizontal\style.min.css" />
+		<Content Include="Client\scripts\assets\themes\default\formbuilder.js" />
+		<Content Include="Client\scripts\assets\themes\default\formbuilder.min.js" />
+		<Content Include="Client\scripts\assets\themes\default\style.css" />
+		<Content Include="Client\scripts\assets\themes\default\style.min.css" />
+		<Content Include="Client\scripts\cs-cz.js" />
+		<Content Include="Client\scripts\cs-cz.js.map" />
+		<Content Include="Client\scripts\da-dk.js" />
+		<Content Include="Client\scripts\da-dk.js.map" />
+		<Content Include="Client\scripts\data-type-picker-property-editor.element.js" />
+		<Content Include="Client\scripts\data-type-picker-property-editor.element.js.map" />
+		<Content Include="Client\scripts\datasource-create-options-modal.element.js" />
+		<Content Include="Client\scripts\datasource-create-options-modal.element.js.map" />
+		<Content Include="Client\scripts\datasource-created.condition.js" />
+		<Content Include="Client\scripts\datasource-created.condition.js.map" />
+		<Content Include="Client\scripts\datasource-delete-confirm-modal.element.js" />
+		<Content Include="Client\scripts\datasource-delete-confirm-modal.element.js.map" />
+		<Content Include="Client\scripts\datasource-type-collection.repository.js" />
+		<Content Include="Client\scripts\datasource-type-collection.repository.js.map" />
+		<Content Include="Client\scripts\datasource-workspace.context.js" />
+		<Content Include="Client\scripts\datasource-workspace.context.js.map" />
+		<Content Include="Client\scripts\data\templates\commentform.json">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Client\scripts\data\templates\contactform.json">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Client\scripts\document-mapper-property-editor.element.js" />
+		<Content Include="Client\scripts\document-mapper-property-editor.element.js.map" />
+		<Content Include="Client\scripts\document-type-field-picker-property-editor.element.js" />
+		<Content Include="Client\scripts\document-type-field-picker-property-editor.element.js.map" />
+		<Content Include="Client\scripts\document-type-picker-property-editor.element.js" />
+		<Content Include="Client\scripts\document-type-picker-property-editor.element.js.map" />
+		<Content Include="Client\scripts\email-template-picker-property-editor.element.js" />
+		<Content Include="Client\scripts\email-template-picker-property-editor.element.js.map" />
+		<Content Include="Client\scripts\email-template-tree.repository.js" />
+		<Content Include="Client\scripts\email-template-tree.repository.js.map" />
+		<Content Include="Client\scripts\email-template-tree.store.js">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Client\scripts\email-template-tree.store.js.map" />
+		<Content Include="Client\scripts\en-gb.js" />
+		<Content Include="Client\scripts\en-gb.js.map" />
+		<Content Include="Client\scripts\en.js">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Client\scripts\en.js.map" />
+		<Content Include="Client\scripts\entry-render-helper.class.js" />
+		<Content Include="Client\scripts\entry-render-helper.class.js.map" />
+		<Content Include="Client\scripts\es-es.js" />
+		<Content Include="Client\scripts\es-es.js.map" />
+		<Content Include="Client\scripts\field-mapper-property-editor.element.js" />
+		<Content Include="Client\scripts\field-mapper-property-editor.element.js.map" />
+		<Content Include="Client\scripts\folder-delete-confirm-modal.element.js" />
+		<Content Include="Client\scripts\folder-delete-confirm-modal.element.js.map" />
+		<Content Include="Client\scripts\folder-move-options-modal.element.js" />
+		<Content Include="Client\scripts\folder-move-options-modal.element.js.map" />
+		<Content Include="Client\scripts\folder-picker-multiple-property-editor.element.js" />
+		<Content Include="Client\scripts\folder-picker-multiple-property-editor.element.js.map" />
+		<Content Include="Client\scripts\form-builder.js">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Client\scripts\form-builder.js.map" />
+		<Content Include="Client\scripts\form-copy-options-modal.element.js" />
+		<Content Include="Client\scripts\form-copy-options-modal.element.js.map" />
+		<Content Include="Client\scripts\form-copy-workflows-options-modal.element.js" />
+		<Content Include="Client\scripts\form-copy-workflows-options-modal.element.js.map" />
+		<Content Include="Client\scripts\form-create-options-modal.element.js" />
+		<Content Include="Client\scripts\form-create-options-modal.element.js.map" />
+		<Content Include="Client\scripts\form-delete-confirm-modal.element.js" />
+		<Content Include="Client\scripts\form-delete-confirm-modal.element.js.map" />
+		<Content Include="Client\scripts\form-details-picker-property-editor.element.js" />
+		<Content Include="Client\scripts\form-details-picker-property-editor.element.js.map" />
+		<Content Include="Client\scripts\form-edit-workflow-modal.element.js" />
+		<Content Include="Client\scripts\form-edit-workflow-modal.element.js.map" />
+		<Content Include="Client\scripts\form-entry-collection.element.js" />
+		<Content Include="Client\scripts\form-entry-collection.element.js.map" />
+		<Content Include="Client\scripts\form-entry-details-modal.element.js" />
+		<Content Include="Client\scripts\form-entry-details-modal.element.js.map" />
+		<Content Include="Client\scripts\form-entry-table-collection-view.element.js" />
+		<Content Include="Client\scripts\form-entry-table-collection-view.element.js.map" />
+		<Content Include="Client\scripts\form-export-modal.element.js" />
+		<Content Include="Client\scripts\form-export-modal.element.js.map" />
+		<Content Include="Client\scripts\form-import-modal.element.js" />
+		<Content Include="Client\scripts\form-import-modal.element.js.map" />
+		<Content Include="Client\scripts\form-move-options-modal.element.js" />
+		<Content Include="Client\scripts\form-move-options-modal.element.js.map" />
+		<Content Include="Client\scripts\form-name.component.js">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Client\scripts\form-name.component.js.map" />
+		<Content Include="Client\scripts\form-picker-base.element.js" />
+		<Content Include="Client\scripts\form-picker-base.element.js.map" />
+		<Content Include="Client\scripts\form-picker-multiple-property-editor.element.js" />
+		<Content Include="Client\scripts\form-picker-multiple-property-editor.element.js.map" />
+		<Content Include="Client\scripts\form-picker-single-property-editor.element.js" />
+		<Content Include="Client\scripts\form-picker-single-property-editor.element.js.map" />
+		<Content Include="Client\scripts\form-workspace.context.js" />
+		<Content Include="Client\scripts\form-workspace.context.js.map" />
+		<Content Include="Client\scripts\forms-dashboard.element.js">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Client\scripts\forms-dashboard.element.js.map" />
+		<Content Include="Client\scripts\fr-fr.js" />
+		<Content Include="Client\scripts\fr-fr.js.map" />
+		<Content Include="Client\scripts\index.js" />
+		<Content Include="Client\scripts\index.js.map" />
+		<Content Include="Client\scripts\it-it.js" />
+		<Content Include="Client\scripts\it-it.js.map" />
+		<Content Include="Client\scripts\nl-nl.js" />
+		<Content Include="Client\scripts\nl-nl.js.map" />
+		<Content Include="Client\scripts\password-property-editor.element.js" />
+		<Content Include="Client\scripts\password-property-editor.element.js.map" />
+		<Content Include="Client\scripts\pl-pl.js" />
+		<Content Include="Client\scripts\pl-pl.js.map" />
+		<Content Include="Client\scripts\prevaluesource-collection.repository.js" />
+		<Content Include="Client\scripts\prevaluesource-collection.repository.js.map" />
+		<Content Include="Client\scripts\prevaluesource-create-options-modal.element.js" />
+		<Content Include="Client\scripts\prevaluesource-create-options-modal.element.js.map" />
+		<Content Include="Client\scripts\prevaluesource-delete-confirm-modal.element.js" />
+		<Content Include="Client\scripts\prevaluesource-delete-confirm-modal.element.js.map" />
+		<Content Include="Client\scripts\prevaluesource-type-collection.repository.js" />
+		<Content Include="Client\scripts\prevaluesource-type-collection.repository.js.map" />
+		<Content Include="Client\scripts\prevaluesource-workspace.context-token.js" />
+		<Content Include="Client\scripts\prevaluesource-workspace.context-token.js.map" />
+		<Content Include="Client\scripts\prevaluesource-workspace.context.js" />
+		<Content Include="Client\scripts\prevaluesource-workspace.context.js.map" />
+		<Content Include="Client\scripts\security-options.condition.js" />
+		<Content Include="Client\scripts\security-options.condition.js.map" />
+		<Content Include="Client\scripts\security-user-group-workspace.context-token.js" />
+		<Content Include="Client\scripts\security-user-group-workspace.context-token.js.map" />
+		<Content Include="Client\scripts\security-user-group-workspace.context.js" />
+		<Content Include="Client\scripts\security-user-group-workspace.context.js.map" />
+		<Content Include="Client\scripts\security-user-workspace.context-token.js" />
+		<Content Include="Client\scripts\security-user-workspace.context-token.js.map" />
+		<Content Include="Client\scripts\security-user-workspace.context.js" />
+		<Content Include="Client\scripts\security-user-workspace.context.js.map" />
+		<Content Include="Client\scripts\security-workspace-base.context.js" />
+		<Content Include="Client\scripts\security-workspace-base.context.js.map" />
+		<Content Include="Client\scripts\standard-field-mapper-property-editor.element.js" />
+		<Content Include="Client\scripts\standard-field-mapper-property-editor.element.js.map" />
+		<Content Include="Client\scripts\text-with-field-picker-property-editor.element.js" />
+		<Content Include="Client\scripts\text-with-field-picker-property-editor.element.js.map" />
+		<Content Include="Client\scripts\theme-picker-property-editor.element.js" />
+		<Content Include="Client\scripts\theme-picker-property-editor.element.js.map" />
+		<Content Include="Client\scripts\user-security-create-options-modal.element.js" />
+		<Content Include="Client\scripts\user-security-create-options-modal.element.js.map" />
+		<Content Include="Client\scripts\user-security-delete-confirm-modal.element.js" />
+		<Content Include="Client\scripts\user-security-delete-confirm-modal.element.js.map" />
+		<Content Include="Client\scripts\workspace-view-datasource-design.element.js" />
+		<Content Include="Client\scripts\workspace-view-datasource-design.element.js.map" />
+		<Content Include="Client\scripts\workspace-view-datasource-info.element.js" />
+		<Content Include="Client\scripts\workspace-view-datasource-info.element.js.map" />
+		<Content Include="Client\scripts\workspace-view-form-advanced.element.js" />
+		<Content Include="Client\scripts\workspace-view-form-advanced.element.js.map" />
+		<Content Include="Client\scripts\workspace-view-form-design.element.js" />
+		<Content Include="Client\scripts\workspace-view-form-design.element.js.map" />
+		<Content Include="Client\scripts\workspace-view-form-entries.element.js" />
+		<Content Include="Client\scripts\workspace-view-form-entries.element.js.map" />
+		<Content Include="Client\scripts\workspace-view-form-info.element.js" />
+		<Content Include="Client\scripts\workspace-view-form-info.element.js.map" />
+		<Content Include="Client\scripts\workspace-view-form-settings.element.js" />
+		<Content Include="Client\scripts\workspace-view-form-settings.element.js.map" />
+		<Content Include="Client\scripts\workspace-view-prevaluesource-design.element.js" />
+		<Content Include="Client\scripts\workspace-view-prevaluesource-design.element.js.map" />
+		<Content Include="Client\scripts\workspace-view-prevaluesource-info.element.js" />
+		<Content Include="Client\scripts\workspace-view-prevaluesource-info.element.js.map" />
+		<Content Include="Client\scripts\workspace-view-security-permissions-base.element.js" />
+		<Content Include="Client\scripts\workspace-view-security-permissions-base.element.js.map" />
+		<Content Include="Client\scripts\workspace-view-security-user-group-permissions.element.js" />
+		<Content Include="Client\scripts\workspace-view-security-user-group-permissions.element.js.map" />
+		<Content Include="Client\scripts\workspace-view-security-user-permissions.element.js" />
+		<Content Include="Client\scripts\workspace-view-security-user-permissions.element.js.map" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="wwwroot\App_Plugins\" />
+	</ItemGroup>
+
+</Project>

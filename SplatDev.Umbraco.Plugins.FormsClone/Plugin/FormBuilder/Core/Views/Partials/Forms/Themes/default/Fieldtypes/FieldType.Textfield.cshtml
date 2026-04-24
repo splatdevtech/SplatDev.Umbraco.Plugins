@@ -1,0 +1,19 @@
+@using FormBuilder.Core.Extensions
+@using FormBuilder.Core.Models
+@using FormBuilder.Web.Extensions
+@model FieldViewModel
+@{
+    var maxLength = Model.GetSettingValue<int>("MaximumLength", 255);
+    var fieldType = Model.GetSettingValue<string>("FieldType", "text");
+    var autocompleteAttribute = Model.GetSettingValue<string>("AutocompleteAttribute", string.Empty);
+}
+<input type="@fieldType" name="@Model.Name" id="@Model.Id" data-umb="@Model.Id" class="text @Html.GetFormFieldClass(Model.FieldTypeName)" value="@Model.ValueAsHtmlString" maxlength="@maxLength"
+@(string.IsNullOrEmpty(Model.PlaceholderText) == false ? $"placeholder=\"{Model.PlaceholderText}\"" : "")
+@(string.IsNullOrEmpty(autocompleteAttribute) == false ? $"autocomplete=\"{autocompleteAttribute}\"" : "")
+@(Model.Mandatory || Model.Validate ? "data-val=\"true\"" : "")
+@(Model.Mandatory ? $"data-val-required=\"{Model.RequiredErrorMessage}\" aria-required=\"true\"" : "")
+@(Model.Validate ? $"data-val-regex=\"{Model.InvalidErrorMessage}\" data-val-regex-pattern=\"{Html.Raw(Model.Regex)}\"" : "")
+@(!string.IsNullOrEmpty(Model.ToolTip) ? $"aria-describedby=\"{(Model.Id)}_description\"":"") />
+
+
+

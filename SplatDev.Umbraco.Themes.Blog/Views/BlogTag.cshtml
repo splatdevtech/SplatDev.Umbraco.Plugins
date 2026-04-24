@@ -1,0 +1,24 @@
+@using Umbraco.Extensions
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@{
+    Layout = "_Layout";
+    var tagName = Model.Value<string>("tagName") ?? Model.Name;
+    var color = Model.Value<string>("color");
+}
+
+<main class="blog-tag container">
+    <header class="blog-tag__header">
+        <h1 class="blog-tag__title">
+            <span class="tag-pill @(!string.IsNullOrWhiteSpace(color) ? "" : "")"
+                  @(!string.IsNullOrWhiteSpace(color) ? $"style=\"background-color:{color}\"" : "")>
+                #@tagName
+            </span>
+        </h1>
+    </header>
+
+    <div class="blog-tag__body">
+        <p class="blog-tag__info">
+            Showing all posts tagged <strong>#@tagName</strong>.
+        </p>
+    </div>
+</main>

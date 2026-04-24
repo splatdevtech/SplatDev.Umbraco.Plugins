@@ -1,0 +1,295 @@
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@{
+    Layout = null;
+    var root         = Model.AncestorsOrSelf().FirstOrDefault(n => n.ContentType.Alias == "portfolioRoot");
+    var ownerName    = root?.Value<string>("yourName") ?? root?.Name ?? "Portfolio";
+    var ownerTitle   = root?.Value<string>("title") ?? string.Empty;
+    var accentColor  = root?.Value<string>("accentColor") ?? "#6c63ff";
+
+    var heroHeadline  = Model.Value<string>("heroHeadline") ?? ownerName;
+    var heroSubtext   = Model.Value<string>("heroSubtext") ?? string.Empty;
+    var heroStyle     = (Model.Value<string>("heroStyle") ?? "Minimal").ToLower();
+    var ctaText       = Model.Value<string>("ctaText") ?? "View My Work";
+    var ctaUrl        = Model.Value<Umbraco.Cms.Core.Models.Link>("ctaUrl");
+    var heroImage     = Model.Value<Umbraco.Cms.Core.Models.MediaWithCrops>("heroImage");
+
+    var aboutShort    = Model.Value<string>("aboutShort") ?? string.Empty;
+    var aboutPhoto    = Model.Value<Umbraco.Cms.Core.Models.MediaWithCrops>("aboutPhoto");
+
+    var workHeadline  = Model.Value<string>("workHeadline") ?? "Selected Work";
+    var servicesTitle = Model.Value<string>("servicesTitle") ?? "Services";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ownerName @(!string.IsNullOrWhiteSpace(ownerTitle) ? $"— {ownerTitle}" : "")</title>
+    <style>:root { --color-accent: @accentColor; }</style>
+    <link rel="stylesheet" href="/css/portfolio-theme.css" />
+</head>
+<body class="portfolio-layout portfolio-home hero-style--@heroStyle" data-theme="light">
+
+    <header class="portfolio-header">
+        <div class="container portfolio-header__inner">
+            <a class="portfolio-header__logo" href="@Model.Url()">@ownerName</a>
+            <nav class="portfolio-nav" aria-label="Main navigation">
+                <ul class="portfolio-nav__list">
+                    <li><a href="@Model.Url()">Home</a></li>
+                    @{
+                        var projectsPage = root?.Children.FirstOrDefault(c => c.ContentType.Alias == "projectsListing");
+                        var aboutPage    = root?.Children.FirstOrDefault(c => c.ContentType.Alias == "aboutPage");
+                        var servicesPage = root?.Children.FirstOrDefault(c => c.ContentType.Alias == "servicesPage");
+                        var contactPage  = root?.Children.FirstOrDefault(c => c.ContentType.Alias == "contactPage");
+                    }
+                    @if (projectsPage != null) { <li><a href="@projectsPage.Url()">Work</a></li> }
+                    @if (aboutPage != null)    { <li><a href="@aboutPage.Url()">About</a></li> }
+                    @if (servicesPage != null) { <li><a href="@servicesPage.Url()">Services</a></li> }
+                    @if (contactPage != null)  { <li><a href="@contactPage.Url()" class="nav-cta">Hire Me</a></li> }
+                </ul>
+            </nav>
+            <button class="theme-toggle" aria-label="Toggle dark mode" type="button">
+                <span class="theme-toggle__icon" aria-hidden="true">◐</span>
+            </button>
+        </div>
+    </header>
+
+    <main>
+
+        <!-- ── Hero ───────────────────────────────────────────────────── -->
+        <section class="hero hero--@heroStyle" aria-labelledby="hero-heading">
+            <div class="container hero__inner">
+                <div class="hero__text">
+                    @if (!string.IsNullOrWhiteSpace(ownerTitle))
+                    {
+                        <p class="hero__eyebrow">@ownerTitle</p>
+                    }
+                    <h1 id="hero-heading" class="hero__headline">@heroHeadline</h1>
+                    @if (!string.IsNullOrWhiteSpace(heroSubtext))
+                    {
+                        <p class="hero__subtext">@heroSubtext</p>
+                    }
+                    <div class="hero__actions">
+                        @if (ctaUrl != null)
+                        {
+                            <a class="btn btn--accent" href="@ctaUrl.Url">@ctaText</a>
+                        }
+                        else if (projectsPage != null)
+                        {
+                            <a class="btn btn--accent" href="@projectsPage.Url()">@ctaText</a>
+                        }
+                        @if (contactPage != null)
+                        {
+                            <a class="btn btn--outline" href="@contactPage.Url()">Get in Touch</a>
+                        }
+                    </div>
+                </div>
+                @if (heroImage != null)
+                {
+                    <div class="hero__image">
+                        <img src="@heroImage.MediaUrl()" alt="@ownerName" loading="eager" />
+                    </div>
+                }
+            </div>
+        </section>
+
+        <!-- ── About Preview ──────────────────────────────────────────── -->
+        @if (!string.IsNullOrWhiteSpace(aboutShort))
+        {
+            <section class="about-preview section" aria-labelledby="about-preview-heading">
+                <div class="container about-preview__inner">
+                    <div class="about-preview__text">
+                        <h2 id="about-preview-heading" class="section-heading">About Me</h2>
+                        <p class="about-preview__bio">@aboutShort</p>
+                        @if (aboutPage != null)
+                        {
+                            <a class="btn btn--ghost" href="@aboutPage.Url()">More About Me &rarr;</a>
+                        }
+                    </div>
+                    @if (aboutPhoto != null)
+                    {
+                        <div class="about-preview__photo">
+                            <img src="@aboutPhoto.MediaUrl()" alt="@ownerName" loading="lazy" />
+                        </div>
+                    }
+                </div>
+            </section>
+        }
+
+        <!-- ── Featured Work ──────────────────────────────────────────── -->
+        @{
+            var featuredLinks = Model.Value<IEnumerable<Umbraco.Cms.Core.Models.Link>>("featuredProjects");
+        }
+        @if (featuredLinks != null && featuredLinks.Any())
+        {
+            <section class="featured-work section" aria-labelledby="work-heading">
+                <div class="container">
+                    <h2 id="work-heading" class="section-heading">@workHeadline</h2>
+                    <div class="project-grid project-grid--featured">
+                        @foreach (var link in featuredLinks.Take(6))
+                        {
+                            <article class="project-card">
+                                <a class="project-card__link" href="@link.Url" tabindex="-1" aria-hidden="true">
+                                    <div class="project-card__image-wrap">
+                                        <div class="project-card__placeholder" aria-hidden="true"></div>
+                                        <div class="project-card__overlay">
+                                            <span class="project-card__overlay-title">@link.Name</span>
+                                            <span class="project-card__overlay-cta">View Project</span>
+                                        </div>
+                                    </div>
+                                </a>
+                                <div class="project-card__meta">
+                                    <h3 class="project-card__title">
+                                        <a href="@link.Url">@link.Name</a>
+                                    </h3>
+                                </div>
+                            </article>
+                        }
+                    </div>
+                    @if (projectsPage != null)
+                    {
+                        <div class="section-cta">
+                            <a class="btn btn--outline" href="@projectsPage.Url()">View All Projects &rarr;</a>
+                        </div>
+                    }
+                </div>
+            </section>
+        }
+
+        <!-- ── Services Preview ───────────────────────────────────────── -->
+        @{
+            var serviceItems = Model.Value<IEnumerable<Umbraco.Cms.Core.Models.Blocks.BlockListItem>>("services");
+        }
+        @if (serviceItems != null && serviceItems.Any())
+        {
+            <section class="services-preview section section--alt" aria-labelledby="services-heading">
+                <div class="container">
+                    <h2 id="services-heading" class="section-heading">@servicesTitle</h2>
+                    <div class="services-grid">
+                        @foreach (var item in serviceItems.Take(6))
+                        {
+                            var svcTitle = item.Content.Value<string>("title") ?? string.Empty;
+                            var svcDesc  = item.Content.Value<string>("description") ?? string.Empty;
+                            var svcIcon  = item.Content.Value<string>("icon") ?? "✦";
+                            var svcPrice = item.Content.Value<string>("price") ?? string.Empty;
+                            <article class="service-card">
+                                <div class="service-card__icon" aria-hidden="true">@svcIcon</div>
+                                <h3 class="service-card__title">@svcTitle</h3>
+                                @if (!string.IsNullOrWhiteSpace(svcDesc))
+                                {
+                                    <p class="service-card__desc">@svcDesc</p>
+                                }
+                                @if (!string.IsNullOrWhiteSpace(svcPrice))
+                                {
+                                    <span class="service-card__price">@svcPrice</span>
+                                }
+                            </article>
+                        }
+                    </div>
+                    @if (servicesPage != null)
+                    {
+                        <div class="section-cta">
+                            <a class="btn btn--outline" href="@servicesPage.Url()">All Services &rarr;</a>
+                        </div>
+                    }
+                </div>
+            </section>
+        }
+
+        <!-- ── Testimonials ───────────────────────────────────────────── -->
+        @{
+            var testimonials = Model.Value<IEnumerable<Umbraco.Cms.Core.Models.Blocks.BlockListItem>>("testimonials");
+        }
+        @if (testimonials != null && testimonials.Any())
+        {
+            <section class="testimonials section" aria-labelledby="testimonials-heading">
+                <div class="container">
+                    <h2 id="testimonials-heading" class="section-heading">Kind Words</h2>
+                    <div class="testimonial-grid">
+                        @foreach (var item in testimonials)
+                        {
+                            var quote       = item.Content.Value<string>("quote") ?? string.Empty;
+                            var clientName  = item.Content.Value<string>("clientName") ?? string.Empty;
+                            var clientTitle = item.Content.Value<string>("clientTitle") ?? string.Empty;
+                            var clientCo    = item.Content.Value<string>("clientCompany") ?? string.Empty;
+                            var clientPhoto = item.Content.Value<Umbraco.Cms.Core.Models.MediaWithCrops>("clientPhoto");
+                            <blockquote class="testimonial-card">
+                                <p class="testimonial-card__quote">&ldquo;@quote&rdquo;</p>
+                                <footer class="testimonial-card__author">
+                                    @if (clientPhoto != null)
+                                    {
+                                        <img src="@clientPhoto.MediaUrl()"
+                                             alt="@clientName"
+                                             class="testimonial-card__photo"
+                                             loading="lazy" />
+                                    }
+                                    <div>
+                                        <cite class="testimonial-card__name">@clientName</cite>
+                                        @if (!string.IsNullOrWhiteSpace(clientTitle) || !string.IsNullOrWhiteSpace(clientCo))
+                                        {
+                                            <span class="testimonial-card__role">
+                                                @clientTitle@(!string.IsNullOrWhiteSpace(clientTitle) && !string.IsNullOrWhiteSpace(clientCo) ? ", " : "")@clientCo
+                                            </span>
+                                        }
+                                    </div>
+                                </footer>
+                            </blockquote>
+                        }
+                    </div>
+                </div>
+            </section>
+        }
+
+        <!-- ── Contact Teaser ─────────────────────────────────────────── -->
+        @if (contactPage != null)
+        {
+            <section class="contact-teaser section section--accent" aria-labelledby="contact-teaser-heading">
+                <div class="container contact-teaser__inner">
+                    <h2 id="contact-teaser-heading" class="contact-teaser__heading">Let's Work Together</h2>
+                    <p class="contact-teaser__subtext">Have a project in mind? I'd love to hear about it.</p>
+                    <a class="btn btn--white" href="@contactPage.Url()">Start a Conversation &rarr;</a>
+                </div>
+            </section>
+        }
+
+    </main>
+
+    <footer class="portfolio-footer">
+        <div class="container portfolio-footer__inner">
+            <p>&copy; @DateTime.UtcNow.Year @ownerName. All rights reserved.</p>
+            @if (root != null)
+            {
+                var gh  = root.Value<Umbraco.Cms.Core.Models.Link>("github");
+                var li  = root.Value<Umbraco.Cms.Core.Models.Link>("linkedIn");
+                var tw  = root.Value<Umbraco.Cms.Core.Models.Link>("twitter");
+                var dr  = root.Value<Umbraco.Cms.Core.Models.Link>("dribbble");
+                if (gh != null || li != null || tw != null || dr != null)
+                {
+                    <nav class="footer-social" aria-label="Social links">
+                        @if (li != null) { <a href="@li.Url" target="_blank" rel="noopener noreferrer">LinkedIn</a> }
+                        @if (gh != null) { <a href="@gh.Url" target="_blank" rel="noopener noreferrer">GitHub</a> }
+                        @if (dr != null) { <a href="@dr.Url" target="_blank" rel="noopener noreferrer">Dribbble</a> }
+                        @if (tw != null) { <a href="@tw.Url" target="_blank" rel="noopener noreferrer">Twitter</a> }
+                    </nav>
+                }
+            }
+        </div>
+    </footer>
+
+    <script>
+        // Simple dark/light toggle
+        const btn = document.querySelector('.theme-toggle');
+        if (btn) {
+            btn.addEventListener('click', () => {
+                const body = document.body;
+                const next = body.dataset.theme === 'dark' ? 'light' : 'dark';
+                body.dataset.theme = next;
+                localStorage.setItem('portfolio-theme', next);
+            });
+            const saved = localStorage.getItem('portfolio-theme');
+            if (saved) document.body.dataset.theme = saved;
+        }
+    </script>
+
+</body>
+</html>
