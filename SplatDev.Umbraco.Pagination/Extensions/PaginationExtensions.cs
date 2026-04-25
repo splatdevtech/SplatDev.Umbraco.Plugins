@@ -4,7 +4,7 @@
     {
         public static int GetTotalPages(long totalResults, int pageSize)
         {
-            var totalPages = (int)Math.Ceiling((decimal)(totalResults / pageSize));
+            var totalPages = (int)Math.Ceiling((decimal)totalResults / pageSize);
             return totalPages > 0 ? totalPages : 1;
         }
 

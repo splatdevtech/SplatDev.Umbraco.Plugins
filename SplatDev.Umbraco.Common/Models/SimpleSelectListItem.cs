@@ -21,7 +21,7 @@ namespace SplatDev.Umbraco.Common.Models
         [JsonPropertyName("alias")]
         public string Alias { get; set; } = string.Empty;
         [JsonPropertyName("value")]
-        public int Value { get; set; } = new();
+        public int Value { get; set; } = 0;
         [JsonPropertyName("group")]
         public string? Group { get; set; }
     }

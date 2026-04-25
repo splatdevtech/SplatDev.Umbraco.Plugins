@@ -12,8 +12,9 @@ namespace SplatDev.Umbraco.Common.ContentFinders
             if (path.StartsWith(BASE_FRAGMENT, StringComparison.OrdinalIgnoreCase))
             {
                 request.SetRedirect(request.Uri.GetLeftPart(UriPartial.Path));
+                return Task.FromResult(true);
             }
-            return Task.FromResult(false); // Let other finders handle routing
+            return Task.FromResult(false);
         }
     }
 }

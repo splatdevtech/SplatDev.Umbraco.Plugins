@@ -1,15 +1,26 @@
+using SplatDev.Umbraco.Authorization.Ldap.Services;
+
+using System.Runtime.Versioning;
+
 using Umbraco.Cms.Core.Security;
 
 namespace SplatDev.Umbraco.Authorization.Ldap.Handlers
 {
-    public class LdapBackOfficePasswordChecker : IBackOfficeUserPasswordChecker
+    public class LdapBackOfficePasswordChecker(LdapService ldapService) : IBackOfficeUserPasswordChecker
     {
-        public async Task<BackOfficeUserPasswordCheckerResult> CheckPasswordAsync(BackOfficeIdentityUser user, string password)
+        private readonly LdapService _ldapService = ldapService;
+
+        [SupportedOSPlatform("windows")]
+        public Task<BackOfficeUserPasswordCheckerResult> CheckPasswordAsync(BackOfficeIdentityUser user, string password)
         {
-            await Task.FromResult(0);
-            return user == null
-                ? throw new ArgumentNullException(nameof(user))
-                : BackOfficeUserPasswordCheckerResult.ValidCredentials;
+            ArgumentNullException.ThrowIfNull(user);
+
+            var ldapUser = _ldapService.GetUser(user.UserName);
+            var result = ldapUser is not null && ldapUser.IsAllowedBackOffice
+                ? BackOfficeUserPasswordCheckerResult.ValidCredentials
+                : BackOfficeUserPasswordCheckerResult.InvalidCredentials;
+
+            return Task.FromResult(result);
         }
     }
 }

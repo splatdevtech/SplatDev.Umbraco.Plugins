@@ -4,26 +4,21 @@
     {
         public static class CacheExpires
         {
-#pragma warning disable CA2211 // Non-constant fields should not be visible
-            public static double MINUTE = 60 * 1000;
-            public static double HOUR = MINUTE * 60;
-            public static double DAY = HOUR * 24;
-            public static double WEEK = DAY * 7;
-            public static double MONTH = WEEK * 4;
-            public static double THREE_MONTHS = MONTH * 3;
-
-#pragma warning restore CA2211 // Non-constant fields should not be visible
+            public static readonly double MINUTE = 60 * 1000;
+            public static readonly double HOUR = MINUTE * 60;
+            public static readonly double DAY = HOUR * 24;
+            public static readonly double WEEK = DAY * 7;
+            public static readonly double MONTH = WEEK * 4;
+            public static readonly double THREE_MONTHS = MONTH * 3;
         }
         public static class CacheRefresh
         {
-#pragma warning disable CA2211 // Non-constant fields should not be visible
-            public static TimeSpan MINUTE = TimeSpan.FromMinutes(1);
-            public static TimeSpan HOUR = TimeSpan.FromHours(1);
-            public static TimeSpan DAY = TimeSpan.FromHours(24);
-            public static TimeSpan WEEK = TimeSpan.FromDays(7);
-            public static TimeSpan MONTH = TimeSpan.FromDays(30);
-            public static TimeSpan THREE_MONTHS = TimeSpan.FromDays(90);
-#pragma warning restore CA2211 // Non-constant fields should not be visible
+            public static readonly TimeSpan MINUTE = TimeSpan.FromMinutes(1);
+            public static readonly TimeSpan HOUR = TimeSpan.FromHours(1);
+            public static readonly TimeSpan DAY = TimeSpan.FromHours(24);
+            public static readonly TimeSpan WEEK = TimeSpan.FromDays(7);
+            public static readonly TimeSpan MONTH = TimeSpan.FromDays(30);
+            public static readonly TimeSpan THREE_MONTHS = TimeSpan.FromDays(90);
         }
 
         public static class SlidingCacheExpiration

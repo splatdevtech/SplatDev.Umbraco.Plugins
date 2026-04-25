@@ -12,13 +12,13 @@ namespace SplatDev.Umbraco.Markup.Extensions
         private static string FirstCharToUpper(this string input) =>
             string.IsNullOrEmpty(input) ? input : char.ToUpper(input[0]) + input[1..];
 
-        private readonly static string AUDIO_TAG = "<audio controls src=\"{url}\"></audio>";
+        private readonly static string AUDIO_TAG = "<audio controls src=\"{0}\"></audio>";
 
-        private readonly static string FILE_TAG = "<a href='{url}' target='_blank' download>{name}</a>";
+        private readonly static string FILE_TAG = "<a href='{0}' target='_blank' download>{1}</a>";
 
-        private readonly static string IMG_TAG = "<img src='{url}' alt='{name}'/>";
+        private readonly static string IMG_TAG = "<img src='{0}' alt='{1}'/>";
 
-        private readonly static string VIDEO_TAG = "<video width=\"320\" height=\"240\" style=\"width:100%;height:100vh\" controls>\r\n  <source src=\"{url}\" type=\"video/mp4\">\r\n  Your browser does not support the video tag.\r\n</video>";
+        private readonly static string VIDEO_TAG = "<video width=\"320\" height=\"240\" style=\"width:100%;height:100vh\" controls>\r\n  <source src=\"{0}\" type=\"video/mp4\">\r\n  Your browser does not support the video tag.\r\n</video>";
 
         public static string? GetMarkup(this BlockGridArea source)
         {

@@ -32,7 +32,7 @@ namespace SplatDev.Umbraco.NPoco.Repositories
 
         T? Get(string column, object? value);
 
-        IQueryProviderWithIncludes<T> GetAll();
+        IEnumerable<T> GetAll();
 
         IEnumerable<T> GetMany(params int[]? ids);
 

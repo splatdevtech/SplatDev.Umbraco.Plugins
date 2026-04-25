@@ -1,6 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 
-namespace QuoteTab.Umbraco.Core.Extensions
+namespace SplatDev.Umbraco.Common.Extensions
 {
     public static partial class RuntimeMinifierExtensions
     {

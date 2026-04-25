@@ -7,7 +7,7 @@ using System.Xml.Linq;
 
 using Umbraco.Extensions;
 
-namespace QuoteTab.Umbraco.Core.Extensions
+namespace SplatDev.Umbraco.Common.Extensions
 {
     public static partial class StringExtensions
     {

@@ -24,7 +24,6 @@ namespace SplatDev.Umbraco.Authorization.Ldap.Middleware
                 context.Request.Path.Value!.Contains("/umbraco") ||
                 context.Request.Path.Value!.StartsWith("/impersonate"))
             {
-                context.Response.StatusCode = StatusCodes.Status200OK;
                 await next(context);
                 return;
             }
@@ -33,7 +32,9 @@ namespace SplatDev.Umbraco.Authorization.Ldap.Middleware
             {
                 context.Response.StatusCode = StatusCodes.Status401Unauthorized;
                 context.Response.Redirect(context.Request.PathBase + "/status-codes/401");
+                return;
             }
+
             await next(context);
         }
 

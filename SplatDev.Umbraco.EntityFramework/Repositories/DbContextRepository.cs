@@ -58,18 +58,22 @@ namespace SplatDev.Umbraco.EntityFramework.Repositories
 
         public async Task<PagedResults<TEntity>> GetPagedResultsAsync(int pageNumber, int pageSize)
         {
-            var all = await GetAllAsync();
-            int total = all?.Count ?? 0;
-            IList<TEntity>? allPaged = all?.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
+            int total = await _dbContext.Set<TEntity>().CountAsync();
+            IList<TEntity> paged = await _dbContext.Set<TEntity>()
+                .AsNoTracking()
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
+
             var pagedResults = new PagedResults<TEntity>
             {
-                Results = allPaged,
+                Results = paged,
                 Pagination = new Pagination.Models.Pagination
                 {
                     Page = pageNumber,
                     PageSize = pageSize,
                     TotalResults = total,
-                    TotalPages = all is not null && all.Any() ? PaginationExtensions.GetTotalPages(all.Count, pageSize) : 0
+                    TotalPages = total > 0 ? PaginationExtensions.GetTotalPages(total, pageSize) : 0
                 }
             };
             return pagedResults;
@@ -84,9 +88,7 @@ namespace SplatDev.Umbraco.EntityFramework.Repositories
 
         public async Task<int?> CountRecordsAsync()
         {
-            await Task.FromResult(0);
-            int count = _dbContext.Set<TEntity>().Count();
-            return count;
+            return await _dbContext.Set<TEntity>().CountAsync();
         }
     }
 }

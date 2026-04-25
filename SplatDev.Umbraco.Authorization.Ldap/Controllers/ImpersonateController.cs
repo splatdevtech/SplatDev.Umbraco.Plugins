@@ -25,10 +25,12 @@ namespace SplatDev.Umbraco.Authorization.Ldap.Controllers
 
         [HttpGet]
         [SupportedOSPlatform("windows")]
-        public async Task<IActionResult> Index(string username, string currentUsername)
+        public async Task<IActionResult> Index(string username)
         {
             if (!_configuration.AllowImpersonation) return Forbid();
             if (username is null) return NotFound();
+
+            var currentUsername = User.Identity?.Name;
             if (currentUsername is null) return BadRequest();
 
             var umbracoUser = _userService.GetByUsername(currentUsername);

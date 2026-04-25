@@ -157,10 +157,10 @@ namespace SplatDev.Umbraco.NPoco.Repositories
         }
 
 
-        public IQueryProviderWithIncludes<T> GetAll()
+        public IEnumerable<T> GetAll()
         {
             using var scope = _scopeProvider.CreateScope(autoComplete: true);
-            return scope.Database.Query<T>();
+            return scope.Database.Query<T>().ToList();
         }
 
         public IEnumerable<T> GetPagedResultsByQuery(
@@ -170,7 +170,7 @@ namespace SplatDev.Umbraco.NPoco.Repositories
             out long totalRecords,
             IQuery<T>? filter,
             Ordering? ordering)
-       => GetPagedResultsByQuery(query, pageIndex, pageSize, out totalRecords, filter, ordering);
+       => GetPagedResultsByQuery(query, pageIndex, pageSize, out totalRecords, filter, ordering, sqlCustomization: null);
 
         public IEnumerable<T> GetPagedResultsByQuery(
             IQuery<T> query,
