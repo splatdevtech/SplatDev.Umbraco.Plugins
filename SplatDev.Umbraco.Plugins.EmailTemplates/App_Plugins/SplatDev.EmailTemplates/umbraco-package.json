@@ -1,0 +1,52 @@
+{
+  "$schema": "../../umbraco-package-schema.json",
+  "id": "SplatDev.EmailTemplates",
+  "name": "SplatDev Email Templates",
+  "version": "1.0.0",
+  "allowPackageTelemetry": true,
+  "extensions": [
+    {
+      "type": "section",
+      "alias": "SplatDev.Section.EmailTemplates",
+      "name": "Email Templates",
+      "meta": {
+        "label": "Email Templates",
+        "pathname": "email-templates"
+      }
+    },
+    {
+      "type": "menuItem",
+      "alias": "SplatDev.MenuItem.EmailTemplates",
+      "name": "Email Templates Menu Item",
+      "conditions": [
+        {
+          "alias": "Umb.Condition.SectionAlias",
+          "match": "SplatDev.Section.EmailTemplates"
+        }
+      ],
+      "meta": {
+        "label": "Templates",
+        "icon": "icon-mail",
+        "entityType": "email-template",
+        "menus": ["Umb.Menu.Default"]
+      }
+    },
+    {
+      "type": "menuItem",
+      "alias": "SplatDev.MenuItem.EmailStyle",
+      "name": "Email Style Menu Item",
+      "conditions": [
+        {
+          "alias": "Umb.Condition.SectionAlias",
+          "match": "SplatDev.Section.EmailTemplates"
+        }
+      ],
+      "meta": {
+        "label": "Style Settings",
+        "icon": "icon-brush",
+        "entityType": "email-style",
+        "menus": ["Umb.Menu.Default"]
+      }
+    }
+  ]
+}
