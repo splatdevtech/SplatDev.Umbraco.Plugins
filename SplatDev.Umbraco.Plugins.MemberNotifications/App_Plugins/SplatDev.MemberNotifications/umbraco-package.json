@@ -1,0 +1,8 @@
+{
+  "$schema": "../../umbraco-package-schema.json",
+  "id": "SplatDev.MemberNotifications",
+  "name": "SplatDev Member Notifications",
+  "version": "1.0.0",
+  "allowPackageTelemetry": true,
+  "extensions": []
+}

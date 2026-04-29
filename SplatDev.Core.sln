@@ -141,6 +141,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SplatDev.Umbraco.Plugins.Em
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SplatDev.Umbraco.Plugins.Newsletter", "SplatDev.Umbraco.Plugins.Newsletter\SplatDev.Umbraco.Plugins.Newsletter.csproj", "{D5E6F708-4B9C-5D2E-AF30-1B2C3D4E5F60}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SplatDev.Umbraco.Plugins.MemberNotifications", "SplatDev.Umbraco.Plugins.MemberNotifications\SplatDev.Umbraco.Plugins.MemberNotifications.csproj", "{E6F70819-5CAD-6E3F-B041-2C3D4E5F6071}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SplatDev.Umbraco.Plugins.Tweets", "SplatDev.Umbraco.Plugins.Tweets\SplatDev.Umbraco.Plugins.Tweets.csproj", "{A5515F40-1DB6-43E9-B5A4-01C99C8FDEA9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SplatDev.Umbraco.Plugins.MemberLogin", "SplatDev.Umbraco.Plugins.MemberLogin\SplatDev.Umbraco.Plugins.MemberLogin.csproj", "{E125C8D0-54F0-4DD4-927C-88F19CCD43AB}"
@@ -1011,6 +1013,10 @@ Global
 		{D5E6F708-4B9C-5D2E-AF30-1B2C3D4E5F60}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D5E6F708-4B9C-5D2E-AF30-1B2C3D4E5F60}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D5E6F708-4B9C-5D2E-AF30-1B2C3D4E5F60}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E6F70819-5CAD-6E3F-B041-2C3D4E5F6071}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E6F70819-5CAD-6E3F-B041-2C3D4E5F6071}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E6F70819-5CAD-6E3F-B041-2C3D4E5F6071}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E6F70819-5CAD-6E3F-B041-2C3D4E5F6071}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A5515F40-1DB6-43E9-B5A4-01C99C8FDEA9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A5515F40-1DB6-43E9-B5A4-01C99C8FDEA9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A5515F40-1DB6-43E9-B5A4-01C99C8FDEA9}.Debug|x64.ActiveCfg = Debug|Any CPU
