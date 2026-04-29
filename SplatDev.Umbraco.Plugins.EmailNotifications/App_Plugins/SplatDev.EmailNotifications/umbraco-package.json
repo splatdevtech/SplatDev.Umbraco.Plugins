@@ -1,0 +1,7 @@
+{
+  "$schema": "../../umbraco-package-schema.json",
+  "name": "SplatDev Email Notifications",
+  "version": "1.0.0",
+  "allowPublicAccess": false,
+  "extensions": []
+}
