@@ -1,0 +1,66 @@
+{
+  "$schema": "../../umbraco-package-schema.json",
+  "id": "SplatDev.Newsletter",
+  "name": "SplatDev Newsletter",
+  "version": "1.0.0",
+  "allowPackageTelemetry": true,
+  "extensions": [
+    {
+      "type": "section",
+      "alias": "SplatDev.Section.Newsletter",
+      "name": "Newsletter",
+      "meta": {
+        "label": "Newsletter",
+        "pathname": "newsletter"
+      }
+    },
+    {
+      "type": "menuItem",
+      "alias": "SplatDev.MenuItem.Newsletter.Subscribers",
+      "name": "Newsletter Subscribers",
+      "conditions": [
+        {
+          "alias": "Umb.Condition.SectionAlias",
+          "match": "SplatDev.Section.Newsletter"
+        }
+      ],
+      "meta": {
+        "label": "Subscribers",
+        "icon": "icon-users",
+        "menus": ["Umb.Menu.Default"]
+      }
+    },
+    {
+      "type": "menuItem",
+      "alias": "SplatDev.MenuItem.Newsletter.Campaigns",
+      "name": "Newsletter Campaigns",
+      "conditions": [
+        {
+          "alias": "Umb.Condition.SectionAlias",
+          "match": "SplatDev.Section.Newsletter"
+        }
+      ],
+      "meta": {
+        "label": "Campaigns",
+        "icon": "icon-mail",
+        "menus": ["Umb.Menu.Default"]
+      }
+    },
+    {
+      "type": "menuItem",
+      "alias": "SplatDev.MenuItem.Newsletter.Analytics",
+      "name": "Newsletter Analytics",
+      "conditions": [
+        {
+          "alias": "Umb.Condition.SectionAlias",
+          "match": "SplatDev.Section.Newsletter"
+        }
+      ],
+      "meta": {
+        "label": "Analytics",
+        "icon": "icon-chart",
+        "menus": ["Umb.Menu.Default"]
+      }
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <PackageId>SplatDev.Umbraco.Plugins.Newsletter</PackageId>
+    <Version>1.0.0</Version>
+    <Description>Newsletter subscriber lists, campaigns, Mailgun bulk send, and stats tracking for Umbraco 17 (net10.0). Depends on SplatDev.Umbraco.Plugins.EmailTemplates for rendering.</Description>
+    <PackageTags>umbraco umbraco-marketplace newsletter mailgun campaigns</PackageTags>
+    <Company>SplatDev Ltda</Company>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/SplatDev-Ltda/SplatDev.Umbraco.Core</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/SplatDev-Ltda/SplatDev.Umbraco.Core</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <ContentTargetFolders>.</ContentTargetFolders>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Umbraco.Cms.Core" Version="17.3.4" />
+    <PackageReference Include="Umbraco.Cms.Infrastructure" Version="17.3.4" />
+    <PackageReference Include="Umbraco.Cms.Api.Management" Version="17.3.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SplatDev.Umbraco.Plugins.EmailTemplates\SplatDev.Umbraco.Plugins.EmailTemplates.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="App_Plugins\**" ExcludeFromSingleFile="true" CopyToPublishDirectory="Always" />
+    <None Include="buildTransitive\**" Pack="true" PackagePath="buildTransitive" />
+  </ItemGroup>
+</Project>
