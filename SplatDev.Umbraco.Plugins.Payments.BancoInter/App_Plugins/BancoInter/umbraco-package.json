@@ -1,0 +1,15 @@
+{
+  "$schema": "../../umbraco-package-schema.json",
+  "name": "Banco Inter Payments",
+  "version": "1.0.0",
+  "extensions": [
+    {
+      "type": "dashboard",
+      "alias": "bancoInter.dashboard",
+      "name": "Banco Inter Dashboard",
+      "element": "/App_Plugins/BancoInter/dist/dashboard.js",
+      "weight": -98,
+      "conditions": [{ "alias": "Umb.Condition.SectionAlias", "match": "Umb.Section.Content" }]
+    }
+  ]
+}

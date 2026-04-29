@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>net8.0;net10.0</TargetFrameworks>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageId>SplatDev.Payments.BancoInter</PackageId>
+    <Version>1.0.0</Version>
+    <Authors>SplatDev-Ltda</Authors>
+    <Company>SplatDev Ltda</Company>
+    <Description>Banco Inter payment gateway models, settings, and API contracts for Pix, Boleto, and Banking integrations.</Description>
+    <PackageTags>banco-inter pix boleto payments brazil</PackageTags>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/SplatDev-Ltda/SplatDev.Umbraco.Core</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/SplatDev-Ltda/SplatDev.Umbraco.Core</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+  </PropertyGroup>
+</Project>

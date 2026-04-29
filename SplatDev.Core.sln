@@ -47,6 +47,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SplatDev.Payments.PagSeguro
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SplatDev.Payments.Stripe", "SplatDev.Payments.Stripe\SplatDev.Payments.Stripe.csproj", "{BC901234-789A-DEF0-1234-567890123467}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SplatDev.Payments.BancoInter", "SplatDev.Payments.BancoInter\SplatDev.Payments.BancoInter.csproj", "{CD123456-7890-ABCD-EF12-345678901289}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SplatDev.Umbraco.Plugins.Payments.BancoInter", "SplatDev.Umbraco.Plugins.Payments.BancoInter\SplatDev.Umbraco.Plugins.Payments.BancoInter.csproj", "{DE234567-8901-BCDE-F123-456789012390}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SplatDev.Umbraco.Plugins.Payments.BancoInter.Tests", "SplatDev.Umbraco.Plugins.Payments.BancoInter.Tests\SplatDev.Umbraco.Plugins.Payments.BancoInter.Tests.csproj", "{EF345678-9012-CDEF-0134-567890123401}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SplatDev.Tests", "SplatDev.Tests\SplatDev.Tests.csproj", "{CD012345-89AB-EF01-2345-678901234578}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SplatDev.Umbraco.Plugins.EmailNotifications.Tests", "SplatDev.Umbraco.Plugins.EmailNotifications.Tests\SplatDev.Umbraco.Plugins.EmailNotifications.Tests.csproj", "{8B3F5A2D-4C1E-4F9B-A7D2-3F9E0B5C8A12}"
@@ -1473,6 +1479,18 @@ Global
 		{F78E7100-76C5-410C-B07B-CCA73EAE900B}.Release|x64.Build.0 = Release|Any CPU
 		{F78E7100-76C5-410C-B07B-CCA73EAE900B}.Release|x86.ActiveCfg = Release|Any CPU
 		{F78E7100-76C5-410C-B07B-CCA73EAE900B}.Release|x86.Build.0 = Release|Any CPU
+		{CD123456-7890-ABCD-EF12-345678901289}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CD123456-7890-ABCD-EF12-345678901289}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CD123456-7890-ABCD-EF12-345678901289}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CD123456-7890-ABCD-EF12-345678901289}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DE234567-8901-BCDE-F123-456789012390}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DE234567-8901-BCDE-F123-456789012390}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DE234567-8901-BCDE-F123-456789012390}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DE234567-8901-BCDE-F123-456789012390}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EF345678-9012-CDEF-0134-567890123401}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EF345678-9012-CDEF-0134-567890123401}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EF345678-9012-CDEF-0134-567890123401}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EF345678-9012-CDEF-0134-567890123401}.Release|Any CPU.Build.0 = Release|Any CPU
 		{8EB6C5C5-3BB6-44C5-8C75-CB4C9745CB77}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8EB6C5C5-3BB6-44C5-8C75-CB4C9745CB77}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8EB6C5C5-3BB6-44C5-8C75-CB4C9745CB77}.Debug|x64.ActiveCfg = Debug|Any CPU
