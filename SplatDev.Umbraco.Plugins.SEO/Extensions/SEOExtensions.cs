@@ -5,7 +5,7 @@ using System.Text.RegularExpressions;
 using Umbraco.Cms.Core.Models.PublishedContent;
 using Umbraco.Extensions;
 
-namespace QuoteTab.Umbraco.Core.Extensions
+namespace SplatDev.Umbraco.Plugins.SEO.Extensions
 {
     public static partial class SEOExtensions
     {
