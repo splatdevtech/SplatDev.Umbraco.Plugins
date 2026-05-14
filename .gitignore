@@ -1,24 +1,88 @@
-## .NET
-bin/
-obj/
-*.user
-*.suo
+# ============================================================
+# Visual Studio
+# ============================================================
+
 .vs/
-packages/
-*.nupkg
-*.snupkg
-
-## Build results
-[Dd]ebug/
-[Rr]elease/
-x64/
-x86/
-
-## User-specific files
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
 *.rsuser
 
-## VS Code
-.vscode/
+# Build results
+bin/
+obj/
+[Bb]uild[Ll]og.*
+[Tt]est[Rr]esult*/
+TestResult.xml
+BenchmarkDotNet.Artifacts/
 
-## NuGet
-*.nuspec
+# Publish
+[Pp]ublish/
+*.pubxml
+!*.pubxml.user
+*.azurePubxml
+*.publishsettings
+PublishScripts/
+
+# NuGet
+*.nupkg
+*.snupkg
+[Pp]ackages/
+!**/[Pp]ackages/build/
+*.nuget.props
+*.nuget.targets
+project.lock.json
+project.fragment.lock.json
+
+# Misc
+*.cache
+*.log
+*.tmp
+*.tmp_proj
+*_wpftmp.csproj
+*.tlh
+*.tli
+*.vspscc
+*.vssscc
+.builds
+*.pidb
+*.svclog
+*.scc
+*.aps
+*.ncb
+*.opendb
+*.opensdf
+*.sdf
+*.VC.db
+*.VC.VC.opendb
+ipch/
+artifacts/
+
+# ============================================================
+# Umbraco
+# ============================================================
+
+# Runtime / generated data
+**/App_Data/
+**/umbraco/Data/TEMP/
+**/umbraco/Logs/
+**/umbraco/medialibrary/
+**/umbraco/models/
+**/umbraco/cache/
+
+# Media uploads
+**/wwwroot/media/
+
+# Umbraco backoffice (bundled at runtime for v9+)
+**/wwwroot/umbraco/
+
+# ============================================================
+# Node / npm
+# ============================================================
+
+node_modules/
+**/node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
