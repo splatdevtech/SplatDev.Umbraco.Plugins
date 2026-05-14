@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <package >
   <metadata>
-    <id>UmbracoCms.Plugins.OnOff</id>
+    <id>SplatDev.Umbraco.Plugins.OnOff</id>
     <version>1.0.1</version>
     <title>On-Off Button for Umbraco 8+</title>
     <authors>SplatDev</authors>
