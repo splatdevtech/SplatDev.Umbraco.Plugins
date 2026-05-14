@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package >
+  <metadata>
+    <id>UmbracoCms.Plugins.OnOff</id>
+    <version>1.0.1</version>
+    <title>On-Off Button for Umbraco 8+</title>
+    <authors>SplatDev</authors>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <license type="expression">MIT</license>
+    <projectUrl>https://www.splatdev.com/project/on-off-button</projectUrl>
+    <icon>On-Off-Icon.png</icon>
+    <description>This plugin adds an On-Off property editor with animation in the backoffice</description>
+    <releaseNotes>For Umbraco 8+</releaseNotes>
+    <copyright>SplatDev © 2021</copyright>
+    <tags>On-Off Button Property Editor</tags>
+  </metadata>
+  <files>
+    <!-- Add a readme -->
+    <file src="readme.txt" target="" />
+    <!-- Add files from an arbitrary folder that's not necessarily in the project -->
+    <!--<file src="..\..\SomeRoot\**\*.*" target="" />-->
+  </files>
+</package>

@@ -1,0 +1,21 @@
+{
+  "$schema": "https://appassets.azureedge.net/app-assets/umbraco/packages/umbraco-package-schema.json",
+  "name": "e-Not Assina Electronic Signatures",
+  "version": "1.0.0",
+  "extensions": [
+    {
+      "type": "dashboard",
+      "alias": "enotassina.dashboard",
+      "name": "e-Not Assina Dashboard",
+      "element": "/App_Plugins/ENotAssina/dashboard.js",
+      "weight": -90,
+      "meta": {
+        "label": "e-Not Assina",
+        "pathname": "enotassina"
+      },
+      "conditions": [
+        { "alias": "Umb.Condition.SectionAlias", "match": "Umb.Section.Content" }
+      ]
+    }
+  ]
+}

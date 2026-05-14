@@ -1,0 +1,21 @@
+{
+  "$schema": "../../umbraco-package-schema.json",
+  "name": "D4Sign Digital Signatures",
+  "version": "1.0.0",
+  "extensions": [
+    {
+      "type": "dashboard",
+      "alias": "d4sign.dashboard",
+      "name": "D4Sign Dashboard",
+      "element": "/App_Plugins/D4Sign/dashboard.js",
+      "weight": -90,
+      "meta": {
+        "label": "D4Sign",
+        "pathname": "d4sign"
+      },
+      "conditions": [
+        { "alias": "Umb.Condition.SectionAlias", "match": "Umb.Section.Content" }
+      ]
+    }
+  ]
+}
