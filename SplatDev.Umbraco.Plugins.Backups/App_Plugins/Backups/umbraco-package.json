@@ -1,7 +1,7 @@
 {
   "$schema": "../../umbraco-package-schema.json",
   "name": "Backups",
-  "version": "2.0.0",
+  "version": "3.1.0",
   "extensions": [
     {
       "type": "dashboard",
@@ -33,7 +33,18 @@
             "backups_description": "Create and manage quick backups from the backoffice",
             "backups_create": "Create Backup",
             "backups_delete": "Delete",
-            "backups_includeMedia": "Include Media"
+            "backups_includeMedia": "Include Media",
+            "backups_cloudProvider": "Cloud Provider",
+            "backups_provider_local": "Local File System",
+            "backups_provider_azure": "Azure Blob Storage",
+            "backups_provider_googledrive": "Google Drive",
+            "backups_provider_dropbox": "Dropbox",
+            "backups_provider_box": "Box.net",
+            "backups_provider_onedrive": "OneDrive",
+            "backups_provider_mega": "Mega",
+            "backups_provider_seafile": "Seafile",
+            "backups_provider_s3": "Amazon S3",
+            "backups_provider_sftp": "SFTP"
           }
         }
       }

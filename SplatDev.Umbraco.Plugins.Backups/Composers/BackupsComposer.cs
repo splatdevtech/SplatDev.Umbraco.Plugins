@@ -24,5 +24,13 @@ public class BackupsComposer : IComposer
         builder.Services.AddScoped<IBackupEngine, BackupEngine>();
         builder.Services.AddScoped<ICloudStorageProvider, LocalFileSystemStorageProvider>();
         builder.Services.AddScoped<ICloudStorageProvider, AzureBlobStorageProvider>();
+        builder.Services.AddScoped<ICloudStorageProvider, GoogleDriveStorageProvider>();
+        builder.Services.AddScoped<ICloudStorageProvider, DropboxStorageProvider>();
+        builder.Services.AddScoped<ICloudStorageProvider, BoxStorageProvider>();
+        builder.Services.AddScoped<ICloudStorageProvider, OneDriveStorageProvider>();
+        builder.Services.AddScoped<ICloudStorageProvider, MegaStorageProvider>();
+        builder.Services.AddScoped<ICloudStorageProvider, SeafileStorageProvider>();
+        builder.Services.AddScoped<ICloudStorageProvider, AwsS3StorageProvider>();
+        builder.Services.AddScoped<ICloudStorageProvider, SftpStorageProvider>();
     }
 }
