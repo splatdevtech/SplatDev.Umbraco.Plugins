@@ -34,7 +34,7 @@ public class MegaStorageProvider : ICloudStorageProvider
     public async Task UploadAsync(Stream data, string remotePath, string fileName, CancellationToken ct)
     {
         var (email, password, rootFolder) = GetConfig();
-        var client = new MegaApiClient();
+        using var client = new MegaApiClient();
 
         await client.LoginAsync(email, password);
         try
@@ -53,7 +53,7 @@ public class MegaStorageProvider : ICloudStorageProvider
     public async Task<Stream> DownloadAsync(string remotePath, CancellationToken ct)
     {
         var (email, password, _) = GetConfig();
-        var client = new MegaApiClient();
+        using var client = new MegaApiClient();
 
         await client.LoginAsync(email, password);
         try
@@ -81,7 +81,7 @@ public class MegaStorageProvider : ICloudStorageProvider
     public async Task DeleteAsync(string remotePath, CancellationToken ct)
     {
         var (email, password, _) = GetConfig();
-        var client = new MegaApiClient();
+        using var client = new MegaApiClient();
 
         await client.LoginAsync(email, password);
         try
@@ -106,9 +106,13 @@ public class MegaStorageProvider : ICloudStorageProvider
         try
         {
             var (email, password, _) = GetConfig();
-            var client = new MegaApiClient();
+            using var client = new MegaApiClient();
             await client.LoginAsync(email, password);
-            await client.LogoutAsync();
+            try
+            {
+                await client.LogoutAsync();
+            }
+            catch { /* swallow logout errors on validation */ }
             return true;
         }
         catch
@@ -120,7 +124,7 @@ public class MegaStorageProvider : ICloudStorageProvider
     public async Task<IEnumerable<StorageItem>> ListAsync(string remotePath, CancellationToken ct)
     {
         var (email, password, rootFolder) = GetConfig();
-        var client = new MegaApiClient();
+        using var client = new MegaApiClient();
 
         await client.LoginAsync(email, password);
         try
