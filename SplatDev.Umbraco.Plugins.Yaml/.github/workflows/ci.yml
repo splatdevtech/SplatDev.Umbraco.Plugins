@@ -1,0 +1,82 @@
+name: CI
+
+on:
+  push:
+    branches: [ master, support/umbraco-13 ]
+    paths-ignore:
+      - '**.md'
+      - '.gitignore'
+  pull_request:
+    branches: [ master ]
+    paths-ignore:
+      - '**.md'
+      - '.gitignore'
+
+jobs:
+  build-and-test:
+    name: Build & Test (${{ matrix.tfm }})
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        tfm: [ net8.0, net9.0, net10.0 ]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: |
+            8.x
+            9.x
+            10.x
+
+      - name: Restore Schema2Yaml
+        run: dotnet restore SplatDev.Umbraco.Plugins.Schema2Yaml/SplatDev.Umbraco.Plugins.Schema2Yaml.csproj
+
+      - name: Restore Schema2Yaml Tests
+        run: dotnet restore SplatDev.Umbraco.Plugins.Schema2Yaml.Tests/SplatDev.Umbraco.Plugins.Schema2Yaml.Tests.csproj
+
+      - name: Build Schema2Yaml
+        run: >
+          dotnet build
+          --no-restore
+          --configuration Release
+          --framework ${{ matrix.tfm }}
+          SplatDev.Umbraco.Plugins.Schema2Yaml/SplatDev.Umbraco.Plugins.Schema2Yaml.csproj
+
+      - name: Restore Yaml2Schema
+        if: matrix.tfm == 'net10.0'
+        run: dotnet restore SplatDev.Umbraco.Plugins.Yaml2Schema/SplatDev.Umbraco.Plugins.Yaml2Schema.csproj
+
+      - name: Build Yaml2Schema
+        if: matrix.tfm == 'net10.0'
+        run: >
+          dotnet build
+          --no-restore
+          --configuration Release
+          SplatDev.Umbraco.Plugins.Yaml2Schema/SplatDev.Umbraco.Plugins.Yaml2Schema.csproj
+
+      - name: Test Schema2Yaml
+        run: >
+          dotnet test
+          --no-restore
+          --configuration Release
+          --framework ${{ matrix.tfm }}
+          --logger "console;verbosity=minimal"
+          SplatDev.Umbraco.Plugins.Schema2Yaml.Tests/SplatDev.Umbraco.Plugins.Schema2Yaml.Tests.csproj
+
+      - name: Restore Yaml2Schema Tests
+        if: matrix.tfm == 'net10.0'
+        run: dotnet restore SplatDev.Umbraco.Plugins.Yaml2Schema.Tests/SplatDev.Umbraco.Plugins.Yaml2Schema.Tests.csproj
+
+      - name: Test Yaml2Schema
+        if: matrix.tfm == 'net10.0'
+        run: >
+          dotnet test
+          --no-restore
+          --configuration Release
+          --logger "console;verbosity=minimal"
+          SplatDev.Umbraco.Plugins.Yaml2Schema.Tests/SplatDev.Umbraco.Plugins.Yaml2Schema.Tests.csproj

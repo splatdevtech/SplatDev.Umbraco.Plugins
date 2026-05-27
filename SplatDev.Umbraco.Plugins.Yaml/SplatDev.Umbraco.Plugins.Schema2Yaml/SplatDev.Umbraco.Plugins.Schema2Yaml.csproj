@@ -1,0 +1,105 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <!--
+      net8.0  → Umbraco 14 (14.x)
+      net9.0  → Umbraco 15 (15.x) and Umbraco 16 (16.x)
+      net10.0 → Umbraco 17 (17.x)
+    -->
+    <TargetFrameworks>net8.0;net9.0;net10.0</TargetFrameworks>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+
+    <!-- Pack settings for themed variants (metadata-only) -->
+    <Schema2YamlThemePackage>false</Schema2YamlThemePackage>
+    <Schema2YamlThemeName></Schema2YamlThemeName>
+
+    <!-- NuGet package metadata -->
+    <_BasePackageId>SplatDev.Umbraco.Plugins.Schema2Yaml</_BasePackageId>
+    <_BaseDescription>An Umbraco plugin that exports your existing Umbraco schema and content to YAML format. Exports DataTypes, DocumentTypes, Media Types, Templates, Content, Media, Languages, Dictionary Items, Members, and Users to a declarative Infrastructure-as-Code YAML file. Supports Umbraco 14–17. For Umbraco 13, use v1.x.</_BaseDescription>
+    <_BasePackageTags>umbraco yaml infrastructure-as-code cms content-management export schema document-types data-types templates media languages dictionary members users umbraco-marketplace</_BasePackageTags>
+
+    <PackageId>$(_BasePackageId)</PackageId>
+    <Version>2.0.7</Version>
+    <Authors>Carlos Casalicchio</Authors>
+    <Company>SplatDev</Company>
+    <Copyright>Copyright © 2026 SplatDev</Copyright>
+    <Description>$(_BaseDescription)</Description>
+    <PackageTags>$(_BasePackageTags)</PackageTags>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageIcon>icon.png</PackageIcon>
+    <PackageProjectUrl>https://github.com/SplatDev-Ltda/umbraco-yaml</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/SplatDev-Ltda/umbraco-yaml</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <PackageReleaseNotes>v2.0.7: Fix auth token — revert _getToken() to getLatestToken() (getOpenApiConfiguration() has no .token, causing 401 on every API call). Fix .chip.selected text contrast (white text on dark background). v2.0.6: Fix ExportProfile route templates, WCAG UI/UX audit, contrast fixes.</PackageReleaseNotes>
+
+    <!-- Umbraco Marketplace metadata -->
+    <PackageType>Dependency</PackageType>
+    <DevelopmentDependency>false</DevelopmentDependency>
+
+    <!-- Suppress transitive vulnerability warnings from Umbraco's own dependencies (MimeKit, Lucene) -->
+    <NoWarn>$(NoWarn);NU1902;NU1903</NoWarn>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Schema2YamlThemePackage)' == 'true'">
+    <PackageId>$(_BasePackageId).$(Schema2YamlThemeName)</PackageId>
+    <Description>$(_BaseDescription) Themed package: $(Schema2YamlThemeName).</Description>
+    <PackageTags>$(_BasePackageTags);theme;$(Schema2YamlThemeName)</PackageTags>
+  </PropertyGroup>
+
+  <Target Name="ValidateSchema2YamlThemePackageSettings" BeforeTargets="Pack">
+    <Error Condition="'$(Schema2YamlThemePackage)' == 'true' and '$(Schema2YamlThemeName)' == ''"
+           Text="Schema2Yaml themed pack requires Schema2YamlThemeName when Schema2YamlThemePackage=true." />
+  </Target>
+
+  <ItemGroup>
+    <!-- Provides IWebHostEnvironment, IHttpClientFactory, and other ASP.NET Core abstractions -->
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+  <!-- Umbraco 14  (net8.0) -->
+  <ItemGroup Condition="'$(TargetFramework)' == 'net8.0'">
+    <PackageReference Include="Umbraco.Cms.Core" Version="[14.0.0, 15.0.0)" />
+    <PackageReference Include="Umbraco.Cms.Web.Common" Version="[14.0.0, 15.0.0)" />
+  </ItemGroup>
+
+  <!-- Umbraco 15 / 16  (net9.0) -->
+  <ItemGroup Condition="'$(TargetFramework)' == 'net9.0'">
+    <PackageReference Include="Umbraco.Cms.Core" Version="[15.0.0, 17.0.0)" />
+    <PackageReference Include="Umbraco.Cms.Web.Common" Version="[15.0.0, 17.0.0)" />
+  </ItemGroup>
+
+  <!-- Umbraco 17  (net10.0) -->
+  <ItemGroup Condition="'$(TargetFramework)' == 'net10.0'">
+    <PackageReference Include="Umbraco.Cms.Core" Version="[17.0.0, 18.0.0)" />
+    <PackageReference Include="Umbraco.Cms.Web.Common" Version="[17.0.0, 18.0.0)" />
+  </ItemGroup>
+
+  <!-- Version-independent packages -->
+  <ItemGroup>
+    <PackageReference Include="YamlDotNet" Version="15.1.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+  </ItemGroup>
+
+  <!-- Include README, icon, and Umbraco Marketplace metadata in the NuGet package -->
+  <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="\" />
+    <None Include="icon.png" Pack="true" PackagePath="\" />
+    <None Include="umbraco-marketplace.json" Pack="true" PackagePath="\" />
+  </ItemGroup>
+
+  <!-- Include App_Plugins in the NuGet package via contentFiles (modern NuGet convention) -->
+  <ItemGroup>
+    <Content Include="wwwroot\App_Plugins\**\*" Pack="true" PackagePath="App_Plugins_Package\" />
+  </ItemGroup>
+
+  <!-- Include buildTransitive targets for reliable App_Plugins delivery -->
+  <ItemGroup>
+    <None Include="buildTransitive\**\*.targets" Pack="true" PackagePath="buildTransitive\" />
+  </ItemGroup>
+
+</Project>
+

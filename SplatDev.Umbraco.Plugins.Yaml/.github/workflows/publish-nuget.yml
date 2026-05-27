@@ -1,0 +1,247 @@
+name: Publish to NuGet
+
+# Triggers on tags: v1.2.3 (both packages) or
+#   schema2yaml-v1.2.3 / yaml2schema-v1.2.3 (individual package)
+on:
+  push:
+    tags:
+      - 'v[0-9]+.[0-9]+.[0-9]+'
+      - 'v[0-9]+.[0-9]+.[0-9]+-*'
+      - 'schema2yaml-v[0-9]+.[0-9]+.[0-9]+'
+      - 'schema2yaml-v[0-9]+.[0-9]+.[0-9]+-*'
+      - 'schema2yaml-theme-*-v[0-9]+.[0-9]+.[0-9]+'
+      - 'schema2yaml-theme-*-v[0-9]+.[0-9]+.[0-9]+-*'
+      - 'yaml2schema-v[0-9]+.[0-9]+.[0-9]+'
+      - 'yaml2schema-v[0-9]+.[0-9]+.[0-9]+-*'
+
+env:
+  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
+  DOTNET_NOLOGO: true
+
+jobs:
+  # ─── Determine which packages to publish ────────────────────────────────────
+  resolve:
+    name: Resolve packages to publish
+    runs-on: ubuntu-latest
+    outputs:
+      publish_schema2yaml: ${{ steps.resolve.outputs.schema2yaml }}
+      publish_schema2yaml_theme: ${{ steps.resolve.outputs.schema2yaml_theme }}
+      schema2yaml_theme_name: ${{ steps.resolve.outputs.schema2yaml_theme_name }}
+      publish_yaml2schema: ${{ steps.resolve.outputs.yaml2schema }}
+    steps:
+      - id: resolve
+        run: |
+          TAG="${{ github.ref_name }}"
+          if [[ "$TAG" == schema2yaml-theme-*-v* ]]; then
+            THEME_PART="${TAG#schema2yaml-theme-}"
+            THEME_NAME="${THEME_PART%-v*}"
+            echo "schema2yaml=false" >> "$GITHUB_OUTPUT"
+            echo "schema2yaml_theme=true" >> "$GITHUB_OUTPUT"
+            echo "schema2yaml_theme_name=$THEME_NAME" >> "$GITHUB_OUTPUT"
+            echo "yaml2schema=false" >> "$GITHUB_OUTPUT"
+          elif [[ "$TAG" == schema2yaml-* ]]; then
+            echo "schema2yaml=true"  >> "$GITHUB_OUTPUT"
+            echo "schema2yaml_theme=false" >> "$GITHUB_OUTPUT"
+            echo "schema2yaml_theme_name=" >> "$GITHUB_OUTPUT"
+            echo "yaml2schema=false" >> "$GITHUB_OUTPUT"
+          elif [[ "$TAG" == yaml2schema-* ]]; then
+            echo "schema2yaml=false" >> "$GITHUB_OUTPUT"
+            echo "schema2yaml_theme=false" >> "$GITHUB_OUTPUT"
+            echo "schema2yaml_theme_name=" >> "$GITHUB_OUTPUT"
+            echo "yaml2schema=true"  >> "$GITHUB_OUTPUT"
+          else
+            # bare v* tag → publish both base packages
+            echo "schema2yaml=true" >> "$GITHUB_OUTPUT"
+            echo "schema2yaml_theme=false" >> "$GITHUB_OUTPUT"
+            echo "schema2yaml_theme_name=" >> "$GITHUB_OUTPUT"
+            echo "yaml2schema=true" >> "$GITHUB_OUTPUT"
+          fi
+
+  # ─── Build, test, pack, and publish Schema2Yaml ─────────────────────────────
+  publish-schema2yaml:
+    name: Publish Schema2Yaml
+    runs-on: ubuntu-latest
+    needs: resolve
+    if: needs.resolve.outputs.publish_schema2yaml == 'true'
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: |
+            8.x
+            9.x
+            10.x
+
+      - name: Restore
+        run: |
+          dotnet restore SplatDev.Umbraco.Plugins.Schema2Yaml/SplatDev.Umbraco.Plugins.Schema2Yaml.csproj
+          dotnet restore SplatDev.Umbraco.Plugins.Schema2Yaml.Tests/SplatDev.Umbraco.Plugins.Schema2Yaml.Tests.csproj
+
+      - name: Build
+        run: >
+          dotnet build
+          --no-restore
+          --configuration Release
+          SplatDev.Umbraco.Plugins.Schema2Yaml/SplatDev.Umbraco.Plugins.Schema2Yaml.csproj
+
+      - name: Test (all TFMs)
+        run: >
+          dotnet test
+          --no-restore
+          --configuration Release
+          --logger "console;verbosity=minimal"
+          SplatDev.Umbraco.Plugins.Schema2Yaml.Tests/SplatDev.Umbraco.Plugins.Schema2Yaml.Tests.csproj
+
+      - name: Extract version from tag
+        id: version
+        run: |
+          TAG="${{ github.ref_name }}"
+          # Strip optional prefix (schema2yaml-v or v)
+          VERSION="${TAG#schema2yaml-v}"
+          VERSION="${VERSION#v}"
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+
+      - name: Pack
+        run: >
+          dotnet pack
+          --no-build
+          --configuration Release
+          -p:PackageVersion=${{ steps.version.outputs.version }}
+          --output ./nupkgs
+          SplatDev.Umbraco.Plugins.Schema2Yaml/SplatDev.Umbraco.Plugins.Schema2Yaml.csproj
+
+      - name: Push to NuGet
+        run: >
+          dotnet nuget push ./nupkgs/*.nupkg
+          --api-key ${{ secrets.NUGET_API_KEY }}
+          --source https://api.nuget.org/v3/index.json
+          --skip-duplicate
+
+  # ─── Build, test, pack, and publish themed Schema2Yaml ──────────────────────
+  publish-schema2yaml-themed:
+    name: Publish Schema2Yaml (Themed)
+    runs-on: ubuntu-latest
+    needs: resolve
+    if: needs.resolve.outputs.publish_schema2yaml_theme == 'true'
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: |
+            8.x
+            9.x
+            10.x
+
+      - name: Restore
+        run: |
+          dotnet restore SplatDev.Umbraco.Plugins.Schema2Yaml/SplatDev.Umbraco.Plugins.Schema2Yaml.csproj
+          dotnet restore SplatDev.Umbraco.Plugins.Schema2Yaml.Tests/SplatDev.Umbraco.Plugins.Schema2Yaml.Tests.csproj
+
+      - name: Build
+        run: >
+          dotnet build
+          --no-restore
+          --configuration Release
+          SplatDev.Umbraco.Plugins.Schema2Yaml/SplatDev.Umbraco.Plugins.Schema2Yaml.csproj
+
+      - name: Test (all TFMs)
+        run: >
+          dotnet test
+          --no-restore
+          --configuration Release
+          --logger "console;verbosity=minimal"
+          SplatDev.Umbraco.Plugins.Schema2Yaml.Tests/SplatDev.Umbraco.Plugins.Schema2Yaml.Tests.csproj
+
+      - name: Extract version from tag
+        id: version
+        run: |
+          TAG="${{ github.ref_name }}"
+          VERSION="${TAG##*-v}"
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+
+      - name: Pack themed package
+        run: >
+          dotnet pack
+          --no-build
+          --configuration Release
+          -p:PackageVersion=${{ steps.version.outputs.version }}
+          -p:Schema2YamlThemePackage=true
+          -p:Schema2YamlThemeName=${{ needs.resolve.outputs.schema2yaml_theme_name }}
+          --output ./nupkgs
+          SplatDev.Umbraco.Plugins.Schema2Yaml/SplatDev.Umbraco.Plugins.Schema2Yaml.csproj
+
+      - name: Push to NuGet
+        run: >
+          dotnet nuget push ./nupkgs/*.nupkg
+          --api-key ${{ secrets.NUGET_API_KEY }}
+          --source https://api.nuget.org/v3/index.json
+          --skip-duplicate
+
+  # ─── Build, test, pack, and publish Yaml2Schema ─────────────────────────────
+  publish-yaml2schema:
+    name: Publish Yaml2Schema
+    runs-on: ubuntu-latest
+    needs: resolve
+    if: needs.resolve.outputs.publish_yaml2schema == 'true'
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: |
+            10.x
+
+      - name: Restore
+        run: |
+          dotnet restore SplatDev.Umbraco.Plugins.Yaml2Schema/SplatDev.Umbraco.Plugins.Yaml2Schema.csproj
+          dotnet restore SplatDev.Umbraco.Plugins.Yaml2Schema.Tests/SplatDev.Umbraco.Plugins.Yaml2Schema.Tests.csproj
+
+      - name: Build
+        run: >
+          dotnet build
+          --no-restore
+          --configuration Release
+          SplatDev.Umbraco.Plugins.Yaml2Schema/SplatDev.Umbraco.Plugins.Yaml2Schema.csproj
+
+      - name: Test
+        run: >
+          dotnet test
+          --no-restore
+          --configuration Release
+          --logger "console;verbosity=minimal"
+          SplatDev.Umbraco.Plugins.Yaml2Schema.Tests/SplatDev.Umbraco.Plugins.Yaml2Schema.Tests.csproj
+
+      - name: Extract version from tag
+        id: version
+        run: |
+          TAG="${{ github.ref_name }}"
+          VERSION="${TAG#yaml2schema-v}"
+          VERSION="${VERSION#v}"
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+
+      - name: Pack
+        run: >
+          dotnet pack
+          --no-build
+          --configuration Release
+          -p:PackageVersion=${{ steps.version.outputs.version }}
+          --output ./nupkgs
+          SplatDev.Umbraco.Plugins.Yaml2Schema/SplatDev.Umbraco.Plugins.Yaml2Schema.csproj
+
+      - name: Push to NuGet
+        run: >
+          dotnet nuget push ./nupkgs/*.nupkg
+          --api-key ${{ secrets.NUGET_API_KEY }}
+          --source https://api.nuget.org/v3/index.json
+          --skip-duplicate

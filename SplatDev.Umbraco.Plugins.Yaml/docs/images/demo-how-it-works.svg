@@ -1,0 +1,123 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 500" width="1200" height="500">
+  <defs>
+    <linearGradient id="bg2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0D1724"/>
+      <stop offset="100%" style="stop-color:#1B2A3B"/>
+    </linearGradient>
+    <linearGradient id="stepGrad1" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#1E3A5F"/>
+      <stop offset="100%" style="stop-color:#162A47"/>
+    </linearGradient>
+    <linearGradient id="stepGrad2" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#3A1F3F"/>
+      <stop offset="100%" style="stop-color:#2A1530"/>
+    </linearGradient>
+    <linearGradient id="stepGrad3" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#1A3D2E"/>
+      <stop offset="100%" style="stop-color:#122C20"/>
+    </linearGradient>
+    <linearGradient id="stepGrad4" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#3D2A10"/>
+      <stop offset="100%" style="stop-color:#2C1D08"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="500" fill="url(#bg2)"/>
+
+  <!-- Title -->
+  <text x="600" y="55" font-family="sans-serif" font-size="26" font-weight="bold" fill="#FFFFFF" text-anchor="middle">How It Works</text>
+  <text x="600" y="82" font-family="sans-serif" font-size="14" fill="#6A8BA4" text-anchor="middle">One YAML file. Four Umbraco structures. Created automatically at startup.</text>
+
+  <!-- Step connector line -->
+  <line x1="188" y1="250" x2="1012" y2="250" stroke="#2A4060" stroke-width="2" stroke-dasharray="6,4"/>
+
+  <!-- STEP 1: Write YAML -->
+  <rect x="60" y="120" width="256" height="260" rx="12" fill="url(#stepGrad1)" stroke="#2A5080" stroke-width="1"/>
+  <circle cx="188" cy="120" r="18" fill="#1B2A3B" stroke="#4ECDC4" stroke-width="2"/>
+  <text x="188" y="126" font-family="sans-serif" font-size="14" font-weight="bold" fill="#4ECDC4" text-anchor="middle">1</text>
+  <text x="188" y="160" font-family="monospace" font-size="13" fill="#4ECDC4" text-anchor="middle">Write YAML</text>
+  <!-- mini yaml preview -->
+  <rect x="80" y="172" width="216" height="130" rx="6" fill="#0D1724" opacity="0.6"/>
+  <text x="96" y="194" font-family="monospace" font-size="10" fill="#4ECDC4">dataTypes:</text>
+  <text x="96" y="210" font-family="monospace" font-size="10" fill="#B0C4DE">  - alias: </text><text x="163" y="210" font-family="monospace" font-size="10" fill="#A8D8A8">title</text>
+  <text x="96" y="226" font-family="monospace" font-size="10" fill="#B0C4DE">    editorUiAlias:</text>
+  <text x="96" y="242" font-family="monospace" font-size="10" fill="#FFD700">      Umbraco.TextBox</text>
+  <text x="96" y="262" font-family="monospace" font-size="10" fill="#4ECDC4">documentTypes:</text>
+  <text x="96" y="278" font-family="monospace" font-size="10" fill="#B0C4DE">  - alias: </text><text x="163" y="278" font-family="monospace" font-size="10" fill="#A8D8A8">page</text>
+  <text x="96" y="294" font-family="monospace" font-size="10" fill="#B0C4DE">    allowAsRoot: </text><text x="204" y="294" font-family="monospace" font-size="10" fill="#FF8E8E">true</text>
+  <text x="188" y="350" font-family="sans-serif" font-size="12" fill="#6A9AC0" text-anchor="middle">config/umbraco.yaml</text>
+  <text x="188" y="368" font-family="sans-serif" font-size="11" fill="#4A6A88" text-anchor="middle">committed to source control</text>
+
+  <!-- Arrow 1→2 -->
+  <path d="M326 250 L360 250" stroke="#FF6B6B" stroke-width="2.5" stroke-linecap="round"/>
+  <path d="M354 244 L362 250 L354 256" stroke="#FF6B6B" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+
+  <!-- STEP 2: App Starts -->
+  <rect x="372" y="120" width="220" height="260" rx="12" fill="url(#stepGrad2)" stroke="#6A2A80" stroke-width="1"/>
+  <circle cx="482" cy="120" r="18" fill="#1B2A3B" stroke="#C084FC" stroke-width="2"/>
+  <text x="482" y="126" font-family="sans-serif" font-size="14" font-weight="bold" fill="#C084FC" text-anchor="middle">2</text>
+  <text x="482" y="160" font-family="sans-serif" font-size="13" fill="#C084FC" text-anchor="middle">App Starts</text>
+  <!-- startup visual -->
+  <g text-anchor="middle">
+    <rect x="402" y="172" width="160" height="44" rx="8" fill="#2A1535" stroke="#6A2A80" stroke-width="1"/>
+    <text x="482" y="190" font-family="monospace" font-size="10" fill="#C084FC">YamlStartupComposer</text>
+    <text x="482" y="207" font-family="sans-serif" font-size="10" fill="#8A6AAA">registers services</text>
+    <line x1="482" y1="216" x2="482" y2="232" stroke="#6A2A80" stroke-width="1.5"/>
+    <rect x="402" y="232" width="160" height="44" rx="8" fill="#2A1535" stroke="#6A2A80" stroke-width="1"/>
+    <text x="482" y="250" font-family="monospace" font-size="10" fill="#C084FC">YamlInitialization</text>
+    <text x="482" y="264" font-family="sans-serif" font-size="10" fill="#8A6AAA">Handler fires</text>
+    <line x1="482" y1="276" x2="482" y2="292" stroke="#6A2A80" stroke-width="1.5"/>
+    <rect x="402" y="292" width="160" height="44" rx="8" fill="#2A1535" stroke="#6A2A80" stroke-width="1"/>
+    <text x="482" y="310" font-family="monospace" font-size="10" fill="#C084FC">YamlParser</text>
+    <text x="482" y="324" font-family="sans-serif" font-size="10" fill="#8A6AAA">reads + deserializes</text>
+  </g>
+
+  <!-- Arrow 2→3 -->
+  <path d="M602 250 L636 250" stroke="#FF6B6B" stroke-width="2.5" stroke-linecap="round"/>
+  <path d="M630 244 L638 250 L630 256" stroke="#FF6B6B" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+
+  <!-- STEP 3: Structures Created -->
+  <rect x="648" y="120" width="220" height="260" rx="12" fill="url(#stepGrad3)" stroke="#1A6A3A" stroke-width="1"/>
+  <circle cx="758" cy="120" r="18" fill="#1B2A3B" stroke="#4ADE80" stroke-width="2"/>
+  <text x="758" y="126" font-family="sans-serif" font-size="14" font-weight="bold" fill="#4ADE80" text-anchor="middle">3</text>
+  <text x="758" y="160" font-family="sans-serif" font-size="13" fill="#4ADE80" text-anchor="middle">Structures Created</text>
+  <g text-anchor="start" font-family="sans-serif" font-size="12">
+    <rect x="668" y="175" width="180" height="28" rx="6" fill="#122C20" stroke="#1A6A3A" stroke-width="1"/>
+    <text x="682" y="194" fill="#4ADE80">① DataTypes</text>
+    <line x1="758" y1="203" x2="758" y2="215" stroke="#1A6A3A" stroke-width="1.5"/>
+    <rect x="668" y="215" width="180" height="28" rx="6" fill="#122C20" stroke="#1A6A3A" stroke-width="1"/>
+    <text x="682" y="234" fill="#4ADE80">② DocumentTypes</text>
+    <line x1="758" y1="243" x2="758" y2="255" stroke="#1A6A3A" stroke-width="1.5"/>
+    <rect x="668" y="255" width="180" height="28" rx="6" fill="#122C20" stroke="#1A6A3A" stroke-width="1"/>
+    <text x="682" y="274" fill="#4ADE80">③ Templates</text>
+    <line x1="758" y1="283" x2="758" y2="295" stroke="#1A6A3A" stroke-width="1.5"/>
+    <rect x="668" y="295" width="180" height="28" rx="6" fill="#122C20" stroke="#1A6A3A" stroke-width="1"/>
+    <text x="682" y="314" fill="#4ADE80">④ Content</text>
+  </g>
+  <text x="758" y="352" font-family="sans-serif" font-size="11" fill="#4A8A5A" text-anchor="middle">idempotent — skips existing</text>
+  <text x="758" y="368" font-family="sans-serif" font-size="11" fill="#4A8A5A" text-anchor="middle">matched by alias</text>
+
+  <!-- Arrow 3→4 -->
+  <path x1="0" y1="0" d="M878 250 L912 250" stroke="#FF6B6B" stroke-width="2.5" stroke-linecap="round"/>
+  <path d="M906 244 L914 250 L906 256" stroke="#FF6B6B" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+
+  <!-- STEP 4: Ready -->
+  <rect x="924" y="120" width="216" height="260" rx="12" fill="url(#stepGrad4)" stroke="#80501A" stroke-width="1"/>
+  <circle cx="1032" cy="120" r="18" fill="#1B2A3B" stroke="#FB923C" stroke-width="2"/>
+  <text x="1032" y="126" font-family="sans-serif" font-size="14" font-weight="bold" fill="#FB923C" text-anchor="middle">4</text>
+  <text x="1032" y="160" font-family="sans-serif" font-size="13" fill="#FB923C" text-anchor="middle">Umbraco Ready</text>
+  <!-- checkmarks -->
+  <g font-family="sans-serif" font-size="12" fill="#E0D0B0">
+    <text x="950" y="198">✓  DataTypes in back-office</text>
+    <text x="950" y="222">✓  DocTypes with tabs</text>
+    <text x="950" y="246">✓  Properties linked</text>
+    <text x="950" y="270">✓  Templates registered</text>
+    <text x="950" y="294">✓  Content seeded</text>
+    <text x="950" y="318">✓  Content published</text>
+  </g>
+  <rect x="944" y="330" width="176" height="36" rx="8" fill="#3D2A10" stroke="#FB923C" stroke-width="1"/>
+  <text x="1032" y="353" font-family="sans-serif" font-size="12" fill="#FB923C" text-anchor="middle">Site live. No UI clicks.</text>
+
+  <!-- Bottom tagline -->
+  <text x="600" y="460" font-family="sans-serif" font-size="13" fill="#4A6A88" text-anchor="middle">SplatDev.Umbraco.Plugins.Yaml2Schema — MIT License — Umbraco 17+</text>
+</svg>

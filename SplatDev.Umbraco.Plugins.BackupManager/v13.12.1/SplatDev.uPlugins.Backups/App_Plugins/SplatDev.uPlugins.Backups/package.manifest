@@ -1,0 +1,24 @@
+{
+  "dashboards": [
+    {
+      "alias": "SplatDev.Umbraco.Plugin.Backups",
+      "view": "/App_Plugins/SplatDev.Umbraco.Plugin.Backups/views/dashboard.html",
+      "sections": [ "settings" ],
+      "weight": -10,
+      "access": [
+        { "deny": "translator" },
+        { "deny": "editor" },
+        { "grant": "admin" }
+      ]
+    }
+  ],
+
+  "javascript": [
+    "~/App_Plugins/SplatDev.Umbraco.Plugin.Backups/js/controller.js",
+    "~/App_Plugins/SplatDev.Umbraco.Plugin.Backups/js/filters.js"
+  ],
+
+  "css": [
+    "~/App_Plugins/SplatDev.Umbraco.Plugin.Backups/css/style.css"
+  ]
+}

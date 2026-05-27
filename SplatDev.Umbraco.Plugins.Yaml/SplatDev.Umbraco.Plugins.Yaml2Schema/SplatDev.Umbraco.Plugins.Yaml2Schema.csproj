@@ -1,0 +1,61 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>net8.0;net10.0</TargetFrameworks>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+
+    <!-- NuGet package metadata -->
+    <PackageId>SplatDev.Umbraco.Plugins.Yaml2Schema</PackageId>
+    <Version>1.0.38</Version>
+    <Authors>Carlos Casalicchio</Authors>
+    <Company>SplatDev</Company>
+    <Copyright>Copyright © 2026 SplatDev</Copyright>
+    <Description>A declarative, Infrastructure-as-Code style plugin for Umbraco 13+ that bootstraps your entire site from a YAML file: DataTypes, DocumentTypes, Media Types, Templates, Content, Media, Languages, Dictionary Items, Members, and Users. Supports create, update ([UPDATE]), and delete ([REMOVE]) operations on every entity type.</Description>
+    <PackageTags>umbraco yaml infrastructure-as-code cms content-management document-types data-types templates media languages dictionary members users seeding umbraco-marketplace</PackageTags>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageIcon>icon.png</PackageIcon>
+    <PackageProjectUrl>https://github.com/SplatDev-Ltda/umbraco-yaml</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/SplatDev-Ltda/umbraco-yaml</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <PackageReleaseNotes>v1.0.38: Fix auth token — revert _getToken() to getLatestToken() (getOpenApiConfiguration() has no .token, causing 401 on every API call). v1.0.37: Add umbraco-marketplace.json, dashboard, WCAG UI/UX fixes.</PackageReleaseNotes>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Provides IWebHostEnvironment, IHttpClientFactory, and other ASP.NET Core abstractions -->
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+  <!-- Umbraco 13 (net8.0) -->
+  <ItemGroup Condition="'$(TargetFramework)' == 'net8.0'">
+    <PackageReference Include="Umbraco.Cms.Core" Version="13.12.0" />
+    <PackageReference Include="YamlDotNet" Version="15.1.0" />
+  </ItemGroup>
+
+  <!-- Umbraco 17 (net10.0) -->
+  <ItemGroup Condition="'$(TargetFramework)' == 'net10.0'">
+    <PackageReference Include="Umbraco.Cms.Core" Version="17.3.4" />
+    <PackageReference Include="YamlDotNet" Version="15.1.0" />
+  </ItemGroup>
+
+  <!-- Include README, icon, and Umbraco Marketplace metadata in the NuGet package -->
+  <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="\" />
+    <None Include="icon.png" Pack="true" PackagePath="\" />
+    <None Include="umbraco-marketplace.json" Pack="true" PackagePath="\" />
+  </ItemGroup>
+
+  <!-- Include App_Plugins in the NuGet package via contentFiles (modern NuGet convention) -->
+  <ItemGroup>
+    <Content Include="wwwroot\App_Plugins\**\*" Pack="true" PackagePath="App_Plugins_Package\" />
+  </ItemGroup>
+
+  <!-- Include buildTransitive targets for reliable App_Plugins delivery -->
+  <ItemGroup>
+    <None Include="buildTransitive\**\*.targets" Pack="true" PackagePath="buildTransitive\" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,33 @@
+{
+  "$schema": "https://marketplace.umbraco.com/umbraco-marketplace-schema.json",
+  "Description": "Define your entire Umbraco structure — DataTypes, DocumentTypes, Templates, Content, Media, Languages, Dictionary Items, Members, and Users — in a single YAML file. The plugin reads it on startup and builds everything automatically. Infrastructure-as-Code for Umbraco 17.",
+  "Category": "Developer Tools",
+  "PackageType": "Package",
+  "LicenseTypes": ["Free"],
+  "DocumentationUrl": "https://github.com/SplatDev-Ltda/umbraco-yaml/blob/main/docs/yaml-authoring-guide.md",
+  "IssueTrackerUrl": "https://github.com/SplatDev-Ltda/umbraco-yaml/issues",
+  "AuthorDetails": {
+    "Name": "Carlos Casalicchio",
+    "Description": "Developer at SplatDev. Building tools to make Umbraco development faster and more reproducible.",
+    "Url": "https://github.com/ccasalicchio",
+    "ImageUrl": "https://github.com/ccasalicchio.png",
+    "SyncContributorsFromRepository": true
+  },
+  "RelatedPackages": [
+    {
+      "PackageId": "SplatDev.Umbraco.Plugins.Schema2Yaml",
+      "Description": "Companion package — exports your existing Umbraco site structure to YAML. v2.x supports Umbraco 14-17, v1.x supports Umbraco 13.",
+      "GroupTitle": "Umbraco YAML Toolkit"
+    }
+  ],
+  "Screenshots": [
+    {
+      "ImageUrl": "https://raw.githubusercontent.com/SplatDev-Ltda/umbraco-yaml/main/docs/images/hero-banner.png",
+      "Caption": "YAML configuration — Umbraco structures, created automatically at startup"
+    },
+    {
+      "ImageUrl": "https://raw.githubusercontent.com/SplatDev-Ltda/umbraco-yaml/main/docs/images/demo-how-it-works.png",
+      "Caption": "How it works: 4-step process from YAML file to live Umbraco site"
+    }
+  ]
+}

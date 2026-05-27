@@ -1,0 +1,171 @@
+scripts:
+  - alias: siteJs
+    name: Site JavaScript
+    path: js/site.js
+    content: |
+      document.addEventListener('DOMContentLoaded', function () {
+        console.log('Site JS loaded');
+      });
+  # [UPDATE] — overwrites the file on every startup
+  - alias: siteJsUpdate
+    name: Site JavaScript (Updated)
+    path: js/site.js
+    update: true
+    content: |
+      document.addEventListener('DOMContentLoaded', function () {
+        console.log('Site JS updated');
+      });
+  # [REMOVE] — deletes wwwroot/js/legacy.js if it exists
+  - alias: legacyJs
+    name: Legacy JavaScript
+    path: js/legacy.js
+    remove: true
+
+stylesheets:
+  - alias: siteStyles
+    name: Site Styles
+    path: css/site.css
+    content: |
+      body {
+        margin: 0;
+        font-family: sans-serif;
+      }
+  # [REMOVE] — deletes wwwroot/css/old.css if it exists
+  - alias: oldStyles
+    name: Old Styles
+    path: css/old.css
+    remove: true
+
+dataTypes:
+  # [UPDATE] — upsert by name; bypasses the broad "skip if editor exists" check
+  - alias: textString
+    name: Text String
+    editorUiAlias: Umbraco.TextBox
+    update: true
+  # [REMOVE] — removes the richText DataType
+  - alias: richText
+    name: Rich Text
+    editorUiAlias: Umbraco.RichText
+    remove: true
+  - alias: textString
+    name: Text String
+    editorUiAlias: Umbraco.TextBox
+    config:
+      maxLength: 255
+  - alias: richText
+    name: Rich Text
+    editorUiAlias: Umbraco.RichText
+    config:
+      toolbar: "bold,italic,underline,oembed"
+
+documentTypes:
+  # [UPDATE] — applies name/icon/tab changes to existing doc type; new allowedTemplates are linked after templates are created
+  - alias: page
+    name: Page
+    icon: icon-document
+    allowAsRoot: true
+    update: true
+    allowedChildTypes:
+      - page
+    allowedTemplates:
+      - masterPage
+      - customPage
+    defaultTemplate: masterPage
+    tabs:
+      - name: Content
+        properties:
+          - alias: title
+            name: Title
+            dataType: textString
+            required: true
+            description: The page title
+  # [REMOVE] — deletes the article document type
+  - alias: article
+    name: Article
+    remove: true
+
+templates:
+  - alias: masterPage
+    name: Master Page
+    path: Master.cshtml
+    masterTemplate: null
+    stylesheets:
+      - css/site.css
+    scripts:
+      - js/site.js
+  # Template with explicit Razor content (overrides auto-generated scaffold)
+  - alias: customPage
+    name: Custom Page
+    content: |
+      @inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+      @{
+          Layout = null;
+      }
+      <!DOCTYPE html>
+      <html>
+      <head><title>@Model.Value("pageTitle")</title></head>
+      <body><h1>@Model.Value("title")</h1></body>
+      </html>
+
+languages:
+  - isoCode: en-US
+    cultureName: English (United States)
+    isDefault: true
+    isMandatory: true
+  - isoCode: es-ES
+    cultureName: Spanish (Spain)
+
+dictionaryItems:
+  - key: general.hello
+    translations:
+      en-US: Hello
+      es-ES: Hola
+  - key: general.goodbye
+    translations:
+      en-US: Goodbye
+      es-ES: Adiós
+
+mediaTypes:
+  - alias: customImage
+    name: Custom Image
+    icon: icon-picture
+    allowedAtRoot: false
+    tabs:
+      - name: Media
+        properties:
+          - alias: umbracoFile
+            name: File
+            dataType: textString
+
+media:
+  - alias: siteBanner
+    name: Site Banner
+    mediaType: Image
+    url: https://placehold.co/1200x400.jpg
+
+members:
+  - alias: testMember
+    name: Test Member
+    email: test@example.com
+    username: testmember
+    password: "S3cure!Pass"
+    memberType: Member
+    isApproved: true
+
+users:
+  - alias: editorUser
+    name: Editor User
+    email: editor@example.com
+    username: editoruser
+    userGroups:
+      - editor
+
+content:
+  - alias: home
+    name: Home
+    documentType: page
+    isPublished: true
+    sortOrder: 0
+    properties:
+      title: Welcome to Umbraco
+    children: []

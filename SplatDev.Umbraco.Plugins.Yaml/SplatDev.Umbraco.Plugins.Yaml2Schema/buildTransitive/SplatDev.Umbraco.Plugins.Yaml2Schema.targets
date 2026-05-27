@@ -1,0 +1,19 @@
+<Project>
+  <!--
+    Copy App_Plugins from the NuGet package into the consuming project's
+    wwwroot/App_Plugins directory at build time. This ensures Umbraco 14+
+    discovers the backoffice extension.
+  -->
+  <PropertyGroup>
+    <_Yaml2SchemaPkgRoot>$(MSBuildThisFileDirectory)..\</_Yaml2SchemaPkgRoot>
+  </PropertyGroup>
+
+  <Target Name="CopyYaml2SchemaAppPlugins" AfterTargets="Build">
+    <ItemGroup>
+      <_Yaml2SchemaPluginFiles Include="$(_Yaml2SchemaPkgRoot)App_Plugins_Package\**\*.*" />
+    </ItemGroup>
+    <Copy SourceFiles="@(_Yaml2SchemaPluginFiles)"
+          DestinationFolder="$(MSBuildProjectDirectory)\wwwroot\App_Plugins\Yaml2Schema\%(RecursiveDir)"
+          SkipUnchangedFiles="true" />
+  </Target>
+</Project>

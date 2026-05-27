@@ -1,0 +1,138 @@
+# Umbraco YAML Configuration – Plugin Demo
+# Plugin: SplatDev.Umbraco.Plugins.Yaml2Schema v1.0.5+
+# Demonstrates all supported sections and flags.
+
+languages:
+  - isoCode: en-US
+    cultureName: English (United States)
+    isDefault: true
+    isMandatory: true
+    update: true
+
+dataTypes:
+  - alias: textString
+    name: Text String
+    editorUiAlias: Umbraco.TextBox
+    config:
+      maxLength: 512
+
+  - alias: richText
+    name: Rich Text
+    editorUiAlias: Umbraco.RichText
+
+scripts:
+  - alias: siteJs
+    name: Site JavaScript
+    path: js/site.js
+    update: true
+    content: |
+      document.addEventListener('DOMContentLoaded', function () {
+        console.log('Site JS loaded');
+      });
+
+stylesheets:
+  - alias: siteStyles
+    name: Site Styles
+    path: css/site.css
+    update: true
+    content: |
+      body { margin: 0; font-family: sans-serif; }
+
+documentTypes:
+  - alias: page
+    name: Page
+    icon: icon-document
+    allowAsRoot: true
+    update: true
+    allowedChildTypes:
+      - page
+    allowedTemplates:
+      - page
+    defaultTemplate: page
+    tabs:
+      - name: Content
+        properties:
+          - alias: title
+            name: Title
+            dataType: textString
+            required: true
+          - alias: bodyContent
+            name: Body Content
+            dataType: richText
+
+  - alias: article
+    name: Article
+    icon: icon-article
+    allowAsRoot: false
+    update: true
+    allowedChildTypes: []
+    allowedTemplates:
+      - article
+    defaultTemplate: article
+    tabs:
+      - name: Content
+        properties:
+          - alias: articleTitle
+            name: Article Title
+            dataType: textString
+            required: true
+          - alias: articleBody
+            name: Article Body
+            dataType: richText
+
+templates:
+  - alias: page
+    name: Page
+    path: Page.cshtml
+    masterTemplate: null
+    update: true
+    content: |
+      @inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+      @{
+          Layout = null;
+      }
+      <!DOCTYPE html>
+      <html>
+      <head>
+          <title>@Model.Value("title")</title>
+      </head>
+      <body>
+          <h1>@Model.Value("title")</h1>
+          @Html.Raw(Model.Value("bodyContent"))
+          @RenderBody()
+      </body>
+      </html>
+
+  - alias: article
+    name: Article
+    path: Article.cshtml
+    masterTemplate: page
+    update: true
+    content: |
+      @inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+      @{
+          Layout = "Page.cshtml";
+      }
+      <article>
+          <h1>@Model.Value("articleTitle")</h1>
+          @Html.Raw(Model.Value("articleBody"))
+      </article>
+
+content:
+  - alias: home
+    name: Home
+    documentType: page
+    isPublished: true
+    sortOrder: 0
+    properties:
+      title: "Welcome to Umbraco"
+      bodyContent: "<p>Getting started with YAML-driven Umbraco.</p>"
+    children:
+      - alias: about
+        name: About
+        documentType: page
+        isPublished: true
+        sortOrder: 1
+        properties:
+          title: "About Us"
+          bodyContent: "<p>Learn more about our team and mission.</p>"

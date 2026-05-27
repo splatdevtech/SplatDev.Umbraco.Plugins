@@ -1,0 +1,21 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <SplatDevuPluginsBackupsContentFilesPath>$(MSBuildThisFileDirectory)..\App_Plugins\SplatDev.uPlugins.Backups\**\*.*</SplatDevuPluginsBackupsContentFilesPath>
+  </PropertyGroup>
+
+  <Target Name="CopySplatDevuPluginsBackupsAssets" BeforeTargets="BeforeBuild">
+    <ItemGroup>
+      <SplatDevuPluginsBackupsContentFiles Include="$(SplatDevuPluginsBackupsContentFilesPath)" />
+    </ItemGroup>
+    <Message Text="Copying SplatDev.uPlugins.Backups files: $(SplatDevuPluginsBackupsContentFilesPath) - #@(SplatDevuPluginsBackupsContentFiles->Count()) files" Importance="high" />
+    <Copy SourceFiles="@(SplatDevuPluginsBackupsContentFiles)" DestinationFiles="@(SplatDevuPluginsBackupsContentFiles->'$(MSBuildProjectDirectory)\App_Plugins\SplatDev.uPlugins.Backups\%(RecursiveDir)%(Filename)%(Extension)')" SkipUnchangedFiles="true" />
+  </Target>
+
+  <Target Name="ClearSplatDevuPluginsBackupsAssets" BeforeTargets="Clean">
+    <ItemGroup>
+      <SplatDevuPluginsBackupsDir Include="$(MSBuildProjectDirectory)\App_Plugins\SplatDev.uPlugins.Backups\" />
+    </ItemGroup>
+    <Message Text="Clear old SplatDev.uPlugins.Backups data" Importance="high" />
+    <RemoveDir Directories="@(SplatDevuPluginsBackupsDir)" />
+  </Target>
+</Project>

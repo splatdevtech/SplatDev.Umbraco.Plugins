@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json.schemastore.org/umbraco-package.json",
+  "name": "Schema2Yaml",
+  "version": "2.0.0",
+  "extensions": [
+    {
+      "type": "dashboard",
+      "alias": "Schema.Export.Dashboard",
+      "name": "Schema Export",
+      "element": "/App_Plugins/Schema2Yaml/dashboard.js",
+      "elementName": "schema2yaml-dashboard",
+      "weight": 100,
+      "meta": {
+        "label": "Schema Export",
+        "pathname": "schema-export"
+      },
+      "conditions": [
+        {
+          "alias": "Umb.Condition.SectionAlias",
+          "match": "Umb.Section.Settings"
+        }
+      ]
+    }
+  ]
+}
+
