@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Umbraco.Cms.Web.Common.Controllers;
+using SplatDev.Umbraco.Plugins.Backups.Configuration;
 using SplatDev.Umbraco.Plugins.Backups.Models;
 using SplatDev.Umbraco.Plugins.Backups.Services;
 
@@ -32,6 +33,26 @@ public class BackupsApiController : UmbracoApiController
         return Ok(result);
     }
 
+    [HttpPost("advanced")]
+    public async Task<IActionResult> CreateAdvanced([FromBody] BackupOptions options, CancellationToken ct)
+    {
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+
+        var result = await _service.CreateBackupAsync(options, ct);
+        return Ok(result);
+    }
+
+    [HttpPost("restore")]
+    public async Task<IActionResult> Restore([FromQuery] string backupPath, [FromBody] RestoreOptions options, CancellationToken ct)
+    {
+        if (string.IsNullOrWhiteSpace(backupPath))
+            return BadRequest("Backup path is required.");
+
+        var result = await _service.RestoreBackupAsync(backupPath, options, ct);
+        return Ok(result);
+    }
+
     [HttpDelete]
     public async Task<IActionResult> Delete([FromQuery] string name)
     {
@@ -47,5 +68,22 @@ public class BackupsApiController : UmbracoApiController
         {
             return NotFound(ex.Message);
         }
+    }
+
+    [HttpGet("providers")]
+    public async Task<IActionResult> GetCloudProviders()
+    {
+        var providers = await _service.GetCloudProvidersAsync();
+        return Ok(providers);
+    }
+
+    [HttpPost("providers/test")]
+    public async Task<IActionResult> TestProvider([FromQuery] string providerId, CancellationToken ct)
+    {
+        if (string.IsNullOrWhiteSpace(providerId))
+            return BadRequest("Provider ID is required.");
+
+        var valid = await _service.TestCloudProviderAsync(providerId, ct);
+        return Ok(new { providerId, valid });
     }
 }
