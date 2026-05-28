@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WhatsApp Order Tracking — Checkout Opt-in & Order Details Wireframe</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --brand-primary: #25D366;
+            --brand-dark: #075E54;
+            --wa-light: #dcf8c6;
+        }
+        body { font-family: 'Inter', sans-serif; background: #f0f2f5; color: #333; }
+        .wireframe-label { display: inline-block; background: #6c757d; color: #fff; padding: 2px 8px; border-radius: 3px; font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px; }
+        .nop-page-header { background: var(--brand-dark); color: #fff; padding: 16px 24px; margin-bottom: 24px; border-radius: 6px; }
+        .nop-page-header h1 { margin: 0; font-size: 1.5rem; font-weight: 700; }
+        .nop-page-header p { margin: 4px 0 0; opacity: 0.8; font-size: 0.9rem; }
+
+        /* Checkout Opt-in Widget */
+        .wa-optin-widget {
+            border: 2px solid var(--brand-primary);
+            border-radius: 8px;
+            padding: 16px 20px;
+            background: linear-gradient(135deg, #f0faf4 0%, #fff 100%);
+            margin-bottom: 16px;
+        }
+        .wa-optin-widget .wa-header {
+            display: flex; align-items: center; gap: 10px; margin-bottom: 8px;
+        }
+        .wa-optin-widget .wa-header i { font-size: 1.5rem; color: var(--brand-primary); }
+        .wa-optin-widget .wa-header h5 { margin: 0; font-weight: 600; font-size: 0.95rem; }
+        .wa-optin-widget .wa-desc { font-size: 0.85rem; color: #6c757d; margin-bottom: 12px; }
+
+        /* Phone Input with Flag */
+        .phone-input-group { display: flex; gap: 6px; align-items: center; }
+        .phone-input-group .country-code {
+            display: flex; align-items: center; gap: 4px;
+            border: 1px solid #ced4da; border-radius: 4px; padding: 6px 10px;
+            font-size: 0.85rem; background: #fff; min-width: 80px;
+        }
+        .phone-input-group input {
+            flex: 1; border: 1px solid #ced4da; border-radius: 4px;
+            padding: 6px 12px; font-size: 0.9rem;
+        }
+
+        /* Order Details — WhatsApp Timeline */
+        .order-panel { background: #fff; border: 1px solid #dee2e6; border-radius: 6px; margin-bottom: 20px; }
+        .order-panel-heading { background: var(--brand-dark); color: #fff; padding: 12px 16px; border-radius: 6px 6px 0 0; font-weight: 600; font-size: 0.95rem; display: flex; align-items: center; gap: 8px; }
+        .order-panel-body { padding: 20px; }
+
+        .wa-timeline { position: relative; padding-left: 28px; }
+        .wa-timeline::before { content: ''; position: absolute; left: 10px; top: 0; bottom: 0; width: 2px; background: #dee2e6; }
+        .wa-event { position: relative; margin-bottom: 20px; }
+        .wa-event::before {
+            content: ''; position: absolute; left: -22px; top: 4px;
+            width: 12px; height: 12px; border-radius: 50%; border: 2px solid var(--brand-primary); background: #fff;
+        }
+        .wa-event.completed::before { background: var(--brand-primary); }
+        .wa-event.failed::before { border-color: #dc3545; background: #dc3545; }
+        .wa-event .event-header { display: flex; align-items: center; gap: 8px; margin-bottom: 4px; }
+        .wa-event .event-title { font-weight: 600; font-size: 0.9rem; }
+        .wa-event .event-time { font-size: 0.75rem; color: #6c757d; font-family: 'JetBrains Mono', monospace; }
+        .wa-event .event-detail { font-size: 0.85rem; color: #555; }
+
+        .wa-bubble {
+            background: var(--wa-light); border-radius: 0 8px 8px 8px;
+            padding: 10px 14px; max-width: 320px; font-size: 0.82rem;
+            margin-top: 6px; position: relative; box-shadow: 0 1px 2px rgba(0,0,0,0.08);
+        }
+        .wa-bubble::before {
+            content: ''; position: absolute; top: 0; left: -6px;
+            width: 0; height: 0; border-top: 6px solid var(--wa-light); border-left: 6px solid transparent;
+        }
+        .wa-bubble .wa-check { color: #53bdeb; font-size: 0.7rem; float: right; margin-top: 4px; }
+        .wa-bubble .wa-time { font-size: 0.7rem; color: #6c757d; float: right; margin-top: 4px; margin-right: 4px; }
+        .wa-bubble .track-btn {
+            display: inline-block; margin-top: 8px; padding: 6px 14px;
+            border: 1px solid #128C7E; border-radius: 4px;
+            color: #128C7E; font-weight: 600; font-size: 0.8rem; text-decoration: none;
+            text-align: center; width: 100%;
+        }
+
+        .anno { background: #fffde7; border: 1px dashed #ffc107; border-radius: 4px; padding: 12px 16px; margin-top: 24px; font-size: 0.8rem; color: #5d4037; }
+        .anno h6 { font-weight: 700; margin-bottom: 8px; }
+        .anno code { font-family: 'JetBrains Mono', monospace; background: #fff8e1; padding: 1px 4px; border-radius: 2px; }
+    </style>
+</head>
+<body>
+    <div class="container py-4" style="max-width: 960px;">
+
+        <div class="nop-page-header">
+            <h1><i class="fab fa-whatsapp mr-2"></i> WhatsApp Order Tracking — Public Views</h1>
+            <p>Checkout opt-in widget and order details tracking timeline as seen by the customer.</p>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- VIEW 1: Checkout — WhatsApp Opt-in Widget  -->
+        <!-- ========================================== -->
+        <span class="wireframe-label">View 1 — Checkout Page Opt-in</span>
+
+        <div class="card mb-4">
+            <div class="card-header bg-white font-weight-bold"><i class="fas fa-credit-card mr-2"></i> Checkout — Confirm Order</div>
+            <div class="card-body">
+                <p class="text-muted" style="font-size:0.85rem;">
+                    <i class="fas fa-ellipsis-h mr-1"></i> [ Billing address, shipping, payment — standard nopCommerce checkout above ]
+                </p>
+                <hr>
+
+                <!-- WhatsApp Opt-in -->
+                <div class="wa-optin-widget">
+                    <div class="wa-header">
+                        <i class="fab fa-whatsapp"></i>
+                        <h5>Receive order updates on WhatsApp</h5>
+                    </div>
+                    <p class="wa-desc">
+                        Get real-time notifications about your order status, shipping, and delivery directly on WhatsApp.
+                    </p>
+                    <div class="d-flex align-items-center gap-3 mb-2" style="gap:12px;">
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="waOptIn" checked>
+                            <label class="custom-control-label" for="waOptIn" style="font-weight:500;">
+                                Yes, send me updates via WhatsApp
+                            </label>
+                        </div>
+                    </div>
+                    <div class="phone-input-group" style="max-width:360px;">
+                        <div class="country-code">
+                            <span>🇧🇷</span> <span>+55</span>
+                        </div>
+                        <input type="tel" placeholder="11 99988-7766" value="11 99988-7766">
+                    </div>
+                    <small class="form-text text-muted mt-1">
+                        <i class="fas fa-lock mr-1" style="font-size:0.7rem;"></i>
+                        Your number is only used for order updates. You can opt out anytime.
+                    </small>
+                </div>
+
+                <hr>
+                <div class="d-flex justify-content-between align-items-center">
+                    <a href="#" class="text-muted" style="font-size:0.85rem;"><i class="fas fa-arrow-left mr-1"></i> Back</a>
+                    <button class="btn btn-primary"><i class="fas fa-check mr-1"></i> Confirm Order</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- VIEW 2: Order Completed — Confirmation     -->
+        <!-- ========================================== -->
+        <span class="wireframe-label">View 2 — Order Completed Page</span>
+
+        <div class="card mb-4">
+            <div class="card-body text-center py-4">
+                <div style="font-size:3rem;color:var(--brand-primary);margin-bottom:12px;"><i class="fas fa-check-circle"></i></div>
+                <h4 class="font-weight-bold">Thank you! Your order has been placed.</h4>
+                <p class="text-muted">Order #1042 — R$ 249,90</p>
+
+                <div class="d-inline-block text-left mt-3 p-3" style="background:#f0faf4;border-radius:8px;border:1px solid #c3e6cb;">
+                    <div class="d-flex align-items-center gap-2 mb-1" style="gap:8px;">
+                        <i class="fab fa-whatsapp" style="font-size:1.2rem;color:var(--brand-primary);"></i>
+                        <strong style="font-size:0.9rem;">WhatsApp notifications enabled</strong>
+                    </div>
+                    <p style="font-size:0.82rem;color:#555;margin:0;">
+                        We'll send order updates to <strong>+55 11 99988-7766</strong>.
+                        <br><small class="text-muted">First message arriving shortly.</small>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- VIEW 3: Order Details — Tracking Timeline  -->
+        <!-- ========================================== -->
+        <span class="wireframe-label">View 3 — Order Details / Tracking Page</span>
+
+        <div class="order-panel">
+            <div class="order-panel-heading">
+                <i class="fas fa-box"></i> Order #1042 — Tracking
+            </div>
+            <div class="order-panel-body">
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <table style="font-size:0.85rem;">
+                            <tr><td class="pr-3 text-muted">Status:</td><td><span class="badge badge-info">Shipped</span></td></tr>
+                            <tr><td class="pr-3 text-muted">Carrier:</td><td><strong>Correios</strong> — SEDEX</td></tr>
+                            <tr><td class="pr-3 text-muted">Tracking:</td><td style="font-family:'JetBrains Mono',monospace;"><a href="#">SS987654321BR</a></td></tr>
+                        </table>
+                    </div>
+                    <div class="col-md-6 text-md-right">
+                        <div class="d-flex align-items-center justify-content-md-end gap-2" style="gap:8px;">
+                            <i class="fab fa-whatsapp" style="color:var(--brand-primary);font-size:1.1rem;"></i>
+                            <span style="font-size:0.82rem;">Updates sent to <strong>+55 11 99988-7766</strong></span>
+                        </div>
+                    </div>
+                </div>
+
+                <h6 class="font-weight-bold mb-3"><i class="fab fa-whatsapp mr-1" style="color:var(--brand-primary);"></i> WhatsApp Notification Timeline</h6>
+
+                <div class="wa-timeline">
+                    <!-- Event: Order Confirmed -->
+                    <div class="wa-event completed">
+                        <div class="event-header">
+                            <span class="event-title">Order Confirmed</span>
+                            <span class="event-time">May 28, 2026 — 14:30</span>
+                        </div>
+                        <div class="wa-bubble">
+                            Olá João! Seu pedido #1042 foi confirmado e está sendo preparado. Valor: R$ 249,90
+                            <div style="clear:both;"></div>
+                            <span class="wa-time">14:30</span>
+                            <span class="wa-check"><i class="fas fa-check-double"></i></span>
+                        </div>
+                    </div>
+
+                    <!-- Event: Shipment Sent -->
+                    <div class="wa-event completed">
+                        <div class="event-header">
+                            <span class="event-title">Shipment Sent</span>
+                            <span class="event-time">May 28, 2026 — 18:45</span>
+                        </div>
+                        <div class="wa-bubble">
+                            Olá João! Seu pedido #1042 foi enviado via Correios. Rastreio: SS987654321BR 📦
+                            <div style="clear:both;"></div>
+                            <a href="#" class="track-btn"><i class="fas fa-map-marker-alt mr-1"></i> Rastrear Envio</a>
+                            <div style="clear:both;"></div>
+                            <span class="wa-time">18:45</span>
+                            <span class="wa-check"><i class="fas fa-check-double"></i></span>
+                        </div>
+                    </div>
+
+                    <!-- Event: Delivered (pending) -->
+                    <div class="wa-event">
+                        <div class="event-header">
+                            <span class="event-title" style="color:#adb5bd;">Delivered</span>
+                            <span class="event-time" style="color:#ced4da;">Pending</span>
+                        </div>
+                        <div class="event-detail" style="color:#adb5bd;">Will be sent when the carrier confirms delivery.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- VIEW 4: Customer Account — Opt-in Manage   -->
+        <!-- ========================================== -->
+        <span class="wireframe-label">View 4 — My Account / WhatsApp Preferences</span>
+
+        <div class="card mb-4">
+            <div class="card-header bg-white font-weight-bold">
+                <i class="fab fa-whatsapp mr-2" style="color:var(--brand-primary);"></i> WhatsApp Notification Preferences
+            </div>
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-start mb-3">
+                    <div>
+                        <div class="custom-control custom-switch mb-2">
+                            <input type="checkbox" class="custom-control-input" id="globalOptIn" checked>
+                            <label class="custom-control-label font-weight-bold" for="globalOptIn">
+                                Receive order updates via WhatsApp
+                            </label>
+                        </div>
+                        <p class="text-muted" style="font-size:0.82rem;margin:0;">
+                            Toggle off to stop all WhatsApp notifications for future orders.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="form-group" style="max-width:360px;">
+                    <label class="font-weight-bold" style="font-size:0.85rem;">WhatsApp Phone Number</label>
+                    <div class="phone-input-group">
+                        <div class="country-code">
+                            <span>🇧🇷</span> <span>+55</span>
+                        </div>
+                        <input type="tel" value="11 99988-7766">
+                    </div>
+                </div>
+
+                <h6 class="font-weight-bold mt-4 mb-2" style="font-size:0.85rem;">Notification Types</h6>
+                <div class="custom-control custom-checkbox mb-1">
+                    <input type="checkbox" class="custom-control-input" id="prefConfirmed" checked>
+                    <label class="custom-control-label" for="prefConfirmed" style="font-size:0.85rem;">Order confirmed</label>
+                </div>
+                <div class="custom-control custom-checkbox mb-1">
+                    <input type="checkbox" class="custom-control-input" id="prefShipped" checked>
+                    <label class="custom-control-label" for="prefShipped" style="font-size:0.85rem;">Shipment sent (with tracking link)</label>
+                </div>
+                <div class="custom-control custom-checkbox mb-1">
+                    <input type="checkbox" class="custom-control-input" id="prefDelivered" checked>
+                    <label class="custom-control-label" for="prefDelivered" style="font-size:0.85rem;">Delivery confirmation</label>
+                </div>
+                <div class="custom-control custom-checkbox mb-1">
+                    <input type="checkbox" class="custom-control-input" id="prefCancelled">
+                    <label class="custom-control-label" for="prefCancelled" style="font-size:0.85rem;">Order cancelled / refund</label>
+                </div>
+
+                <hr>
+                <button class="btn btn-primary btn-sm"><i class="fas fa-save mr-1"></i> Save Preferences</button>
+            </div>
+        </div>
+
+        <!-- Annotations -->
+        <div class="anno">
+            <h6><i class="fas fa-code mr-1"></i> Model / Property Annotations — Public Views</h6>
+
+            <p><strong>View 1 — Checkout Opt-in Widget:</strong></p>
+            <ul>
+                <li>Rendered as a partial view in the checkout confirm step: <code>Views/WhatsAppOrderTracking/_CheckoutOptIn.cshtml</code></li>
+                <li>Widget zone: <code>op_checkout_confirm_top</code> or <code>order_summary_content_after</code></li>
+                <li>Model: <code>WhatsAppOptInModel</code> — <code>OptIn</code> (bool), <code>PhoneNumber</code> (string, with country code)</li>
+                <li>On order placed: stored as <code>GenericAttribute</code> on Customer: <code>"WhatsAppOptIn"</code> (bool) + <code>"WhatsAppPhoneNumber"</code> (string)</li>
+            </ul>
+
+            <p><strong>View 2 — Order Completed:</strong></p>
+            <ul>
+                <li>Widget zone: <code>orderdetails_page_afterproducts</code> or <code>checkout_completed_top</code></li>
+                <li>Conditionally rendered when <code>WhatsAppOptIn == true</code> on the customer</li>
+            </ul>
+
+            <p><strong>View 3 — Order Details / Tracking Timeline:</strong></p>
+            <ul>
+                <li>Widget zone: <code>orderdetails_page_afterproducts</code></li>
+                <li>Model: <code>WhatsAppTrackingTimelineModel</code> — <code>OrderId</code>, <code>PhoneNumber</code>, <code>Messages: List&lt;WhatsAppTimelineItem&gt;</code></li>
+                <li><code>WhatsAppTimelineItem</code>: <code>Event</code>, <code>SentAt</code>, <code>MessagePreview</code>, <code>DeliveryStatus</code>, <code>TrackingUrl</code></li>
+                <li>Data source: <code>WhatsAppMessageLog</code> table filtered by <code>OrderId</code></li>
+            </ul>
+
+            <p><strong>View 4 — My Account Preferences:</strong></p>
+            <ul>
+                <li>Route: <code>/customer/whatsapp-preferences</code> — added via <code>IConsumer&lt;CustomerNavigationEvent&gt;</code></li>
+                <li>Model: <code>WhatsAppPreferencesModel</code> — <code>GlobalOptIn</code> (bool), <code>PhoneNumber</code>, <code>NotifyConfirmed</code>, <code>NotifyShipped</code>, <code>NotifyDelivered</code>, <code>NotifyCancelled</code></li>
+                <li>Stored as <code>GenericAttribute</code> on Customer entity</li>
+            </ul>
+
+            <p><strong>Phone Number Handling:</strong></p>
+            <ul>
+                <li>Store in E.164 format: <code>+5511999887766</code></li>
+                <li>Display with formatting: <code>+55 11 99988-7766</code></li>
+                <li>Validate via regex: <code>^\+[1-9]\d{1,14}$</code> (ITU-T E.164)</li>
+                <li>Pre-fill from billing address phone if available</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

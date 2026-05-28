@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WhatsApp Order Tracking — Admin Configure Wireframe</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --brand-primary: #25D366;
+            --brand-dark: #075E54;
+            --brand-light: #f8f9fa;
+            --brand-success: #28a745;
+            --brand-warning: #ffc107;
+            --brand-danger: #dc3545;
+            --brand-info: #128C7E;
+        }
+        body { font-family: 'Inter', sans-serif; background: #f0f2f5; color: #333; }
+        .nop-panel { background: #fff; border: 1px solid #dee2e6; border-radius: 6px; margin-bottom: 20px; }
+        .nop-panel-heading { background: var(--brand-dark); color: #fff; padding: 12px 16px; border-radius: 6px 6px 0 0; font-weight: 600; font-size: 0.95rem; display: flex; align-items: center; gap: 8px; }
+        .nop-panel-body { padding: 20px; }
+        .nop-page-header { background: var(--brand-dark); color: #fff; padding: 16px 24px; margin-bottom: 24px; border-radius: 6px; }
+        .nop-page-header h1 { margin: 0; font-size: 1.5rem; font-weight: 700; }
+        .nop-page-header p { margin: 4px 0 0; opacity: 0.8; font-size: 0.9rem; }
+        .custom-switch .custom-control-label { cursor: pointer; }
+        .log-table { font-size: 0.85rem; }
+        .log-table th { background: #f8f9fa; font-weight: 600; }
+        .log-table .log-time { font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; color: #6c757d; }
+        .status-badge { display: inline-block; padding: 3px 10px; border-radius: 9999px; font-size: 0.75rem; font-weight: 600; }
+        .status-badge.sent { background: #cce5ff; color: #004085; }
+        .status-badge.delivered { background: #d4edda; color: #155724; }
+        .status-badge.read { background: #d1ecf1; color: #0c5460; }
+        .status-badge.failed { background: #f8d7da; color: #721c24; }
+        .template-card { border: 1px solid #dee2e6; border-radius: 6px; padding: 14px; margin-bottom: 12px; background: #fafbfc; }
+        .template-card .template-name { font-weight: 600; font-size: 0.9rem; color: var(--brand-dark); }
+        .template-card .template-event { font-size: 0.8rem; color: #6c757d; }
+        .template-card .template-preview { font-size: 0.8rem; background: #fff; border: 1px solid #e9ecef; border-radius: 4px; padding: 8px 12px; margin-top: 8px; font-family: 'JetBrains Mono', monospace; }
+        .webhook-url { font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; background: #f8f9fa; border: 1px solid #dee2e6; padding: 8px 12px; border-radius: 4px; word-break: break-all; }
+        .anno { background: #fffde7; border: 1px dashed #ffc107; border-radius: 4px; padding: 12px 16px; margin-top: 24px; font-size: 0.8rem; color: #5d4037; }
+        .anno h6 { font-weight: 700; margin-bottom: 8px; }
+        .anno code { font-family: 'JetBrains Mono', monospace; background: #fff8e1; padding: 1px 4px; border-radius: 2px; }
+    </style>
+</head>
+<body>
+    <div class="container py-4" style="max-width: 960px;">
+
+        <!-- Page Header -->
+        <div class="nop-page-header">
+            <h1><i class="fab fa-whatsapp mr-2"></i> WhatsApp Order Tracking — Configure</h1>
+            <p>Send order status and shipment tracking notifications to customers via WhatsApp Business Cloud API.</p>
+        </div>
+
+        <!-- Section 1: API Credentials -->
+        <div class="nop-panel">
+            <div class="nop-panel-heading"><i class="fas fa-key"></i> WhatsApp Business API Credentials</div>
+            <div class="nop-panel-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="font-weight-bold">Phone Number ID <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" value="995578186971989" placeholder="e.g. 995578186971989">
+                            <small class="form-text text-muted">From Meta App Dashboard → WhatsApp → API Setup.</small>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="font-weight-bold">App ID</label>
+                            <input type="text" class="form-control" value="848636640909066" placeholder="e.g. 848636640909066">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="font-weight-bold">Access Token <span class="text-danger">*</span></label>
+                    <div class="input-group">
+                        <input type="password" class="form-control" value="EAAMD1J2GVwoBRYydU..." placeholder="System User Access Token">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" type="button" title="Toggle visibility"><i class="fas fa-eye"></i></button>
+                        </div>
+                    </div>
+                    <small class="form-text text-muted">Long-lived System User Access Token with <code>whatsapp_business_messaging</code> permission.</small>
+                </div>
+                <div class="form-group mb-0">
+                    <label class="font-weight-bold">App Secret</label>
+                    <div class="input-group">
+                        <input type="password" class="form-control" value="a0209299210e48ee1d03d0bcddd612f5" placeholder="Used for webhook signature verification">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" type="button"><i class="fas fa-eye"></i></button>
+                        </div>
+                    </div>
+                    <small class="form-text text-muted">Used to validate <code>X-Hub-Signature-256</code> on incoming webhooks.</small>
+                </div>
+                <hr>
+                <button class="btn btn-sm btn-outline-primary"><i class="fas fa-plug mr-1"></i> Test Connection</button>
+                <span class="ml-2 text-success font-weight-bold" style="font-size:0.85rem;"><i class="fas fa-check-circle"></i> Connected — Business: SplatDev Ltda</span>
+            </div>
+        </div>
+
+        <!-- Section 2: Notification Settings -->
+        <div class="nop-panel">
+            <div class="nop-panel-heading"><i class="fas fa-bell"></i> Notification Triggers</div>
+            <div class="nop-panel-body">
+                <p class="text-muted mb-3" style="font-size:0.85rem;">
+                    Enable WhatsApp notifications for each order lifecycle event. Each event maps to a pre-approved message template.
+                </p>
+
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <div class="custom-control custom-switch mb-2">
+                            <input type="checkbox" class="custom-control-input" id="notifyConfirmed" checked>
+                            <label class="custom-control-label" for="notifyConfirmed"><strong>Order Confirmed</strong></label>
+                        </div>
+                        <div class="custom-control custom-switch mb-2">
+                            <input type="checkbox" class="custom-control-input" id="notifyProcessing" checked>
+                            <label class="custom-control-label" for="notifyProcessing"><strong>Order Processing</strong></label>
+                        </div>
+                        <div class="custom-control custom-switch mb-2">
+                            <input type="checkbox" class="custom-control-input" id="notifyShipped" checked>
+                            <label class="custom-control-label" for="notifyShipped"><strong>Shipment Sent</strong></label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="custom-control custom-switch mb-2">
+                            <input type="checkbox" class="custom-control-input" id="notifyDelivered" checked>
+                            <label class="custom-control-label" for="notifyDelivered"><strong>Shipment Delivered</strong></label>
+                        </div>
+                        <div class="custom-control custom-switch mb-2">
+                            <input type="checkbox" class="custom-control-input" id="notifyCancelled">
+                            <label class="custom-control-label" for="notifyCancelled"><strong>Order Cancelled</strong></label>
+                        </div>
+                        <div class="custom-control custom-switch mb-2">
+                            <input type="checkbox" class="custom-control-input" id="notifyRefund">
+                            <label class="custom-control-label" for="notifyRefund"><strong>Refund Issued</strong></label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group mb-0">
+                    <label class="font-weight-bold">Default Language Code</label>
+                    <select class="form-control form-control-sm" style="max-width:200px;">
+                        <option selected>pt_BR</option>
+                        <option>en_US</option>
+                        <option>es_ES</option>
+                    </select>
+                    <small class="form-text text-muted">Must match the language of your approved templates in Meta Business Suite.</small>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 3: Message Templates -->
+        <div class="nop-panel">
+            <div class="nop-panel-heading"><i class="fas fa-comment-dots"></i> Message Templates</div>
+            <div class="nop-panel-body">
+                <p class="text-muted mb-3" style="font-size:0.85rem;">
+                    Map nopCommerce order events to approved WhatsApp template names. Templates must be created and approved in
+                    <a href="#" class="text-decoration-none">Meta Business Suite → WhatsApp Manager → Message Templates</a>.
+                </p>
+
+                <div class="template-card">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <div class="template-name"><i class="fas fa-check-circle text-success mr-1"></i> Order Confirmed</div>
+                            <div class="template-event">Fires when: <code>OrderStatusChanged → Processing</code></div>
+                        </div>
+                        <span class="badge badge-success">Approved</span>
+                    </div>
+                    <div class="form-group mt-2 mb-1">
+                        <input type="text" class="form-control form-control-sm" value="order_confirmed" placeholder="Template name">
+                    </div>
+                    <div class="template-preview">
+                        Olá {{1}}! Seu pedido #{{2}} foi confirmado e está sendo preparado. Valor: R$ {{3}}
+                    </div>
+                </div>
+
+                <div class="template-card">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <div class="template-name"><i class="fas fa-shipping-fast text-info mr-1"></i> Shipment Sent</div>
+                            <div class="template-event">Fires when: <code>ShipmentSentEvent</code></div>
+                        </div>
+                        <span class="badge badge-success">Approved</span>
+                    </div>
+                    <div class="form-group mt-2 mb-1">
+                        <input type="text" class="form-control form-control-sm" value="shipment_tracking" placeholder="Template name">
+                    </div>
+                    <div class="template-preview">
+                        Olá {{1}}! Seu pedido #{{2}} foi enviado via {{3}}. Rastreio: {{4}} 📦
+                        <br><small class="text-muted">[Button: Rastrear Envio → https://track.example.com/{{tracking}}]</small>
+                    </div>
+                </div>
+
+                <div class="template-card">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <div class="template-name"><i class="fas fa-box-open text-primary mr-1"></i> Shipment Delivered</div>
+                            <div class="template-event">Fires when: <code>ShipmentDeliveredEvent</code></div>
+                        </div>
+                        <span class="badge badge-success">Approved</span>
+                    </div>
+                    <div class="form-group mt-2 mb-1">
+                        <input type="text" class="form-control form-control-sm" value="order_delivered" placeholder="Template name">
+                    </div>
+                    <div class="template-preview">
+                        Olá {{1}}! Seu pedido #{{2}} foi entregue! Obrigado pela compra. ⭐
+                    </div>
+                </div>
+
+                <div class="template-card">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <div class="template-name"><i class="fas fa-times-circle text-danger mr-1"></i> Order Cancelled</div>
+                            <div class="template-event">Fires when: <code>OrderStatusChanged → Cancelled</code></div>
+                        </div>
+                        <span class="badge badge-warning">Pending Review</span>
+                    </div>
+                    <div class="form-group mt-2 mb-1">
+                        <input type="text" class="form-control form-control-sm" value="order_cancelled" placeholder="Template name">
+                    </div>
+                    <div class="template-preview">
+                        Olá {{1}}, seu pedido #{{2}} foi cancelado. Se tiver dúvidas, entre em contato.
+                    </div>
+                </div>
+
+                <div class="template-card">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <div class="template-name"><i class="fas fa-undo text-warning mr-1"></i> Refund Issued</div>
+                            <div class="template-event">Fires when: <code>OrderRefundedEvent</code></div>
+                        </div>
+                        <span class="badge badge-secondary">Not Created</span>
+                    </div>
+                    <div class="form-group mt-2 mb-1">
+                        <input type="text" class="form-control form-control-sm" value="" placeholder="Template name (leave blank to skip)">
+                    </div>
+                </div>
+
+                <button class="btn btn-sm btn-outline-info mt-2"><i class="fas fa-sync mr-1"></i> Validate Templates with Meta API</button>
+            </div>
+        </div>
+
+        <!-- Section 4: Webhook Configuration -->
+        <div class="nop-panel">
+            <div class="nop-panel-heading"><i class="fas fa-satellite-dish"></i> Webhook (Delivery Status Callbacks)</div>
+            <div class="nop-panel-body">
+                <p class="text-muted mb-3" style="font-size:0.85rem;">
+                    Configure a webhook to receive delivery status updates from WhatsApp (sent, delivered, read, failed).
+                    Register this URL in Meta App Dashboard → WhatsApp → Configuration → Webhook URL.
+                </p>
+                <div class="form-group">
+                    <label class="font-weight-bold">Webhook Callback URL</label>
+                    <div class="webhook-url">
+                        <i class="fas fa-link mr-1 text-muted"></i>
+                        https://yourstore.com/Plugins/WhatsAppOrderTracking/Webhook
+                    </div>
+                    <small class="form-text text-muted">This URL is auto-generated. Set it in Meta App Dashboard → WhatsApp → Configuration.</small>
+                </div>
+                <div class="form-group mb-0">
+                    <label class="font-weight-bold">Verify Token</label>
+                    <div class="input-group" style="max-width:400px;">
+                        <input type="text" class="form-control" value="splatdev_wa_verify_2026" placeholder="Custom verify token">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" type="button" title="Regenerate"><i class="fas fa-redo"></i></button>
+                        </div>
+                    </div>
+                    <small class="form-text text-muted">Meta sends this value in the <code>hub.verify_token</code> param during webhook registration.</small>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 5: Tracking URL Pattern -->
+        <div class="nop-panel">
+            <div class="nop-panel-heading"><i class="fas fa-map-marker-alt"></i> Tracking URL Configuration</div>
+            <div class="nop-panel-body">
+                <p class="text-muted mb-3" style="font-size:0.85rem;">
+                    Define the URL pattern for tracking links sent in shipment notifications. Use <code>{TRACKING}</code> as the placeholder for the tracking number.
+                </p>
+                <div class="form-group">
+                    <label class="font-weight-bold">Default Tracking URL Template</label>
+                    <input type="text" class="form-control" value="https://www.linkcorreios.com.br/?id={TRACKING}" placeholder="https://carrier.com/track/{TRACKING}">
+                    <small class="form-text text-muted">Applied when no carrier-specific URL is configured below.</small>
+                </div>
+                <label class="font-weight-bold">Carrier-Specific URLs</label>
+                <table class="table table-sm table-bordered" style="font-size:0.85rem;">
+                    <thead>
+                        <tr><th style="width:30%;">Carrier Name (match)</th><th>Tracking URL Pattern</th><th style="width:60px;"></th></tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><input type="text" class="form-control form-control-sm" value="Correios"></td>
+                            <td><input type="text" class="form-control form-control-sm" value="https://www.linkcorreios.com.br/?id={TRACKING}"></td>
+                            <td><button class="btn btn-sm btn-outline-danger"><i class="fas fa-trash"></i></button></td>
+                        </tr>
+                        <tr>
+                            <td><input type="text" class="form-control form-control-sm" value="Jadlog"></td>
+                            <td><input type="text" class="form-control form-control-sm" value="https://www.jadlog.com.br/jadlog/tracking?cte={TRACKING}"></td>
+                            <td><button class="btn btn-sm btn-outline-danger"><i class="fas fa-trash"></i></button></td>
+                        </tr>
+                        <tr>
+                            <td><input type="text" class="form-control form-control-sm" value="Sequoia"></td>
+                            <td><input type="text" class="form-control form-control-sm" value="https://www.sequoialog.com.br/rastreamento/?code={TRACKING}"></td>
+                            <td><button class="btn btn-sm btn-outline-danger"><i class="fas fa-trash"></i></button></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <button class="btn btn-sm btn-outline-primary"><i class="fas fa-plus mr-1"></i> Add Carrier</button>
+            </div>
+        </div>
+
+        <!-- Section 6: Message Log -->
+        <div class="nop-panel">
+            <div class="nop-panel-heading"><i class="fas fa-list-alt"></i> Message Log</div>
+            <div class="nop-panel-body p-0">
+                <div class="px-3 pt-3 pb-2 d-flex justify-content-between align-items-center">
+                    <div class="d-flex" style="gap:8px;">
+                        <select class="form-control form-control-sm" style="max-width:150px;">
+                            <option>All Events</option>
+                            <option>Order Confirmed</option>
+                            <option>Shipment Sent</option>
+                            <option>Shipment Delivered</option>
+                            <option>Order Cancelled</option>
+                        </select>
+                        <select class="form-control form-control-sm" style="max-width:130px;">
+                            <option>All Statuses</option>
+                            <option>Sent</option>
+                            <option>Delivered</option>
+                            <option>Read</option>
+                            <option>Failed</option>
+                        </select>
+                    </div>
+                    <button class="btn btn-sm btn-outline-secondary"><i class="fas fa-download mr-1"></i> Export CSV</button>
+                </div>
+                <table class="table table-hover log-table mb-0">
+                    <thead>
+                        <tr>
+                            <th>Timestamp</th>
+                            <th>Order #</th>
+                            <th>Customer</th>
+                            <th>Phone</th>
+                            <th>Event</th>
+                            <th>WA Status</th>
+                            <th>Message ID</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="log-time">2026-05-28 18:45:12</td>
+                            <td><a href="#">#1042</a></td>
+                            <td>João Silva</td>
+                            <td style="font-family:'JetBrains Mono',monospace;font-size:0.8rem;">+5511999887766</td>
+                            <td><i class="fas fa-shipping-fast text-info mr-1"></i> Shipment Sent</td>
+                            <td><span class="status-badge read"><i class="fas fa-check-double mr-1"></i>Read</span></td>
+                            <td style="font-family:'JetBrains Mono',monospace;font-size:0.75rem;">wamid.HBg...x4Z</td>
+                        </tr>
+                        <tr>
+                            <td class="log-time">2026-05-28 18:30:05</td>
+                            <td><a href="#">#1041</a></td>
+                            <td>Maria Santos</td>
+                            <td style="font-family:'JetBrains Mono',monospace;font-size:0.8rem;">+5521988776655</td>
+                            <td><i class="fas fa-check-circle text-success mr-1"></i> Order Confirmed</td>
+                            <td><span class="status-badge delivered"><i class="fas fa-check mr-1"></i>Delivered</span></td>
+                            <td style="font-family:'JetBrains Mono',monospace;font-size:0.75rem;">wamid.HBg...y7A</td>
+                        </tr>
+                        <tr>
+                            <td class="log-time">2026-05-28 17:15:22</td>
+                            <td><a href="#">#1039</a></td>
+                            <td>Carlos Oliveira</td>
+                            <td style="font-family:'JetBrains Mono',monospace;font-size:0.8rem;">+5531977665544</td>
+                            <td><i class="fas fa-box-open text-primary mr-1"></i> Delivered</td>
+                            <td><span class="status-badge sent"><i class="fas fa-paper-plane mr-1"></i>Sent</span></td>
+                            <td style="font-family:'JetBrains Mono',monospace;font-size:0.75rem;">wamid.HBg...z3B</td>
+                        </tr>
+                        <tr>
+                            <td class="log-time">2026-05-28 14:00:01</td>
+                            <td><a href="#">#1038</a></td>
+                            <td>Ana Costa</td>
+                            <td style="font-family:'JetBrains Mono',monospace;font-size:0.8rem;">+5541966554433</td>
+                            <td><i class="fas fa-check-circle text-success mr-1"></i> Order Confirmed</td>
+                            <td><span class="status-badge failed"><i class="fas fa-exclamation-triangle mr-1"></i>Failed</span></td>
+                            <td style="font-family:'JetBrains Mono',monospace;font-size:0.75rem;">—</td>
+                        </tr>
+                        <tr>
+                            <td colspan="7" class="text-center text-muted py-2" style="font-size:0.8rem;">
+                                <i class="fas fa-exclamation-circle mr-1"></i> Error: Phone number not registered on WhatsApp (code 131026)
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="px-3 py-2 d-flex justify-content-between align-items-center" style="border-top:1px solid #dee2e6;font-size:0.8rem;">
+                    <span class="text-muted">Showing 1–4 of 127 messages</span>
+                    <nav>
+                        <ul class="pagination pagination-sm mb-0">
+                            <li class="page-item disabled"><a class="page-link" href="#">«</a></li>
+                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                            <li class="page-item"><a class="page-link" href="#">2</a></li>
+                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                            <li class="page-item"><a class="page-link" href="#">»</a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 7: Manual Send / Test -->
+        <div class="nop-panel">
+            <div class="nop-panel-heading"><i class="fas fa-paper-plane"></i> Test Message</div>
+            <div class="nop-panel-body">
+                <p class="text-muted mb-3" style="font-size:0.85rem;">Send a test notification to verify your configuration and template setup.</p>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="font-weight-bold">Phone Number</label>
+                            <input type="text" class="form-control form-control-sm" placeholder="+5511999887766">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="font-weight-bold">Template</label>
+                            <select class="form-control form-control-sm">
+                                <option>order_confirmed</option>
+                                <option>shipment_tracking</option>
+                                <option>order_delivered</option>
+                                <option>order_cancelled</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-4 d-flex align-items-end">
+                        <button class="btn btn-sm mb-3" style="background:var(--brand-primary);color:#fff;font-weight:600;">
+                            <i class="fab fa-whatsapp mr-1"></i> Send Test
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Save / Cancel -->
+        <div class="d-flex justify-content-end" style="gap:8px;">
+            <button class="btn btn-outline-secondary"><i class="fas fa-times mr-1"></i> Cancel</button>
+            <button class="btn btn-primary"><i class="fas fa-save mr-1"></i> Save Configuration</button>
+        </div>
+
+        <!-- Annotations -->
+        <div class="anno">
+            <h6><i class="fas fa-code mr-1"></i> Model / Property Annotations</h6>
+
+            <p><strong>Section 1 — API Credentials:</strong></p>
+            <ul>
+                <li><code>WhatsAppOrderTrackingSettings.PhoneNumberId</code> — <code>[NopResourceDisplayName("Plugins.Misc.WhatsAppOrderTracking.PhoneNumberId")]</code> string</li>
+                <li><code>WhatsAppOrderTrackingSettings.AccessToken</code> — password field, encrypted via <code>IEncryptionService</code></li>
+                <li><code>WhatsAppOrderTrackingSettings.AppId</code> — string</li>
+                <li><code>WhatsAppOrderTrackingSettings.AppSecret</code> — password field, encrypted</li>
+            </ul>
+
+            <p><strong>Section 2 — Notification Triggers:</strong></p>
+            <ul>
+                <li><code>.NotifyOnOrderConfirmed</code>, <code>.NotifyOnOrderProcessing</code>, <code>.NotifyOnShipmentSent</code>, <code>.NotifyOnShipmentDelivered</code>, <code>.NotifyOnOrderCancelled</code>, <code>.NotifyOnRefund</code> — bool</li>
+                <li><code>.DefaultLanguageCode</code> — string, default <code>"pt_BR"</code></li>
+            </ul>
+
+            <p><strong>Section 3 — Message Templates:</strong></p>
+            <ul>
+                <li><code>.TemplateOrderConfirmed</code>, <code>.TemplateShipmentSent</code>, <code>.TemplateShipmentDelivered</code>, <code>.TemplateOrderCancelled</code>, <code>.TemplateRefundIssued</code> — string (template name in Meta)</li>
+                <li>POST <code>/Admin/WhatsAppOrderTracking/ValidateTemplates</code> — checks templates against Meta Graph API</li>
+            </ul>
+
+            <p><strong>Section 4 — Webhook:</strong></p>
+            <ul>
+                <li><code>.WebhookVerifyToken</code> — string</li>
+                <li>GET/POST <code>/Plugins/WhatsAppOrderTracking/Webhook</code> — public endpoint, no auth; validates <code>X-Hub-Signature-256</code></li>
+            </ul>
+
+            <p><strong>Section 5 — Tracking URLs:</strong></p>
+            <ul>
+                <li><code>.DefaultTrackingUrlTemplate</code> — string, <code>{TRACKING}</code> placeholder</li>
+                <li><code>WhatsAppCarrierUrl</code> entity: <code>CarrierName</code> (string), <code>TrackingUrlTemplate</code> (string) — stored in <code>WhatsAppCarrierUrl</code> table</li>
+                <li>CRUD: <code>/Admin/WhatsAppOrderTracking/CarrierUrlAdd</code>, <code>/CarrierUrlDelete</code></li>
+            </ul>
+
+            <p><strong>Section 6 — Message Log:</strong></p>
+            <ul>
+                <li><code>WhatsAppMessageLog</code> entity: <code>OrderId</code>, <code>CustomerId</code>, <code>PhoneNumber</code>, <code>Event</code>, <code>TemplateName</code>, <code>WhatsAppMessageId</code> (wamid), <code>DeliveryStatus</code> (sent/delivered/read/failed), <code>ErrorMessage</code>, <code>CreatedOnUtc</code>, <code>UpdatedOnUtc</code></li>
+                <li>GET <code>/Admin/WhatsAppOrderTracking/GetLogs?event=&amp;status=&amp;page=1&amp;pageSize=50</code> → <code>PagedList&lt;WhatsAppMessageLog&gt;</code></li>
+            </ul>
+
+            <p><strong>Section 7 — Test Message:</strong></p>
+            <ul>
+                <li>POST <code>/Admin/WhatsAppOrderTracking/SendTest</code> — params: <code>phoneNumber</code>, <code>templateName</code></li>
+            </ul>
+
+            <p><strong>nopCommerce Event Consumers:</strong></p>
+            <ul>
+                <li><code>IConsumer&lt;OrderStatusChangedEvent&gt;</code> — fires for Confirmed, Processing, Cancelled</li>
+                <li><code>IConsumer&lt;ShipmentSentEvent&gt;</code> — fires with tracking number + carrier</li>
+                <li><code>IConsumer&lt;ShipmentDeliveredEvent&gt;</code> — fires on delivery</li>
+                <li><code>IConsumer&lt;OrderRefundedEvent&gt;</code> — fires on refund</li>
+            </ul>
+
+            <p><strong>WhatsApp Cloud API:</strong></p>
+            <ul>
+                <li>POST <code>https://graph.facebook.com/v21.0/{PhoneNumberId}/messages</code></li>
+                <li>Auth: <code>Bearer {AccessToken}</code></li>
+                <li>Category: <code>UTILITY</code> (transactional, not marketing)</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
