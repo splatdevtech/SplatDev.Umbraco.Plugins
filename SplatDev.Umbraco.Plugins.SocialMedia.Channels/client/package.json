@@ -1,5 +1,5 @@
 {
-  "name": "blog-client",
+  "name": "@splatdev/umbracocms-plugins-socialmedia-channels",
   "version": "2.0.0",
   "type": "module",
   "scripts": {
@@ -14,8 +14,6 @@
     "@umbraco-cms/backoffice": "^17.0.0"
   },
   "peerDependenciesMeta": {
-    "@umbraco-cms/backoffice": {
-      "optional": true
-    }
+    "@umbraco-cms/backoffice": { "optional": true }
   }
 }
