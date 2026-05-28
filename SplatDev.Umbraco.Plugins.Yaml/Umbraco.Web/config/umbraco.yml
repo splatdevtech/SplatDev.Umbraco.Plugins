@@ -1,0 +1,52 @@
+dataTypes:
+  - alias: textString
+    name: Textstring
+    editorUiAlias: Umbraco.Textbox
+  - alias: richText
+    name: Richtext Editor
+    editorUiAlias: Umbraco.RichText
+  - alias: markdown
+    name: Markdown Editor
+    editorUiAlias: Umbraco.MarkdownEditor
+documentTypes:
+  - alias: home
+    name: Home
+    tabs:
+      - name: Content
+        properties:
+          - alias: title
+            name: Title
+            dataType: textString
+          - alias: bodyText
+            name: Body Text
+            dataType: richText
+  - alias: blogPost
+    name: Blog Post
+    tabs:
+      - name: Content
+        properties:
+          - alias: title
+            name: Title
+            dataType: textString
+          - alias: excerpt
+            name: Excerpt
+            dataType: textString
+templates:
+  - alias: page
+    name: Page
+    path: Page.cshtml
+  - alias: article
+    name: Article
+    path: Article.cshtml
+content:
+  - alias: home
+    name: Home
+    isPublished: true
+    children:
+      - alias: blog
+        name: Blog
+        isPublished: true
+        children:
+          - alias: firstPost
+            name: First Post
+            isPublished: true
