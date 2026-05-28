@@ -34,7 +34,11 @@
             "backups_create": "Create Backup",
             "backups_delete": "Delete",
             "backups_includeMedia": "Include Media",
-            "backups_cloudProvider": "Cloud Provider",
+            "backups_creating": "Creating backup…",
+            "backups_download": "Download",
+            "backups_confirm_delete": "Delete this backup? This action cannot be undone.",
+            "backups_includeDatabase": "Include Database",
+            "backups_cloudProvider": "Storage Destination",
             "backups_provider_local": "Local File System",
             "backups_provider_azure": "Azure Blob Storage",
             "backups_provider_googledrive": "Google Drive",
@@ -44,7 +48,10 @@
             "backups_provider_mega": "Mega",
             "backups_provider_seafile": "Seafile",
             "backups_provider_s3": "Amazon S3",
-            "backups_provider_sftp": "SFTP"
+            "backups_provider_sftp": "SFTP",
+            "backups_status_success": "Success",
+            "backups_status_failed": "Failed",
+            "backups_status_running": "Running"
           }
         }
       }
