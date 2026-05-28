@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Olist / Tiny ERP — Admin Configure Wireframe</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --brand-primary: #ff6600;
+            --brand-dark: #1a1a2e;
+            --brand-light: #f8f9fa;
+            --brand-success: #28a745;
+            --brand-warning: #ffc107;
+            --brand-danger: #dc3545;
+            --brand-info: #17a2b8;
+        }
+        body { font-family: 'Inter', sans-serif; background: #f0f2f5; color: #333; }
+        .nop-panel { background: #fff; border: 1px solid #dee2e6; border-radius: 6px; margin-bottom: 20px; }
+        .nop-panel-heading { background: var(--brand-dark); color: #fff; padding: 12px 16px; border-radius: 6px 6px 0 0; font-weight: 600; font-size: 0.95rem; display: flex; align-items: center; gap: 8px; }
+        .nop-panel-body { padding: 20px; }
+        .nop-page-header { background: var(--brand-dark); color: #fff; padding: 16px 24px; margin-bottom: 24px; border-radius: 6px; }
+        .nop-page-header h1 { margin: 0; font-size: 1.5rem; font-weight: 700; }
+        .nop-page-header p { margin: 4px 0 0; opacity: 0.8; font-size: 0.9rem; }
+        .sync-module { display: flex; align-items: center; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid #e9ecef; }
+        .sync-module:last-child { border-bottom: none; }
+        .sync-module-label { font-weight: 500; display: flex; align-items: center; gap: 8px; }
+        .sync-module-label i { color: var(--brand-primary); }
+        .sync-status { display: inline-block; padding: 3px 10px; border-radius: 9999px; font-size: 0.75rem; font-weight: 600; }
+        .sync-status.ok { background: #d4edda; color: #155724; }
+        .sync-status.warning { background: #fff3cd; color: #856404; }
+        .sync-status.error { background: #f8d7da; color: #721c24; }
+        .sync-status.idle { background: #e2e3e5; color: #383d41; }
+        .log-table { font-size: 0.85rem; }
+        .log-table th { background: #f8f9fa; font-weight: 600; }
+        .log-table .log-time { font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; color: #6c757d; }
+        .custom-switch .custom-control-label { cursor: pointer; }
+        .btn-sync { background: var(--brand-primary); border-color: var(--brand-primary); color: #fff; font-weight: 600; }
+        .btn-sync:hover { background: #e65c00; border-color: #e65c00; color: #fff; }
+        .anno { background: #fffde7; border: 1px dashed #ffc107; border-radius: 4px; padding: 12px 16px; margin-top: 24px; font-size: 0.8rem; color: #5d4037; }
+        .anno h6 { font-weight: 700; margin-bottom: 8px; }
+        .anno code { font-family: 'JetBrains Mono', monospace; background: #fff8e1; padding: 1px 4px; border-radius: 2px; }
+    </style>
+</head>
+<body>
+    <div class="container py-4" style="max-width: 900px;">
+
+        <!-- Page Header -->
+        <div class="nop-page-header">
+            <h1><i class="fas fa-plug mr-2"></i> Olist / Tiny ERP — Configure</h1>
+            <p>Sync products, orders, customers, and stock with your Olist (Tiny ERP) account.</p>
+        </div>
+
+        <!-- Section 1: Credentials -->
+        <div class="nop-panel">
+            <div class="nop-panel-heading"><i class="fas fa-key"></i> API Credentials</div>
+            <div class="nop-panel-body">
+                <div class="form-group">
+                    <label class="font-weight-bold">API Token <span class="text-danger">*</span></label>
+                    <div class="input-group">
+                        <input type="password" class="form-control" value="tk_live_a1b2c3d4e5f6g7h8i9j0" placeholder="Enter your Olist/Tiny ERP API token">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" type="button" title="Toggle visibility"><i class="fas fa-eye"></i></button>
+                        </div>
+                    </div>
+                    <small class="form-text text-muted">Found in Olist → Settings → Integrations → API Keys.</small>
+                </div>
+                <div class="form-group mb-0">
+                    <label class="font-weight-bold">Environment</label>
+                    <div>
+                        <div class="custom-control custom-radio custom-control-inline">
+                            <input type="radio" id="envProd" name="env" class="custom-control-input" checked>
+                            <label class="custom-control-label" for="envProd">Production</label>
+                        </div>
+                        <div class="custom-control custom-radio custom-control-inline">
+                            <input type="radio" id="envSandbox" name="env" class="custom-control-input">
+                            <label class="custom-control-label" for="envSandbox">Sandbox</label>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <button class="btn btn-sm btn-outline-primary"><i class="fas fa-plug mr-1"></i> Test Connection</button>
+                <span class="ml-2 text-success font-weight-bold" style="font-size:0.85rem;"><i class="fas fa-check-circle"></i> Connected</span>
+            </div>
+        </div>
+
+        <!-- Section 2: Sync Modules -->
+        <div class="nop-panel">
+            <div class="nop-panel-heading"><i class="fas fa-sync-alt"></i> Sync Modules</div>
+            <div class="nop-panel-body">
+                <div class="sync-module">
+                    <div class="sync-module-label"><i class="fas fa-box"></i> Products</div>
+                    <div class="d-flex align-items-center gap-2" style="gap:8px;">
+                        <span class="sync-status ok">Synced</span>
+                        <div class="custom-control custom-switch">
+                            <input type="checkbox" class="custom-control-input" id="syncProducts" checked>
+                            <label class="custom-control-label" for="syncProducts"></label>
+                        </div>
+                    </div>
+                </div>
+                <div class="sync-module">
+                    <div class="sync-module-label"><i class="fas fa-shopping-cart"></i> Orders</div>
+                    <div class="d-flex align-items-center gap-2" style="gap:8px;">
+                        <span class="sync-status ok">Synced</span>
+                        <div class="custom-control custom-switch">
+                            <input type="checkbox" class="custom-control-input" id="syncOrders" checked>
+                            <label class="custom-control-label" for="syncOrders"></label>
+                        </div>
+                    </div>
+                </div>
+                <div class="sync-module">
+                    <div class="sync-module-label"><i class="fas fa-users"></i> Customers</div>
+                    <div class="d-flex align-items-center gap-2" style="gap:8px;">
+                        <span class="sync-status warning">Partial</span>
+                        <div class="custom-control custom-switch">
+                            <input type="checkbox" class="custom-control-input" id="syncCustomers" checked>
+                            <label class="custom-control-label" for="syncCustomers"></label>
+                        </div>
+                    </div>
+                </div>
+                <div class="sync-module">
+                    <div class="sync-module-label"><i class="fas fa-warehouse"></i> Stock</div>
+                    <div class="d-flex align-items-center gap-2" style="gap:8px;">
+                        <span class="sync-status idle">Not synced</span>
+                        <div class="custom-control custom-switch">
+                            <input type="checkbox" class="custom-control-input" id="syncStock">
+                            <label class="custom-control-label" for="syncStock"></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 3: Manual Sync -->
+        <div class="nop-panel">
+            <div class="nop-panel-heading"><i class="fas fa-play-circle"></i> Manual Sync</div>
+            <div class="nop-panel-body">
+                <p class="text-muted mb-3" style="font-size:0.85rem;">Trigger a one-time sync for each module. Only enabled modules can be manually synced.</p>
+                <div class="d-flex flex-wrap" style="gap:8px;">
+                    <button class="btn btn-sync btn-sm"><i class="fas fa-box mr-1"></i> Sync Products</button>
+                    <button class="btn btn-sync btn-sm"><i class="fas fa-shopping-cart mr-1"></i> Sync Orders</button>
+                    <button class="btn btn-sync btn-sm"><i class="fas fa-users mr-1"></i> Sync Customers</button>
+                    <button class="btn btn-sm btn-outline-secondary" disabled><i class="fas fa-warehouse mr-1"></i> Sync Stock</button>
+                    <span class="align-self-center ml-2" style="font-size:0.8rem;color:#6c757d;"><i class="fas fa-info-circle"></i> Stock sync disabled above</span>
+                </div>
+                <hr>
+                <button class="btn btn-outline-danger btn-sm"><i class="fas fa-redo mr-1"></i> Full Re-sync (All Modules)</button>
+            </div>
+        </div>
+
+        <!-- Section 4: Sync Status / Logs -->
+        <div class="nop-panel">
+            <div class="nop-panel-heading"><i class="fas fa-list-alt"></i> Sync Status &amp; Logs</div>
+            <div class="nop-panel-body p-0">
+                <table class="table table-hover log-table mb-0">
+                    <thead>
+                        <tr>
+                            <th>Timestamp</th>
+                            <th>Module</th>
+                            <th>Direction</th>
+                            <th>Records</th>
+                            <th>Status</th>
+                            <th>Message</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="log-time">2026-05-28 18:45:12</td>
+                            <td><i class="fas fa-box text-muted mr-1"></i> Products</td>
+                            <td><span class="badge badge-info">Import</span></td>
+                            <td>142</td>
+                            <td><span class="sync-status ok">Success</span></td>
+                            <td>All products imported.</td>
+                        </tr>
+                        <tr>
+                            <td class="log-time">2026-05-28 18:44:58</td>
+                            <td><i class="fas fa-shopping-cart text-muted mr-1"></i> Orders</td>
+                            <td><span class="badge badge-warning">Export</span></td>
+                            <td>37</td>
+                            <td><span class="sync-status ok">Success</span></td>
+                            <td>37 new orders exported to Olist.</td>
+                        </tr>
+                        <tr>
+                            <td class="log-time">2026-05-28 18:44:30</td>
+                            <td><i class="fas fa-users text-muted mr-1"></i> Customers</td>
+                            <td><span class="badge badge-info">Import</span></td>
+                            <td>3</td>
+                            <td><span class="sync-status warning">Partial</span></td>
+                            <td>1 of 4 customers had missing email — skipped.</td>
+                        </tr>
+                        <tr>
+                            <td class="log-time">2026-05-28 12:00:01</td>
+                            <td><i class="fas fa-box text-muted mr-1"></i> Products</td>
+                            <td><span class="badge badge-info">Import</span></td>
+                            <td>0</td>
+                            <td><span class="sync-status error">Error</span></td>
+                            <td>API rate limit exceeded. Retry in 60s.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Save / Cancel -->
+        <div class="d-flex justify-content-end" style="gap:8px;">
+            <button class="btn btn-outline-secondary"><i class="fas fa-times mr-1"></i> Cancel</button>
+            <button class="btn btn-primary"><i class="fas fa-save mr-1"></i> Save Configuration</button>
+        </div>
+
+        <!-- Annotations -->
+        <div class="anno">
+            <h6><i class="fas fa-code mr-1"></i> Model / Property Annotations</h6>
+            <p><strong>Section 1 — Credentials:</strong></p>
+            <ul>
+                <li><code>OlistConfigModel.ApiToken</code> — <code>[NopResourceDisplayName("Plugins.Misc.Olist.ApiToken")]</code> password field</li>
+                <li><code>OlistConfigModel.UseSandbox</code> — <code>[NopResourceDisplayName("Plugins.Misc.Olist.UseSandbox")]</code> bool toggle (radio)</li>
+            </ul>
+            <p><strong>Section 2 — Sync Modules:</strong></p>
+            <ul>
+                <li><code>OlistConfigModel.SyncProducts</code>, <code>.SyncOrders</code>, <code>.SyncCustomers</code>, <code>.SyncStock</code> — bool switches</li>
+            </ul>
+            <p><strong>Section 3 — Manual Sync:</strong></p>
+            <ul>
+                <li>POST <code>/Admin/OlistConfigure/ManualSync?module={Products|Orders|Customers|Stock}</code></li>
+                <li>POST <code>/Admin/OlistConfigure/FullResync</code></li>
+            </ul>
+            <p><strong>Section 4 — Sync Logs:</strong></p>
+            <ul>
+                <li>GET <code>/Admin/OlistConfigure/GetLogs?page=1&amp;pageSize=50</code> → <code>PagedList&lt;SyncLogEntry&gt;</code></li>
+                <li><code>SyncLogEntry</code>: <code>Timestamp</code>, <code>Module</code>, <code>Direction</code>, <code>RecordCount</code>, <code>Status</code>, <code>Message</code></li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
