@@ -1,6 +1,6 @@
 {
   "javascript": ["/App_Plugins/Backups/angular/backups.controller.js"],
-  "css": [],
+  "css": ["/App_Plugins/Backups/angular/backups.css"],
   "propertyEditors": [],
   "gridEditors": [],
   "dashboards": [

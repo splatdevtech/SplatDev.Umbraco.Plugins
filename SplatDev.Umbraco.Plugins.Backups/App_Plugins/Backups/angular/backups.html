@@ -1,0 +1,379 @@
+<div ng-controller="Backups.DashboardController as vm" class="umb-dashboard backups-dashboard">
+
+  <umb-load-indicator ng-if="vm.loading"></umb-load-indicator>
+
+  <div class="umb-dashboard-content" ng-hide="vm.loading">
+
+    <!-- Header -->
+    <div class="backups-header">
+      <div class="backups-header__title">
+        <h1>Backups</h1>
+        <p class="muted">Create, restore, and schedule backups from the backoffice.</p>
+      </div>
+      <button type="button" class="btn btn-action" ng-click="vm.showCreateForm = !vm.showCreateForm"
+        ng-disabled="vm.creating">
+        <i class="icon icon-cloud-upload"></i> Create Backup
+      </button>
+    </div>
+
+    <!-- Tab navigation -->
+    <ul class="backups-tabs">
+      <li ng-class="{'active': vm.activeTab === 'backups'}">
+        <a href ng-click="vm.setTab('backups')">
+          <i class="icon icon-box"></i> Backups
+        </a>
+      </li>
+      <li ng-class="{'active': vm.activeTab === 'restore'}">
+        <a href ng-click="vm.setTab('restore')">
+          <i class="icon icon-undo"></i> Restore
+        </a>
+      </li>
+      <li ng-class="{'active': vm.activeTab === 'schedule'}">
+        <a href ng-click="vm.setTab('schedule')">
+          <i class="icon icon-timer"></i> Schedule
+        </a>
+      </li>
+      <li ng-class="{'active': vm.activeTab === 'providers'}">
+        <a href ng-click="vm.setTab('providers')">
+          <i class="icon icon-cloud"></i> Cloud Providers
+        </a>
+      </li>
+    </ul>
+
+    <!-- ===================== CREATE BACKUP FORM ===================== -->
+    <div class="backups-create-form" ng-show="vm.showCreateForm">
+      <div class="backups-section-header">
+        <i class="icon icon-add"></i> New Backup
+      </div>
+      <div class="backups-form-body">
+        <div class="backups-form-row">
+          <label for="backup-name">Backup Name</label>
+          <input type="text" id="backup-name" class="umb-editor umb-textstring"
+            ng-model="vm.form.name" placeholder="e.g. pre-deploy-2026-05-28" />
+        </div>
+
+        <div class="backups-form-row">
+          <label for="backup-scope">Scope</label>
+          <select id="backup-scope" class="umb-editor" ng-model="vm.form.scope"
+            ng-options="s.value as s.label for s in vm.scopes">
+          </select>
+        </div>
+
+        <div class="backups-form-row backups-form-row--checkboxes">
+          <label class="backups-checkbox">
+            <input type="checkbox" ng-model="vm.form.includeMedia" /> Include Media Files
+          </label>
+          <label class="backups-checkbox">
+            <input type="checkbox" ng-model="vm.form.compress" /> Compress (ZIP)
+          </label>
+          <label class="backups-checkbox">
+            <input type="checkbox" ng-model="vm.form.encrypt" /> Encrypt
+          </label>
+        </div>
+
+        <div class="backups-form-row" ng-show="vm.form.encrypt">
+          <label for="encryption-key">Encryption Key</label>
+          <input type="password" id="encryption-key" class="umb-editor umb-textstring"
+            ng-model="vm.form.encryptionKey" placeholder="Enter encryption key" />
+        </div>
+
+        <div class="backups-form-row" ng-show="vm.cloudProviders.length > 0">
+          <label>Upload to Cloud (optional)</label>
+          <div class="backups-provider-select">
+            <label class="backups-checkbox" ng-repeat="p in vm.cloudProviders">
+              <input type="checkbox" ng-checked="vm.form.cloudProviderIds.indexOf(p.id) > -1"
+                ng-click="vm.toggleProvider(vm.form.cloudProviderIds, p.id)" />
+              {{ p.providerType }}
+              <span class="backups-provider-badge" ng-if="p.enabled">Active</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="backups-form-actions">
+          <button type="button" class="btn btn-success" ng-click="vm.createBackup()" ng-disabled="vm.creating">
+            <i class="icon icon-check" ng-hide="vm.creating"></i>
+            <i class="icon icon-load" ng-show="vm.creating"></i>
+            <span ng-hide="vm.creating">Run Backup Now</span>
+            <span ng-show="vm.creating">Creating...</span>
+          </button>
+          <button type="button" class="btn btn-link" ng-click="vm.showCreateForm = false">Cancel</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===================== TAB: BACKUPS (History) ===================== -->
+    <div ng-show="vm.activeTab === 'backups'">
+      <div class="backups-section-header">
+        <i class="icon icon-list"></i> Backup History
+        <div class="backups-section-actions">
+          <input type="text" class="umb-editor umb-textstring backups-filter-input"
+            ng-model="vm.historyFilter" placeholder="Filter backups..." />
+          <button type="button" class="btn btn-default btn-small" ng-click="vm.refreshBackups()">
+            <i class="icon icon-sync"></i> Refresh
+          </button>
+        </div>
+      </div>
+
+      <div ng-if="vm.filteredBackups().length === 0 && !vm.creating" class="backups-empty-state">
+        <i class="icon icon-box backups-empty-icon"></i>
+        <p>No backups found.</p>
+        <button type="button" class="btn btn-action" ng-click="vm.showCreateForm = true">
+          Create your first backup
+        </button>
+      </div>
+
+      <table class="table backups-table" ng-if="vm.filteredBackups().length > 0">
+        <thead>
+          <tr>
+            <th class="backups-th-sortable" ng-click="vm.sortHistory('name')">
+              Name <i class="icon" ng-class="vm.sortIcon('name')"></i>
+            </th>
+            <th class="backups-th-sortable" ng-click="vm.sortHistory('createdAt')">
+              Created <i class="icon" ng-class="vm.sortIcon('createdAt')"></i>
+            </th>
+            <th class="backups-th-sortable" ng-click="vm.sortHistory('sizeBytes')">
+              Size <i class="icon" ng-class="vm.sortIcon('sizeBytes')"></i>
+            </th>
+            <th>Type</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="backup in vm.filteredBackups() | orderBy:vm.historySortField:vm.historySortReverse">
+            <td>
+              <strong>{{ backup.name }}</strong>
+              <span class="backups-ext" ng-if="backup.extension">.{{ backup.extension }}</span>
+            </td>
+            <td>
+              <span title="{{ backup.createdAt | date:'medium' }}">
+                {{ vm.timeAgo(backup.createdAt) }}
+              </span>
+            </td>
+            <td>{{ vm.formatSize(backup.sizeBytes) }}</td>
+            <td>
+              <span class="backups-badge backups-badge--compressed" ng-if="backup.isCompressed"
+                title="Compressed">
+                <i class="icon icon-zip"></i> ZIP
+              </span>
+              <span class="backups-badge backups-badge--encrypted" ng-if="backup.isEncrypted"
+                title="Encrypted">
+                <i class="icon icon-lock"></i> Encrypted
+              </span>
+              <span class="backups-badge backups-badge--raw"
+                ng-if="!backup.isCompressed && !backup.isEncrypted">
+                Raw
+              </span>
+            </td>
+            <td>
+              <span class="backups-badge backups-badge--success">
+                <i class="icon icon-check"></i> Available
+              </span>
+            </td>
+            <td class="backups-actions">
+              <button class="btn btn-default btn-small" ng-click="vm.restoreForm.backupName = backup.name; vm.setTab('restore')"
+                title="Restore this backup">
+                <i class="icon icon-undo"></i>
+              </button>
+              <button class="btn btn-danger btn-small" ng-click="vm.deleteBackup(backup.name)"
+                title="Delete this backup">
+                <i class="icon icon-delete"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="backups-summary" ng-if="vm.backups.length > 0">
+        <span>{{ vm.backups.length }} backup(s)</span>
+        <span class="backups-summary-sep">|</span>
+        <span>Total size: {{ vm.formatSize(vm.totalSize()) }}</span>
+      </div>
+    </div>
+
+    <!-- ===================== TAB: RESTORE ===================== -->
+    <div ng-show="vm.activeTab === 'restore'">
+      <div class="backups-section-header">
+        <i class="icon icon-undo"></i> Restore from Backup
+      </div>
+
+      <div class="backups-restore-warning">
+        <i class="icon icon-alert"></i>
+        <span>Restoring a backup will modify your site's content and/or database. Make sure you have a current backup before proceeding.</span>
+      </div>
+
+      <div class="backups-form-body">
+        <div class="backups-form-row">
+          <label for="restore-backup">Select Backup</label>
+          <select id="restore-backup" class="umb-editor" ng-model="vm.restoreForm.backupName">
+            <option value="">-- Select a backup --</option>
+            <option ng-repeat="b in vm.backups" value="{{ b.name }}">
+              {{ b.name }} ({{ vm.formatSize(b.sizeBytes) }} — {{ b.createdAt | date:'short' }})
+            </option>
+          </select>
+        </div>
+
+        <div class="backups-form-row">
+          <label for="restore-scope">Restore Scope</label>
+          <select id="restore-scope" class="umb-editor" ng-model="vm.restoreForm.scope"
+            ng-options="s.value as s.label for s in vm.scopes">
+          </select>
+        </div>
+
+        <div class="backups-form-row backups-form-row--checkboxes">
+          <label class="backups-checkbox backups-checkbox--warning">
+            <input type="checkbox" ng-model="vm.restoreForm.overwriteExisting" />
+            Overwrite existing content
+          </label>
+        </div>
+
+        <div class="backups-form-row" ng-if="vm.restoreForm.backupName && vm.isBackupEncrypted(vm.restoreForm.backupName)">
+          <label for="decryption-key">Decryption Key</label>
+          <input type="password" id="decryption-key" class="umb-editor umb-textstring"
+            ng-model="vm.restoreForm.decryptionKey" placeholder="Enter decryption key" />
+        </div>
+
+        <div class="backups-form-actions">
+          <button type="button" class="btn btn-warning" ng-click="vm.restoreBackup()"
+            ng-disabled="vm.restoring || !vm.restoreForm.backupName">
+            <i class="icon icon-undo" ng-hide="vm.restoring"></i>
+            <i class="icon icon-load" ng-show="vm.restoring"></i>
+            <span ng-hide="vm.restoring">Restore Backup</span>
+            <span ng-show="vm.restoring">Restoring...</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===================== TAB: SCHEDULE ===================== -->
+    <div ng-show="vm.activeTab === 'schedule'">
+      <div class="backups-section-header">
+        <i class="icon icon-timer"></i> Backup Schedule
+      </div>
+
+      <div class="backups-info-box">
+        <i class="icon icon-info"></i>
+        <span>Backup scheduling is configured via <code>appsettings.json</code> under the <code>SplatDev:Backups:Schedule</code> section. Changes below are for reference — apply them in your configuration file.</span>
+      </div>
+
+      <div class="backups-form-body">
+        <div class="backups-form-row backups-form-row--checkboxes">
+          <label class="backups-checkbox">
+            <input type="checkbox" ng-model="vm.scheduleForm.enabled" /> Enable Scheduled Backups
+          </label>
+        </div>
+
+        <div ng-show="vm.scheduleForm.enabled">
+          <div class="backups-form-row">
+            <label for="cron-preset">Frequency</label>
+            <select id="cron-preset" class="umb-editor" ng-model="vm.scheduleForm.selectedPreset"
+              ng-change="vm.selectCronPreset()">
+              <option ng-repeat="p in vm.cronPresets" value="{{ p.value }}">{{ p.label }}</option>
+            </select>
+          </div>
+
+          <div class="backups-form-row">
+            <label for="cron-expr">Cron Expression</label>
+            <input type="text" id="cron-expr" class="umb-editor umb-textstring"
+              ng-model="vm.scheduleForm.cronExpression" placeholder="0 2 * * *" />
+            <small class="backups-help-text">
+              Format: minute hour day-of-month month day-of-week
+            </small>
+          </div>
+
+          <div class="backups-form-row">
+            <label for="schedule-scope">Scope</label>
+            <select id="schedule-scope" class="umb-editor" ng-model="vm.scheduleForm.scope"
+              ng-options="s.value as s.label for s in vm.scopes">
+            </select>
+          </div>
+
+          <div class="backups-form-row backups-form-row--checkboxes">
+            <label class="backups-checkbox">
+              <input type="checkbox" ng-model="vm.scheduleForm.compress" /> Compress
+            </label>
+            <label class="backups-checkbox">
+              <input type="checkbox" ng-model="vm.scheduleForm.keepLocal" /> Keep Local Copy
+            </label>
+          </div>
+
+          <div class="backups-form-row" ng-show="vm.cloudProviders.length > 0">
+            <label>Upload to Cloud</label>
+            <div class="backups-provider-select">
+              <label class="backups-checkbox" ng-repeat="p in vm.cloudProviders">
+                <input type="checkbox" ng-checked="vm.scheduleForm.cloudProviderIds.indexOf(p.id) > -1"
+                  ng-click="vm.toggleProvider(vm.scheduleForm.cloudProviderIds, p.id)" />
+                {{ p.providerType }}
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div class="backups-config-preview" ng-show="vm.scheduleForm.enabled">
+          <div class="backups-section-header backups-section-header--small">
+            <i class="icon icon-code"></i> appsettings.json snippet
+          </div>
+          <pre class="backups-code-block">{
+  "SplatDev": {
+    "Backups": {
+      "Schedule": {
+        "Enabled": {{ vm.scheduleForm.enabled }},
+        "CronExpression": "{{ vm.scheduleForm.cronExpression }}",
+        "Scope": {{ vm.scheduleForm.scope }},
+        "Compress": {{ vm.scheduleForm.compress }},
+        "KeepLocal": {{ vm.scheduleForm.keepLocal }}
+      }
+    }
+  }
+}</pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===================== TAB: CLOUD PROVIDERS ===================== -->
+    <div ng-show="vm.activeTab === 'providers'">
+      <div class="backups-section-header">
+        <i class="icon icon-cloud"></i> Cloud Storage Providers
+      </div>
+
+      <div ng-if="vm.cloudProviders.length === 0" class="backups-empty-state">
+        <i class="icon icon-cloud backups-empty-icon"></i>
+        <p>No cloud providers configured.</p>
+        <p class="muted">Add providers in <code>appsettings.json</code> under <code>SplatDev:Backups:Providers</code>.</p>
+      </div>
+
+      <div class="backups-providers-grid" ng-if="vm.cloudProviders.length > 0">
+        <div class="backups-provider-card" ng-repeat="p in vm.cloudProviders">
+          <div class="backups-provider-card__header">
+            <i class="icon icon-cloud"></i>
+            <strong>{{ p.providerType }}</strong>
+            <span class="backups-badge" ng-class="{'backups-badge--success': p.enabled, 'backups-badge--muted': !p.enabled}">
+              {{ p.enabled ? 'Enabled' : 'Disabled' }}
+            </span>
+          </div>
+          <div class="backups-provider-card__body">
+            <p class="muted">ID: {{ p.id }}</p>
+          </div>
+          <div class="backups-provider-card__footer">
+            <button class="btn btn-default btn-small" ng-click="vm.testProvider(p.id)"
+              ng-disabled="vm.providerTestResults[p.id].testing">
+              <i class="icon icon-load" ng-show="vm.providerTestResults[p.id].testing"></i>
+              <i class="icon icon-check" ng-show="!vm.providerTestResults[p.id].testing"></i>
+              <span ng-hide="vm.providerTestResults[p.id].testing">Test Connection</span>
+              <span ng-show="vm.providerTestResults[p.id].testing">Testing...</span>
+            </button>
+            <span class="backups-test-result" ng-if="vm.providerTestResults[p.id].tested">
+              <span ng-if="vm.providerTestResults[p.id].valid" class="backups-test-result--pass">
+                <i class="icon icon-check"></i> Connected
+              </span>
+              <span ng-if="!vm.providerTestResults[p.id].valid" class="backups-test-result--fail">
+                <i class="icon icon-delete"></i> Failed
+              </span>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
