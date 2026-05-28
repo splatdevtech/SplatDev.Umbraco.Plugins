@@ -1,94 +1,82 @@
 ﻿using FormBuilder.Extension.Interfaces;
 
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 
 using System.Net;
 using System.Net.Mail;
 
-namespace FormBuilder.Extension.Services
+namespace FormBuilder.Extension.Services;
+
+public class EmailService(IOptions<EmailServiceOptions> options, ILogger<EmailService> logger) : IEmailService
 {
-    /// <summary>
-    /// Service for handling email sending functionality.
-    /// </summary>
-    public class EmailService(ILogger<EmailService> logger) : IEmailService
+    private readonly EmailServiceOptions _config = options.Value;
+    private readonly ILogger<EmailService> _logger = logger;
+
+    public async Task SendAsync(string to, string subject, string body, string? from = null)
     {
-        private readonly ILogger<EmailService> _logger = logger;
+        if (string.IsNullOrEmpty(to))
+            throw new ArgumentException("Recipient email address cannot be null or empty.", nameof(to));
 
-        // SMTP configuration (can be loaded from appsettings.json or environment variables)
-        private readonly string _smtpHost = "smtp.example.com"; // Replace with your SMTP server
-        private readonly int _smtpPort = 587; // Default SMTP port
-        private readonly string _smtpUsername = "your-smtp-username"; // Replace with your SMTP username
-        private readonly string _smtpPassword = "your-smtp-password"; // Replace with your SMTP password
-        private readonly string _defaultSender = "no-reply@example.com"; // Default sender email
-
-        public async Task SendAsync(string to, string subject, string body, string? from = null)
+        try
         {
-            if (string.IsNullOrEmpty(to))
-                throw new ArgumentException("Recipient email address cannot be null or empty.", nameof(to));
-
-            try
+            using var smtpClient = new SmtpClient(_config.SmtpHost, _config.SmtpPort)
             {
-                using var smtpClient = new SmtpClient(_smtpHost, _smtpPort)
-                {
-                    Credentials = new NetworkCredential(_smtpUsername, _smtpPassword),
-                    EnableSsl = true // Use SSL for secure communication
-                };
+                Credentials = new NetworkCredential(_config.SmtpUsername, _config.SmtpPassword),
+                EnableSsl = _config.EnableSsl,
+            };
 
-                var mailMessage = new MailMessage
-                {
-                    From = new MailAddress(from ?? _defaultSender),
-                    Subject = subject,
-                    Body = body,
-                    IsBodyHtml = true // Set to true if the body contains HTML content
-                };
-
-                mailMessage.To.Add(to);
-
-                await smtpClient.SendMailAsync(mailMessage);
-                _logger.LogInformation("Email sent successfully to {to}.", to);
-            }
-            catch (Exception ex)
+            var mailMessage = new MailMessage
             {
-                _logger.LogError(ex, "Failed to send email to {to}. Error: {message}", to, ex.Message);
-                throw;
-            }
-            await Task.FromResult(0);
+                From = new MailAddress(from ?? _config.DefaultFromAddress, _config.DefaultFromName),
+                Subject = subject,
+                Body = body,
+                IsBodyHtml = true,
+            };
+
+            mailMessage.To.Add(to);
+
+            await smtpClient.SendMailAsync(mailMessage);
+            _logger.LogInformation("Email sent successfully to {to}.", to);
         }
-
-        public async Task SendToMultipleAsync(string[] recipients, string subject, string body, string? from = null)
+        catch (Exception ex)
         {
-            if (recipients == null || recipients.Length == 0)
-                throw new ArgumentException("Recipients list cannot be null or empty.", nameof(recipients));
+            _logger.LogError(ex, "Failed to send email to {to}.", to);
+            throw;
+        }
+    }
 
-            try
+    public async Task SendToMultipleAsync(string[] recipients, string subject, string body, string? from = null)
+    {
+        if (recipients == null || recipients.Length == 0)
+            throw new ArgumentException("Recipients list cannot be null or empty.", nameof(recipients));
+
+        try
+        {
+            using var smtpClient = new SmtpClient(_config.SmtpHost, _config.SmtpPort)
             {
-                using var smtpClient = new SmtpClient(_smtpHost, _smtpPort)
-                {
-                    Credentials = new NetworkCredential(_smtpUsername, _smtpPassword),
-                    EnableSsl = true // Use SSL for secure communication
-                };
+                Credentials = new NetworkCredential(_config.SmtpUsername, _config.SmtpPassword),
+                EnableSsl = _config.EnableSsl,
+            };
 
-                var mailMessage = new MailMessage
-                {
-                    From = new MailAddress(from ?? _defaultSender),
-                    Subject = subject,
-                    Body = body,
-                    IsBodyHtml = true // Set to true if the body contains HTML content
-                };
-
-                foreach (var recipient in recipients)
-                {
-                    mailMessage.To.Add(recipient);
-                }
-
-                await smtpClient.SendMailAsync(mailMessage);
-                _logger.LogInformation("Email sent successfully to multiple recipients: {recipients}.", string.Join(", ", recipients));
-            }
-            catch (Exception ex)
+            var mailMessage = new MailMessage
             {
-                _logger.LogError(ex, "Failed to send email to multiple recipients. Error: {message}", ex.Message);
-                throw;
-            }
+                From = new MailAddress(from ?? _config.DefaultFromAddress, _config.DefaultFromName),
+                Subject = subject,
+                Body = body,
+                IsBodyHtml = true,
+            };
+
+            foreach (var recipient in recipients)
+                mailMessage.To.Add(recipient);
+
+            await smtpClient.SendMailAsync(mailMessage);
+            _logger.LogInformation("Email sent to {count} recipients.", recipients.Length);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Failed to send email to multiple recipients.");
+            throw;
         }
     }
 }

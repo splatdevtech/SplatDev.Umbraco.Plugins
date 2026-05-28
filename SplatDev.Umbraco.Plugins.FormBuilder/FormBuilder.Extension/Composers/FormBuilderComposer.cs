@@ -3,6 +3,7 @@ using FormBuilder.Extension.Repositories;
 using FormBuilder.Extension.Services;
 using FormBuilder.Extension.Validators;
 
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 using Umbraco.Cms.Core.Composing;
@@ -16,6 +17,8 @@ namespace FormBuilder.Extension.Composers
         {
             builder.Services.AddScoped<IFormSubmissionValidator, FormSubmissionValidator>();
             builder.Services.AddScoped<IFormRepository, FormRepository>();
+            builder.Services.Configure<EmailServiceOptions>(
+                builder.Config.GetSection(EmailServiceOptions.Section));
             builder.Services.AddSingleton<IEmailService, EmailService>();
         }
     }
