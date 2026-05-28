@@ -1,0 +1,86 @@
+{
+  "$schema": "../../umbraco-package-schema.json",
+  "name": "SplatDev Workflow",
+  "version": "1.0.0",
+  "extensions": [
+    {
+      "type": "section",
+      "alias": "SplatDevWorkflow.Section",
+      "name": "Workflow",
+      "weight": 50,
+      "meta": {
+        "label": "Workflow",
+        "pathname": "workflow"
+      }
+    },
+    {
+      "type": "dashboard",
+      "alias": "SplatDevWorkflow.Queue.Dashboard",
+      "name": "Workflow Queue",
+      "element": "/App_Plugins/SplatDev.Workflow/dist/workflow-queue.element.js",
+      "elementName": "workflow-queue-dashboard",
+      "weight": 100,
+      "meta": {
+        "label": "Queue",
+        "pathname": "queue"
+      },
+      "conditions": [
+        {
+          "alias": "Umb.Condition.SectionAlias",
+          "match": "SplatDevWorkflow.Section"
+        }
+      ]
+    },
+    {
+      "type": "dashboard",
+      "alias": "SplatDevWorkflow.Editor.Dashboard",
+      "name": "Workflow Definitions",
+      "element": "/App_Plugins/SplatDev.Workflow/dist/workflow-editor.element.js",
+      "elementName": "workflow-editor-dashboard",
+      "weight": 90,
+      "meta": {
+        "label": "Definitions",
+        "pathname": "definitions"
+      },
+      "conditions": [
+        {
+          "alias": "Umb.Condition.SectionAlias",
+          "match": "SplatDevWorkflow.Section"
+        }
+      ]
+    },
+    {
+      "type": "localization",
+      "alias": "SplatDevWorkflow.Localization.En",
+      "name": "Workflow — English",
+      "meta": {
+        "culture": "en",
+        "localizations": {
+          "section": {
+            "workflow_heading": "Workflow",
+            "workflow_description": "Manage workflow definitions, queues, and approval processes",
+            "workflow_queue": "Queue",
+            "workflow_definitions": "Definitions",
+            "workflow_themes": "Themes",
+            "workflow_create_instance": "Create Instance",
+            "workflow_transition": "Transition",
+            "workflow_approve": "Approve",
+            "workflow_reject": "Reject",
+            "workflow_status_open": "Open",
+            "workflow_status_completed": "Completed",
+            "workflow_status_cancelled": "Cancelled",
+            "workflow_filter_assigned": "Assigned to me",
+            "workflow_save_definition": "Save Definition",
+            "workflow_activate": "Activate",
+            "workflow_new_definition": "New Definition",
+            "workflow_definition_key": "Key",
+            "workflow_definition_label": "Label",
+            "workflow_definition_version": "Version",
+            "workflow_definition_json": "Definition JSON",
+            "workflow_tasks": "Tasks"
+          }
+        }
+      }
+    }
+  ]
+}
