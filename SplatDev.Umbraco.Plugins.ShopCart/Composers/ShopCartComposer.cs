@@ -13,8 +13,14 @@ public class ShopCartComposer : IComposer
     {
         builder.Services.AddScoped<IShopCartService, ShopCartService>();
 
+#if NET10_0_OR_GREATER
+        builder.Services.AddDbContext<ShopCartDbContext>(options =>
+            options.UseSqlServer(
+                builder.Config.GetSection("ConnectionStrings:umbracoDbDSN").Value ?? string.Empty));
+#else
         builder.Services.AddDbContext<ShopCartDbContext>(options =>
             options.UseSqlServer(
                 builder.Config.GetConnectionString("umbracoDbDSN") ?? string.Empty));
+#endif
     }
 }
