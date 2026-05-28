@@ -7,8 +7,13 @@
     "dev": "vite build --watch"
   },
   "devDependencies": {
-    "@umbraco-cms/backoffice": "^17.0.0",
     "typescript": "^5.5.0",
     "vite": "^5.4.0"
+  },
+  "peerDependencies": {
+    "@umbraco-cms/backoffice": "^17.0.0"
+  },
+  "peerDependenciesMeta": {
+    "@umbraco-cms/backoffice": { "optional": true }
   }
 }
