@@ -14,21 +14,62 @@
       }
     },
     {
+      "type": "menuItem",
+      "alias": "formBuilder.Menu.Forms",
+      "name": "Forms",
+      "conditions": [
+        { "alias": "Umb.Condition.SectionAlias", "match": "formBuilder.Section" }
+      ],
+      "meta": {
+        "label": "Forms",
+        "icon": "icon-list",
+        "menus": ["Umb.Menu.Default"],
+        "entityType": ""
+      }
+    },
+    {
       "type": "dashboard",
-      "alias": "formbuildeer.dashboard",
-      "name": "Form Builder Dashboard",
+      "alias": "formBuilder.Dashboard.Welcome",
+      "name": "Welcome",
       "element": "/App_Plugins/FormBuilderExtension/welcome-dashboard.js",
       "elementName": "formbuilder-dashboard",
-      "weight": 30,
+      "weight": 100,
       "meta": {
-        "label": "Form Builder Dashboard",
+        "label": "Welcome",
         "pathname": "formbuilder-dashboard"
       },
       "conditions": [
-        {
-          "alias": "Umb.Condition.SectionAlias",
-          "match": "formBuilder.Section"
-        }
+        { "alias": "Umb.Condition.SectionAlias", "match": "formBuilder.Section" }
+      ]
+    },
+    {
+      "type": "dashboard",
+      "alias": "formBuilder.Dashboard.FormList",
+      "name": "Form List",
+      "element": "/App_Plugins/FormBuilderExtension/form-list-dashboard.js",
+      "elementName": "formbuilder-form-list",
+      "weight": 90,
+      "meta": {
+        "label": "Forms",
+        "pathname": "formbuilder-list"
+      },
+      "conditions": [
+        { "alias": "Umb.Condition.SectionAlias", "match": "formBuilder.Section" }
+      ]
+    },
+    {
+      "type": "dashboard",
+      "alias": "formBuilder.Dashboard.FormEditor",
+      "name": "Form Editor",
+      "element": "/App_Plugins/FormBuilderExtension/form-editor-dashboard.js",
+      "elementName": "formbuilder-form-editor",
+      "weight": 80,
+      "meta": {
+        "label": "Editor",
+        "pathname": "formbuilder-editor"
+      },
+      "conditions": [
+        { "alias": "Umb.Condition.SectionAlias", "match": "formBuilder.Section" }
       ]
     }
   ]
