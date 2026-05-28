@@ -17,6 +17,6 @@ public class MercadoPagoComposer : IComposer
 
         builder.Services.AddDbContext<MercadoPagoDbContext>(options =>
             options.UseSqlServer(
-                builder.Config.GetConnectionString("umbracoDbDSN") ?? string.Empty));
+                builder.Config.GetSection("ConnectionStrings:umbracoDbDSN").Value ?? string.Empty));
     }
 }
