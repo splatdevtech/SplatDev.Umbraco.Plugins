@@ -27,7 +27,8 @@
       "meta": {
         "label": "Subscribers",
         "icon": "icon-users",
-        "menus": ["Umb.Menu.Default"]
+        "menus": ["Umb.Menu.Default"],
+        "entityType": ""
       }
     },
     {
@@ -43,7 +44,8 @@
       "meta": {
         "label": "Campaigns",
         "icon": "icon-mail",
-        "menus": ["Umb.Menu.Default"]
+        "menus": ["Umb.Menu.Default"],
+        "entityType": ""
       }
     },
     {
@@ -59,8 +61,63 @@
       "meta": {
         "label": "Analytics",
         "icon": "icon-chart",
-        "menus": ["Umb.Menu.Default"]
+        "menus": ["Umb.Menu.Default"],
+        "entityType": ""
       }
+    },
+    {
+      "type": "dashboard",
+      "alias": "SplatDev.Dashboard.Newsletter.Subscribers",
+      "name": "Newsletter Subscribers",
+      "element": "/App_Plugins/SplatDev.Newsletter/dist/newsletter-subscribers-dashboard.element.js",
+      "elementName": "newsletter-subscribers-dashboard",
+      "weight": 100,
+      "meta": {
+        "label": "Subscribers",
+        "pathname": "subscribers"
+      },
+      "conditions": [
+        {
+          "alias": "Umb.Condition.SectionAlias",
+          "match": "SplatDev.Section.Newsletter"
+        }
+      ]
+    },
+    {
+      "type": "dashboard",
+      "alias": "SplatDev.Dashboard.Newsletter.Campaigns",
+      "name": "Newsletter Campaigns",
+      "element": "/App_Plugins/SplatDev.Newsletter/dist/newsletter-campaigns-dashboard.element.js",
+      "elementName": "newsletter-campaigns-dashboard",
+      "weight": 90,
+      "meta": {
+        "label": "Campaigns",
+        "pathname": "campaigns"
+      },
+      "conditions": [
+        {
+          "alias": "Umb.Condition.SectionAlias",
+          "match": "SplatDev.Section.Newsletter"
+        }
+      ]
+    },
+    {
+      "type": "dashboard",
+      "alias": "SplatDev.Dashboard.Newsletter.Analytics",
+      "name": "Newsletter Analytics",
+      "element": "/App_Plugins/SplatDev.Newsletter/dist/newsletter-analytics-dashboard.element.js",
+      "elementName": "newsletter-analytics-dashboard",
+      "weight": 80,
+      "meta": {
+        "label": "Analytics",
+        "pathname": "analytics"
+      },
+      "conditions": [
+        {
+          "alias": "Umb.Condition.SectionAlias",
+          "match": "SplatDev.Section.Newsletter"
+        }
+      ]
     }
   ]
 }
