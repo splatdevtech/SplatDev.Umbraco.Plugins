@@ -1,0 +1,16 @@
+{
+  "css": [
+    "~/App_Plugins/FormBuilderExtension/backoffice/formbuilder.css"
+  ],
+  "javascript": [
+    "~/App_Plugins/FormBuilderExtension/backoffice/formbuilder.controller.js"
+  ],
+  "dashboards": [
+    {
+      "alias": "splatdevFormBuilder",
+      "view": "/App_Plugins/FormBuilderExtension/dashboards/formbuilder.html",
+      "sections": ["formBuilder"],
+      "weight": 10
+    }
+  ]
+}

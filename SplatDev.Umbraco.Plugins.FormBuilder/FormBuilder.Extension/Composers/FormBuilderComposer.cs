@@ -15,6 +15,10 @@ namespace FormBuilder.Extension.Composers
     {
         public void Compose(IUmbracoBuilder builder)
         {
+#if !NET10_0_OR_GREATER
+            builder.Sections().Append<FormBuilderSection>();
+#endif
+
             builder.Services.AddScoped<IFormSubmissionValidator, FormSubmissionValidator>();
             builder.Services.AddScoped<IFormRepository, FormRepository>();
             builder.Services.Configure<EmailServiceOptions>(

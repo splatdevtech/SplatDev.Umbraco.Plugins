@@ -1,0 +1,99 @@
+<div class="splatdev-formbuilder" ng-controller="SplatDev.FormBuilder.Controller">
+
+  <!-- FORM LIST VIEW -->
+  <div ng-if="activeView === 'list'">
+    <h2>Form Builder</h2>
+    <div class="toolbar">
+      <button class="primary" ng-click="createForm()">New Form</button>
+      <button ng-click="loadForms()">Refresh</button>
+    </div>
+
+    <div ng-if="loading"><umb-load-indicator></umb-load-indicator></div>
+    <div ng-if="!loading && forms.length === 0" class="empty">No forms yet. Create your first form.</div>
+
+    <table ng-if="forms.length > 0">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Category</th>
+          <th>Fields</th>
+          <th>Created</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="form in forms">
+          <td><strong>{{form.name}}</strong></td>
+          <td>{{form.category || '—'}}</td>
+          <td>{{form.fieldCount}}</td>
+          <td>{{form.createdDate | date:'shortDate'}}</td>
+          <td>
+            <div class="actions">
+              <button ng-click="editForm(form)">Edit</button>
+              <button ng-click="duplicateForm(form)">Copy</button>
+              <button ng-click="deleteForm(form)" style="color:#dc2626">Delete</button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- FORM EDITOR VIEW -->
+  <div ng-if="activeView === 'editor' && currentForm">
+    <h2>{{currentForm.name}}</h2>
+    <div class="toolbar">
+      <button class="primary" ng-click="saveForm()">Save</button>
+      <button ng-click="backToList()">Back</button>
+    </div>
+
+    <div class="form-group">
+      <label>Form Name</label>
+      <input type="text" ng-model="currentForm.name" />
+    </div>
+    <div class="form-group">
+      <label>Category</label>
+      <input type="text" ng-model="currentForm.category" placeholder="Optional" />
+    </div>
+
+    <h3>Fields ({{currentForm.fields.length}})</h3>
+    <div class="toolbar">
+      <button ng-click="addField()">Add Field</button>
+    </div>
+    <div ng-if="currentForm.fields.length === 0" class="empty">No fields yet. Add your first field.</div>
+
+    <div class="field-card" ng-repeat="field in currentForm.fields">
+      <h4>{{field.label || field.alias}} <button ng-click="removeField($index)" style="color:#dc2626;border-color:#dc2626">Remove</button></h4>
+      <div class="field-grid">
+        <div class="form-group">
+          <label>Alias</label>
+          <input type="text" ng-model="field.alias" />
+        </div>
+        <div class="form-group">
+          <label>Label</label>
+          <input type="text" ng-model="field.label" />
+        </div>
+        <div class="form-group">
+          <label>Type</label>
+          <select ng-model="field.type" ng-options="ft.type as ft.label for ft in fieldTypes"></select>
+        </div>
+        <div class="form-group">
+          <label>Placeholder</label>
+          <input type="text" ng-model="field.placeholder" />
+        </div>
+        <div class="form-group">
+          <label>Regex</label>
+          <input type="text" ng-model="field.regex" />
+        </div>
+        <div class="form-group">
+          <label>Min Length</label>
+          <input type="number" ng-model="field.minLength" />
+        </div>
+      </div>
+      <label style="margin-top:8px;display:block">
+        <input type="checkbox" ng-model="field.isRequired" /> Required
+      </label>
+    </div>
+  </div>
+
+</div>
