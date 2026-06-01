@@ -4,7 +4,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <PackageId>SplatDev.Umbraco.Plugins.EmailTemplates</PackageId>
-    <Version>1.0.0</Version>
+    <Version>1.0.1</Version>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <Description>Email template engine with variable substitution, preview, and singleton style settings for Umbraco 17 (net10.0).</Description>
     <PackageTags>umbraco umbraco-marketplace email templates</PackageTags>
