@@ -12,9 +12,9 @@
 	</PropertyGroup>
 
 	<PropertyGroup>
-		<PackageId>Umbraco.Plugins.CacheWarmer</PackageId>
-		<Product>Umbraco.Plugins.CacheWarmer</Product>
-		<Title>Umbraco.Plugins.CacheWarmer</Title>
+		<PackageId>SplatDev.Umbraco.Plugins.CacheManager</PackageId>
+		<Product>SplatDev.Umbraco.Plugins.CacheManager</Product>
+		<Title>SplatDev.Umbraco.Plugins.CacheManager</Title>
 		<Description>Umbraco cache manager/warmer plugin supporting Umbraco 13 (net8.0) and Umbraco 17 (net10.0)</Description>
 		<PackageTags>umbraco umbraco-marketplace</PackageTags>
 		<Version>2.0.0</Version>
