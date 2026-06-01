@@ -1,0 +1,21 @@
+services:
+  umbraco13-baseline:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "5001:5001"
+    volumes:
+      - umbraco-data:/app/umbraco/Data
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://0.0.0.0:5001
+    healthcheck:
+      test: ["CMD", "curl", "-sf", "http://127.0.0.1:5001/umbraco"]
+      interval: 20s
+      timeout: 5s
+      start_period: 90s
+      retries: 5
+
+volumes:
+  umbraco-data:
