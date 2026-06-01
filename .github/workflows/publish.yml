@@ -63,14 +63,49 @@ jobs:
         env:
           NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
         run: |
+          PUSHED=()
+          SKIPPED=()
+          FAILED=()
           for pkg in ./nupkgs/*.nupkg; do
-            echo "Pushing $pkg..."
-            dotnet nuget push "$pkg" \
-              --api-key "$NUGET_API_KEY" \
-              --source https://api.nuget.org/v3/index.json \
-              --skip-duplicate \
-              --no-symbols
+            filename=$(basename "$pkg" .nupkg)
+            # PackageId ends at the first dot-then-digit boundary; version is the rest
+            pkgid=$(echo "$filename" | sed -E 's/\.[0-9].*//')
+            pkgver="${filename#${pkgid}.}"
+            pkgid_lower=$(echo "$pkgid" | tr '[:upper:]' '[:lower:]')
+            # Check if version already exists on NuGet.org (avoid 409 rate-limit hits)
+            nuget_url="https://api.nuget.org/v3-flatcontainer/${pkgid_lower}/index.json"
+            existing=$(curl -sf "$nuget_url" 2>/dev/null | python3 -c "import sys,json; d=json.load(sys.stdin); print('yes' if '${pkgver}' in d.get('versions',[]) else 'no')" 2>/dev/null || echo "no")
+            if [ "$existing" = "yes" ]; then
+              echo "Skipping $filename (already on NuGet.org)"
+              SKIPPED+=("$filename")
+              continue
+            fi
+            echo "Pushing $filename..."
+            for attempt in 1 2 3; do
+              if dotnet nuget push "$pkg" \
+                  --api-key "$NUGET_API_KEY" \
+                  --source https://api.nuget.org/v3/index.json \
+                  --skip-duplicate \
+                  --no-symbols; then
+                PUSHED+=("$filename")
+                break
+              elif [ $attempt -lt 3 ]; then
+                echo "::warning::Push attempt $attempt failed for $filename, retrying in 10s..."
+                sleep 10
+              else
+                echo "::error::Push failed for $filename after 3 attempts"
+                FAILED+=("$filename")
+              fi
+            done
           done
+          echo ""
+          echo "=== NuGet Push Summary ==="
+          echo "Pushed  (${#PUSHED[@]}): ${PUSHED[*]:-none}"
+          echo "Skipped (${#SKIPPED[@]}): ${SKIPPED[*]:-none}"
+          if [ ${#FAILED[@]} -gt 0 ]; then
+            echo "Failed  (${#FAILED[@]}): ${FAILED[*]}"
+            exit 1
+          fi
 
       - name: Push to GitHub Packages
         env:
