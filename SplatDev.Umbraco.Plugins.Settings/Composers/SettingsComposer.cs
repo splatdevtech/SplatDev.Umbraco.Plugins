@@ -14,7 +14,7 @@ namespace SplatDev.Umbraco.Plugins.Settings.Composers
         public void Compose(IUmbracoBuilder builder)
         {
             builder.Services.AddDbContext<SettingsDbContext>(options =>
-                options.UseSqlServer(builder.Config.GetConnectionString("umbracoDbDSN") ?? string.Empty));
+                options.UseSqlServer(builder.Config.GetSection("ConnectionStrings")["umbracoDbDSN"] ?? string.Empty));
 
             builder.Services.AddScoped<ISettingsService, SettingsService>();
         }

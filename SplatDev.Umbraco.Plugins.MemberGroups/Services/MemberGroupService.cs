@@ -247,7 +247,7 @@ namespace SplatDev.Umbraco.Plugins.MemberGroups.Services
             _memberService.Delete(member);
 
         public void DeleteMemberGroup(string groupName) =>
-            _memberGroupService.Delete(new Umbraco.Cms.Core.Models.MemberGroup { Name = groupName });
+            _memberGroupService.Delete(new global::Umbraco.Cms.Core.Models.MemberGroup { Name = groupName });
 
         public void DeleteMemberType(IMemberType memberType) =>
             _memberTypeService.Delete(memberType);
@@ -482,7 +482,7 @@ namespace SplatDev.Umbraco.Plugins.MemberGroups.Services
             _memberService.Save(member);
 
         public void SaveMemberGroup(string groupName) =>
-            _memberGroupService.Save(new Umbraco.Cms.Core.Models.MemberGroup { Name = groupName });
+            _memberGroupService.Save(new global::Umbraco.Cms.Core.Models.MemberGroup { Name = groupName });
 
         public void SaveMemberType(string parentGroupAlias, string memberTypeAlias,
             string memberTypeName = "", string description = "", string icon = "icon-user")

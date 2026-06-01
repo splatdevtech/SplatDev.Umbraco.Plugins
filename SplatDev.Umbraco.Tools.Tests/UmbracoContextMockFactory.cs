@@ -1,5 +1,6 @@
 using Moq;
 using Umbraco.Cms.Core.Models.PublishedContent;
+using Umbraco.Cms.Core.PublishedCache;
 using Umbraco.Cms.Core.Web;
 
 namespace SplatDev.Umbraco.Tools.Tests;
@@ -15,11 +16,14 @@ public static class UmbracoContextMockFactory
         var contextMock = new Mock<IUmbracoContext>();
         contextMock.Setup(c => c.Content).Returns(cacheMock.Object);
 
-        var referenceMock = new Mock<IUmbracoContextReference>();
-        referenceMock.Setup(r => r.UmbracoContext).Returns(contextMock.Object);
-
         var factoryMock = new Mock<IUmbracoContextFactory>();
-        factoryMock.Setup(f => f.EnsureUmbracoContext()).Returns(referenceMock.Object);
+
+        // UmbracoContextReference is a concrete class (not an interface) in both
+        // Umbraco 13 and 17, with non-virtual properties — create a real instance.
+        var contextAccessorMock = new Mock<IUmbracoContextAccessor>();
+        var reference = new global::Umbraco.Cms.Core.UmbracoContextReference(
+            contextMock.Object, true, contextAccessorMock.Object);
+        factoryMock.Setup(f => f.EnsureUmbracoContext()).Returns(reference);
 
         return (factoryMock, contextMock);
     }

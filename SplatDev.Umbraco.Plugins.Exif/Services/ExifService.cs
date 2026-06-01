@@ -1,6 +1,7 @@
 using MetadataExtractor;
 using MetadataExtractor.Formats.Exif;
 using MetadataExtractor.Formats.Jpeg;
+using Microsoft.AspNetCore.Hosting;
 using Umbraco.Cms.Core.Services;
 using SplatDev.Umbraco.Plugins.Exif.Models;
 

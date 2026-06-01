@@ -6,7 +6,7 @@ namespace SplatDev.Tests
 
     public class Security
     {
-        [Fact]
+        [Fact(Skip = "Integration test — requires CheckPhish API key")]
         public void UrlShortening_CheckPhish()
         {
             // arrange
@@ -18,7 +18,7 @@ namespace SplatDev.Tests
             Assert.NotNull(response);
         }
 
-        [Fact]
+        [Fact(Skip = "Integration test — requires valid Google Safe Browsing API key")]
         public void UrlShortening_GoogleSafeBrowsing()
         {
             // arrange
@@ -30,7 +30,7 @@ namespace SplatDev.Tests
             Assert.NotNull(response);
         }
 
-        [Fact]
+        [Fact(Skip = "Integration test — requires IpQualityScore API key")]
         public void UrlShortening_IpQualityScore()
         {
             // arrange

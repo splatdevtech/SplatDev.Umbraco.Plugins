@@ -21,6 +21,6 @@ public class BancoInterComposer : IComposer
 
         builder.Services.AddDbContext<BancoInterDbContext>(options =>
             options.UseSqlServer(
-                builder.Config.GetConnectionString("umbracoDbDSN") ?? string.Empty));
+                builder.Config.GetSection("ConnectionStrings")["umbracoDbDSN"] ?? string.Empty));
     }
 }

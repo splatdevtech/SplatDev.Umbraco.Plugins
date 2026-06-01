@@ -15,8 +15,8 @@
         public static MobileDevice[] MobileDevices { get; private set; }
         static MobileDetection()
         {
-            var path = new DirectoryInfo(Assembly.GetCallingAssembly().CodeBase.Substring(8)).Parent.FullName;
-            var file = File.ReadAllText($"{path}\\device_list.json");
+            var assemblyDir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)!;
+            var file = File.ReadAllText(Path.Combine(assemblyDir, "device_list.json"));
             MobileDevices = JsonConvert.DeserializeObject<MobileDevice[]>(file);
         }
 

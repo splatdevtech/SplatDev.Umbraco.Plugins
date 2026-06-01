@@ -12,30 +12,31 @@ public class ExamineExtensionsService : IExamineExtensionsService
         _examineManager = examineManager;
     }
 
-    public Task<SearchResult> SearchAsync(SearchRequest request)
+    public Task<Models.SearchResult> SearchAsync(SearchRequest request)
     {
-        var result = new SearchResult();
+        var result = new Models.SearchResult();
 
         if (!_examineManager.TryGetIndex(request.IndexName, out var index))
-            return Task.FromResult(result);
+            return Task.FromResult<Models.SearchResult>(result);
 
         var searcher = index.Searcher;
         var query = searcher.CreateQuery();
 
         ISearchResults searchResults;
 
+        var skip = (request.Page - 1) * request.PageSize;
+        var take = request.PageSize;
+
         if (request.Fields?.Length > 0)
         {
             var booleanOp = query.GroupedOr(request.Fields, request.Query);
-            searchResults = booleanOp.Execute(QueryOptions.SkipTake(
-                (request.Page - 1) * request.PageSize, request.PageSize));
+            searchResults = booleanOp.Execute(Examine.Search.QueryOptions.SkipTake(skip, take));
         }
         else
         {
             searchResults = query
                 .ManagedQuery(request.Query)
-                .Execute(QueryOptions.SkipTake(
-                    (request.Page - 1) * request.PageSize, request.PageSize));
+                .Execute(Examine.Search.QueryOptions.SkipTake(skip, take));
         }
 
         result.TotalItems = searchResults.TotalItemCount;
@@ -46,7 +47,7 @@ public class ExamineExtensionsService : IExamineExtensionsService
             Fields = r.AllValues.ToDictionary(kvp => kvp.Key, kvp => string.Join(", ", kvp.Value))
         }).ToList();
 
-        return Task.FromResult(result);
+        return Task.FromResult<Models.SearchResult>(result);
     }
 
     public Task<IEnumerable<string>> GetAllIndexesAsync()

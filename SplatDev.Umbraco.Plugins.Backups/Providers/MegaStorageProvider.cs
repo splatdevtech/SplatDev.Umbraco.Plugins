@@ -34,7 +34,7 @@ public class MegaStorageProvider : ICloudStorageProvider
     public async Task UploadAsync(Stream data, string remotePath, string fileName, CancellationToken ct)
     {
         var (email, password, rootFolder) = GetConfig();
-        using var client = new MegaApiClient();
+        var client = new MegaApiClient();
 
         await client.LoginAsync(email, password);
         try
@@ -53,7 +53,7 @@ public class MegaStorageProvider : ICloudStorageProvider
     public async Task<Stream> DownloadAsync(string remotePath, CancellationToken ct)
     {
         var (email, password, _) = GetConfig();
-        using var client = new MegaApiClient();
+        var client = new MegaApiClient();
 
         await client.LoginAsync(email, password);
         try
@@ -81,7 +81,7 @@ public class MegaStorageProvider : ICloudStorageProvider
     public async Task DeleteAsync(string remotePath, CancellationToken ct)
     {
         var (email, password, _) = GetConfig();
-        using var client = new MegaApiClient();
+        var client = new MegaApiClient();
 
         await client.LoginAsync(email, password);
         try
@@ -106,7 +106,7 @@ public class MegaStorageProvider : ICloudStorageProvider
         try
         {
             var (email, password, _) = GetConfig();
-            using var client = new MegaApiClient();
+            var client = new MegaApiClient();
             await client.LoginAsync(email, password);
             try
             {
@@ -124,7 +124,7 @@ public class MegaStorageProvider : ICloudStorageProvider
     public async Task<IEnumerable<StorageItem>> ListAsync(string remotePath, CancellationToken ct)
     {
         var (email, password, rootFolder) = GetConfig();
-        using var client = new MegaApiClient();
+        var client = new MegaApiClient();
 
         await client.LoginAsync(email, password);
         try

@@ -19,6 +19,6 @@
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.0" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="../System.Reflection.Helpers/System.Reflection.Helpers.csproj" />
+    <ProjectReference Include="../SplatDev.Reflection.Helpers/SplatDev.Reflection.Helpers.csproj" />
   </ItemGroup>
 </Project>

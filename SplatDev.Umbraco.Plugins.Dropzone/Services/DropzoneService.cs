@@ -1,9 +1,7 @@
 using Microsoft.AspNetCore.Http;
 using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.Models;
-using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Cms.Core.Services;
-using Umbraco.Cms.Core.Strings;
 using SplatDev.Umbraco.Plugins.Dropzone.Models;
 
 namespace SplatDev.Umbraco.Plugins.Dropzone.Services;
@@ -11,23 +9,14 @@ namespace SplatDev.Umbraco.Plugins.Dropzone.Services;
 public class DropzoneService : IDropzoneService
 {
     private readonly IMediaService _mediaService;
-    private readonly IContentTypeBaseServiceProvider _contentTypeBaseServiceProvider;
     private readonly MediaFileManager _mediaFileManager;
-    private readonly MediaUrlGeneratorCollection _mediaUrlGenerators;
-    private readonly IShortStringHelper _shortStringHelper;
 
     public DropzoneService(
         IMediaService mediaService,
-        IContentTypeBaseServiceProvider contentTypeBaseServiceProvider,
-        MediaFileManager mediaFileManager,
-        MediaUrlGeneratorCollection mediaUrlGenerators,
-        IShortStringHelper shortStringHelper)
+        MediaFileManager mediaFileManager)
     {
         _mediaService = mediaService;
-        _contentTypeBaseServiceProvider = contentTypeBaseServiceProvider;
         _mediaFileManager = mediaFileManager;
-        _mediaUrlGenerators = mediaUrlGenerators;
-        _shortStringHelper = shortStringHelper;
     }
 
     public async Task<UploadResult> UploadFileAsync(IFormFile file, UploadRequest request)
@@ -41,15 +30,11 @@ public class DropzoneService : IDropzoneService
                 "Image");
 
             await using var stream = file.OpenReadStream();
-            mediaItem.SetValue(
-                _contentTypeBaseServiceProvider,
-                "umbracoFile",
-                file.FileName,
-                stream);
+            mediaItem.SetValue("umbracoFile", file.FileName);
 
             _mediaService.Save(mediaItem);
 
-            var url = mediaItem.GetUrl("umbracoFile", _mediaUrlGenerators);
+            var url = mediaItem.GetValue<string>("umbracoFile");
 
             return new UploadResult
             {
@@ -72,7 +57,7 @@ public class DropzoneService : IDropzoneService
     {
         var items = parentId.HasValue
             ? _mediaService.GetPagedChildren(parentId.Value, 0, 100, out _)
-            : _mediaService.GetPagedRootMedia(0, 100, out _);
+            : _mediaService.GetRootMedia();
 
         return Task.FromResult(items);
     }

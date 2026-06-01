@@ -22,7 +22,7 @@ namespace SplatDev.Tests
         private readonly string toEmail = "carlos.casalicchio@gmail.com";
         private readonly string to = "Carlos Casalicchio (Gmail)";
 
-        [Fact]
+        [Fact(Skip = "Integration test — requires SendGrid API key in app.config")]
         public void Messaging_SendGrid_Send()
         {
             // Arrange
@@ -51,7 +51,7 @@ namespace SplatDev.Tests
             Assert.False(false);
         }
 
-        [Fact]
+        [Fact(Skip = "Integration test — requires SocketLabs API key")]
         public void Messaging_SocketLabs_Send()
         {
             // Arrange
@@ -73,7 +73,7 @@ namespace SplatDev.Tests
             Assert.NotNull(response);
         }
 
-        [Fact]
+        [Fact(Skip = "Integration test — requires SocketLabs API key")]
         public void Messaging_SocketLabs_BulkSend()
         {
             // Arrange
@@ -110,7 +110,7 @@ namespace SplatDev.Tests
             Assert.NotNull(response);
         }
 
-        [Fact]
+        [Fact(Skip = "Integration test — requires Twilio credentials")]
         public void Messaging_Twilio_Send()
         {
             // Arrange

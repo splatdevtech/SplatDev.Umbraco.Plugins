@@ -68,7 +68,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\Umbraco.Plugins.Mailer\Umbraco.Plugins.Mailer.csproj" />
+		<ProjectReference Include="..\SplatDev.Umbraco.Plugins.Mailer\SplatDev.Umbraco.Plugins.Mailer.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>

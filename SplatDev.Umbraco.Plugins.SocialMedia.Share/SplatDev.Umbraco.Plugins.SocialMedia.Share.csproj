@@ -14,6 +14,7 @@
 		<PackageProjectUrl>https://github.com/SplatDev-Ltda/SplatDev.Umbraco.Core</PackageProjectUrl>
 		<RepositoryUrl>https://github.com/SplatDev-Ltda/SplatDev.Umbraco.Core</RepositoryUrl>
 		<RepositoryType>git</RepositoryType>
+		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
 	</PropertyGroup>
 
 	<ItemGroup>

@@ -17,6 +17,6 @@ public class PagSeguroComposer : IComposer
 
         builder.Services.AddDbContext<PagSeguroDbContext>(options =>
             options.UseSqlServer(
-                builder.Config.GetConnectionString("umbracoDbDSN") ?? string.Empty));
+                builder.Config.GetSection("ConnectionStrings")["umbracoDbDSN"] ?? string.Empty));
     }
 }
