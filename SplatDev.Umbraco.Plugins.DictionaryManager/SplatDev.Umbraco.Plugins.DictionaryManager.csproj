@@ -5,6 +5,7 @@
     <Nullable>enable</Nullable>
     <PackageId>SplatDev.Umbraco.Plugins.DictionaryManager</PackageId>
     <Version>2.0.0</Version>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
     <Authors>SplatDev</Authors>
     <Description>Dictionary import/export/CRUD manager for Umbraco — full rewrite of the Umbraco 8 plugin using ILocalizationService. Supports Umbraco 13 (net8.0) and Umbraco 17 (net10.0).</Description>
     <PackageTags>umbraco umbraco-marketplace dictionary localization import export</PackageTags>
@@ -31,5 +32,10 @@
 
   <ItemGroup>
     <EmbeddedResource Include="App_Plugins\**\*" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="\" />
+    <None Include="umbraco-marketplace.json" Pack="true" PackagePath="\" Condition="Exists('umbraco-marketplace.json')" />
   </ItemGroup>
 </Project>

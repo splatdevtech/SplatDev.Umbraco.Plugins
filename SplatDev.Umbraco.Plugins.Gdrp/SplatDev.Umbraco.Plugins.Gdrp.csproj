@@ -5,6 +5,7 @@
     <Nullable>enable</Nullable>
     <PackageId>SplatDev.Umbraco.Plugins.Gdrp</PackageId>
     <Version>2.0.0</Version>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
     <Authors>SplatDev</Authors>
     <Description>GDPR compliance plugin for Umbraco — cookie consent banner, data export, and right to erasure requests. Supports Umbraco 13 (net8.0) and Umbraco 17 (net10.0).</Description>
     <PackageTags>umbraco umbraco-marketplace gdpr cookie-consent data-export erasure compliance</PackageTags>
@@ -35,5 +36,10 @@
 
   <ItemGroup>
     <EmbeddedResource Include="App_Plugins\**\*" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="\" />
+    <None Include="umbraco-marketplace.json" Pack="true" PackagePath="\" Condition="Exists('umbraco-marketplace.json')" />
   </ItemGroup>
 </Project>

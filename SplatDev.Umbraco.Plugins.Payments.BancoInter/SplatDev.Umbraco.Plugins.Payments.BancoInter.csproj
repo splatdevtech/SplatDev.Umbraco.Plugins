@@ -5,6 +5,7 @@
     <Nullable>enable</Nullable>
     <PackageId>SplatDev.Umbraco.Plugins.Payments.BancoInter</PackageId>
     <Version>1.0.0</Version>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
     <Authors>SplatDev</Authors>
     <Description>Banco Inter payment integration for Umbraco. Supports Pix (immediate and due charges), Boleto com Pix, Banking (outbound Pix, boleto payments, balance/statement), and webhook handling. Supports Umbraco 13 (net8.0) and Umbraco 17 (net10.0).</Description>
     <PackageTags>umbraco umbraco-marketplace payments banco-inter pix boleto brazil</PackageTags>
@@ -41,5 +42,10 @@
 
   <ItemGroup>
     <EmbeddedResource Include="App_Plugins\**\*" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="\" />
+    <None Include="umbraco-marketplace.json" Pack="true" PackagePath="\" Condition="Exists('umbraco-marketplace.json')" />
   </ItemGroup>
 </Project>

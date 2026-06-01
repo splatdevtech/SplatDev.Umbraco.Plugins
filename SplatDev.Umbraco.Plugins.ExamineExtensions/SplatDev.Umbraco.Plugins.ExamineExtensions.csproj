@@ -8,6 +8,7 @@
     <RootNamespace>SplatDev.Umbraco.Plugins.ExamineExtensions</RootNamespace>
     <PackageId>SplatDev.Umbraco.Plugins.ExamineExtensions</PackageId>
     <Version>1.0.0</Version>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
     <Authors>SplatDev</Authors>
     <Company>SplatDev Ltda</Company>
     <Description>Examine search extensions for Umbraco — additional query helpers, result transformers, and index utilities.</Description>
@@ -38,4 +39,9 @@
     <EmbeddedResource Include="App_Plugins\**\*" />
   </ItemGroup>
 
+
+  <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="\" />
+    <None Include="umbraco-marketplace.json" Pack="true" PackagePath="\" Condition="Exists('umbraco-marketplace.json')" />
+  </ItemGroup>
 </Project>

@@ -18,6 +18,7 @@
     <Description>Umbraco redirect manager plugin supporting Umbraco 13 (net8.0) and Umbraco 17 (net10.0)</Description>
     <PackageTags>umbraco umbraco-marketplace redirect url</PackageTags>
     <Version>2.0.0</Version>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
     <Authors>SplatDev</Authors>
   </PropertyGroup>
 
@@ -34,5 +35,10 @@
   <ItemGroup>
     <Content Include="App_Plugins\Umbraco.Plugins.RedirectManager\**" ExcludeFromSingleFile="true" CopyToPublishDirectory="Always" />
     <None Include="buildTransitive\**" Pack="true" PackagePath="buildTransitive" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="\" />
+    <None Include="umbraco-marketplace.json" Pack="true" PackagePath="\" Condition="Exists('umbraco-marketplace.json')" />
   </ItemGroup>
 </Project>

@@ -5,6 +5,7 @@
     <Nullable>enable</Nullable>
     <PackageId>SplatDev.Umbraco.Plugins.Rsvp</PackageId>
     <Version>2.0.0</Version>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
     <Authors>SplatDev</Authors>
     <Description>Umbraco RSVP event registration plugin with attendee management, capacity limits, waitlisting, and cancellation support. Supports Umbraco 13 (net8.0) and Umbraco 17 (net10.0).</Description>
     <PackageTags>umbraco umbraco-marketplace</PackageTags>
@@ -33,4 +34,9 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.7" />
   </ItemGroup>
 
+
+  <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="\" />
+    <None Include="umbraco-marketplace.json" Pack="true" PackagePath="\" Condition="Exists('umbraco-marketplace.json')" />
+  </ItemGroup>
 </Project>

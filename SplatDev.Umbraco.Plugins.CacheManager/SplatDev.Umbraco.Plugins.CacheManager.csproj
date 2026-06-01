@@ -18,6 +18,7 @@
 		<Description>Umbraco cache manager/warmer plugin supporting Umbraco 13 (net8.0) and Umbraco 17 (net10.0)</Description>
 		<PackageTags>umbraco umbraco-marketplace</PackageTags>
 		<Version>2.0.0</Version>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
 		<Authors>SplatDev</Authors>
 	</PropertyGroup>
 
@@ -79,4 +80,9 @@
 	<ItemGroup>
 		<Content Remove="App_Plugins\Umbraco.Plugins.CacheWarmer\package.manifest" />
 	</ItemGroup>
+
+  <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="\" />
+    <None Include="umbraco-marketplace.json" Pack="true" PackagePath="\" Condition="Exists('umbraco-marketplace.json')" />
+  </ItemGroup>
 </Project>

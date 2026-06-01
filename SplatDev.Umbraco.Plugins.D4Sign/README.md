@@ -1,0 +1,48 @@
+# D4Sign
+
+D4Sign digital signature integration for Umbraco. Supports document upload, signer management, webhook processing, and a Lit 3 backoffice dashboard. Supports Umbraco 13 (net8.0) and Umbraco 17 (net10.0).
+
+[![NuGet](https://img.shields.io/nuget/v/SplatDev.Umbraco.Plugins.D4Sign.svg)](https://www.nuget.org/packages/SplatDev.Umbraco.Plugins.D4Sign)
+
+## Compatibility
+
+| Umbraco | .NET | Package Version |
+|---------|------|-----------------|
+| 13.x    | 8.0  | 1.0.0           |
+| 17.x    | 10.0 | 1.0.0           |
+
+## Installation
+
+```sh
+dotnet add package SplatDev.Umbraco.Plugins.D4Sign
+```
+
+## Quick Start
+
+Register in `Program.cs`:
+
+```csharp
+builder.CreateUmbracoBuilder()
+    .AddBackOffice()
+    .AddWebsite()
+    .AddD4Sign()   // <-- add this
+    .Build();
+```
+
+## Configuration
+
+Add to `appsettings.json`:
+
+```json
+{
+  "D4Sign": {
+    "TokenAPI": "",
+    "CryptKey": "",
+    "BaseUrl": "https://sandbox.d4sign.com.br/api/v1"
+  }
+}
+```
+
+## License
+
+MIT © [SplatDev](https://github.com/SplatDev-Ltda)
