@@ -15,6 +15,6 @@ public class GdrpComposer : IComposer
 
         builder.Services.AddDbContext<GdrpDbContext>(options =>
             options.UseSqlServer(
-                builder.Config.GetConnectionString("umbracoDbDSN") ?? string.Empty));
+                builder.Config.GetSection("ConnectionStrings")["umbracoDbDSN"] ?? string.Empty));
     }
 }

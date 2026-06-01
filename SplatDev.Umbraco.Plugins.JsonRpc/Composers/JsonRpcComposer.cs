@@ -14,6 +14,6 @@ public class JsonRpcComposer : IComposer
         builder.Services.AddScoped<IApiKeyService, ApiKeyService>();
         builder.Services.AddScoped<IJsonRpcService, JsonRpcService>();
         builder.Services.AddDbContext<JsonRpcDbContext>(options =>
-            options.UseSqlServer(builder.Config.GetConnectionString("umbracoDbDSN") ?? string.Empty));
+            options.UseSqlServer(builder.Config.GetSection("ConnectionStrings")["umbracoDbDSN"] ?? string.Empty));
     }
 }

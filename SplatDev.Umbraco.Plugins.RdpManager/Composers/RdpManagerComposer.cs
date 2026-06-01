@@ -14,7 +14,7 @@ namespace SplatDev.Umbraco.Plugins.RdpManager.Composers
         public void Compose(IUmbracoBuilder builder)
         {
             builder.Services.AddDbContext<RdpManagerDbContext>(options =>
-                options.UseSqlServer(builder.Config.GetConnectionString("umbracoDbDSN") ?? string.Empty));
+                options.UseSqlServer(builder.Config.GetSection("ConnectionStrings")["umbracoDbDSN"] ?? string.Empty));
 
             builder.Services.AddScoped<IRdpManagerService, RdpManagerService>();
         }

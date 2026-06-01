@@ -1,4 +1,6 @@
+using Microsoft.Extensions.DependencyInjection;
 using Umbraco.Cms.Core.Composing;
+using Umbraco.Cms.Core.DependencyInjection;
 using SplatDev.Umbraco.Plugins.SvgViewer.Services;
 
 namespace SplatDev.Umbraco.Plugins.SvgViewer.Composers;
