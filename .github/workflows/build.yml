@@ -24,11 +24,11 @@ jobs:
             10.0.x
 
       - name: Restore dependencies
-        run: dotnet restore SplatDev.Core.sln
+        run: dotnet restore SplatDev.Publishable.slnf
 
       - name: Build
-        run: dotnet build SplatDev.Core.sln --no-restore -c Release
+        run: dotnet build SplatDev.Publishable.slnf --no-restore -c Release
 
       - name: Test
-        run: dotnet test SplatDev.Core.sln --no-build -c Release --verbosity normal
+        run: dotnet test SplatDev.Publishable.slnf --no-build -c Release --verbosity normal
 
