@@ -69,18 +69,25 @@ public class JsonRpcService : IJsonRpcService
 
     private global::Umbraco.Cms.Core.Models.IContent? FindByName(global::Umbraco.Cms.Core.Models.IContent node, string alias)
     {
-        // Match by name (case-insensitive) or by URL-friendly slug comparison
-        var nodeName = node.Name?.Replace(" ", "-").ToLowerInvariant();
+var nodeName = node.Name?.Replace(" ", "-").ToLowerInvariant();
         if (string.Equals(nodeName, alias, StringComparison.OrdinalIgnoreCase)
             || string.Equals(node.Name, alias, StringComparison.OrdinalIgnoreCase))
             return node;
 
-        var children = _contentService.GetPagedChildren(node.Id, 0, int.MaxValue, out _);
-        foreach (var child in children)
+long page = 0;
+        const int pageSize = 500;
+        long total;
+        do
         {
-            var result = FindByName(child, alias);
-            if (result is not null) return result;
-        }
+            var children = _contentService.GetPagedChildren(node.Id, page, pageSize, out total);
+            foreach (var child in children)
+            {
+                var result = FindByName(child, alias);
+                if (result is not null) return result;
+            }
+            page++;
+        } while (page * pageSize < total);
+
         return null;
     }
 #else
@@ -189,12 +196,19 @@ public class JsonRpcService : IJsonRpcService
             }
         }
 
-        var children = _contentService.GetPagedChildren(node.Id, 0, int.MaxValue, out _);
-        foreach (var child in children)
+long page = 0;
+        const int pageSize = 500;
+        long total;
+        do
         {
-            await CollectMatchesAsync(cache, child, term, matches);
-            if (matches.Count >= 20) return;
-        }
+            var children = _contentService.GetPagedChildren(node.Id, page, pageSize, out total);
+            foreach (var child in children)
+            {
+                await CollectMatchesAsync(cache, child, term, matches);
+                if (matches.Count >= 20) return;
+            }
+            page++;
+        } while (page * pageSize < total);
     }
 #else
     public Task<object?> SearchContent(string term)

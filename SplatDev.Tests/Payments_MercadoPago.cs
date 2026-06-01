@@ -151,7 +151,7 @@ namespace UmbracoCms.Plugins.Tests
 
         public void Dispose() { }
 
-        [Fact]
+        [Fact(Skip = "Integration test — requires valid MercadoPago API credentials")]
         public void MercadoPago_SearchPaymentMethods()
         {
             // Arrange
@@ -164,7 +164,7 @@ namespace UmbracoCms.Plugins.Tests
             Assert.NotNull(paymentTypes);
         }
 
-        [Fact]
+        [Fact(Skip = "Integration test — requires valid MercadoPago API credentials")]
         public void MercadoPago_GetAvailableIndentificationTypes()
         {
             // Arrange
@@ -176,7 +176,7 @@ namespace UmbracoCms.Plugins.Tests
             Assert.NotNull(identTypes);
         }
 
-        [Fact]
+        [Fact(Skip = "Integration test — requires valid MercadoPago API credentials")]
         public void MercadoPago_GetAvailablePaymentMethods()
         {
             // Arrange
@@ -188,7 +188,7 @@ namespace UmbracoCms.Plugins.Tests
             Assert.NotNull(paymentTypes);
         }
 
-        [Fact]
+        [Fact(Skip = "Integration test — requires valid MercadoPago API credentials")]
         public void MercadoPago_GetPayment()
         {
             // Arrange
@@ -200,7 +200,7 @@ namespace UmbracoCms.Plugins.Tests
             Assert.NotNull(result);
         }
 
-        [Fact]
+        [Fact(Skip = "Integration test — requires valid MercadoPago API credentials")]
         public void MercadoPago_GetAllPayments()
         {
             // Arrange
@@ -212,7 +212,7 @@ namespace UmbracoCms.Plugins.Tests
             Assert.NotNull(payments);
         }
 
-        [Fact]
+        [Fact(Skip = "Integration test — requires valid MercadoPago API credentials")]
         public void MercadoPago_UpdatePayment()
         {
             // Arrange
@@ -228,7 +228,7 @@ namespace UmbracoCms.Plugins.Tests
             Assert.NotNull(updated);
         }
 
-        [Fact]
+        [Fact(Skip = "Integration test — requires valid MercadoPago API credentials")]
         public void MercadoPago_CreateSubscriptionPlan()
         {
             // Arrange
@@ -258,7 +258,7 @@ namespace UmbracoCms.Plugins.Tests
             Assert.NotNull(response);
         }
 
-        [Fact]
+        [Fact(Skip = "Integration test — requires valid MercadoPago API credentials")]
         public void MercadoPago_CreateTestUser()
         {
             var userRequest = new UserRequest(ACCESS_TOKEN_PROD_SUBSCRIPTIONS);
@@ -267,7 +267,7 @@ namespace UmbracoCms.Plugins.Tests
             Assert.NotNull(user);
         }
 
-        [Fact]
+        [Fact(Skip = "Integration test — requires valid MercadoPago API credentials")]
         public void MercadoPago_CreateSubscriptionFromPlan()
         {
             // Arrange
@@ -290,7 +290,7 @@ namespace UmbracoCms.Plugins.Tests
             Assert.NotNull(response);
         }
 
-        [Fact]
+        [Fact(Skip = "Integration test — requires valid MercadoPago API credentials")]
         public void MercadoPago_CreateSubscriptionWithoutPlan()
         {
             // Arrange
@@ -319,7 +319,7 @@ namespace UmbracoCms.Plugins.Tests
             Assert.NotNull(response);
         }
 
-        [Fact]
+        [Fact(Skip = "Integration test — requires valid MercadoPago API credentials")]
         public void MercadoPago_GenerateCardToken()
         {
             // Arrange
@@ -333,7 +333,7 @@ namespace UmbracoCms.Plugins.Tests
             Assert.NotNull(result);
         }
 
-        [Fact]
+        [Fact(Skip = "Integration test — requires valid MercadoPago API credentials")]
         public void MercadoPago_CreateCardPaymentRequest()
         {
             // Arrange
@@ -349,7 +349,7 @@ namespace UmbracoCms.Plugins.Tests
             Assert.NotNull(result);
         }
 
-        [Fact]
+        [Fact(Skip = "Integration test — requires valid MercadoPago API credentials")]
         public void MercadoPago_CreatePixPaymentRequest()
         {
             // Arrange
@@ -379,7 +379,7 @@ namespace UmbracoCms.Plugins.Tests
             Assert.NotNull(payment.PointOfInteraction.TransactionData.QrCode);
         }
 
-        [Fact]
+        [Fact(Skip = "Integration test — requires valid MercadoPago API credentials")]
         public void MercadoPago_CreateTicketPaymentRequest()
         {
             // Arrange

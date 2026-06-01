@@ -6,7 +6,7 @@ namespace SplatDev.Tests
 
     public class GeoLocation
     {
-        [Fact]
+        [Fact(Skip = "Integration test — requires IpInfo API token")]
         public void GeoLocation_IpInfo()
         {
             // arrange
