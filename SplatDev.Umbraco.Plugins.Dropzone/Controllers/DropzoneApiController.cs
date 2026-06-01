@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Umbraco.Cms.Web.Common.Controllers;
 using SplatDev.Umbraco.Plugins.Dropzone.Models;

@@ -44,7 +44,11 @@ public class DictionaryManagerService : IDictionaryManagerService
         var translations = new Dictionary<string, string>();
         foreach (var lang in languages)
         {
+#if NET10_0_OR_GREATER
+            var t = item.Translations.FirstOrDefault(x => x.LanguageIsoCode == lang.IsoCode);
+#else
             var t = item.Translations.FirstOrDefault(x => x.Language.IsoCode == lang.IsoCode);
+#endif
             translations[lang.IsoCode] = t?.Value ?? string.Empty;
         }
 
@@ -195,7 +199,11 @@ public class DictionaryManagerService : IDictionaryManagerService
             if (lang is null)
                 continue;
 
+#if NET10_0_OR_GREATER
+            var existing = existingTranslations.FirstOrDefault(t => t.LanguageIsoCode == isoCode);
+#else
             var existing = existingTranslations.FirstOrDefault(t => t.Language.IsoCode == isoCode);
+#endif
             if (existing is not null)
                 existing.Value = value;
             else
@@ -208,7 +216,11 @@ public class DictionaryManagerService : IDictionaryManagerService
             var lang = _localizationService.GetLanguageByIsoCode(dto.LanguageCode);
             if (lang is not null)
             {
+#if NET10_0_OR_GREATER
+                var existing = existingTranslations.FirstOrDefault(t => t.LanguageIsoCode == dto.LanguageCode);
+#else
                 var existing = existingTranslations.FirstOrDefault(t => t.Language.IsoCode == dto.LanguageCode);
+#endif
                 if (existing is not null)
                     existing.Value = dto.Value;
                 else

@@ -6,17 +6,17 @@
 		<ContentTargetFolders>.</ContentTargetFolders>
 		<Company>SplatDev Ltda</Company>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
-		<PackageProjectUrl>https://github.com/SplatDev-Ltda/SplatDev.Umbraco.Core</PackageProjectUrl>
-		<RepositoryUrl>https://github.com/SplatDev-Ltda/SplatDev.Umbraco.Core</RepositoryUrl>
+		<PackageProjectUrl>https://github.com/SplatDev-Ltda/SplatDev.Umbraco.Plugins</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/SplatDev-Ltda/SplatDev.Umbraco.Plugins</RepositoryUrl>
 		<RepositoryType>git</RepositoryType>
 	</PropertyGroup>
 
 	<PropertyGroup>
-		<PackageId>Umbraco.Plugins.Mailer</PackageId>
-		<Product>Umbraco.Plugins.Mailer</Product>
-		<Title>Umbraco.Plugins.Mailer</Title>
+		<PackageId>SplatDev.Umbraco.Plugins.Mailer</PackageId>
+		<Product>SplatDev.Umbraco.Plugins.Mailer</Product>
+		<Title>SplatDev.Umbraco.Plugins.Mailer</Title>
 		<Description>Umbraco mailer plugin supporting Umbraco 13 (net8.0) and Umbraco 17 (net10.0)</Description>
-		<PackageTags>umbraco umbraco-marketplace</PackageTags>
+		<PackageTags>umbraco umbraco-marketplace email mail smtp</PackageTags>
 		<Version>2.0.0</Version>
 		<Authors>SplatDev</Authors>
 	</PropertyGroup>

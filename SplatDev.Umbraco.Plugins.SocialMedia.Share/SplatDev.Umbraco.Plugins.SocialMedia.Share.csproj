@@ -11,9 +11,10 @@
 		<PackageTags>umbraco umbraco-marketplace</PackageTags>
 		<Company>SplatDev Ltda</Company>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
-		<PackageProjectUrl>https://github.com/SplatDev-Ltda/SplatDev.Umbraco.Core</PackageProjectUrl>
-		<RepositoryUrl>https://github.com/SplatDev-Ltda/SplatDev.Umbraco.Core</RepositoryUrl>
+		<PackageProjectUrl>https://github.com/SplatDev-Ltda/SplatDev.Umbraco.Plugins</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/SplatDev-Ltda/SplatDev.Umbraco.Plugins</RepositoryUrl>
 		<RepositoryType>git</RepositoryType>
+		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
 	</PropertyGroup>
 
 	<ItemGroup>

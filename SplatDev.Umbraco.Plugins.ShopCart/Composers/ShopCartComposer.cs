@@ -15,6 +15,6 @@ public class ShopCartComposer : IComposer
 
         builder.Services.AddDbContext<ShopCartDbContext>(options =>
             options.UseSqlServer(
-                builder.Config.GetConnectionString("umbracoDbDSN") ?? string.Empty));
+                builder.Config.GetSection("ConnectionStrings")["umbracoDbDSN"] ?? string.Empty));
     }
 }

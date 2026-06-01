@@ -1,6 +1,7 @@
 using Umbraco.Cms.Core.Services;
 
 #if NET10_0_OR_GREATER
+using Umbraco.Cms.Core;
 using Umbraco.Cms.Core.Models;
 #endif
 
@@ -36,17 +37,13 @@ public abstract class TemplateAction : IPackageAction
         if (existing is not null)
             return;
 
-        var template = new Template(null, TemplateName, TemplateAlias)
-        {
-            Content = Content,
-        };
-        await _templateService.CreateAsync(template, userId: -1, cancellationToken);
+        await _templateService.CreateAsync(TemplateName, TemplateAlias, Content, Constants.Security.SuperUserKey);
 #else
         var existing = _fileService.GetTemplate(TemplateAlias);
         if (existing is not null)
             return;
 
-        var template = new Umbraco.Cms.Core.Models.Template(null, TemplateName, TemplateAlias)
+        var template = new global::Umbraco.Cms.Core.Models.Template(null, TemplateName, TemplateAlias)
         {
             Content = Content,
         };

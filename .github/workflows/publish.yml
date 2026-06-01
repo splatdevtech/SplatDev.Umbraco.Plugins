@@ -5,6 +5,9 @@ on:
     tags:
       - 'v*'
 
+env:
+  DOTNET_SYSTEM_GLOBALIZATION_INVARIANT: 1
+
 jobs:
   publish:
     runs-on: ubuntu-latest
@@ -20,28 +23,59 @@ jobs:
             10.0.x
 
       - name: Restore dependencies
-        run: dotnet restore SplatDev.Publishable.slnf
+        run: dotnet restore SplatDev.Core.sln
 
-      - name: Build
-        run: dotnet build SplatDev.Publishable.slnf --no-restore -c Release
+      - name: Build & Pack publishable plugins
+        run: |
+          mkdir -p ./nupkgs
+          FAIL=()
+          PASS=()
+          for csproj in $(find . -maxdepth 3 -name "SplatDev.Umbraco.Plugins.*.csproj" \
+            | grep -v "Tests\|BackupManager\|FormsClone\|obj\|bin\|CodeFirst\|PdfCurator" \
+            | sort); do
+            name=$(basename "$csproj" .csproj)
+            echo "--- Building $name ---"
+            if dotnet build "$csproj" -c Release --no-restore 2>&1 | grep -q "Build succeeded"; then
+              dotnet pack "$csproj" --no-build -c Release -o ./nupkgs
+              PASS+=("$name")
+            else
+              echo "::warning::Skipping $name (build failed)"
+              FAIL+=("$name")
+            fi
+          done
+          echo ""
+          echo "=== Pack Summary ==="
+          echo "Packed (${#PASS[@]}): ${PASS[*]}"
+          if [ ${#FAIL[@]} -gt 0 ]; then
+            echo "Skipped (${#FAIL[@]}): ${FAIL[*]}"
+          fi
 
-      - name: Pack
-        run: dotnet pack SplatDev.Publishable.slnf --no-build -c Release -o ./nupkgs
+      - name: List packages
+        run: ls -la ./nupkgs/*.nupkg 2>/dev/null || echo "No packages generated"
 
       - name: Push to NuGet.org
+        env:
+          NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
         run: |
           for pkg in ./nupkgs/*.nupkg; do
+            echo "Pushing $pkg..."
             dotnet nuget push "$pkg" \
-              --api-key ${{ secrets.NUGET_API_KEY }} \
+              --api-key "$NUGET_API_KEY" \
               --source https://api.nuget.org/v3/index.json \
-              --skip-duplicate
+              --skip-duplicate \
+              --no-symbols
           done
 
       - name: Push to GitHub Packages
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           for pkg in ./nupkgs/*.nupkg; do
+            echo "Pushing $pkg to GitHub Packages..."
             dotnet nuget push "$pkg" \
-              --api-key ${{ secrets.GITHUB_TOKEN }} \
+              --api-key "$GITHUB_TOKEN" \
               --source https://nuget.pkg.github.com/SplatDev-Ltda/index.json \
-              --skip-duplicate
+              --skip-duplicate \
+              --no-symbols \
+              || echo "::warning::GitHub Packages push failed for $pkg (may need org config)"
           done

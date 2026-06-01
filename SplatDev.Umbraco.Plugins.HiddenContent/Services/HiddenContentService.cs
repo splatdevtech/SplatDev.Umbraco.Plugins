@@ -25,7 +25,7 @@ public class HiddenContentService : IHiddenContentService
         return Task.FromResult<IEnumerable<int>>(hiddenIds);
     }
 
-    private void CollectHidden(IEnumerable<Umbraco.Cms.Core.Models.IContent> nodes, List<int> hiddenIds)
+    private void CollectHidden(IEnumerable<global::Umbraco.Cms.Core.Models.IContent> nodes, List<int> hiddenIds)
     {
         foreach (var node in nodes)
         {

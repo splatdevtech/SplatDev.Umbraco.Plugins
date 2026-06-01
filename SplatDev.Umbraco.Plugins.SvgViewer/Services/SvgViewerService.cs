@@ -1,5 +1,6 @@
 using System.Text.RegularExpressions;
 using System.Xml;
+using Microsoft.AspNetCore.Hosting;
 using Umbraco.Cms.Core.Services;
 using SplatDev.Umbraco.Plugins.SvgViewer.Models;
 
@@ -41,42 +42,33 @@ public partial class SvgViewerService : ISvgViewerService
     public async Task<IEnumerable<SvgInfo>> GetAllSvgMediaAsync()
     {
         var results = new List<SvgInfo>();
-        var page = 0;
-        const int pageSize = 100;
+        var allItems = _mediaService.GetRootMedia().ToList();
 
-        while (true)
+        foreach (var media in allItems)
         {
-            var items = _mediaService.GetPagedRootMedia(page, pageSize, out var total).ToList();
+            var path = ResolvePhysicalPath(media);
+            if (string.IsNullOrEmpty(path)) continue;
+            var ext = Path.GetExtension(path);
+            if (!ext.Equals(".svg", StringComparison.OrdinalIgnoreCase)) continue;
+            if (!File.Exists(path)) continue;
 
-            foreach (var media in items)
+            var raw = await File.ReadAllTextAsync(path);
+            var sanitized = SanitizeSvg(raw);
+            var (w, h) = ParseDimensions(sanitized);
+            results.Add(new SvgInfo
             {
-                var path = ResolvePhysicalPath(media);
-                if (string.IsNullOrEmpty(path)) continue;
-                var ext = Path.GetExtension(path);
-                if (!ext.Equals(".svg", StringComparison.OrdinalIgnoreCase)) continue;
-                if (!File.Exists(path)) continue;
-
-                var raw = await File.ReadAllTextAsync(path);
-                var sanitized = SanitizeSvg(raw);
-                var (w, h) = ParseDimensions(sanitized);
-                results.Add(new SvgInfo
-                {
-                    MediaKey = media.Key,
-                    FileName = Path.GetFileName(path),
-                    SanitizedContent = sanitized,
-                    Width = w,
-                    Height = h
-                });
-            }
-
-            if ((page + 1) * pageSize >= total) break;
-            page++;
+                MediaKey = media.Key,
+                FileName = Path.GetFileName(path),
+                SanitizedContent = sanitized,
+                Width = w,
+                Height = h
+            });
         }
 
         return results;
     }
 
-    private string? ResolvePhysicalPath(Umbraco.Cms.Core.Models.IMedia media)
+    private string? ResolvePhysicalPath(global::Umbraco.Cms.Core.Models.IMedia media)
     {
         var umbracoFile = media.GetValue<string>("umbracoFile");
         if (string.IsNullOrEmpty(umbracoFile)) return null;

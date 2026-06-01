@@ -10,8 +10,8 @@
     <Company>SplatDev Ltda</Company>
     <Description>SendGrid email provider for SplatDev.Messaging</Description>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageProjectUrl>https://github.com/SplatDev-Ltda/SplatDev.Umbraco.Core</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/SplatDev-Ltda/SplatDev.Umbraco.Core</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/SplatDev-Ltda/SplatDev.Umbraco.Plugins</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/SplatDev-Ltda/SplatDev.Umbraco.Plugins</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
   </PropertyGroup>
   <ItemGroup>

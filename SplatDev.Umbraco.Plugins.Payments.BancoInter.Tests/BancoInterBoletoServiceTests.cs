@@ -6,6 +6,7 @@ using Moq;
 using Moq.Protected;
 using SplatDev.Payments.BancoInter.Models;
 using SplatDev.Umbraco.Plugins.Payments.BancoInter.Services;
+using Xunit;
 
 namespace SplatDev.Umbraco.Plugins.Payments.BancoInter.Tests;
 
