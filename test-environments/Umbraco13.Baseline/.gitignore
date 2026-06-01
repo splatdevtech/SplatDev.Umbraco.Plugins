@@ -1,0 +1,5 @@
+appsettings-schema.*.json
+wwwroot/App_Plugins/
+umbraco/Data/
+umbraco/Logs/
+umbraco/media/
