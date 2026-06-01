@@ -31,9 +31,24 @@ jobs:
           dotnet restore "SplatDev.Umbraco.Plugins.Yaml/SplatDev.Umbraco.Plugins.Schema2Yaml/SplatDev.Umbraco.Plugins.Schema2Yaml.csproj"
           dotnet restore "SplatDev.Umbraco.Plugins.Yaml/SplatDev.Umbraco.Plugins.Yaml2Schema/SplatDev.Umbraco.Plugins.Yaml2Schema.csproj"
 
-      - name: Build & Pack publishable plugins
+      - name: Build & Pack shared libraries
         run: |
           mkdir -p ./nupkgs
+          for csproj in \
+            SplatDev.Umbraco.Common/SplatDev.Umbraco.Common.csproj \
+            SplatDev.Umbraco.Markup/SplatDev.Umbraco.Markup.csproj \
+            SplatDev.Payments.BancoInter/SplatDev.Payments.BancoInter.csproj; do
+            name=$(basename "$csproj" .csproj)
+            echo "--- Building $name ---"
+            if dotnet build "$csproj" -c Release --no-restore 2>&1 | grep -q "Build succeeded"; then
+              dotnet pack "$csproj" --no-build -c Release -o ./nupkgs
+            else
+              echo "::warning::Skipping $name (build failed)"
+            fi
+          done
+
+      - name: Build & Pack publishable plugins
+        run: |
           FAIL=()
           PASS=()
           for csproj in $(find . -maxdepth 3 -name "SplatDev.Umbraco.Plugins.*.csproj" \
