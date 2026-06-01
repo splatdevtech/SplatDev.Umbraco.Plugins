@@ -20,10 +20,16 @@ jobs:
         with:
           dotnet-version: |
             8.0.x
+            9.0.x
             10.0.x
 
       - name: Restore dependencies
-        run: dotnet restore SplatDev.Core.sln
+        run: |
+          dotnet restore SplatDev.Core.sln
+          dotnet restore SplatDev.Umbraco.Plugins.D4Sign/SplatDev.Umbraco.Plugins.D4Sign.csproj
+          dotnet restore SplatDev.Umbraco.Plugins.ENotAssina/SplatDev.Umbraco.Plugins.ENotAssina.csproj
+          dotnet restore "SplatDev.Umbraco.Plugins.Yaml/SplatDev.Umbraco.Plugins.Schema2Yaml/SplatDev.Umbraco.Plugins.Schema2Yaml.csproj"
+          dotnet restore "SplatDev.Umbraco.Plugins.Yaml/SplatDev.Umbraco.Plugins.Yaml2Schema/SplatDev.Umbraco.Plugins.Yaml2Schema.csproj"
 
       - name: Build & Pack publishable plugins
         run: |
