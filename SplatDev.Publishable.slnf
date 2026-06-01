@@ -25,7 +25,6 @@
       "SplatDev.Routing/SplatDev.Routing.csproj",
       "SplatDev.ScheduledTasks/SplatDev.ScheduledTasks.csproj",
       "SplatDev.Security/SplatDev.Security.csproj",
-      "SplatDev.Tests/SplatDev.Tests.csproj",
       "SplatDev.Umbraco.2FA/SplatDev.Umbraco.2FA.csproj",
       "SplatDev.Umbraco.Authorization.Ldap/SplatDev.Umbraco.Authorization.Ldap.csproj",
       "SplatDev.Umbraco.Common/SplatDev.Umbraco.Common.csproj",
