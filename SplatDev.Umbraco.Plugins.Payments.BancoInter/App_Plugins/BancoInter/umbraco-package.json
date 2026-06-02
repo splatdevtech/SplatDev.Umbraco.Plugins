@@ -1,15 +1,60 @@
 {
   "$schema": "../../umbraco-package-schema.json",
-  "name": "Banco Inter Payments",
+  "name": "SplatDev Banco Inter Payments",
+  "alias": "SplatDev.BancoInter",
   "version": "1.0.0",
   "extensions": [
     {
       "type": "dashboard",
-      "alias": "bancoInter.dashboard",
+      "alias": "SplatDev.BancoInter.Dashboard",
       "name": "Banco Inter Dashboard",
       "element": "/App_Plugins/BancoInter/dist/dashboard.js",
-      "weight": -98,
-      "conditions": [{ "alias": "Umb.Condition.SectionAlias", "match": "Umb.Section.Content" }]
+      "elementName": "bancointer-dashboard",
+      "weight": -90,
+      "meta": {
+        "label": "Banco Inter",
+        "pathname": "banco-inter"
+      },
+      "conditions": [
+        {
+          "alias": "Umb.Condition.SectionAlias",
+          "match": "Umb.Section.Settings"
+        }
+      ]
+    },
+    {
+      "type": "localization",
+      "alias": "SplatDev.BancoInter.Localization.En",
+      "name": "Banco Inter — English",
+      "meta": {
+        "culture": "en",
+        "localizations": {
+          "section": {
+            "bancointer_heading": "Banco Inter Payments",
+            "bancointer_description": "Manage Pix, Boleto, and Banking integrations with Banco Inter.",
+            "bancointer_overview": "Overview",
+            "bancointer_statement": "Statement",
+            "bancointer_tools": "Tools"
+          }
+        }
+      }
+    },
+    {
+      "type": "localization",
+      "alias": "SplatDev.BancoInter.Localization.PtBr",
+      "name": "Banco Inter — Português (Brasil)",
+      "meta": {
+        "culture": "pt-BR",
+        "localizations": {
+          "section": {
+            "bancointer_heading": "Banco Inter Pagamentos",
+            "bancointer_description": "Gerencie integrações de Pix, Boleto e Banking com o Banco Inter.",
+            "bancointer_overview": "Visão geral",
+            "bancointer_statement": "Extrato",
+            "bancointer_tools": "Ferramentas"
+          }
+        }
+      }
     }
   ]
 }
