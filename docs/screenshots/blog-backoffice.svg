@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 800" width="1280" height="800">
+  <defs>
+    <linearGradient id="sidebarBg" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#1A1B2E"/>
+      <stop offset="100%" style="stop-color:#16172B"/>
+    </linearGradient>
+    <clipPath id="rounded"><rect width="1280" height="800" rx="8"/></clipPath>
+  </defs>
+
+  <g clip-path="url(#rounded)">
+    <!-- Browser chrome -->
+    <rect width="1280" height="800" fill="#1A1B2E"/>
+
+    <!-- Top bar -->
+    <rect width="1280" height="48" fill="#14152A"/>
+    <circle cx="24" cy="24" r="6" fill="#FF5F57"/>
+    <circle cx="44" cy="24" r="6" fill="#FEBC2E"/>
+    <circle cx="64" cy="24" r="6" fill="#28C840"/>
+    <rect x="90" y="12" width="500" height="24" rx="12" fill="#1E2036"/>
+    <text x="340" y="28" font-family="Inter, sans-serif" font-size="11" fill="#6D7090" text-anchor="middle">localhost:5001/umbraco#/blog</text>
+
+    <!-- Sidebar -->
+    <rect x="0" y="48" width="220" height="752" fill="url(#sidebarBg)"/>
+    <rect x="0" y="48" width="220" height="1" fill="#2B2D42"/>
+
+    <!-- Umbraco logo area -->
+    <text x="24" y="36" font-family="Inter, sans-serif" font-size="13" font-weight="700" fill="#4ECDC4">Umbraco</text>
+
+    <rect x="0" y="60" width="220" height="36" rx="0" fill="#2B2D42"/><rect x="0" y="60" width="3" height="36" fill="#4ECDC4"/><text x="42" y="83" font-family="Inter, sans-serif" font-size="13" fill="#E0E2F0">Content</text><text x="42" y="121" font-family="Inter, sans-serif" font-size="13" fill="#6D7090">Media</text><text x="42" y="159" font-family="Inter, sans-serif" font-size="13" fill="#6D7090">Settings</text><text x="42" y="197" font-family="Inter, sans-serif" font-size="13" fill="#6D7090">Members</text><text x="42" y="235" font-family="Inter, sans-serif" font-size="13" fill="#6D7090">Forms</text><text x="42" y="273" font-family="Inter, sans-serif" font-size="13" fill="#6D7090">Packages</text>
+
+    <!-- Main content area -->
+    <rect x="220" y="48" width="1060" height="752" fill="#1E2036"/>
+    <rect x="220" y="48" width="1060" height="1" fill="#2B2D42"/>
+
+    <!-- Page header -->
+    <text x="252" y="82" font-family="Inter, sans-serif" font-size="20" font-weight="700" fill="#E0E2F0">Blog</text>
+    <text x="252" y="86" font-family="Inter, sans-serif" font-size="0" fill="#8D90A8">Full-featured blog engine</text>
+
+    <!-- Panels -->
+    
+    <text x="252" y="90" font-family="Inter, sans-serif" font-size="14" font-weight="600" fill="#E0E2F0">Blog Posts</text><rect x="252" y="108" width="1004" height="28" rx="4" fill="#2B2D42"/><text x="264" y="126" font-family="Inter, sans-serif" font-size="11" font-weight="600" fill="#8D90A8">Title</text><text x="461.6" y="126" font-family="Inter, sans-serif" font-size="11" font-weight="600" fill="#8D90A8">Author</text><text x="659.2" y="126" font-family="Inter, sans-serif" font-size="11" font-weight="600" fill="#8D90A8">Category</text><text x="856.8" y="126" font-family="Inter, sans-serif" font-size="11" font-weight="600" fill="#8D90A8">Published</text><text x="1054.4" y="126" font-family="Inter, sans-serif" font-size="11" font-weight="600" fill="#8D90A8">Views</text><rect x="252" y="138" width="1004" height="26" rx="2" fill="#1E2036" opacity="0.5"/><text x="264" y="155" font-family="Inter, sans-serif" font-size="11" fill="#C0C4D8">Getting Started with Umbraco</text><text x="461.6" y="155" font-family="Inter, sans-serif" font-size="11" fill="#C0C4D8">admin</text><text x="659.2" y="155" font-family="Inter, sans-serif" font-size="11" fill="#C0C4D8">Tutorials</text><text x="856.8" y="155" font-family="Inter, sans-serif" font-size="11" fill="#C0C4D8">2024-01-15</text><text x="1054.4" y="155" font-family="Inter, sans-serif" font-size="11" fill="#C0C4D8">1,247</text><text x="264" y="181" font-family="Inter, sans-serif" font-size="11" fill="#C0C4D8">Building Custom Plugins</text><text x="461.6" y="181" font-family="Inter, sans-serif" font-size="11" fill="#C0C4D8">editor</text><text x="659.2" y="181" font-family="Inter, sans-serif" font-size="11" fill="#C0C4D8">Development</text><text x="856.8" y="181" font-family="Inter, sans-serif" font-size="11" fill="#C0C4D8">2024-01-12</text><text x="1054.4" y="181" font-family="Inter, sans-serif" font-size="11" fill="#C0C4D8">892</text><rect x="252" y="190" width="1004" height="26" rx="2" fill="#1E2036" opacity="0.5"/><text x="264" y="207" font-family="Inter, sans-serif" font-size="11" fill="#C0C4D8">Best Practices for CMS Content</text><text x="461.6" y="207" font-family="Inter, sans-serif" font-size="11" fill="#C0C4D8">admin</text><text x="659.2" y="207" font-family="Inter, sans-serif" font-size="11" fill="#C0C4D8">Tips</text><text x="856.8" y="207" font-family="Inter, sans-serif" font-size="11" fill="#C0C4D8">2024-01-10</text><text x="1054.4" y="207" font-family="Inter, sans-serif" font-size="11" fill="#C0C4D8">654</text><text x="264" y="233" font-family="Inter, sans-serif" font-size="11" fill="#C0C4D8">Umbraco 13 New Features</text><text x="461.6" y="233" font-family="Inter, sans-serif" font-size="11" fill="#C0C4D8">admin</text><text x="659.2" y="233" font-family="Inter, sans-serif" font-size="11" fill="#C0C4D8">News</text><text x="856.8" y="233" font-family="Inter, sans-serif" font-size="11" fill="#C0C4D8">2024-01-08</text><text x="1054.4" y="233" font-family="Inter, sans-serif" font-size="11" fill="#C0C4D8">1,531</text>
+
+    <!-- Actions -->
+    
+      <rect x="252" y="258" width="110" height="30" rx="4" fill="#4ECDC4" stroke="#4ECDC4" stroke-width="1"/>
+      <text x="307" y="277" font-family="Inter, sans-serif" font-size="11" font-weight="600" fill="#1A1B2E" text-anchor="middle">New Post</text>
+      <rect x="372" y="258" width="110" height="30" rx="4" fill="#2B2D42" stroke="#3D3F5A" stroke-width="1"/>
+      <text x="427" y="277" font-family="Inter, sans-serif" font-size="11" font-weight="400" fill="#C0C4D8" text-anchor="middle">Categories</text>
+      <rect x="492" y="258" width="110" height="30" rx="4" fill="#2B2D42" stroke="#3D3F5A" stroke-width="1"/>
+      <text x="547" y="277" font-family="Inter, sans-serif" font-size="11" font-weight="400" fill="#C0C4D8" text-anchor="middle">Tags</text>
+
+    <!-- Watermark -->
+    <text x="1264" y="790" font-family="Inter, sans-serif" font-size="9" fill="#3D3F5A" text-anchor="end">SplatDev.Umbraco.Plugins</text>
+  </g>
+</svg>

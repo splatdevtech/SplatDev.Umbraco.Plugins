@@ -6,6 +6,104 @@ A comprehensive monorepo of Umbraco plugins, extensions, and utilities maintaine
 [![NuGet](https://img.shields.io/nuget/v/SplatDev.Umbraco.Common)](https://www.nuget.org/packages?q=SplatDev)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
+![SplatDev Umbraco Plugins](docs/screenshots/hero-banner.svg)
+
+---
+
+## Screenshots
+
+### Blog Engine
+
+Manage blog posts, categories, tags, comments, and RSS feeds from the backoffice.
+
+![Blog Backoffice](docs/screenshots/blog-backoffice.svg)
+
+### Backups
+
+Create, schedule, and restore backups with 10+ cloud storage providers (Azure, AWS S3, Dropbox, Google Drive, and more).
+
+![Backups Backoffice](docs/screenshots/backups-backoffice.svg)
+
+### Cache Manager
+
+Monitor and manage cache regions, hit rates, and memory usage with a visual dashboard.
+
+![Cache Manager Backoffice](docs/screenshots/cache-manager-backoffice.svg)
+
+### Analytics
+
+Track page views, unique visitors, session duration, and bounce rates with interactive charts.
+
+![Analytics Backoffice](docs/screenshots/analytics-backoffice.svg)
+
+### SEO Tools
+
+Audit meta tags, generate sitemaps, manage robots.txt, and track SEO scores across all pages.
+
+![SEO Backoffice](docs/screenshots/seo-backoffice.svg)
+
+### Newsletters
+
+Manage subscriber lists, create email campaigns, and track open/click rates.
+
+![Newsletters Backoffice](docs/screenshots/newsletters-backoffice.svg)
+
+### Forums
+
+Host community discussions with topics, posts, member management, and moderation tools.
+
+![Forums Backoffice](docs/screenshots/forums-backoffice.svg)
+
+### Exception Manager
+
+Track, investigate, and resolve application exceptions with severity classification.
+
+![Exception Manager Backoffice](docs/screenshots/exception-manager-backoffice.svg)
+
+### Star Ratings
+
+Enable content rating with aggregated scores and top-rated content reporting.
+
+![Star Ratings Backoffice](docs/screenshots/star-ratings-backoffice.svg)
+
+### Redirect Manager
+
+Create and manage URL redirects (301/302) with hit tracking and bulk import/export.
+
+![Redirect Manager Backoffice](docs/screenshots/redirect-manager-backoffice.svg)
+
+### Surveys
+
+Build surveys and forms with response tracking and data export.
+
+![Surveys Backoffice](docs/screenshots/surveys-backoffice.svg)
+
+### Custom Login
+
+Configure branded login pages with social login support and custom styling.
+
+![Custom Login Backoffice](docs/screenshots/custom-login-backoffice.svg)
+
+### FAQs
+
+Organize frequently asked questions by category with drag-and-drop reordering.
+
+![FAQs Backoffice](docs/screenshots/faqs-backoffice.svg)
+
+### Visitor Counter
+
+Track visitor counts by day, week, month, and all-time with trend charts.
+
+![Visitor Counter Backoffice](docs/screenshots/visitor-counter-backoffice.svg)
+
+### Mailer
+
+Configure SMTP settings and manage email delivery across the platform.
+
+![Mailer Backoffice](docs/screenshots/mailer-backoffice.svg)
+
+> **Note:** These are representative mockups of the backoffice dashboards. To capture live screenshots from a running Umbraco instance, see [Capturing Live Screenshots](#capturing-live-screenshots).
+
 ---
 
 ## Installation

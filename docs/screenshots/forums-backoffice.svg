@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 800" width="1280" height="800">
+  <defs>
+    <linearGradient id="sidebarBg" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#1A1B2E"/>
+      <stop offset="100%" style="stop-color:#16172B"/>
+    </linearGradient>
+    <clipPath id="rounded"><rect width="1280" height="800" rx="8"/></clipPath>
+  </defs>
+
+  <g clip-path="url(#rounded)">
+    <!-- Browser chrome -->
+    <rect width="1280" height="800" fill="#1A1B2E"/>
+
+    <!-- Top bar -->
+    <rect width="1280" height="48" fill="#14152A"/>
+    <circle cx="24" cy="24" r="6" fill="#FF5F57"/>
+    <circle cx="44" cy="24" r="6" fill="#FEBC2E"/>
+    <circle cx="64" cy="24" r="6" fill="#28C840"/>
+    <rect x="90" y="12" width="500" height="24" rx="12" fill="#1E2036"/>
+    <text x="340" y="28" font-family="Inter, sans-serif" font-size="11" fill="#6D7090" text-anchor="middle">localhost:5001/umbraco#/forums</text>
+
+    <!-- Sidebar -->
+    <rect x="0" y="48" width="220" height="752" fill="url(#sidebarBg)"/>
+    <rect x="0" y="48" width="220" height="1" fill="#2B2D42"/>
+
+    <!-- Umbraco logo area -->
+    <text x="24" y="36" font-family="Inter, sans-serif" font-size="13" font-weight="700" fill="#4ECDC4">Umbraco</text>
+
+    <text x="42" y="83" font-family="Inter, sans-serif" font-size="13" fill="#6D7090">Content</text><text x="42" y="121" font-family="Inter, sans-serif" font-size="13" fill="#6D7090">Media</text><text x="42" y="159" font-family="Inter, sans-serif" font-size="13" fill="#6D7090">Settings</text><text x="42" y="197" font-family="Inter, sans-serif" font-size="13" fill="#6D7090">Members</text><text x="42" y="235" font-family="Inter, sans-serif" font-size="13" fill="#6D7090">Forms</text><text x="42" y="273" font-family="Inter, sans-serif" font-size="13" fill="#6D7090">Packages</text>
+
+    <!-- Main content area -->
+    <rect x="220" y="48" width="1060" height="752" fill="#1E2036"/>
+    <rect x="220" y="48" width="1060" height="1" fill="#2B2D42"/>
+
+    <!-- Page header -->
+    <text x="252" y="82" font-family="Inter, sans-serif" font-size="20" font-weight="700" fill="#E0E2F0">Forums</text>
+    <text x="252" y="86" font-family="Inter, sans-serif" font-size="0" fill="#8D90A8">Discussion forum plugin</text>
+
+    <!-- Panels -->
+    
+    <rect x="252" y="90" width="200" height="72" rx="6" fill="#2B2D42" stroke="#3D3F5A" stroke-width="1"/>
+    <text x="352" y="120" font-family="Inter, sans-serif" font-size="22" font-weight="700" fill="#4ECDC4" text-anchor="middle">1,234</text>
+    <text x="352" y="142" font-family="Inter, sans-serif" font-size="11" fill="#8D90A8" text-anchor="middle">Topics</text>
+    <rect x="468" y="90" width="200" height="72" rx="6" fill="#2B2D42" stroke="#3D3F5A" stroke-width="1"/>
+    <text x="568" y="120" font-family="Inter, sans-serif" font-size="22" font-weight="700" fill="#FF6B6B" text-anchor="middle">8,567</text>
+    <text x="568" y="142" font-family="Inter, sans-serif" font-size="11" fill="#8D90A8" text-anchor="middle">Posts</text>
+    <rect x="684" y="90" width="200" height="72" rx="6" fill="#2B2D42" stroke="#3D3F5A" stroke-width="1"/>
+    <text x="784" y="120" font-family="Inter, sans-serif" font-size="22" font-weight="700" fill="#28A745" text-anchor="middle">456</text>
+    <text x="784" y="142" font-family="Inter, sans-serif" font-size="11" fill="#8D90A8" text-anchor="middle">Members</text>
+    <rect x="900" y="90" width="200" height="72" rx="6" fill="#2B2D42" stroke="#3D3F5A" stroke-width="1"/>
+    <text x="1000" y="120" font-family="Inter, sans-serif" font-size="22" font-weight="700" fill="#FFD700" text-anchor="middle">23</text>
+    <text x="1000" y="142" font-family="Inter, sans-serif" font-size="11" fill="#8D90A8" text-anchor="middle">Online</text>
+    <text x="252" y="186" font-family="Inter, sans-serif" font-size="14" font-weight="600" fill="#E0E2F0">Recent Topics</text><rect x="252" y="204" width="1004" height="28" rx="4" fill="#2B2D42"/><text x="264" y="222" font-family="Inter, sans-serif" font-size="11" font-weight="600" fill="#8D90A8">Topic</text><text x="511" y="222" font-family="Inter, sans-serif" font-size="11" font-weight="600" fill="#8D90A8">Author</text><text x="758" y="222" font-family="Inter, sans-serif" font-size="11" font-weight="600" fill="#8D90A8">Replies</text><text x="1005" y="222" font-family="Inter, sans-serif" font-size="11" font-weight="600" fill="#8D90A8">Last Post</text><rect x="252" y="234" width="1004" height="26" rx="2" fill="#1E2036" opacity="0.5"/><text x="264" y="251" font-family="Inter, sans-serif" font-size="11" fill="#C0C4D8">How to customize themes?</text><text x="511" y="251" font-family="Inter, sans-serif" font-size="11" fill="#C0C4D8">john_doe</text><text x="758" y="251" font-family="Inter, sans-serif" font-size="11" fill="#C0C4D8">12</text><text x="1005" y="251" font-family="Inter, sans-serif" font-size="11" fill="#C0C4D8">2h ago</text><text x="264" y="277" font-family="Inter, sans-serif" font-size="11" fill="#C0C4D8">Plugin compatibility Q</text><text x="511" y="277" font-family="Inter, sans-serif" font-size="11" fill="#C0C4D8">sarah_dev</text><text x="758" y="277" font-family="Inter, sans-serif" font-size="11" fill="#C0C4D8">5</text><text x="1005" y="277" font-family="Inter, sans-serif" font-size="11" fill="#C0C4D8">4h ago</text><rect x="252" y="286" width="1004" height="26" rx="2" fill="#1E2036" opacity="0.5"/><text x="264" y="303" font-family="Inter, sans-serif" font-size="11" fill="#C0C4D8">Performance tips</text><text x="511" y="303" font-family="Inter, sans-serif" font-size="11" fill="#C0C4D8">admin</text><text x="758" y="303" font-family="Inter, sans-serif" font-size="11" fill="#C0C4D8">28</text><text x="1005" y="303" font-family="Inter, sans-serif" font-size="11" fill="#C0C4D8">1d ago</text>
+
+    <!-- Actions -->
+    
+      <rect x="252" y="328" width="110" height="30" rx="4" fill="#4ECDC4" stroke="#4ECDC4" stroke-width="1"/>
+      <text x="307" y="347" font-family="Inter, sans-serif" font-size="11" font-weight="600" fill="#1A1B2E" text-anchor="middle">New Forum</text>
+      <rect x="372" y="328" width="110" height="30" rx="4" fill="#2B2D42" stroke="#3D3F5A" stroke-width="1"/>
+      <text x="427" y="347" font-family="Inter, sans-serif" font-size="11" font-weight="400" fill="#C0C4D8" text-anchor="middle">Moderation</text>
+      <rect x="492" y="328" width="110" height="30" rx="4" fill="#2B2D42" stroke="#3D3F5A" stroke-width="1"/>
+      <text x="547" y="347" font-family="Inter, sans-serif" font-size="11" font-weight="400" fill="#C0C4D8" text-anchor="middle">Settings</text>
+
+    <!-- Watermark -->
+    <text x="1264" y="790" font-family="Inter, sans-serif" font-size="9" fill="#3D3F5A" text-anchor="end">SplatDev.Umbraco.Plugins</text>
+  </g>
+</svg>

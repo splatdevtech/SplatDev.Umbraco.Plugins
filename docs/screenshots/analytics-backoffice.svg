@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 800" width="1280" height="800">
+  <defs>
+    <linearGradient id="sidebarBg" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#1A1B2E"/>
+      <stop offset="100%" style="stop-color:#16172B"/>
+    </linearGradient>
+    <clipPath id="rounded"><rect width="1280" height="800" rx="8"/></clipPath>
+  </defs>
+
+  <g clip-path="url(#rounded)">
+    <!-- Browser chrome -->
+    <rect width="1280" height="800" fill="#1A1B2E"/>
+
+    <!-- Top bar -->
+    <rect width="1280" height="48" fill="#14152A"/>
+    <circle cx="24" cy="24" r="6" fill="#FF5F57"/>
+    <circle cx="44" cy="24" r="6" fill="#FEBC2E"/>
+    <circle cx="64" cy="24" r="6" fill="#28C840"/>
+    <rect x="90" y="12" width="500" height="24" rx="12" fill="#1E2036"/>
+    <text x="340" y="28" font-family="Inter, sans-serif" font-size="11" fill="#6D7090" text-anchor="middle">localhost:5001/umbraco#/analytics</text>
+
+    <!-- Sidebar -->
+    <rect x="0" y="48" width="220" height="752" fill="url(#sidebarBg)"/>
+    <rect x="0" y="48" width="220" height="1" fill="#2B2D42"/>
+
+    <!-- Umbraco logo area -->
+    <text x="24" y="36" font-family="Inter, sans-serif" font-size="13" font-weight="700" fill="#4ECDC4">Umbraco</text>
+
+    <text x="42" y="83" font-family="Inter, sans-serif" font-size="13" fill="#6D7090">Content</text><text x="42" y="121" font-family="Inter, sans-serif" font-size="13" fill="#6D7090">Media</text><text x="42" y="159" font-family="Inter, sans-serif" font-size="13" fill="#6D7090">Settings</text><text x="42" y="197" font-family="Inter, sans-serif" font-size="13" fill="#6D7090">Members</text><text x="42" y="235" font-family="Inter, sans-serif" font-size="13" fill="#6D7090">Forms</text><text x="42" y="273" font-family="Inter, sans-serif" font-size="13" fill="#6D7090">Packages</text>
+
+    <!-- Main content area -->
+    <rect x="220" y="48" width="1060" height="752" fill="#1E2036"/>
+    <rect x="220" y="48" width="1060" height="1" fill="#2B2D42"/>
+
+    <!-- Page header -->
+    <text x="252" y="82" font-family="Inter, sans-serif" font-size="20" font-weight="700" fill="#E0E2F0">Analytics</text>
+    <text x="252" y="86" font-family="Inter, sans-serif" font-size="0" fill="#8D90A8">Site analytics dashboard</text>
+
+    <!-- Panels -->
+    
+    <rect x="252" y="90" width="200" height="72" rx="6" fill="#2B2D42" stroke="#3D3F5A" stroke-width="1"/>
+    <text x="352" y="120" font-family="Inter, sans-serif" font-size="22" font-weight="700" fill="#4ECDC4" text-anchor="middle">45,892</text>
+    <text x="352" y="142" font-family="Inter, sans-serif" font-size="11" fill="#8D90A8" text-anchor="middle">Page Views</text>
+    <rect x="468" y="90" width="200" height="72" rx="6" fill="#2B2D42" stroke="#3D3F5A" stroke-width="1"/>
+    <text x="568" y="120" font-family="Inter, sans-serif" font-size="22" font-weight="700" fill="#FF6B6B" text-anchor="middle">12,456</text>
+    <text x="568" y="142" font-family="Inter, sans-serif" font-size="11" fill="#8D90A8" text-anchor="middle">Unique Visitors</text>
+    <rect x="684" y="90" width="200" height="72" rx="6" fill="#2B2D42" stroke="#3D3F5A" stroke-width="1"/>
+    <text x="784" y="120" font-family="Inter, sans-serif" font-size="22" font-weight="700" fill="#FFD700" text-anchor="middle">2m 34s</text>
+    <text x="784" y="142" font-family="Inter, sans-serif" font-size="11" fill="#8D90A8" text-anchor="middle">Avg. Duration</text>
+    <rect x="900" y="90" width="200" height="72" rx="6" fill="#2B2D42" stroke="#3D3F5A" stroke-width="1"/>
+    <text x="1000" y="120" font-family="Inter, sans-serif" font-size="22" font-weight="700" fill="#6C757D" text-anchor="middle">34.2%</text>
+    <text x="1000" y="142" font-family="Inter, sans-serif" font-size="11" fill="#8D90A8" text-anchor="middle">Bounce Rate</text>
+    <text x="252" y="186" font-family="Inter, sans-serif" font-size="14" font-weight="600" fill="#E0E2F0">Page Views (Last 7 Days)</text><rect x="252" y="200" width="988" height="120" rx="6" fill="#2B2D42" stroke="#3D3F5A" stroke-width="1"/><rect x="286" y="248" width="124.57142857142858" height="52" rx="3" fill="#4ECDC4" opacity="0.7"/><text x="348.2857142857143" y="314" font-family="Inter, sans-serif" font-size="9" fill="#6D7090" text-anchor="middle">Mon</text><rect x="418.57142857142856" y="237.6" width="124.57142857142858" height="62.400000000000006" rx="3" fill="#4ECDC4" opacity="0.7"/><text x="480.85714285714283" y="314" font-family="Inter, sans-serif" font-size="9" fill="#6D7090" text-anchor="middle">Tue</text><rect x="551.1428571428571" y="264" width="124.57142857142858" height="36" rx="3" fill="#4ECDC4" opacity="0.7"/><text x="613.4285714285714" y="314" font-family="Inter, sans-serif" font-size="9" fill="#6D7090" text-anchor="middle">Wed</text><rect x="683.7142857142858" y="228.8" width="124.57142857142858" height="71.2" rx="3" fill="#4ECDC4" opacity="0.7"/><text x="746.0000000000001" y="314" font-family="Inter, sans-serif" font-size="9" fill="#6D7090" text-anchor="middle">Thu</text><rect x="816.2857142857143" y="226.39999999999998" width="124.57142857142858" height="73.60000000000001" rx="3" fill="#4ECDC4" opacity="0.7"/><text x="878.5714285714287" y="314" font-family="Inter, sans-serif" font-size="9" fill="#6D7090" text-anchor="middle">Fri</text><rect x="948.8571428571429" y="241.6" width="124.57142857142858" height="58.4" rx="3" fill="#4ECDC4" opacity="0.7"/><text x="1011.1428571428572" y="314" font-family="Inter, sans-serif" font-size="9" fill="#6D7090" text-anchor="middle">Sat</text><rect x="1081.4285714285716" y="232" width="124.57142857142858" height="68" rx="3" fill="#4ECDC4" opacity="0.7"/><text x="1143.7142857142858" y="314" font-family="Inter, sans-serif" font-size="9" fill="#6D7090" text-anchor="middle">Sun</text>
+
+    <!-- Actions -->
+    
+      <rect x="252" y="340" width="110" height="30" rx="4" fill="#4ECDC4" stroke="#4ECDC4" stroke-width="1"/>
+      <text x="307" y="359" font-family="Inter, sans-serif" font-size="11" font-weight="600" fill="#1A1B2E" text-anchor="middle">Export</text>
+      <rect x="372" y="340" width="110" height="30" rx="4" fill="#2B2D42" stroke="#3D3F5A" stroke-width="1"/>
+      <text x="427" y="359" font-family="Inter, sans-serif" font-size="11" font-weight="400" fill="#C0C4D8" text-anchor="middle">Date Range</text>
+
+    <!-- Watermark -->
+    <text x="1264" y="790" font-family="Inter, sans-serif" font-size="9" fill="#3D3F5A" text-anchor="end">SplatDev.Umbraco.Plugins</text>
+  </g>
+</svg>
