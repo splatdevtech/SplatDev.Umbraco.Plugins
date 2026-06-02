@@ -16,7 +16,7 @@ SMTP email provider for the `SplatDev.Messaging` abstraction layer. Send emails 
 
 - `SmtpController` — Implements `IMessagingController` for SMTP
 - `SmtpResult` / `SmtpResultEventArgs` — Delivery result models with event support
-- Uses the built-in ASP.NET Core SMTP client
+- Built on `System.Net.Mail.SmtpClient`
 
 ## Installation
 
