@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 
-const ADMIN_USER = process.env.UMBRACO_ADMIN_USER || 'admin@splatdev.local';
-const ADMIN_PASS = process.env.UMBRACO_ADMIN_PASS || 'SplatDev2024!';
+const ADMIN_USER = process.env.UMBRACO_ADMIN_USER || 'admin@splatdev.com';
+const ADMIN_PASS = process.env.UMBRACO_ADMIN_PASS || 'SplatDev123!';
 
 test.describe('Smoke Tests', () => {
   test('should load the backoffice login or dashboard', async ({ page }) => {

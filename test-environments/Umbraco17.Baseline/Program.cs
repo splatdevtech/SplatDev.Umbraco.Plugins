@@ -1,10 +1,8 @@
-using Umbraco.Cms.Web.Common;
-
 var builder = WebApplication.CreateBuilder(args);
 builder.CreateUmbracoBuilder()
     .AddBackOffice()
     .AddWebsite()
-    .AddDeliveryApi()
+    .AddComposers()
     .Build();
 var app = builder.Build();
 await app.BootUmbracoAsync();
