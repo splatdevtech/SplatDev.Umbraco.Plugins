@@ -8,6 +8,9 @@ interface CustomLoginSettings {
   logoAlternativeUrl: string;
   backgroundImageUrl: string;
   supportEmail: string;
+  loginPageTitle: string;
+  faviconUrl: string;
+  footerText: string;
   backgroundColor: string;
   primaryColor: string;
   textColor: string;
@@ -44,6 +47,9 @@ function defaults(): CustomLoginSettings {
     logoAlternativeUrl: "",
     backgroundImageUrl: "",
     supportEmail: "",
+    loginPageTitle: "",
+    faviconUrl: "",
+    footerText: "",
     backgroundColor: "",
     primaryColor: "",
     textColor: "",
@@ -242,6 +248,9 @@ export class CustomLoginDashboardElement extends UmbElementMixin(LitElement) {
         ${this._textField("Logo Alternative URL", "logoAlternativeUrl", { type: "url", placeholder: "../myImages/logo-alt.svg", hint: "Shown on small screens. Maps to LoginLogoImageAlternative." })}
         ${this._textField("Background Image URL", "backgroundImageUrl", { type: "url", placeholder: "../myImages/login-bg.jpg", hint: "Left panel background. Also configurable via CSS --umb-login-image." })}
         ${this._textField("Support Email", "supportEmail", { type: "email", placeholder: "support@example.com" })}
+        ${this._textField("Login Page Title", "loginPageTitle", { placeholder: "My Company — Login", hint: "Overrides the browser tab title on the login page." })}
+        ${this._textField("Favicon URL", "faviconUrl", { type: "url", placeholder: "/favicon.ico", hint: "Custom favicon shown on the login page." })}
+        ${this._textField("Footer Text", "footerText", { placeholder: "© 2026 My Company", hint: "Displayed at the bottom of the login page." })}
       </uui-box>
 
       <!-- COLORS -->

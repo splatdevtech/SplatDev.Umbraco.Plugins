@@ -1,4 +1,4 @@
-import { LitElement as h, nothing as g, html as r, css as p, state as l, customElement as m } from "@umbraco-cms/backoffice/external/lit";
+import { LitElement as h, nothing as g, html as a, css as p, state as l, customElement as m } from "@umbraco-cms/backoffice/external/lit";
 import { UmbElementMixin as b } from "@umbraco-cms/backoffice/element-api";
 var v = Object.defineProperty, x = Object.getOwnPropertyDescriptor, n = (e, i, t, s) => {
   for (var o = s > 1 ? void 0 : s ? x(i, t) : i, d = e.length - 1, u; d >= 0; d--)
@@ -13,6 +13,9 @@ function c() {
     logoAlternativeUrl: "",
     backgroundImageUrl: "",
     supportEmail: "",
+    loginPageTitle: "",
+    faviconUrl: "",
+    footerText: "",
     backgroundColor: "",
     primaryColor: "",
     textColor: "",
@@ -39,7 +42,7 @@ function c() {
     customCss: ""
   };
 }
-let a = class extends b(h) {
+let r = class extends b(h) {
   constructor() {
     super(...arguments), this._s = c(), this._loading = !1, this._saving = !1, this._message = null, this._api = "/umbraco/api/customlogin";
   }
@@ -86,19 +89,19 @@ let a = class extends b(h) {
     t[e] = i, this._set("greetingsEs", t);
   }
   _textField(e, i, t) {
-    return r`
+    return a`
       <div class="field">
         <label>${e}</label>
         <input type="${(t == null ? void 0 : t.type) ?? "text"}"
           .value=${this._s[i] ?? ""}
           @input=${(s) => this._set(i, s.target.value)}
           placeholder="${(t == null ? void 0 : t.placeholder) ?? ""}" />
-        ${t != null && t.hint ? r`<div class="hint">${t.hint}</div>` : g}
+        ${t != null && t.hint ? a`<div class="hint">${t.hint}</div>` : g}
       </div>`;
   }
   _colorField(e, i, t) {
     const s = this._s[i] ?? "";
-    return r`
+    return a`
       <div class="field">
         <label>${e}</label>
         <div class="color-row">
@@ -108,15 +111,15 @@ let a = class extends b(h) {
             @input=${(o) => this._set(i, o.target.value)}
             placeholder="#000000" />
         </div>
-        ${t ? r`<div class="hint">${t}</div>` : g}
+        ${t ? a`<div class="hint">${t}</div>` : g}
       </div>`;
   }
   render() {
-    return this._loading ? r`<uui-loader></uui-loader>` : r`
+    return this._loading ? a`<uui-loader></uui-loader>` : a`
       <h1>Custom Login Settings</h1>
       <p class="desc">Configure every aspect of the Umbraco backoffice login page — branding, colors, layout, greetings, and more.</p>
 
-      ${this._message ? r`<div class="msg ${this._message.type}">${this._message.text}</div>` : g}
+      ${this._message ? a`<div class="msg ${this._message.type}">${this._message.text}</div>` : g}
 
       <!-- BRANDING -->
       <uui-box headline="Branding">
@@ -127,6 +130,9 @@ let a = class extends b(h) {
         ${this._textField("Logo Alternative URL", "logoAlternativeUrl", { type: "url", placeholder: "../myImages/logo-alt.svg", hint: "Shown on small screens. Maps to LoginLogoImageAlternative." })}
         ${this._textField("Background Image URL", "backgroundImageUrl", { type: "url", placeholder: "../myImages/login-bg.jpg", hint: "Left panel background. Also configurable via CSS --umb-login-image." })}
         ${this._textField("Support Email", "supportEmail", { type: "email", placeholder: "support@example.com" })}
+        ${this._textField("Login Page Title", "loginPageTitle", { placeholder: "My Company — Login", hint: "Overrides the browser tab title on the login page." })}
+        ${this._textField("Favicon URL", "faviconUrl", { type: "url", placeholder: "/favicon.ico", hint: "Custom favicon shown on the login page." })}
+        ${this._textField("Footer Text", "footerText", { placeholder: "© 2026 My Company", hint: "Displayed at the bottom of the login page." })}
       </uui-box>
 
       <!-- COLORS -->
@@ -185,7 +191,7 @@ let a = class extends b(h) {
       <uui-box headline="Greetings (English)">
         <div class="section-note">Custom greeting text shown on the login page by day of week. Leave blank for Umbraco defaults.</div>
         <div class="greeting-grid">
-          ${f.map((e, i) => r`
+          ${f.map((e, i) => a`
             <label>${e}</label>
             <input type="text" .value=${this._s.greetings[i] ?? ""}
               @input=${(t) => this._setGreeting(i, t.target.value)}
@@ -196,7 +202,7 @@ let a = class extends b(h) {
 
       <uui-box headline="Greetings (Spanish)">
         <div class="greeting-grid">
-          ${_.map((e, i) => r`
+          ${_.map((e, i) => a`
             <label>${e}</label>
             <input type="text" .value=${this._s.greetingsEs[i] ?? ""}
               @input=${(t) => this._setGreetingEs(i, t.target.value)}
@@ -252,7 +258,7 @@ let a = class extends b(h) {
     `;
   }
 };
-a.styles = p`
+r.styles = p`
     :host {
       display: block;
       padding: var(--uui-size-layout-1, 24px);
@@ -318,21 +324,21 @@ a.styles = p`
   `;
 n([
   l()
-], a.prototype, "_s", 2);
+], r.prototype, "_s", 2);
 n([
   l()
-], a.prototype, "_loading", 2);
+], r.prototype, "_loading", 2);
 n([
   l()
-], a.prototype, "_saving", 2);
+], r.prototype, "_saving", 2);
 n([
   l()
-], a.prototype, "_message", 2);
-a = n([
+], r.prototype, "_message", 2);
+r = n([
   m("customlogin-dashboard")
-], a);
-const $ = a;
+], r);
+const $ = r;
 export {
-  a as CustomLoginDashboardElement,
+  r as CustomLoginDashboardElement,
   $ as default
 };
