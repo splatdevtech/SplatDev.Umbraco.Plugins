@@ -15,6 +15,9 @@ Complete Umbraco login page customization plugin. Configure branding, colors, la
 
 ### Branding
 - Custom brand name, logo, alternative logo, and background image
+- Login page title (overrides browser tab title)
+- Custom favicon URL
+- Footer text displayed at the bottom of the login page
 - Support email displayed on member login pages
 
 ### Colors (CSS Custom Properties)
