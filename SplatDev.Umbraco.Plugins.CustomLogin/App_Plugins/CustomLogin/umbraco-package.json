@@ -1,11 +1,36 @@
 {
   "$schema": "../../umbraco-package-schema.json",
-  "name": "UmbracoCms.Plugins.CustomLogin",
-  "version": "2.0.0",
+  "name": "SplatDev.CustomLogin",
+  "version": "3.0.0",
+  "allowPublicAccess": true,
   "extensions": [
     {
+      "type": "appEntryPoint",
+      "alias": "SplatDev.CustomLogin.LoginEntry",
+      "name": "Custom Login CSS Loader",
+      "js": "/App_Plugins/CustomLogin/generated/login-entry.js"
+    },
+    {
+      "type": "localization",
+      "alias": "SplatDev.CustomLogin.Localization.En",
+      "name": "Custom Login English Greetings",
+      "js": "/App_Plugins/CustomLogin/generated/en.js",
+      "meta": {
+        "culture": "en"
+      }
+    },
+    {
+      "type": "localization",
+      "alias": "SplatDev.CustomLogin.Localization.Es",
+      "name": "Custom Login Spanish Greetings",
+      "js": "/App_Plugins/CustomLogin/generated/es.js",
+      "meta": {
+        "culture": "es"
+      }
+    },
+    {
       "type": "dashboard",
-      "alias": "UmbracoCms.CustomLogin.Dashboard",
+      "alias": "SplatDev.CustomLogin.Dashboard",
       "name": "Custom Login Dashboard",
       "element": "/App_Plugins/CustomLogin/dist/customlogin-dashboard.element.js",
       "elementName": "customlogin-dashboard",

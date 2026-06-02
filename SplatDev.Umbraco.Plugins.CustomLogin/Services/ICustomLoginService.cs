@@ -4,6 +4,7 @@ namespace SplatDev.Umbraco.Plugins.CustomLogin.Services;
 
 public interface ICustomLoginService
 {
+    CustomLoginSettings GetSettings();
     Task<CustomLoginSettings> GetSettingsAsync();
     Task SaveSettingsAsync(CustomLoginSettings settings);
     Task<bool> LoginAsync(string username, string password);

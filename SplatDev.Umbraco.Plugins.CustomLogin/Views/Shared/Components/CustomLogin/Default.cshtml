@@ -1,4 +1,4 @@
-@using UmbracoCms.Plugins.CustomLogin.Models
+@using SplatDev.Umbraco.Plugins.CustomLogin.Models
 @model CustomLoginSettings
 
 <!DOCTYPE html>
@@ -11,28 +11,40 @@
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            background-color: @Model.BackgroundColor;
+            background-color: @(string.IsNullOrWhiteSpace(Model.BackgroundColor) ? "#f4f4f4" : Model.BackgroundColor);
             display: flex;
             align-items: center;
             justify-content: center;
             min-height: 100vh;
         }
+        @if (!string.IsNullOrWhiteSpace(Model.BackgroundImageUrl))
+        {
+            <text>
+        body {
+            background-image: url('@Model.BackgroundImageUrl');
+            background-size: cover;
+            background-position: center;
+        }
+            </text>
+        }
         .login-card {
             background: #fff;
-            border-radius: 8px;
+            border-radius: @(string.IsNullOrWhiteSpace(Model.ContentBorderRadius) ? "8px" : Model.ContentBorderRadius);
             box-shadow: 0 2px 16px rgba(0,0,0,0.12);
             padding: 2.5rem 2rem;
             width: 100%;
             max-width: 420px;
         }
-        .login-logo {
-            display: block;
-            margin: 0 auto 1.5rem;
-            max-height: 64px;
+        .login-logo { display: block; margin: 0 auto 1.5rem; max-height: 64px; }
+        .login-brand {
+            text-align: center;
+            font-size: @(string.IsNullOrWhiteSpace(Model.HeaderFontSize) ? "1.5rem" : Model.HeaderFontSize);
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: @(string.IsNullOrWhiteSpace(Model.PrimaryColor) ? "#1a73e8" : Model.PrimaryColor);
         }
-        .login-brand { text-align: center; font-size: 1.5rem; font-weight: 700; margin-bottom: 1.5rem; }
         .login-field { margin-bottom: 1rem; }
-        .login-field label { display: block; font-size: 0.875rem; font-weight: 500; margin-bottom: 0.375rem; }
+        .login-field label { display: block; font-size: 0.875rem; font-weight: 500; margin-bottom: 0.375rem; color: @(string.IsNullOrWhiteSpace(Model.TextColor) ? "#333" : Model.TextColor); }
         .login-field input {
             width: 100%;
             padding: 0.625rem 0.75rem;
@@ -40,27 +52,27 @@
             border-radius: 6px;
             font-size: 1rem;
         }
-        .login-field input:focus { outline: 2px solid @Model.AccentColor; border-color: @Model.AccentColor; }
+        .login-field input:focus {
+            outline: 2px solid @(string.IsNullOrWhiteSpace(Model.PrimaryColor) ? "#1a73e8" : Model.PrimaryColor);
+            border-color: @(string.IsNullOrWhiteSpace(Model.PrimaryColor) ? "#1a73e8" : Model.PrimaryColor);
+        }
         .login-btn {
             width: 100%;
             padding: 0.75rem;
-            background: @Model.AccentColor;
+            background: @(string.IsNullOrWhiteSpace(Model.PrimaryColor) ? "#1a73e8" : Model.PrimaryColor);
             color: #fff;
             border: none;
-            border-radius: 6px;
+            border-radius: @(string.IsNullOrWhiteSpace(Model.ButtonBorderRadius) ? "6px" : Model.ButtonBorderRadius);
             font-size: 1rem;
             font-weight: 600;
             cursor: pointer;
             margin-top: 0.5rem;
         }
         .login-btn:hover { opacity: 0.9; }
-        .login-support {
-            text-align: center;
-            margin-top: 1.5rem;
-            font-size: 0.8rem;
-            color: #6b7280;
-        }
-        .login-support a { color: @Model.AccentColor; text-decoration: none; }
+        .login-support { text-align: center; margin-top: 1.5rem; font-size: 0.8rem; color: #6b7280; }
+        .login-support a { color: @(string.IsNullOrWhiteSpace(Model.PrimaryColor) ? "#1a73e8" : Model.PrimaryColor); text-decoration: none; }
+        .login-forgot { text-align: right; margin-bottom: 0.5rem; }
+        .login-forgot a { font-size: 0.8rem; color: @(string.IsNullOrWhiteSpace(Model.PrimaryColor) ? "#1a73e8" : Model.PrimaryColor); text-decoration: none; }
         @if (Model.EnableSso)
         {
             <text>
@@ -69,7 +81,7 @@
             width: 100%;
             padding: 0.625rem;
             border: 1px solid #d1d5db;
-            border-radius: 6px;
+            border-radius: @(string.IsNullOrWhiteSpace(Model.ButtonBorderRadius) ? "6px" : Model.ButtonBorderRadius);
             background: #fff;
             cursor: pointer;
             font-size: 0.95rem;
@@ -84,7 +96,10 @@
         {
             <img src="@Model.LogoUrl" alt="@Model.BrandName logo" class="login-logo" />
         }
-        <div class="login-brand">@Model.BrandName</div>
+        @if (!string.IsNullOrEmpty(Model.BrandName))
+        {
+            <div class="login-brand">@Model.BrandName</div>
+        }
 
         <form method="post" action="/umbraco/api/customlogin/Login">
             <div class="login-field">
@@ -95,6 +110,12 @@
                 <label for="password">Password</label>
                 <input id="password" name="password" type="password" autocomplete="current-password" required />
             </div>
+            @if (Model.AllowPasswordReset)
+            {
+                <div class="login-forgot">
+                    <a href="/umbraco/forgot-password">Forgot password?</a>
+                </div>
+            }
             <button type="submit" class="login-btn">Sign In</button>
         </form>
 

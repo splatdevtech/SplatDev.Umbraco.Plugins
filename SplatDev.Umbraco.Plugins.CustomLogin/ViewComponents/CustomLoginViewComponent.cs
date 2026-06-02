@@ -3,18 +3,11 @@ using SplatDev.Umbraco.Plugins.CustomLogin.Services;
 
 namespace SplatDev.Umbraco.Plugins.CustomLogin.ViewComponents;
 
-public class CustomLoginViewComponent : ViewComponent
+public class CustomLoginViewComponent(ICustomLoginService service) : ViewComponent
 {
-    private readonly ICustomLoginService _service;
-
-    public CustomLoginViewComponent(ICustomLoginService service)
-    {
-        _service = service;
-    }
-
     public async Task<IViewComponentResult> InvokeAsync()
     {
-        var settings = await _service.GetSettingsAsync();
+        var settings = await service.GetSettingsAsync();
         return View(settings);
     }
 }

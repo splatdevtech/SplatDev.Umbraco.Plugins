@@ -6,19 +6,14 @@ using SplatDev.Umbraco.Plugins.CustomLogin.Services;
 namespace SplatDev.Umbraco.Plugins.CustomLogin.Controllers;
 
 [Route("umbraco/api/customlogin/[action]")]
-public class CustomLoginApiController : UmbracoApiController
+#pragma warning disable CS0618 // UmbracoApiController is obsolete in Umbraco 17 but required for v13 compatibility
+public class CustomLoginApiController(ICustomLoginService service) : UmbracoApiController
+#pragma warning restore CS0618
 {
-    private readonly ICustomLoginService _service;
-
-    public CustomLoginApiController(ICustomLoginService service)
-    {
-        _service = service;
-    }
-
     [HttpGet]
     public async Task<IActionResult> GetSettings()
     {
-        var settings = await _service.GetSettingsAsync();
+        var settings = await service.GetSettingsAsync();
         return Ok(settings);
     }
 
@@ -28,8 +23,26 @@ public class CustomLoginApiController : UmbracoApiController
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
 
-        await _service.SaveSettingsAsync(settings);
+        await service.SaveSettingsAsync(settings);
         return Ok(new { message = "Settings saved." });
+    }
+
+    [HttpGet]
+    public IActionResult PreviewCss()
+    {
+        var settings = service.GetSettings();
+        var css = LoginPageCssGenerator.Generate(settings);
+        return Content(css, "text/css");
+    }
+
+    [HttpGet]
+    public IActionResult PreviewLocalization([FromQuery] string culture = "en")
+    {
+        var settings = service.GetSettings();
+        var js = culture.StartsWith("es", StringComparison.OrdinalIgnoreCase)
+            ? LoginPageLocalizationGenerator.GenerateSpanish(settings)
+            : LoginPageLocalizationGenerator.GenerateEnglish(settings);
+        return Content(js, "application/javascript");
     }
 
     [HttpPost]
@@ -38,7 +51,7 @@ public class CustomLoginApiController : UmbracoApiController
         if (string.IsNullOrWhiteSpace(request.Username) || string.IsNullOrWhiteSpace(request.Password))
             return BadRequest("Username and password are required.");
 
-        var success = await _service.LoginAsync(request.Username, request.Password);
+        var success = await service.LoginAsync(request.Username, request.Password);
         if (!success)
             return Unauthorized(new { message = "Invalid credentials." });
 
@@ -51,7 +64,7 @@ public class CustomLoginApiController : UmbracoApiController
         if (string.IsNullOrWhiteSpace(username))
             return BadRequest("Username is required.");
 
-        var valid = await _service.ValidateMemberAsync(username);
+        var valid = await service.ValidateMemberAsync(username);
         return Ok(new { valid });
     }
 }

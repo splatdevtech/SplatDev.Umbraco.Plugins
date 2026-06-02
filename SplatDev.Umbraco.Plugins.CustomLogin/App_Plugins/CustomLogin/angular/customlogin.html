@@ -1,59 +1,123 @@
 <div ng-controller="CustomLoginDashboardController" class="customlogin-dashboard">
-    <div class="umb-panel-header">
-        <h1>Custom Login Settings</h1>
-        <p class="umb-panel-description">Configure the branded login page appearance and SSO integration.</p>
-    </div>
+    <style>
+        .customlogin-dashboard .tab-bar { display: flex; gap: 4px; margin-bottom: 16px; flex-wrap: wrap; }
+        .customlogin-dashboard .tab-bar button { padding: 6px 14px; border: 1px solid #ccc; background: #f9f9f9; cursor: pointer; border-radius: 4px 4px 0 0; font-size: 13px; }
+        .customlogin-dashboard .tab-bar button.active { background: #fff; border-bottom: 2px solid #1b264f; font-weight: 600; }
+        .customlogin-dashboard .section-note { background: #f9fafb; border: 1px solid #e5e7eb; padding: 8px 12px; border-radius: 4px; font-size: 12px; color: #6b7280; margin-bottom: 14px; }
+        .customlogin-dashboard .field-group { margin-bottom: 14px; }
+        .customlogin-dashboard .field-group label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 3px; }
+        .customlogin-dashboard .field-group .hint { font-size: 11px; color: #888; margin-top: 2px; }
+        .customlogin-dashboard .field-group input[type="text"],
+        .customlogin-dashboard .field-group input[type="url"],
+        .customlogin-dashboard .field-group input[type="email"] { width: 100%; max-width: 480px; padding: 6px 8px; border: 1px solid #d1d5db; border-radius: 4px; }
+        .customlogin-dashboard .field-group textarea { width: 100%; max-width: 480px; min-height: 100px; padding: 6px 8px; border: 1px solid #d1d5db; border-radius: 4px; font-family: monospace; font-size: 12px; }
+        .customlogin-dashboard .color-field { display: flex; align-items: center; gap: 8px; }
+        .customlogin-dashboard .color-field input[type="color"] { width: 32px; height: 28px; border: 1px solid #ccc; cursor: pointer; }
+        .customlogin-dashboard .color-field input[type="text"] { width: 110px; }
+        .customlogin-dashboard .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .customlogin-dashboard .greeting-row { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+        .customlogin-dashboard .greeting-row label { width: 90px; font-size: 13px; font-weight: 500; }
+        .customlogin-dashboard .greeting-row input { flex: 1; max-width: 360px; padding: 5px 8px; border: 1px solid #d1d5db; border-radius: 4px; }
+    </style>
+
+    <h1>Custom Login Settings</h1>
+    <p style="color:#6b7280;margin:0 0 16px;font-size:13px;">Configure every aspect of the Umbraco backoffice login page.</p>
 
     <div ng-if="loading" class="umb-loading">Loading...</div>
 
     <div ng-if="!loading">
-        <div ng-if="message" class="alert alert-{{message.type === 'success' ? 'success' : 'danger'}}" style="margin-bottom:16px;">
+        <div ng-if="message" class="alert" ng-class="{'alert-success': message.type==='success', 'alert-danger': message.type==='error'}" style="margin-bottom:12px;">
             {{message.text}}
         </div>
 
-        <div class="umb-panel-body">
-            <div class="control-group">
-                <label class="control-label">Brand Name</label>
-                <div class="controls">
-                    <input type="text" ng-model="settings.brandName" class="umb-editor" placeholder="My Company" />
-                </div>
-            </div>
-            <div class="control-group">
-                <label class="control-label">Logo URL</label>
-                <div class="controls">
-                    <input type="url" ng-model="settings.logoUrl" class="umb-editor" placeholder="https://example.com/logo.png" />
-                </div>
-            </div>
-            <div class="control-group">
-                <label class="control-label">Background Color</label>
-                <div class="controls">
-                    <input type="color" ng-model="settings.backgroundColor" />
-                    <input type="text" ng-model="settings.backgroundColor" class="umb-editor" style="width:120px;margin-left:8px;" />
-                </div>
-            </div>
-            <div class="control-group">
-                <label class="control-label">Accent Color</label>
-                <div class="controls">
-                    <input type="color" ng-model="settings.accentColor" />
-                    <input type="text" ng-model="settings.accentColor" class="umb-editor" style="width:120px;margin-left:8px;" />
-                </div>
-            </div>
-            <div class="control-group">
-                <label class="control-label">Support Email</label>
-                <div class="controls">
-                    <input type="email" ng-model="settings.supportEmail" class="umb-editor" placeholder="support@example.com" />
-                </div>
-            </div>
-            <div class="control-group">
-                <label class="control-label">Enable SSO</label>
-                <div class="controls">
-                    <input type="checkbox" ng-model="settings.enableSso" /> Enable Single Sign-On hook
-                </div>
+        <div class="tab-bar">
+            <button ng-repeat="tab in tabs" ng-click="setTab(tab.key)" ng-class="{active: activeTab === tab.key}">{{tab.label}}</button>
+        </div>
+
+        <!-- BRANDING -->
+        <div ng-show="activeTab === 'branding'">
+            <div class="section-note">Logo and background image paths are relative to <code>/wwwroot/umbraco/</code> or absolute URLs.</div>
+            <div class="field-group"><label>Brand Name</label><input type="text" ng-model="settings.brandName" placeholder="My Company" /></div>
+            <div class="field-group"><label>Logo URL</label><input type="url" ng-model="settings.logoUrl" placeholder="../myImages/logo.svg" /><div class="hint">Maps to LoginLogoImage appsetting (restart required).</div></div>
+            <div class="field-group"><label>Logo Alternative URL</label><input type="url" ng-model="settings.logoAlternativeUrl" placeholder="../myImages/logo-alt.svg" /><div class="hint">Shown on small screens.</div></div>
+            <div class="field-group"><label>Background Image URL</label><input type="url" ng-model="settings.backgroundImageUrl" placeholder="../myImages/login-bg.jpg" /><div class="hint">Left panel background.</div></div>
+            <div class="field-group"><label>Support Email</label><input type="email" ng-model="settings.supportEmail" placeholder="support@example.com" /></div>
+        </div>
+
+        <!-- COLORS -->
+        <div ng-show="activeTab === 'colors'">
+            <div class="section-note">These map to Umbraco CSS custom properties. Leave blank for defaults.</div>
+            <div class="two-col">
+                <div class="field-group"><label>Background</label><div class="color-field"><input type="color" ng-model="settings.backgroundColor" /><input type="text" ng-model="settings.backgroundColor" placeholder="#f4f4f4" /></div><div class="hint">--umb-login-background</div></div>
+                <div class="field-group"><label>Primary Color</label><div class="color-field"><input type="color" ng-model="settings.primaryColor" /><input type="text" ng-model="settings.primaryColor" placeholder="#283a97" /></div><div class="hint">--umb-login-primary-color</div></div>
+                <div class="field-group"><label>Text Color</label><div class="color-field"><input type="color" ng-model="settings.textColor" /><input type="text" ng-model="settings.textColor" placeholder="#000000" /></div><div class="hint">--umb-login-text-color</div></div>
+                <div class="field-group"><label>Curves Color</label><div class="color-field"><input type="color" ng-model="settings.curvesColor" /><input type="text" ng-model="settings.curvesColor" placeholder="#f5c1bc" /></div><div class="hint">--umb-login-curves-color</div></div>
             </div>
         </div>
 
-        <button class="btn btn-primary" ng-click="save()" ng-disabled="saving">
-            {{saving ? 'Saving...' : 'Save Settings'}}
-        </button>
+        <!-- LAYOUT -->
+        <div ng-show="activeTab === 'layout'">
+            <div class="section-note">Control the structural layout of the login page panels.</div>
+            <div class="field-group"><label><input type="checkbox" ng-model="settings.showImagePanel" /> Show image panel (left side)</label><div class="hint">--umb-login-image-display</div></div>
+            <div class="field-group"><label><input type="checkbox" ng-model="settings.showCurves" /> Show decorative curves</label><div class="hint">--umb-login-curves-display</div></div>
+            <div class="two-col">
+                <div class="field-group"><label>Image Border Radius</label><input type="text" ng-model="settings.imageBorderRadius" placeholder="38px" /><div class="hint">--umb-login-image-border-radius</div></div>
+                <div class="field-group"><label>Content Background</label><input type="text" ng-model="settings.contentBackground" placeholder="none" /><div class="hint">--umb-login-content-background</div></div>
+                <div class="field-group"><label>Content Width</label><input type="text" ng-model="settings.contentWidth" placeholder="100%" /><div class="hint">--umb-login-content-width</div></div>
+                <div class="field-group"><label>Content Height</label><input type="text" ng-model="settings.contentHeight" placeholder="100%" /><div class="hint">--umb-login-content-height</div></div>
+                <div class="field-group"><label>Content Border Radius</label><input type="text" ng-model="settings.contentBorderRadius" placeholder="0" /><div class="hint">--umb-login-content-border-radius</div></div>
+                <div class="field-group"><label>Align Items</label><input type="text" ng-model="settings.alignItems" placeholder="unset" /><div class="hint">--umb-login-align-items</div></div>
+            </div>
+        </div>
+
+        <!-- TYPOGRAPHY -->
+        <div ng-show="activeTab === 'typography'">
+            <div class="two-col">
+                <div class="field-group"><label>Header Font Size</label><input type="text" ng-model="settings.headerFontSize" placeholder="3rem" /><div class="hint">--umb-login-header-font-size</div></div>
+                <div class="field-group"><label>Header Font Size (Large)</label><input type="text" ng-model="settings.headerFontSizeLarge" placeholder="4rem" /><div class="hint">--umb-login-header-font-size-large</div></div>
+                <div class="field-group"><label>Secondary Header Font Size</label><input type="text" ng-model="settings.headerSecondaryFontSize" placeholder="2.4rem" /><div class="hint">--umb-login-header-secondary-font-size</div></div>
+                <div class="field-group"><label>Button Border Radius</label><input type="text" ng-model="settings.buttonBorderRadius" placeholder="45px" /><div class="hint">--umb-login-button-border-radius</div></div>
+            </div>
+        </div>
+
+        <!-- GREETINGS -->
+        <div ng-show="activeTab === 'greetings'">
+            <div class="section-note">Custom greeting text by day of week. Leave blank for Umbraco defaults.</div>
+            <h3 style="font-size:14px;margin:0 0 8px;">English</h3>
+            <div ng-repeat="day in dayNames track by $index" class="greeting-row">
+                <label>{{day}}</label>
+                <input type="text" ng-model="settings.greetings[$index]" placeholder="Happy {{day}}" />
+            </div>
+            <h3 style="font-size:14px;margin:16px 0 8px;">Spanish</h3>
+            <div ng-repeat="day in dayNamesEs track by $index" class="greeting-row">
+                <label>{{day}}</label>
+                <input type="text" ng-model="settings.greetingsEs[$index]" placeholder="Feliz {{day.toLowerCase()}}" />
+            </div>
+        </div>
+
+        <!-- TIMEOUT -->
+        <div ng-show="activeTab === 'timeout'">
+            <div class="section-note">Customize the screen shown when the user's session expires.</div>
+            <div class="field-group"><label>Timeout Background Image</label><input type="url" ng-model="settings.timeoutBackgroundImageUrl" placeholder="../myImages/timeout-bg.jpg" /><div class="hint">Overrides --umb-login-image for the timeout screen.</div></div>
+            <div class="field-group"><label>Timeout Instruction (EN)</label><input type="text" ng-model="settings.timeoutInstructionText" placeholder="Log in again to continue" /></div>
+            <div class="field-group"><label>Timeout Instruction (ES)</label><input type="text" ng-model="settings.timeoutInstructionTextEs" placeholder="Inicie sesión nuevamente para continuar" /></div>
+        </div>
+
+        <!-- SECURITY -->
+        <div ng-show="activeTab === 'security'">
+            <div class="field-group"><label><input type="checkbox" ng-model="settings.allowPasswordReset" /> Allow password reset</label><div class="hint">Shows "Forgot password?" link. Requires SMTP. Maps to Umbraco:CMS:Security:AllowPasswordReset (restart required).</div></div>
+            <div class="field-group"><label><input type="checkbox" ng-model="settings.enableSso" /> Enable SSO hook</label><div class="hint">Shows SSO button on member login pages.</div></div>
+        </div>
+
+        <!-- CUSTOM CSS -->
+        <div ng-show="activeTab === 'css'">
+            <div class="section-note">Raw CSS appended after generated styles. Applies to entire backoffice, not just login.</div>
+            <div class="field-group"><textarea ng-model="settings.customCss" placeholder=":root { /* your overrides */ }"></textarea></div>
+        </div>
+
+        <div style="margin-top:16px;">
+            <button class="btn btn-primary" ng-click="save()" ng-disabled="saving">{{saving ? 'Saving...' : 'Save Settings'}}</button>
+            <button class="btn btn-default" ng-click="load()" ng-disabled="loading" style="margin-left:8px;">Reset</button>
+        </div>
     </div>
 </div>

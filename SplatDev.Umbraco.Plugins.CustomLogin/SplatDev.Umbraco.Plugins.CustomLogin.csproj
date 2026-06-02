@@ -4,11 +4,11 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <PackageId>SplatDev.Umbraco.Plugins.CustomLogin</PackageId>
-    <Version>2.0.1</Version>
+    <Version>3.0.0</Version>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <Authors>SplatDev</Authors>
-    <Description>Umbraco custom login page plugin with branding support, SSO integration hooks and 2FA readiness. Supports Umbraco 13 (net8.0) and Umbraco 17 (net10.0).</Description>
-    <PackageTags>umbraco umbraco-marketplace login sso branding</PackageTags>
+    <Description>Complete Umbraco login page customization plugin. Configure branding, colors, layout, typography, greetings, CSS custom properties, timeout screens, and security settings — all from the backoffice dashboard. Supports Umbraco 13 (net8.0) and Umbraco 17 (net10.0).</Description>
+    <PackageTags>umbraco umbraco-marketplace login sso branding customization css</PackageTags>
     <Company>SplatDev Ltda</Company>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/SplatDev-Ltda/SplatDev.Umbraco.Plugins</PackageProjectUrl>

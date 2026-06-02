@@ -1,6 +1,6 @@
 {
   "javascript": ["/App_Plugins/CustomLogin/angular/customlogin.controller.js"],
-  "css": [],
+  "css": ["/App_Plugins/CustomLogin/generated/login-overrides.css"],
   "propertyEditors": [],
   "gridEditors": [],
   "dashboards": [
@@ -9,7 +9,7 @@
       "view": "/App_Plugins/CustomLogin/angular/customlogin.html",
       "sections": ["settings"],
       "tab": "Custom Login",
-      "access": [{"grant": "admin"}]
+      "access": [{ "grant": "admin" }]
     }
   ]
 }
