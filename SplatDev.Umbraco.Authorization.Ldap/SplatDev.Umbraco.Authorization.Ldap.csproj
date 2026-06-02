@@ -11,7 +11,8 @@
 		<Description>LDAP/Active Directory SSO authentication for Umbraco 13 (net8.0) and Umbraco 17 (net10.0)</Description>
 		<PackageTags>umbraco umbraco-marketplace ldap sso active-directory</PackageTags>
 		<Company>SplatDev Ltda</Company>
-		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<PackageIcon>icon.png</PackageIcon>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<PackageProjectUrl>https://github.com/SplatDev-Ltda/SplatDev.Umbraco.Plugins</PackageProjectUrl>
 		<RepositoryUrl>https://github.com/SplatDev-Ltda/SplatDev.Umbraco.Plugins</RepositoryUrl>
 		<RepositoryType>git</RepositoryType>
@@ -40,4 +41,7 @@
 		<Compile Remove="src/Umbraco.Community.AzureSSO/**" />
 	</ItemGroup>
 
+  <ItemGroup>
+    <None Include="icon.png" Pack="true" PackagePath="\" />
+  </ItemGroup>
 </Project>

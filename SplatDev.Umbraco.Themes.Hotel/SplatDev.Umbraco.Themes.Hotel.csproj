@@ -10,6 +10,7 @@
     <Description>Hotel/hospitality theme for Umbraco - rooms, booking, gallery, amenities, reviews, location map</Description>
     <PackageTags>umbraco umbraco-marketplace theme hotel hospitality</PackageTags>
     <Company>SplatDev Ltda</Company>
+    <PackageIcon>icon.png</PackageIcon>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/SplatDev-Ltda/SplatDev.Umbraco.Plugins</PackageProjectUrl>
     <RepositoryUrl>https://github.com/SplatDev-Ltda/SplatDev.Umbraco.Plugins</RepositoryUrl>
@@ -37,6 +38,7 @@
   <ItemGroup>
     <EmbeddedResource Include="Config\umbraco.yml" />
     <None Include="README.md" Pack="true" PackagePath="\" />
+    <None Include="icon.png" Pack="true" PackagePath="\" />
   </ItemGroup>
 
   <ItemGroup>

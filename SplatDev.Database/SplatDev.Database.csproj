@@ -9,6 +9,7 @@
     <Authors>SplatDev-Ltda</Authors>
     <Company>SplatDev Ltda</Company>
     <Description>Generic database service abstractions using NPoco for .NET applications</Description>
+    <PackageIcon>icon.png</PackageIcon>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/SplatDev-Ltda/SplatDev.Umbraco.Plugins</PackageProjectUrl>
     <RepositoryUrl>https://github.com/SplatDev-Ltda/SplatDev.Umbraco.Plugins</RepositoryUrl>
@@ -20,6 +21,9 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="../SplatDev.Reflection.Helpers/SplatDev.Reflection.Helpers.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="icon.png" Pack="true" PackagePath="\" />
   </ItemGroup>
 </Project>
 

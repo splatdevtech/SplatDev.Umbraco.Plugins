@@ -9,6 +9,7 @@
     <Authors>SplatDev-Ltda</Authors>
     <Company>SplatDev Ltda</Company>
     <Description>Reflection and attribute helper utilities for .NET applications</Description>
+    <PackageIcon>icon.png</PackageIcon>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/SplatDev-Ltda/SplatDev.Umbraco.Plugins</PackageProjectUrl>
     <RepositoryUrl>https://github.com/SplatDev-Ltda/SplatDev.Umbraco.Plugins</RepositoryUrl>

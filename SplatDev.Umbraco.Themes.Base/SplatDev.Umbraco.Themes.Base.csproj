@@ -11,6 +11,7 @@
     <Copyright>Copyright © 2026 SplatDev</Copyright>
     <Description>Umbraco Base Theme - Foundation theme with reusable components: navigation, footer, sidebar, responsive grid. Required by all other UmbracoCms themes.</Description>
     <PackageTags>umbraco umbraco-marketplace theme base-theme</PackageTags>
+    <PackageIcon>icon.png</PackageIcon>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/SplatDev-Ltda/umbraco-themes</PackageProjectUrl>
     <RepositoryUrl>https://github.com/SplatDev-Ltda/umbraco-themes</RepositoryUrl>
@@ -33,6 +34,7 @@
   <ItemGroup>
     <EmbeddedResource Include="Config\umbraco.yml" />
     <None Include="README.md" Pack="true" PackagePath="\" />
+    <None Include="icon.png" Pack="true" PackagePath="\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Views\**\*">

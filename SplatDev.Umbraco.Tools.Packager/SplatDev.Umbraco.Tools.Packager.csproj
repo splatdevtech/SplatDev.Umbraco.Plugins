@@ -12,6 +12,7 @@
     <Company>SplatDev Ltda</Company>
     <Description>CLI tool for creating Umbraco NuGet packages — generates package.manifest, bundles App_Plugins assets, and wraps dotnet pack.</Description>
     <PackageTags>umbraco;umbraco-marketplace;tools;packager;nuget;cli</PackageTags>
+    <PackageIcon>icon.png</PackageIcon>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/SplatDev-Ltda/SplatDev.Umbraco.Plugins</PackageProjectUrl>
     <RepositoryUrl>https://github.com/SplatDev-Ltda/SplatDev.Umbraco.Plugins</RepositoryUrl>
@@ -19,5 +20,8 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="System.CommandLine" Version="2.0.0-beta4.22272.1" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="icon.png" Pack="true" PackagePath="\" />
   </ItemGroup>
 </Project>

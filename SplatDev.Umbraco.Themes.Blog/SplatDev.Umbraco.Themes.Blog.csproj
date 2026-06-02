@@ -11,6 +11,7 @@
     <Copyright>Copyright © 2026 SplatDev</Copyright>
     <Description>Blog theme for Umbraco - post layout, author bio, comment section, categories sidebar, archive page</Description>
     <PackageTags>umbraco umbraco-marketplace theme blog</PackageTags>
+    <PackageIcon>icon.png</PackageIcon>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/SplatDev-Ltda/umbraco-themes</PackageProjectUrl>
     <RepositoryUrl>https://github.com/SplatDev-Ltda/umbraco-themes</RepositoryUrl>
@@ -35,6 +36,7 @@
   <ItemGroup>
     <EmbeddedResource Include="Config\umbraco.yml" />
     <None Include="README.md" Pack="true" PackagePath="\" />
+    <None Include="icon.png" Pack="true" PackagePath="\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Views\**\*">

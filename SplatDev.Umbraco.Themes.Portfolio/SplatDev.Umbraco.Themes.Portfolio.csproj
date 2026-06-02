@@ -12,6 +12,7 @@
     <PackageTags>umbraco;theme;portfolio;creative</PackageTags>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <Company>SplatDev Ltda</Company>
+    <PackageIcon>icon.png</PackageIcon>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/SplatDev-Ltda/SplatDev.Umbraco.Plugins</PackageProjectUrl>
     <RepositoryUrl>https://github.com/SplatDev-Ltda/SplatDev.Umbraco.Plugins</RepositoryUrl>
@@ -50,4 +51,7 @@
     </None>
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="icon.png" Pack="true" PackagePath="\" />
+  </ItemGroup>
 </Project>
