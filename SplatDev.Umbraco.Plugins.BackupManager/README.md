@@ -66,6 +66,10 @@ Add provider credentials to `appsettings.json`:
 }
 ```
 
+
+## Dashboard
+
+![Backup Manager dashboard](../docs/screenshots/backup-manager.png)
 ## License
 
 MIT © [SplatDev](https://github.com/SplatDev-Ltda)

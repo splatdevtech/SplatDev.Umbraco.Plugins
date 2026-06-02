@@ -29,6 +29,10 @@ builder.CreateUmbracoBuilder()
     .Build();
 ```
 
+
+## Dashboard
+
+![Social Channels dashboard](../docs/screenshots/social-channels.png)
 ## License
 
 MIT © [SplatDev](https://github.com/SplatDev-Ltda)

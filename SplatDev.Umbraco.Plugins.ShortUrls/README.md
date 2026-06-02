@@ -29,6 +29,10 @@ builder.CreateUmbracoBuilder()
     .Build();
 ```
 
+
+## Dashboard
+
+![Short URLs dashboard](../docs/screenshots/short-urls.png)
 ## License
 
 MIT © [SplatDev](https://github.com/SplatDev-Ltda)

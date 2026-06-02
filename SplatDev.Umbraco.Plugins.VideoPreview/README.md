@@ -29,6 +29,10 @@ builder.CreateUmbracoBuilder()
     .Build();
 ```
 
+
+## Dashboard
+
+![Video Preview dashboard](../docs/screenshots/video-preview.png)
 ## License
 
 MIT © [SplatDev](https://github.com/SplatDev-Ltda)

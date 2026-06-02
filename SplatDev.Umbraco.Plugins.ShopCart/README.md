@@ -29,6 +29,10 @@ builder.CreateUmbracoBuilder()
     .Build();
 ```
 
+
+## Dashboard
+
+![Shop Cart dashboard](../docs/screenshots/shop-cart.png)
 ## License
 
 MIT © [SplatDev](https://github.com/SplatDev-Ltda)

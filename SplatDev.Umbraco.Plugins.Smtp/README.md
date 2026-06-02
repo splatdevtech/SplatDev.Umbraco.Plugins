@@ -46,6 +46,10 @@ Add to `appsettings.json`:
 }
 ```
 
+
+## Dashboard
+
+![SMTP Settings dashboard](../docs/screenshots/smtp-settings.png)
 ## License
 
 MIT © [SplatDev](https://github.com/SplatDev-Ltda)

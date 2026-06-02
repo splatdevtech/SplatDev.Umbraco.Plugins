@@ -29,6 +29,10 @@ builder.CreateUmbracoBuilder()
     .Build();
 ```
 
+
+## Dashboard
+
+![Social Share dashboard](../docs/screenshots/social-share.png)
 ## License
 
 MIT © [SplatDev](https://github.com/SplatDev-Ltda)

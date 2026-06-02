@@ -29,6 +29,10 @@ builder.CreateUmbracoBuilder()
     .Build();
 ```
 
+
+## Dashboard
+
+![RDP Manager dashboard](../docs/screenshots/rdp-manager.png)
 ## License
 
 MIT © [SplatDev](https://github.com/SplatDev-Ltda)

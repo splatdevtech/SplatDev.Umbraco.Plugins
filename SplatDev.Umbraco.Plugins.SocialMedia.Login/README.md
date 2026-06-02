@@ -50,6 +50,10 @@ Add to `appsettings.json`:
 }
 ```
 
+
+## Dashboard
+
+![Social Login dashboard](../docs/screenshots/social-login.png)
 ## License
 
 MIT © [SplatDev](https://github.com/SplatDev-Ltda)

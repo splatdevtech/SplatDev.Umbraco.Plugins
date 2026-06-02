@@ -29,6 +29,10 @@ builder.CreateUmbracoBuilder()
     .Build();
 ```
 
+
+## Dashboard
+
+![Cache Manager dashboard](../docs/screenshots/cache-manager.png)
 ## License
 
 MIT © [SplatDev](https://github.com/SplatDev-Ltda)

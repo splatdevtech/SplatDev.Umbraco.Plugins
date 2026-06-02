@@ -29,6 +29,10 @@ builder.CreateUmbracoBuilder()
     .Build();
 ```
 
+
+## Dashboard
+
+![Mailer dashboard](../docs/screenshots/mailer.png)
 ## License
 
 MIT © [SplatDev](https://github.com/SplatDev-Ltda)

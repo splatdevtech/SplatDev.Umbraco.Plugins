@@ -29,6 +29,10 @@ builder.CreateUmbracoBuilder()
     .Build();
 ```
 
+
+## Dashboard
+
+![Redirect Manager dashboard](../docs/screenshots/redirect-manager.png)
 ## License
 
 MIT © [SplatDev](https://github.com/SplatDev-Ltda)

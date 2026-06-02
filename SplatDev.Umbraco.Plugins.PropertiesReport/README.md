@@ -29,6 +29,10 @@ builder.CreateUmbracoBuilder()
     .Build();
 ```
 
+
+## Dashboard
+
+![Properties Report dashboard](../docs/screenshots/properties-report.png)
 ## License
 
 MIT © [SplatDev](https://github.com/SplatDev-Ltda)

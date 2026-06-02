@@ -29,6 +29,10 @@ builder.CreateUmbracoBuilder()
     .Build();
 ```
 
+
+## Dashboard
+
+![GDPR Compliance dashboard](../docs/screenshots/gdpr-compliance.png)
 ## License
 
 MIT © [SplatDev](https://github.com/SplatDev-Ltda)

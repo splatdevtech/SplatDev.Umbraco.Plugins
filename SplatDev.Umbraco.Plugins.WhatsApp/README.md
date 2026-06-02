@@ -43,6 +43,10 @@ Add to `appsettings.json`:
 }
 ```
 
+
+## Dashboard
+
+![WhatsApp integration dashboard](../docs/screenshots/whatsapp.png)
 ## License
 
 MIT © [SplatDev](https://github.com/SplatDev-Ltda)

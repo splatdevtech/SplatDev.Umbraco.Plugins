@@ -29,6 +29,10 @@ builder.CreateUmbracoBuilder()
     .Build();
 ```
 
+
+## Dashboard
+
+![Character Limit dashboard](../docs/screenshots/char-limit.png)
 ## License
 
 MIT © [SplatDev](https://github.com/SplatDev-Ltda)

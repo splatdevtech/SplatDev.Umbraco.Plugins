@@ -29,6 +29,10 @@ builder.CreateUmbracoBuilder()
     .Build();
 ```
 
+
+## Dashboard
+
+![SEO dashboard](../docs/screenshots/seo.png)
 ## License
 
 MIT © [SplatDev](https://github.com/SplatDev-Ltda)

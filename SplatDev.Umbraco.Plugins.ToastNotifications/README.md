@@ -29,6 +29,10 @@ builder.CreateUmbracoBuilder()
     .Build();
 ```
 
+
+## Dashboard
+
+![Toast Notifications dashboard](../docs/screenshots/toast-notifications.png)
 ## License
 
 MIT © [SplatDev](https://github.com/SplatDev-Ltda)

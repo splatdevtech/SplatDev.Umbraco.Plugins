@@ -43,6 +43,10 @@ Add to `appsettings.json`:
 }
 ```
 
+
+## Dashboard
+
+![MercadoPago Payments dashboard](../docs/screenshots/mercadopago.png)
 ## License
 
 MIT © [SplatDev](https://github.com/SplatDev-Ltda)

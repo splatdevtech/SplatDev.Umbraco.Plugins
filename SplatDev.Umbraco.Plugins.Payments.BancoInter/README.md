@@ -45,6 +45,10 @@ Add to `appsettings.json`:
 }
 ```
 
+
+## Dashboard
+
+![Banco Inter Payments dashboard](../docs/screenshots/banco-inter.png)
 ## License
 
 MIT © [SplatDev](https://github.com/SplatDev-Ltda)
