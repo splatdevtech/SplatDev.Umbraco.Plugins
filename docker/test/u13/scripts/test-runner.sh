@@ -35,7 +35,7 @@ mkdir -p "$SCREENSHOT_DIR" "$VIDEO_DIR"
 # ---- Start Umbraco in background ----
 log "Starting Umbraco 13 baseline..."
 cd /app
-dotnet UmbracoBaseline.dll &
+dotnet Umbraco13.Baseline.dll &
 UMBRACO_PID=$!
 log "Umbraco started with PID $UMBRACO_PID"
 
