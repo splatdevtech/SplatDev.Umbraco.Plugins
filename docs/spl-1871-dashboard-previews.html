@@ -1,0 +1,1023 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SPL-1871 — 13 Plugin Dashboard Previews</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f3f4f6; color: #1a1a1a; }
+
+    /* ── Umbraco Bellissima chrome ── */
+    .umb-shell { display: flex; height: 100vh; overflow: hidden; }
+    .umb-nav { width: 60px; background: #1b264f; display: flex; flex-direction: column; align-items: center; padding: 16px 0; gap: 8px; flex-shrink: 0; }
+    .umb-nav-icon { width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 18px; cursor: pointer; color: #a0aec0; }
+    .umb-nav-icon.active { background: rgba(255,255,255,.12); color: #fff; }
+    .umb-sidebar { width: 220px; background: #fff; border-right: 1px solid #e5e7eb; display: flex; flex-direction: column; overflow: hidden; flex-shrink: 0; }
+    .umb-sidebar-header { padding: 20px 16px 12px; border-bottom: 1px solid #e5e7eb; }
+    .umb-sidebar-header h2 { font-size: 0.875rem; font-weight: 700; color: #374151; text-transform: uppercase; letter-spacing: 0.05em; }
+    .umb-sidebar-item { display: flex; align-items: center; gap: 10px; padding: 8px 16px; font-size: 0.875rem; color: #374151; cursor: pointer; border-left: 3px solid transparent; }
+    .umb-sidebar-item:hover { background: #f9fafb; }
+    .umb-sidebar-item.active { border-left-color: #f06a35; background: #fff7f3; color: #c2410c; font-weight: 600; }
+    .umb-sidebar-item-icon { font-size: 14px; }
+    .umb-main { flex: 1; overflow-y: auto; background: #fafafa; }
+    .umb-topbar { height: 52px; background: #fff; border-bottom: 1px solid #e5e7eb; display: flex; align-items: center; padding: 0 24px; gap: 12px; font-size: 0.875rem; color: #6b7280; position: sticky; top: 0; z-index: 10; }
+    .umb-topbar-crumb { color: #374151; font-weight: 500; }
+    .umb-topbar-sep { color: #d1d5db; }
+    .umb-content { padding: 24px; }
+
+    /* ── Navigation index ── */
+    .index { background: #fff; border: 1px solid #e5e7eb; border-radius: 12px; padding: 24px; margin-bottom: 32px; }
+    .index h2 { font-size: 1rem; font-weight: 700; margin-bottom: 4px; }
+    .index p { font-size: 0.875rem; color: #6b7280; margin-bottom: 16px; }
+    .index-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 8px; }
+    .index-item { display: flex; align-items: center; gap: 8px; padding: 8px 12px; border-radius: 8px; border: 1px solid #e5e7eb; text-decoration: none; color: #374151; font-size: 0.8125rem; font-weight: 500; transition: background .15s; }
+    .index-item:hover { background: #f9fafb; border-color: #d1d5db; }
+    .index-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+
+    /* ── Dashboard card ── */
+    .dashboard { background: #fff; border: 1px solid #e5e7eb; border-radius: 12px; margin-bottom: 48px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,.06); }
+    .dashboard-title-bar { background: #f9fafb; border-bottom: 1px solid #e5e7eb; padding: 12px 20px; display: flex; align-items: center; gap: 10px; }
+    .dashboard-title-bar .plugin-badge { font-size: 0.75rem; font-weight: 700; padding: 2px 10px; border-radius: 9999px; background: #e0e7ff; color: #3730a3; }
+    .dashboard-title-bar .pr-label { font-size: 0.75rem; color: #6b7280; margin-left: auto; }
+    .dashboard-title-bar .file-path { font-size: 0.75rem; font-family: monospace; color: #6b7280; }
+    .dashboard-body { padding: 24px; }
+
+    /* ── Reusable UI primitives ── */
+    .d-header { display: flex; align-items: center; gap: 16px; margin-bottom: 24px; flex-wrap: wrap; }
+    .d-logo { width: 44px; height: 44px; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-weight: 900; font-size: 18px; color: #fff; }
+    .d-logo-sm { font-size: 13px; }
+    .d-header-text h1 { font-size: 1.375rem; font-weight: 700; margin-bottom: 2px; }
+    .d-header-text p { font-size: 0.875rem; color: #6b7280; }
+    .pill { display: inline-flex; align-items: center; gap: 6px; padding: 4px 14px; border-radius: 9999px; font-size: 0.8125rem; font-weight: 600; margin-left: auto; white-space: nowrap; }
+    .pill-ok { background: #dcfce7; color: #15803d; }
+    .pill-checking { background: #eff6ff; color: #1d4ed8; }
+    .pill-disabled { background: #f3f4f6; color: #374151; }
+    .dot { width: 8px; height: 8px; border-radius: 50%; background: currentColor; }
+
+    .uui-box { border: 1px solid #e5e7eb; border-radius: 8px; margin-bottom: 20px; overflow: hidden; }
+    .uui-box-headline { padding: 12px 16px; background: #f9fafb; border-bottom: 1px solid #e5e7eb; font-weight: 700; font-size: 0.9375rem; }
+    .uui-box-body { padding: 16px; }
+
+    .grid-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin-bottom: 16px; }
+    .card { border: 1px solid #e5e7eb; border-radius: 8px; padding: 14px; }
+    .card-label { font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: #6b7280; margin-bottom: 4px; }
+    .card-value { font-size: 0.9375rem; font-weight: 600; word-break: break-all; }
+    .badge { display: inline-block; padding: 2px 10px; border-radius: 9999px; font-size: 0.8125rem; font-weight: 600; }
+    .badge-yes { background: #dcfce7; color: #15803d; }
+    .badge-no  { background: #fee2e2; color: #dc2626; }
+    .badge-blue { background: #eff6ff; color: #1d4ed8; }
+    .badge-info { background: #dbeafe; color: #1e40af; }
+    .badge-success { background: #dcfce7; color: #15803d; }
+    .badge-warn { background: #fef9c3; color: #854d0e; }
+    .badge-error { background: #fee2e2; color: #991b1b; }
+    .badge-gray { background: #f3f4f6; color: #374151; }
+
+    .notice { padding: 12px 16px; border-radius: 6px; font-size: 0.875rem; margin-bottom: 16px; }
+    .notice-info  { background: #eff6ff; color: #1e40af; border-left: 3px solid #3b82f6; }
+    .notice-warn  { background: #fffbeb; color: #92400e; border-left: 3px solid #f59e0b; }
+    .notice-err   { background: #fef2f2; color: #991b1b; border-left: 3px solid #ef4444; }
+
+    .form-row { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 12px; }
+    .form-col { display: flex; flex-direction: column; gap: 4px; flex: 1; min-width: 140px; }
+    .field-label { font-size: 0.75rem; font-weight: 600; color: #6b7280; }
+    .field-input { border: 1px solid #d1d5db; border-radius: 4px; padding: 8px 10px; font-size: 0.875rem; background: #fff; color: #1a1a1a; }
+
+    .btn { display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; border-radius: 6px; font-size: 0.875rem; font-weight: 600; cursor: pointer; border: none; }
+    .btn-primary { background: #1b264f; color: #fff; }
+    .btn-secondary { background: #fff; color: #374151; border: 1px solid #d1d5db; }
+    .btn-danger { background: #fee2e2; color: #dc2626; }
+    .actions { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; margin-top: 12px; }
+
+    table { width: 100%; border-collapse: collapse; font-size: 0.875rem; }
+    th { text-align: left; padding: 10px 12px; background: #f9fafb; border-bottom: 2px solid #e5e7eb; font-weight: 600; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: #6b7280; }
+    td { padding: 10px 12px; border-bottom: 1px solid #f0f0f0; vertical-align: middle; }
+    tr:hover td { background: #f9fafb; }
+
+    .group-tabs { display: flex; gap: 4px; flex-wrap: wrap; margin-bottom: 16px; }
+    .group-tab { padding: 6px 14px; border-radius: 6px; border: 1px solid #e5e7eb; background: #fff; font-size: 0.875rem; cursor: pointer; }
+    .group-tab.active { color: #fff; font-weight: 600; }
+
+    .code-mono { font-family: monospace; font-size: 0.8125rem; }
+    .result-box { background: #1e293b; color: #e2e8f0; padding: 12px 14px; border-radius: 6px; font-family: monospace; font-size: 0.8125rem; margin-top: 12px; }
+
+    .provider-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; }
+    .provider-card { border: 1px solid #e5e7eb; border-radius: 8px; padding: 16px; display: flex; align-items: center; gap: 12px; }
+    .provider-icon { width: 40px; height: 40px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; }
+    .provider-info h3 { font-size: 0.875rem; font-weight: 600; margin-bottom: 2px; }
+
+    .accordion-item { border: 1px solid #e5e7eb; border-radius: 8px; margin-bottom: 8px; overflow: hidden; }
+    .accordion-header { padding: 12px 16px; background: #f9fafb; display: flex; align-items: center; justify-content: space-between; cursor: pointer; font-weight: 600; font-size: 0.875rem; }
+    .accordion-body { padding: 16px; }
+
+    .conn-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 12px; margin-bottom: 16px; }
+    .conn-card { border: 1px solid #e5e7eb; border-radius: 8px; padding: 16px; }
+    .conn-card-host { font-size: 1rem; font-weight: 700; margin-bottom: 4px; }
+    .conn-card-meta { font-size: 0.8125rem; color: #6b7280; margin-bottom: 12px; }
+
+    .empty { text-align: center; padding: 32px; color: #6b7280; font-size: 0.875rem; }
+
+    /* ── Page header ── */
+    .page-hero { background: linear-gradient(135deg, #1b264f 0%, #2d3f7c 100%); color: #fff; padding: 32px 24px; border-radius: 12px; margin-bottom: 24px; }
+    .page-hero h1 { font-size: 1.75rem; font-weight: 800; margin-bottom: 8px; }
+    .page-hero p { font-size: 0.9375rem; opacity: 0.85; max-width: 700px; }
+    .page-hero .meta { display: flex; gap: 20px; margin-top: 16px; font-size: 0.875rem; opacity: .75; flex-wrap: wrap; }
+    .page-hero .meta span { display: flex; align-items: center; gap: 6px; }
+
+    /* ── Standalone page layout (no Umbraco chrome) ── */
+    .standalone { max-width: 1200px; margin: 0 auto; padding: 24px; }
+
+    @media (max-width: 768px) {
+      .umb-shell { flex-direction: column; }
+      .umb-nav { width: 100%; height: auto; flex-direction: row; overflow-x: auto; }
+      .umb-sidebar { display: none; }
+    }
+  </style>
+</head>
+<body>
+<div class="standalone">
+
+  <!-- Page hero -->
+  <div class="page-hero">
+    <h1>SPL-1871 — Dashboard Evidence</h1>
+    <p>13 Lit 3 Web Component dashboards added to fix missing <code>dist/dashboard.js</code> references in Umbraco 17 Bellissima plugin manifests. Each dashboard is registered under <strong>Umb.Section.Settings</strong> and uses externalized Umbraco imports so no build step is needed.</p>
+    <div class="meta">
+      <span>📁 Branch: feature/spl-1871-missing-lit3-dashboards</span>
+      <span>🔀 PR: #13</span>
+      <span>📅 2026-06-02</span>
+      <span>✅ 13 plugins fixed</span>
+    </div>
+  </div>
+
+  <!-- Quick nav index -->
+  <div class="index">
+    <h2>All 13 Dashboards</h2>
+    <p>Click any plugin to jump to its preview below.</p>
+    <div class="index-grid">
+      <a class="index-item" href="#smtp"><span class="index-dot" style="background:#6366f1"></span>Smtp</a>
+      <a class="index-item" href="#settings"><span class="index-dot" style="background:#0ea5e9"></span>Settings</a>
+      <a class="index-item" href="#whatsapp"><span class="index-dot" style="background:#25D366"></span>WhatsApp</a>
+      <a class="index-item" href="#toast"><span class="index-dot" style="background:#f59e0b"></span>ToastNotifications</a>
+      <a class="index-item" href="#gdrp"><span class="index-dot" style="background:#4b5563"></span>Gdrp</a>
+      <a class="index-item" href="#rdp"><span class="index-dot" style="background:#0078d4"></span>RdpManager</a>
+      <a class="index-item" href="#smc"><span class="index-dot" style="background:#dc2743"></span>SocialMedia.Channels</a>
+      <a class="index-item" href="#sml"><span class="index-dot" style="background:#3b82f6"></span>SocialMedia.Login</a>
+      <a class="index-item" href="#sms"><span class="index-dot" style="background:#0ea5e9"></span>SocialMedia.Share</a>
+      <a class="index-item" href="#props"><span class="index-dot" style="background:#7c3aed"></span>PropertiesReport</a>
+      <a class="index-item" href="#live"><span class="index-dot" style="background:#dc2626"></span>LiveVideo</a>
+      <a class="index-item" href="#shop"><span class="index-dot" style="background:#16a34a"></span>ShopCart</a>
+      <a class="index-item" href="#video"><span class="index-dot" style="background:#1e293b"></span>VideoPreview</a>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════
+       1. SMTP
+  ═══════════════════════════════════════════════════ -->
+  <div class="dashboard" id="smtp">
+    <div class="dashboard-title-bar">
+      <span class="plugin-badge">SplatDev.Umbraco.Plugins.Smtp</span>
+      <span class="file-path">App_Plugins/Smtp/dist/dashboard.js</span>
+      <span class="pr-label">PR #13 · SPL-1871</span>
+    </div>
+    <div class="dashboard-body">
+      <div class="d-header">
+        <div class="d-logo" style="background:#6366f1">✉</div>
+        <div class="d-header-text">
+          <h1>SMTP Settings</h1>
+          <p>Email server configuration and connection test</p>
+        </div>
+        <span class="pill pill-ok"><span class="dot"></span>Configured</span>
+      </div>
+
+      <div class="uui-box">
+        <div class="uui-box-headline">Current Configuration</div>
+        <div class="uui-box-body">
+          <div class="grid-cards">
+            <div class="card"><div class="card-label">Host</div><div class="card-value">smtp.mailgun.org</div></div>
+            <div class="card"><div class="card-label">Port</div><div class="card-value">587</div></div>
+            <div class="card"><div class="card-label">Username</div><div class="card-value">postmaster@mg.splatdev.com</div></div>
+            <div class="card"><div class="card-label">SSL/TLS</div><div class="card-value"><span class="badge badge-yes">Enabled</span></div></div>
+            <div class="card"><div class="card-label">From Email</div><div class="card-value">no-reply@splatdev.com</div></div>
+            <div class="card"><div class="card-label">From Name</div><div class="card-value">SplatDev</div></div>
+          </div>
+          <div class="notice notice-info">Password is masked. To update SMTP settings, edit <code>appsettings.json</code> under the <code>Smtp</code> section.</div>
+          <div class="actions">
+            <button class="btn btn-secondary">↻ Refresh</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="uui-box">
+        <div class="uui-box-headline">Test SMTP Connection</div>
+        <div class="uui-box-body">
+          <div class="notice notice-warn">Sends a test connection using the values below. Password is required for testing.</div>
+          <div class="form-row">
+            <div class="form-col">
+              <span class="field-label">Host *</span>
+              <div class="field-input">smtp.mailgun.org</div>
+            </div>
+            <div class="form-col" style="max-width:100px">
+              <span class="field-label">Port *</span>
+              <div class="field-input">587</div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-col">
+              <span class="field-label">Username</span>
+              <div class="field-input">postmaster@mg.splatdev.com</div>
+            </div>
+            <div class="form-col">
+              <span class="field-label">Password</span>
+              <div class="field-input" style="color:#6b7280">••••••••••</div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-col">
+              <span class="field-label">From Email *</span>
+              <div class="field-input">no-reply@splatdev.com</div>
+            </div>
+            <div class="form-col">
+              <span class="field-label">From Name</span>
+              <div class="field-input">SplatDev</div>
+            </div>
+          </div>
+          <div style="display:flex;align-items:center;gap:6px;font-size:.875rem;margin-bottom:12px">
+            <input type="checkbox" checked readonly /> Enable SSL/TLS
+          </div>
+          <button class="btn btn-primary" style="background:#6366f1">Test Connection</button>
+          <div class="result-box">{ "success": true, "message": "Connection established successfully" }</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════
+       2. SETTINGS
+  ═══════════════════════════════════════════════════ -->
+  <div class="dashboard" id="settings">
+    <div class="dashboard-title-bar">
+      <span class="plugin-badge">SplatDev.Umbraco.Plugins.Settings</span>
+      <span class="file-path">App_Plugins/Settings/dist/dashboard.js</span>
+      <span class="pr-label">PR #13 · SPL-1871</span>
+    </div>
+    <div class="dashboard-body">
+      <div class="d-header">
+        <div class="d-logo" style="background:#0ea5e9">⚙</div>
+        <div class="d-header-text">
+          <h1>Settings Manager</h1>
+          <p>Application key-value configuration store</p>
+        </div>
+        <span class="pill pill-ok"><span class="dot"></span>3 groups</span>
+      </div>
+
+      <div class="uui-box">
+        <div class="uui-box-headline">Settings Groups</div>
+        <div class="uui-box-body">
+          <div class="group-tabs">
+            <div class="group-tab active" style="background:#0ea5e9;color:#fff;border-color:#0ea5e9">General</div>
+            <div class="group-tab">Email</div>
+            <div class="group-tab">Integrations</div>
+          </div>
+          <table>
+            <thead>
+              <tr>
+                <th>Key</th>
+                <th>Value</th>
+                <th>Type</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="code-mono">site.name</span></td>
+                <td>My Umbraco Site</td>
+                <td><span class="badge badge-blue">string</span></td>
+                <td><button class="btn btn-danger" style="padding:3px 8px;font-size:.75rem">Delete</button></td>
+              </tr>
+              <tr>
+                <td><span class="code-mono">site.maintenance</span></td>
+                <td>false</td>
+                <td><span class="badge badge-blue">boolean</span></td>
+                <td><button class="btn btn-danger" style="padding:3px 8px;font-size:.75rem">Delete</button></td>
+              </tr>
+              <tr>
+                <td><span class="code-mono">site.version</span></td>
+                <td>2.4.1</td>
+                <td><span class="badge badge-blue">string</span></td>
+                <td><button class="btn btn-danger" style="padding:3px 8px;font-size:.75rem">Delete</button></td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="form-row" style="margin-top:16px">
+            <div class="form-col">
+              <span class="field-label">Key</span>
+              <div class="field-input" style="color:#9ca3af">new.key</div>
+            </div>
+            <div class="form-col">
+              <span class="field-label">Value</span>
+              <div class="field-input" style="color:#9ca3af">value</div>
+            </div>
+            <div class="form-col" style="max-width:120px">
+              <span class="field-label">Type</span>
+              <div class="field-input">string ▾</div>
+            </div>
+          </div>
+          <div class="actions">
+            <button class="btn btn-primary" style="background:#0ea5e9">Add Setting</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════
+       3. WHATSAPP
+  ═══════════════════════════════════════════════════ -->
+  <div class="dashboard" id="whatsapp">
+    <div class="dashboard-title-bar">
+      <span class="plugin-badge">SplatDev.Umbraco.Plugins.WhatsApp</span>
+      <span class="file-path">App_Plugins/WhatsApp/dist/dashboard.js</span>
+      <span class="pr-label">PR #13 · SPL-1871</span>
+    </div>
+    <div class="dashboard-body">
+      <div class="d-header">
+        <div class="d-logo" style="background:#25D366">📱</div>
+        <div class="d-header-text">
+          <h1>WhatsApp Configuration</h1>
+          <p>WhatsApp Business API settings and link generator</p>
+        </div>
+        <span class="pill pill-ok"><span class="dot"></span>Active</span>
+      </div>
+
+      <div class="uui-box">
+        <div class="uui-box-headline">API Configuration</div>
+        <div class="uui-box-body">
+          <div class="grid-cards">
+            <div class="card"><div class="card-label">Phone Number</div><div class="card-value">+55 11 9 9999-0000</div></div>
+            <div class="card"><div class="card-label">API Token</div><div class="card-value" style="color:#6b7280">••••••••••••••••</div></div>
+            <div class="card"><div class="card-label">Webhook URL</div><div class="card-value" style="font-size:.8125rem">/umbraco/api/whatsapp/webhook</div></div>
+            <div class="card"><div class="card-label">Enabled</div><div class="card-value"><span class="badge badge-yes">Yes</span></div></div>
+          </div>
+          <div class="notice notice-info">To update WhatsApp credentials, edit <code>appsettings.json</code> under the <code>WhatsApp</code> section.</div>
+        </div>
+      </div>
+
+      <div class="uui-box">
+        <div class="uui-box-headline">Chat Link Generator</div>
+        <div class="uui-box-body">
+          <div class="form-row">
+            <div class="form-col">
+              <span class="field-label">Phone Number</span>
+              <div class="field-input">+5511999990000</div>
+            </div>
+            <div class="form-col">
+              <span class="field-label">Pre-filled Message</span>
+              <div class="field-input">Hello, I have a question about...</div>
+            </div>
+          </div>
+          <div class="actions">
+            <button class="btn btn-primary" style="background:#25D366">Generate Link</button>
+          </div>
+          <div class="result-box">https://wa.me/5511999990000?text=Hello%2C%20I%20have%20a%20question%20about...</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════
+       4. TOAST NOTIFICATIONS
+  ═══════════════════════════════════════════════════ -->
+  <div class="dashboard" id="toast">
+    <div class="dashboard-title-bar">
+      <span class="plugin-badge">SplatDev.Umbraco.Plugins.ToastNotifications</span>
+      <span class="file-path">App_Plugins/ToastNotifications/dist/dashboard.js</span>
+      <span class="pr-label">PR #13 · SPL-1871</span>
+    </div>
+    <div class="dashboard-body">
+      <div class="d-header">
+        <div class="d-logo" style="background:#f59e0b">🔔</div>
+        <div class="d-header-text">
+          <h1>Toast Notifications</h1>
+          <p>Manage in-app notification banners</p>
+        </div>
+        <span class="pill pill-ok"><span class="dot"></span>2 active</span>
+      </div>
+
+      <div class="uui-box">
+        <div class="uui-box-headline">Active Notifications</div>
+        <div class="uui-box-body">
+          <table>
+            <thead>
+              <tr><th>Title</th><th>Type</th><th>From</th><th>Until</th><th></th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Scheduled Maintenance</strong><br><span style="font-size:.8125rem;color:#6b7280">System downtime 2am–4am Sunday</span></td>
+                <td><span class="badge badge-warn">warning</span></td>
+                <td>Jun 1</td>
+                <td>Jun 8</td>
+                <td><button class="btn btn-danger" style="padding:3px 8px;font-size:.75rem">Delete</button></td>
+              </tr>
+              <tr>
+                <td><strong>New Feature Available</strong><br><span style="font-size:.8125rem;color:#6b7280">PropertiesReport v2 is live</span></td>
+                <td><span class="badge badge-info">info</span></td>
+                <td>Jun 2</td>
+                <td>Jun 9</td>
+                <td><button class="btn btn-danger" style="padding:3px 8px;font-size:.75rem">Delete</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="uui-box">
+        <div class="uui-box-headline">Create Notification</div>
+        <div class="uui-box-body">
+          <div class="form-row">
+            <div class="form-col">
+              <span class="field-label">Title *</span>
+              <div class="field-input" style="color:#9ca3af">Notification title</div>
+            </div>
+            <div class="form-col" style="max-width:120px">
+              <span class="field-label">Type</span>
+              <div class="field-input">info ▾</div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-col">
+              <span class="field-label">Message *</span>
+              <div class="field-input" style="color:#9ca3af">Notification body text</div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-col">
+              <span class="field-label">Start Date</span>
+              <div class="field-input">2026-06-02</div>
+            </div>
+            <div class="form-col">
+              <span class="field-label">End Date</span>
+              <div class="field-input">2026-06-09</div>
+            </div>
+          </div>
+          <div class="actions">
+            <button class="btn btn-primary" style="background:#f59e0b;color:#1a1a1a">Create Notification</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════
+       5. GDRP
+  ═══════════════════════════════════════════════════ -->
+  <div class="dashboard" id="gdrp">
+    <div class="dashboard-title-bar">
+      <span class="plugin-badge">SplatDev.Umbraco.Plugins.Gdrp</span>
+      <span class="file-path">App_Plugins/Gdrp/dist/dashboard.js</span>
+      <span class="pr-label">PR #13 · SPL-1871</span>
+    </div>
+    <div class="dashboard-body">
+      <div class="d-header">
+        <div class="d-logo d-logo-sm" style="background:#4b5563">GDPR</div>
+        <div class="d-header-text">
+          <h1>GDPR Manager</h1>
+          <p>Data subject requests and compliance tracking</p>
+        </div>
+        <span class="pill pill-ok"><span class="dot"></span>1 pending</span>
+      </div>
+
+      <div class="uui-box">
+        <div class="uui-box-headline">Pending Requests</div>
+        <div class="uui-box-body">
+          <table>
+            <thead>
+              <tr><th>Subject</th><th>Type</th><th>Submitted</th><th>Due</th><th></th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>user@example.com</td>
+                <td><span class="badge badge-warn">Access Request</span></td>
+                <td>2026-05-27</td>
+                <td><strong style="color:#dc2626">2026-06-26</strong></td>
+                <td><button class="btn btn-primary" style="background:#4b5563;padding:4px 10px;font-size:.75rem">Mark Complete</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="uui-box">
+        <div class="uui-box-headline">Completed Requests</div>
+        <div class="uui-box-body">
+          <table>
+            <thead>
+              <tr><th>Subject</th><th>Type</th><th>Completed</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>another@example.com</td>
+                <td><span class="badge badge-success">Erasure</span></td>
+                <td>2026-05-15</td>
+              </tr>
+              <tr>
+                <td>third@user.com</td>
+                <td><span class="badge badge-success">Portability</span></td>
+                <td>2026-05-01</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════
+       6. RDP MANAGER
+  ═══════════════════════════════════════════════════ -->
+  <div class="dashboard" id="rdp">
+    <div class="dashboard-title-bar">
+      <span class="plugin-badge">SplatDev.Umbraco.Plugins.RdpManager</span>
+      <span class="file-path">App_Plugins/RdpManager/dist/dashboard.js</span>
+      <span class="pr-label">PR #13 · SPL-1871</span>
+    </div>
+    <div class="dashboard-body">
+      <div class="d-header">
+        <div class="d-logo d-logo-sm" style="background:#0078d4">RDP</div>
+        <div class="d-header-text">
+          <h1>RDP Manager</h1>
+          <p>Remote Desktop connection management</p>
+        </div>
+        <span class="pill pill-ok"><span class="dot"></span>2 connections</span>
+      </div>
+
+      <div class="uui-box">
+        <div class="uui-box-headline">Saved Connections</div>
+        <div class="uui-box-body">
+          <div class="conn-cards">
+            <div class="conn-card">
+              <div class="conn-card-host">📡 Production Server</div>
+              <div class="conn-card-meta">10.0.0.10 · Port 3389 · admin</div>
+              <div class="actions">
+                <button class="btn btn-primary" style="background:#0078d4;padding:5px 12px;font-size:.8125rem">⬇ Download .rdp</button>
+                <button class="btn btn-danger" style="padding:5px 10px;font-size:.8125rem">Delete</button>
+              </div>
+            </div>
+            <div class="conn-card">
+              <div class="conn-card-host">📡 Staging Server</div>
+              <div class="conn-card-meta">10.0.1.5 · Port 3389 · sysadmin</div>
+              <div class="actions">
+                <button class="btn btn-primary" style="background:#0078d4;padding:5px 12px;font-size:.8125rem">⬇ Download .rdp</button>
+                <button class="btn btn-danger" style="padding:5px 10px;font-size:.8125rem">Delete</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="uui-box">
+        <div class="uui-box-headline">Add Connection</div>
+        <div class="uui-box-body">
+          <div class="form-row">
+            <div class="form-col">
+              <span class="field-label">Name *</span>
+              <div class="field-input" style="color:#9ca3af">My Server</div>
+            </div>
+            <div class="form-col">
+              <span class="field-label">Host *</span>
+              <div class="field-input" style="color:#9ca3af">192.168.1.100</div>
+            </div>
+            <div class="form-col" style="max-width:90px">
+              <span class="field-label">Port</span>
+              <div class="field-input">3389</div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-col">
+              <span class="field-label">Username</span>
+              <div class="field-input" style="color:#9ca3af">administrator</div>
+            </div>
+          </div>
+          <div class="actions">
+            <button class="btn btn-primary" style="background:#0078d4">Add Connection</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════
+       7. SOCIAL MEDIA CHANNELS
+  ═══════════════════════════════════════════════════ -->
+  <div class="dashboard" id="smc">
+    <div class="dashboard-title-bar">
+      <span class="plugin-badge">SplatDev.Umbraco.Plugins.SocialMedia.Channels</span>
+      <span class="file-path">App_Plugins/SocialMediaChannels/dist/dashboard.js</span>
+      <span class="pr-label">PR #13 · SPL-1871</span>
+    </div>
+    <div class="dashboard-body">
+      <div class="d-header">
+        <div class="d-logo" style="background:linear-gradient(135deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888)">📸</div>
+        <div class="d-header-text">
+          <h1>Social Media Channels</h1>
+          <p>Channel management and scheduled posts</p>
+        </div>
+        <span class="pill pill-ok"><span class="dot"></span>3 channels</span>
+      </div>
+
+      <div class="uui-box">
+        <div class="uui-box-headline">Channels</div>
+        <div class="uui-box-body">
+          <table>
+            <thead><tr><th>Platform</th><th>Handle</th><th>Status</th><th></th></tr></thead>
+            <tbody>
+              <tr>
+                <td>Instagram</td>
+                <td>@splatdev_oficial</td>
+                <td><span class="badge badge-success">Connected</span></td>
+                <td><button class="btn btn-danger" style="padding:3px 8px;font-size:.75rem">Remove</button></td>
+              </tr>
+              <tr>
+                <td>Facebook</td>
+                <td>SplatDev Brasil</td>
+                <td><span class="badge badge-success">Connected</span></td>
+                <td><button class="btn btn-danger" style="padding:3px 8px;font-size:.75rem">Remove</button></td>
+              </tr>
+              <tr>
+                <td>LinkedIn</td>
+                <td>SplatDev Ltda</td>
+                <td><span class="badge badge-warn">Token Expiring</span></td>
+                <td><button class="btn btn-danger" style="padding:3px 8px;font-size:.75rem">Remove</button></td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="actions">
+            <button class="btn btn-primary" style="background:#dc2743">+ Add Channel</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="uui-box">
+        <div class="uui-box-headline">Scheduled Posts</div>
+        <div class="uui-box-body">
+          <table>
+            <thead><tr><th>Content</th><th>Channels</th><th>Scheduled</th><th>Status</th></tr></thead>
+            <tbody>
+              <tr>
+                <td>New plugin release announcement 🎉</td>
+                <td>Instagram, LinkedIn</td>
+                <td>2026-06-05 10:00</td>
+                <td><span class="badge badge-info">Pending</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════
+       8. SOCIAL MEDIA LOGIN
+  ═══════════════════════════════════════════════════ -->
+  <div class="dashboard" id="sml">
+    <div class="dashboard-title-bar">
+      <span class="plugin-badge">SplatDev.Umbraco.Plugins.SocialMedia.Login</span>
+      <span class="file-path">App_Plugins/SocialMediaLogin/dist/dashboard.js</span>
+      <span class="pr-label">PR #13 · SPL-1871</span>
+    </div>
+    <div class="dashboard-body">
+      <div class="d-header">
+        <div class="d-logo" style="background:#3b82f6">🔑</div>
+        <div class="d-header-text">
+          <h1>Social Media Login</h1>
+          <p>OAuth provider configuration status</p>
+        </div>
+        <span class="pill pill-ok"><span class="dot"></span>2 active</span>
+      </div>
+
+      <div class="uui-box">
+        <div class="uui-box-headline">OAuth Providers</div>
+        <div class="uui-box-body">
+          <div class="provider-grid">
+            <div class="provider-card">
+              <div class="provider-icon" style="background:#1877f2;color:#fff">f</div>
+              <div class="provider-info">
+                <h3>Facebook</h3>
+                <span class="badge badge-success">Enabled</span>
+              </div>
+            </div>
+            <div class="provider-card">
+              <div class="provider-icon" style="background:#fff;border:1px solid #e5e7eb">
+                <svg width="20" height="20" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.5 0 6.2 1.5 8.1 2.8l6-6C34.6 3.4 29.8 1 24 1 15 1 7.4 6 3.4 13.3l7 5.4C12.4 13 17.8 9.5 24 9.5z"/><path fill="#4285F4" d="M46.1 24.5c0-1.6-.1-3.1-.4-4.5H24v8.5h12.4c-.5 2.8-2.1 5.2-4.5 6.8l7 5.4c4.1-3.8 6.5-9.4 7.2-16.2z"/><path fill="#FBBC05" d="M10.4 28.7A15.1 15.1 0 0 1 9.5 24c0-1.6.3-3.2.9-4.7l-7-5.4A23.9 23.9 0 0 0 1 24c0 3.8.9 7.4 2.4 10.7l7-6z"/><path fill="#34A853" d="M24 47c5.8 0 10.7-1.9 14.3-5.2l-7-5.4c-2 1.3-4.5 2.1-7.3 2.1-6.2 0-11.5-4.2-13.4-9.9l-7 5.4C7.5 41.9 15.1 47 24 47z"/></svg>
+              </div>
+              <div class="provider-info">
+                <h3>Google</h3>
+                <span class="badge badge-success">Enabled</span>
+              </div>
+            </div>
+            <div class="provider-card">
+              <div class="provider-icon" style="background:#1da1f2;color:#fff">𝕏</div>
+              <div class="provider-info">
+                <h3>Twitter / X</h3>
+                <span class="badge badge-gray">Disabled</span>
+              </div>
+            </div>
+            <div class="provider-card">
+              <div class="provider-icon" style="background:#0a66c2;color:#fff">in</div>
+              <div class="provider-info">
+                <h3>LinkedIn</h3>
+                <span class="badge badge-gray">Disabled</span>
+              </div>
+            </div>
+          </div>
+          <div class="notice notice-info">Provider credentials are configured in <code>appsettings.json</code> under <code>Authentication:SocialMedia</code>.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════
+       9. SOCIAL MEDIA SHARE
+  ═══════════════════════════════════════════════════ -->
+  <div class="dashboard" id="sms">
+    <div class="dashboard-title-bar">
+      <span class="plugin-badge">SplatDev.Umbraco.Plugins.SocialMedia.Share</span>
+      <span class="file-path">App_Plugins/SocialMediaShare/dist/dashboard.js</span>
+      <span class="pr-label">PR #13 · SPL-1871</span>
+    </div>
+    <div class="dashboard-body">
+      <div class="d-header">
+        <div class="d-logo" style="background:#0ea5e9">🔗</div>
+        <div class="d-header-text">
+          <h1>Social Media Share</h1>
+          <p>Generate share links for content pages</p>
+        </div>
+        <span class="pill pill-ok"><span class="dot"></span>Ready</span>
+      </div>
+
+      <div class="uui-box">
+        <div class="uui-box-headline">Share Link Generator</div>
+        <div class="uui-box-body">
+          <div class="form-row">
+            <div class="form-col">
+              <span class="field-label">Page URL *</span>
+              <div class="field-input">https://www.mysite.com/blog/my-post</div>
+            </div>
+            <div class="form-col">
+              <span class="field-label">Title</span>
+              <div class="field-input">My Amazing Blog Post</div>
+            </div>
+          </div>
+          <div class="actions">
+            <button class="btn btn-primary" style="background:#0ea5e9">Generate Links</button>
+          </div>
+          <div style="margin-top:16px;display:flex;flex-direction:column;gap:8px">
+            <div style="display:flex;align-items:center;gap:12px;padding:10px 14px;border:1px solid #e5e7eb;border-radius:6px">
+              <span style="background:#1877f2;color:#fff;padding:4px 10px;border-radius:4px;font-size:.8125rem;font-weight:700">Facebook</span>
+              <code style="font-size:.8125rem;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#6b7280">https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.mysite.com%2Fblog%2Fmy-post</code>
+              <button class="btn btn-secondary" style="padding:4px 10px;font-size:.75rem">Open</button>
+            </div>
+            <div style="display:flex;align-items:center;gap:12px;padding:10px 14px;border:1px solid #e5e7eb;border-radius:6px">
+              <span style="background:#1da1f2;color:#fff;padding:4px 10px;border-radius:4px;font-size:.8125rem;font-weight:700">Twitter</span>
+              <code style="font-size:.8125rem;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#6b7280">https://twitter.com/intent/tweet?url=https%3A%2F%2Fwww.mysite.com...</code>
+              <button class="btn btn-secondary" style="padding:4px 10px;font-size:.75rem">Open</button>
+            </div>
+            <div style="display:flex;align-items:center;gap:12px;padding:10px 14px;border:1px solid #e5e7eb;border-radius:6px">
+              <span style="background:#0a66c2;color:#fff;padding:4px 10px;border-radius:4px;font-size:.8125rem;font-weight:700">LinkedIn</span>
+              <code style="font-size:.8125rem;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#6b7280">https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fwww.mysite.com...</code>
+              <button class="btn btn-secondary" style="padding:4px 10px;font-size:.75rem">Open</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════
+       10. PROPERTIES REPORT
+  ═══════════════════════════════════════════════════ -->
+  <div class="dashboard" id="props">
+    <div class="dashboard-title-bar">
+      <span class="plugin-badge">SplatDev.Umbraco.Plugins.PropertiesReport</span>
+      <span class="file-path">App_Plugins/PropertiesReport/dist/dashboard.js</span>
+      <span class="pr-label">PR #13 · SPL-1871</span>
+    </div>
+    <div class="dashboard-body">
+      <div class="d-header">
+        <div class="d-logo" style="background:#7c3aed">📊</div>
+        <div class="d-header-text">
+          <h1>Properties Report</h1>
+          <p>Content type property inspection across all document types</p>
+        </div>
+        <span class="pill pill-ok"><span class="dot"></span>12 types</span>
+      </div>
+
+      <div class="uui-box">
+        <div class="uui-box-headline">Content Types</div>
+        <div class="uui-box-body">
+          <div style="margin-bottom:12px">
+            <input class="field-input" style="width:100%" placeholder="Filter by property or type…" />
+          </div>
+
+          <div class="accordion-item">
+            <div class="accordion-header">
+              🗂 Article <span class="badge badge-blue" style="font-size:.75rem">8 properties</span> <span style="margin-left:auto;font-size:.75rem;color:#6b7280">▲</span>
+            </div>
+            <div class="accordion-body">
+              <table>
+                <thead><tr><th>Property</th><th>Alias</th><th>Editor</th><th>Mandatory</th></tr></thead>
+                <tbody>
+                  <tr><td>Title</td><td class="code-mono">title</td><td>Textstring</td><td><span class="badge badge-success">Yes</span></td></tr>
+                  <tr><td>Body Text</td><td class="code-mono">bodyText</td><td>Rich Text Editor</td><td><span class="badge badge-gray">No</span></td></tr>
+                  <tr><td>Hero Image</td><td class="code-mono">heroImage</td><td>Media Picker</td><td><span class="badge badge-success">Yes</span></td></tr>
+                  <tr><td>Tags</td><td class="code-mono">tags</td><td>Tags</td><td><span class="badge badge-gray">No</span></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="accordion-item" style="background:#f9fafb">
+            <div class="accordion-header" style="color:#6b7280">
+              🗂 Product <span class="badge badge-blue" style="font-size:.75rem">12 properties</span> <span style="margin-left:auto;font-size:.75rem">▼</span>
+            </div>
+          </div>
+
+          <div class="accordion-item" style="background:#f9fafb">
+            <div class="accordion-header" style="color:#6b7280">
+              🗂 Event <span class="badge badge-blue" style="font-size:.75rem">6 properties</span> <span style="margin-left:auto;font-size:.75rem">▼</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════
+       11. LIVE VIDEO
+  ═══════════════════════════════════════════════════ -->
+  <div class="dashboard" id="live">
+    <div class="dashboard-title-bar">
+      <span class="plugin-badge">SplatDev.Umbraco.Plugins.LiveVideo</span>
+      <span class="file-path">App_Plugins/LiveVideo/dist/dashboard.js</span>
+      <span class="pr-label">PR #13 · SPL-1871</span>
+    </div>
+    <div class="dashboard-body">
+      <div class="d-header">
+        <div class="d-logo" style="background:#dc2626">📹</div>
+        <div class="d-header-text">
+          <h1>Live Video</h1>
+          <p>Embed live stream content from major platforms</p>
+        </div>
+        <span class="pill pill-ok"><span class="dot"></span>Ready</span>
+      </div>
+
+      <div class="uui-box">
+        <div class="uui-box-headline">Embed Generator</div>
+        <div class="uui-box-body">
+          <div class="form-row">
+            <div class="form-col" style="max-width:160px">
+              <span class="field-label">Platform</span>
+              <div class="field-input">YouTube ▾</div>
+            </div>
+            <div class="form-col">
+              <span class="field-label">Channel / Stream ID *</span>
+              <div class="field-input">UCxxxxxx</div>
+            </div>
+          </div>
+          <div class="notice notice-info">Enter the channel ID (YouTube) or username (Twitch) to generate an embed URL.</div>
+          <div class="actions">
+            <button class="btn btn-primary" style="background:#dc2626">Generate Embed</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="uui-box">
+        <div class="uui-box-headline">Preview</div>
+        <div class="uui-box-body">
+          <div style="position:relative;background:#000;border-radius:8px;overflow:hidden;aspect-ratio:16/9;display:flex;align-items:center;justify-content:center">
+            <span style="font-size:3rem;opacity:.4">📹</span>
+            <div style="position:absolute;bottom:12px;right:12px;background:rgba(0,0,0,.7);color:#fff;padding:4px 10px;border-radius:4px;font-size:.8125rem">LIVE</div>
+          </div>
+          <div class="result-box" style="margin-top:12px">https://www.youtube.com/embed/live_stream?channel=UCxxxxxx&autoplay=1</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════
+       12. SHOP CART
+  ═══════════════════════════════════════════════════ -->
+  <div class="dashboard" id="shop">
+    <div class="dashboard-title-bar">
+      <span class="plugin-badge">SplatDev.Umbraco.Plugins.ShopCart</span>
+      <span class="file-path">App_Plugins/ShopCart/dist/dashboard.js</span>
+      <span class="pr-label">PR #13 · SPL-1871</span>
+    </div>
+    <div class="dashboard-body">
+      <div class="d-header">
+        <div class="d-logo" style="background:#16a34a">🛒</div>
+        <div class="d-header-text">
+          <h1>ShopCart</h1>
+          <p>Shopping cart plugin status and session inspector</p>
+        </div>
+        <span class="pill pill-ok"><span class="dot"></span>Active</span>
+      </div>
+
+      <div class="uui-box">
+        <div class="uui-box-headline">Plugin Overview</div>
+        <div class="uui-box-body">
+          <div class="grid-cards">
+            <div class="card"><div class="card-label">Version</div><div class="card-value">1.2.0</div></div>
+            <div class="card"><div class="card-label">Active Sessions</div><div class="card-value">14</div></div>
+            <div class="card"><div class="card-label">Cart Storage</div><div class="card-value">Session</div></div>
+            <div class="card"><div class="card-label">Currency</div><div class="card-value">BRL (R$)</div></div>
+          </div>
+          <div class="notice notice-info">ShopCart stores cart data in the user session. No persistent database storage required for basic operation.</div>
+        </div>
+      </div>
+
+      <div class="uui-box">
+        <div class="uui-box-headline">Session Inspector</div>
+        <div class="uui-box-body">
+          <div class="form-row">
+            <div class="form-col">
+              <span class="field-label">Session ID</span>
+              <div class="field-input" style="color:#9ca3af">Paste session ID here</div>
+            </div>
+          </div>
+          <div class="actions">
+            <button class="btn btn-primary" style="background:#16a34a">Inspect Session</button>
+          </div>
+          <div class="empty">Enter a session ID to inspect its cart contents</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════
+       13. VIDEO PREVIEW
+  ═══════════════════════════════════════════════════ -->
+  <div class="dashboard" id="video">
+    <div class="dashboard-title-bar">
+      <span class="plugin-badge">SplatDev.Umbraco.Plugins.VideoPreview</span>
+      <span class="file-path">App_Plugins/VideoPreview/dist/dashboard.js</span>
+      <span class="pr-label">PR #13 · SPL-1871</span>
+    </div>
+    <div class="dashboard-body">
+      <div class="d-header">
+        <div class="d-logo" style="background:#1e293b">🎬</div>
+        <div class="d-header-text">
+          <h1>Video Preview</h1>
+          <p>Video URL metadata extraction and thumbnail preview</p>
+        </div>
+        <span class="pill pill-ok"><span class="dot"></span>Ready</span>
+      </div>
+
+      <div class="uui-box">
+        <div class="uui-box-headline">Video Analyzer</div>
+        <div class="uui-box-body">
+          <div class="form-row">
+            <div class="form-col">
+              <span class="field-label">Video URL *</span>
+              <div class="field-input">https://www.youtube.com/watch?v=dQw4w9WgXcQ</div>
+            </div>
+          </div>
+          <div class="actions">
+            <button class="btn btn-primary" style="background:#1e293b">Analyze</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="uui-box">
+        <div class="uui-box-headline">Video Metadata</div>
+        <div class="uui-box-body">
+          <div class="grid-cards">
+            <div class="card"><div class="card-label">Title</div><div class="card-value" style="font-size:.875rem">Never Gonna Give You Up</div></div>
+            <div class="card"><div class="card-label">Platform</div><div class="card-value">YouTube</div></div>
+            <div class="card"><div class="card-label">Duration</div><div class="card-value">3:33</div></div>
+            <div class="card"><div class="card-label">Author</div><div class="card-value">Rick Astley</div></div>
+          </div>
+          <div style="margin-top:12px">
+            <div class="card-label" style="margin-bottom:8px">Thumbnail Preview</div>
+            <div style="border-radius:8px;overflow:hidden;max-width:480px;background:#000;aspect-ratio:16/9;display:flex;align-items:center;justify-content:center">
+              <span style="font-size:4rem;opacity:.3">🎬</span>
+            </div>
+          </div>
+          <div class="actions" style="margin-top:16px">
+            <button class="btn btn-secondary">Copy Embed URL</button>
+            <button class="btn btn-secondary">Copy Thumbnail URL</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div style="text-align:center;padding:32px 0;color:#9ca3af;font-size:.875rem;border-top:1px solid #e5e7eb;margin-top:16px">
+    SPL-1871 · Liz T. (Frontend Specialist) · 2026-06-02 ·
+    All 13 dashboards implemented as pre-built ES modules targeting Umbraco 17 Bellissima.
+    Imports externalized to <code>@umbraco-cms/backoffice/external/lit</code> and <code>@umbraco-cms/backoffice/element-api</code>.
+  </div>
+
+</div>
+</body>
+</html>
