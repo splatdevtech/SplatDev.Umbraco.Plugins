@@ -1,15 +1,60 @@
 {
   "$schema": "../../umbraco-package-schema.json",
-  "name": "MercadoPago Payments",
+  "name": "SplatDev MercadoPago Payments",
+  "alias": "SplatDev.MercadoPago",
   "version": "2.0.0",
   "extensions": [
     {
       "type": "dashboard",
-      "alias": "mercadoPago.dashboard",
+      "alias": "SplatDev.MercadoPago.Dashboard",
       "name": "MercadoPago Dashboard",
       "element": "/App_Plugins/MercadoPago/dist/dashboard.js",
-      "weight": -99,
-      "conditions": [{ "alias": "Umb.Condition.SectionAlias", "match": "Umb.Section.Content" }]
+      "elementName": "mercadopago-dashboard",
+      "weight": -90,
+      "meta": {
+        "label": "MercadoPago",
+        "pathname": "mercadopago"
+      },
+      "conditions": [
+        {
+          "alias": "Umb.Condition.SectionAlias",
+          "match": "Umb.Section.Settings"
+        }
+      ]
+    },
+    {
+      "type": "localization",
+      "alias": "SplatDev.MercadoPago.Localization.En",
+      "name": "MercadoPago — English",
+      "meta": {
+        "culture": "en",
+        "localizations": {
+          "section": {
+            "mercadopago_heading": "MercadoPago Payments",
+            "mercadopago_description": "Manage payment preferences and check transaction statuses.",
+            "mercadopago_config": "Connection & Configuration",
+            "mercadopago_preference": "Test Payment Preference",
+            "mercadopago_status": "Check Payment Status"
+          }
+        }
+      }
+    },
+    {
+      "type": "localization",
+      "alias": "SplatDev.MercadoPago.Localization.PtBr",
+      "name": "MercadoPago — Português (Brasil)",
+      "meta": {
+        "culture": "pt-BR",
+        "localizations": {
+          "section": {
+            "mercadopago_heading": "MercadoPago Pagamentos",
+            "mercadopago_description": "Gerencie preferências de pagamento e consulte status de transações.",
+            "mercadopago_config": "Conexão e Configuração",
+            "mercadopago_preference": "Testar Preferência de Pagamento",
+            "mercadopago_status": "Consultar Status do Pagamento"
+          }
+        }
+      }
     }
   ]
 }
