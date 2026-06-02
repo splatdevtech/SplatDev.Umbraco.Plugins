@@ -1,57 +1,71 @@
-# Umbraco Backup Manager
-A simple backup tool for Umbraco. Allows backing up files and database directly from the backoffice, when you don't have access to the server.
+# BackupManager
 
-The solution is organized into major releases + latest minor release.
+Umbraco backoffice dashboard for scheduling, triggering, and uploading backups to cloud storage providers. Supports Umbraco 13 (net8.0) and Umbraco 17 (net10.0).
 
-![basic file structure](https://i.imgur.com/j6BuG6t.png)
+[![NuGet](https://img.shields.io/nuget/v/SplatDev.Plugins.BackupVault.svg)](https://www.nuget.org/packages/SplatDev.Plugins.BackupVault)
 
-The batch file will install the correct version of the Umbraco template, create the solution, the plugin, and the web project for testing
+## Features
 
-![batch file](https://i.imgur.com/CfXWXQE.png)
+- On-demand and scheduled database + file backups from the Umbraco backoffice
+- Upload backups directly to cloud storage — no server access required
+- Pluggable storage provider architecture (`IBackupStorageProvider`)
 
-![install](https://i.imgur.com/btMXhRr.png)
+## Supported cloud providers
 
-Once the solution is created, you may open it with Visual Studio and start migrating the code from version 8 to each consecutive version.
+| Provider            | Status |
+|---------------------|--------|
+| Local file system   | ✅ Built-in |
+| AWS S3              | ✅ |
+| Azure Blob Storage  | ✅ |
+| Google Cloud Storage| ✅ |
+| Dropbox             | ✅ |
+| OneDrive            | ✅ |
+| Box                 | ✅ |
+| PrismDrive          | ✅ |
 
-![solution](https://i.imgur.com/akIe01V.png)
+## Compatibility
 
+| Umbraco | .NET | Package Version |
+|---------|------|-----------------|
+| 13.x    | 8.0  | 2.0.0           |
+| 17.x    | 10.0 | 2.0.0           |
 
-To make migration easier, migrate the plugin to the latest of each major version.
+## Installation
 
-ex.  
-- v9.5.4
-- v10.8.3
-- v11.5.0
-- v12.3.6
-- v13.1.0
+```sh
+dotnet add package SplatDev.Plugins.BackupVault
+```
 
-for questions, please contact Carlos Casalicchio
+## Quick Start
 
------
+Register in `Program.cs`:
 
-### Documentation for the plugin
+```csharp
+builder.CreateUmbracoBuilder()
+    .AddBackOffice()
+    .AddWebsite()
+    .AddBackupManager()   // <-- add this
+    .Build();
+```
 
-#### Install via nuget
+## Configuration
 
-		Install-Package SplatDev.Umbraco.Plugins.Backups
+Add provider credentials to `appsettings.json`:
 
-A simple backup tool for Umbraco. Allows backing up files and database directly from the backoffice, when you don't have access to the server.
+```json
+{
+  "BackupManager": {
+    "Provider": "AwsS3",
+    "AwsS3": {
+      "BucketName": "my-umbraco-backups",
+      "Region": "us-east-1",
+      "AccessKeyId": "",
+      "SecretAccessKey": ""
+    }
+  }
+}
+```
 
-- Creates a Dashboard to perform backups from the backoffice
-	![Imgur](https://i.imgur.com/5wtidnD.png)
-	![Imgur](https://i.imgur.com/079jIqN.png)
-	![Imgur](https://i.imgur.com/NICZcBV.png)
-	![Imgur](https://i.imgur.com/T7dJcie.png)
+## License
 
-
-- It also works when using SQLCE
-	![Imgur](https://i.imgur.com/PrjfTv0.png)
-
-##### Specs
-- Type: Dashboard
-- Value Type: NONE
-- Dependencies:
-  - System.IO.Compression
-  - System.IO.Compression.FileSystem
-
-[Feedback](mailto:feedback@splatdev.com) is appreciated
+MIT © [SplatDev](https://github.com/SplatDev-Ltda)
