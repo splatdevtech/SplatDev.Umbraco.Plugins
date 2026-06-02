@@ -82,15 +82,18 @@ COPY --from=frontend-build /src/SplatDev.Umbraco.Plugins.Tweets/App_Plugins/ \
 COPY --from=frontend-build /src/SplatDev.Umbraco.Plugins.VisitorCounter/App_Plugins/ \
      ./SplatDev.Umbraco.Plugins.VisitorCounter/App_Plugins/
 
-# Install Umbraco 17 template and scaffold baseline site
+# Install Umbraco 17 template
 RUN dotnet new install Umbraco.Templates::17.4.2
 
 WORKDIR /src/baseline
+
+# Scaffold baseline site
 RUN dotnet new umbraco -n UmbracoBaseline --no-restore \
     --connection-string "Data Source=|DataDirectory|/umbraco_baseline.db;Cache=Shared;Foreign Keys=True;Pooling=True" \
     --development-database-type SQLite
 
-# Generate the baseline .csproj with all plugin project references
+# Generate the baseline .csproj with all plugin project references.
+# This runs before COPY so the layer is cached unless project refs change.
 RUN cat > /src/baseline/UmbracoBaseline/UmbracoBaseline.csproj <<'CSPROJ'
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
@@ -308,12 +311,20 @@ RUN cat > /src/baseline/UmbracoBaseline/appsettings.json <<'APPSETTINGS'
 }
 APPSETTINGS
 
-# Build and publish the baseline with all plugins (net10.0 only)
-RUN dotnet publish /src/baseline/UmbracoBaseline/UmbracoBaseline.csproj \
+# Restore and build with caching for faster iterations
+RUN --mount=type=cache,target=/root/.nuget/packages \
+    dotnet restore /src/baseline/UmbracoBaseline/UmbracoBaseline.csproj \
+        --runtime linux-x64
+
+# Publish with parallel build (-m) and cached NuGet packages
+RUN --mount=type=cache,target=/root/.nuget/packages \
+    dotnet publish /src/baseline/UmbracoBaseline/UmbracoBaseline.csproj \
     -c Release \
     -f net10.0 \
     -o /app/publish \
-    --no-self-contained
+    --no-self-contained \
+    -p:BuildInParallel=true \
+    -m:4
 
 # ---------------------------------------------------------------------------
 # Stage 3: Runtime image with Playwright for E2E testing

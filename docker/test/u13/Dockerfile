@@ -308,12 +308,20 @@ RUN cat > /src/baseline/UmbracoBaseline/appsettings.json <<'APPSETTINGS'
 }
 APPSETTINGS
 
-# Build and publish the baseline with all plugins (net8.0 only)
-RUN dotnet publish /src/baseline/UmbracoBaseline/UmbracoBaseline.csproj \
+# Restore and build with caching for faster iterations
+RUN --mount=type=cache,target=/root/.nuget/packages \
+    dotnet restore /src/baseline/UmbracoBaseline/UmbracoBaseline.csproj \
+        --runtime linux-x64
+
+# Publish with parallel build (-m) and cached NuGet packages
+RUN --mount=type=cache,target=/root/.nuget/packages \
+    dotnet publish /src/baseline/UmbracoBaseline/UmbracoBaseline.csproj \
     -c Release \
     -f net8.0 \
     -o /app/publish \
-    --no-self-contained
+    --no-self-contained \
+    -p:BuildInParallel=true \
+    -m:4
 
 # ---------------------------------------------------------------------------
 # Stage 3: Runtime image with Playwright for E2E testing
