@@ -1,15 +1,60 @@
 {
   "$schema": "../../umbraco-package-schema.json",
-  "name": "PagSeguro Payments",
+  "name": "SplatDev PagSeguro Payments",
+  "alias": "SplatDev.PagSeguro",
   "version": "2.0.0",
   "extensions": [
     {
       "type": "dashboard",
-      "alias": "pagSeguro.dashboard",
+      "alias": "SplatDev.PagSeguro.Dashboard",
       "name": "PagSeguro Dashboard",
       "element": "/App_Plugins/PagSeguro/dist/dashboard.js",
-      "weight": -99,
-      "conditions": [{ "alias": "Umb.Condition.SectionAlias", "match": "Umb.Section.Content" }]
+      "elementName": "pagseguro-dashboard",
+      "weight": -90,
+      "meta": {
+        "label": "PagSeguro",
+        "pathname": "pagseguro"
+      },
+      "conditions": [
+        {
+          "alias": "Umb.Condition.SectionAlias",
+          "match": "Umb.Section.Settings"
+        }
+      ]
+    },
+    {
+      "type": "localization",
+      "alias": "SplatDev.PagSeguro.Localization.En",
+      "name": "PagSeguro — English",
+      "meta": {
+        "culture": "en",
+        "localizations": {
+          "section": {
+            "pagseguro_heading": "PagSeguro Payments",
+            "pagseguro_description": "Manage PagSeguro checkout transactions and configuration.",
+            "pagseguro_config": "Configuration",
+            "pagseguro_create_tx": "Create Transaction",
+            "pagseguro_status": "Transaction Status"
+          }
+        }
+      }
+    },
+    {
+      "type": "localization",
+      "alias": "SplatDev.PagSeguro.Localization.PtBr",
+      "name": "PagSeguro — Português (Brasil)",
+      "meta": {
+        "culture": "pt-BR",
+        "localizations": {
+          "section": {
+            "pagseguro_heading": "PagSeguro Pagamentos",
+            "pagseguro_description": "Gerencie transações de checkout e configuração do PagSeguro.",
+            "pagseguro_config": "Configuração",
+            "pagseguro_create_tx": "Criar Transação",
+            "pagseguro_status": "Status da Transação"
+          }
+        }
+      }
     }
   ]
 }
