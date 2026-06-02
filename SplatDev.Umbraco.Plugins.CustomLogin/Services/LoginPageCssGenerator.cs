@@ -47,6 +47,18 @@ public static class LoginPageCssGenerator
             sb.AppendLine("}");
         }
 
+        if (!string.IsNullOrWhiteSpace(settings.FooterText))
+        {
+            sb.AppendLine();
+            sb.AppendLine("/* Footer text overlay */");
+            sb.AppendLine("umb-auth-layout::after {");
+            sb.AppendLine($"  content: \"{EscapeCssString(settings.FooterText)}\";");
+            sb.AppendLine("  position: fixed; bottom: 8px; left: 0; right: 0;");
+            sb.AppendLine("  text-align: center; font-size: 0.75rem; opacity: 0.7;");
+            sb.AppendLine("  pointer-events: none; z-index: 1000;");
+            sb.AppendLine("}");
+        }
+
         if (!string.IsNullOrWhiteSpace(settings.CustomCss))
         {
             sb.AppendLine();
@@ -62,4 +74,7 @@ public static class LoginPageCssGenerator
         if (!string.IsNullOrWhiteSpace(value))
             sb.AppendLine($"  {property}: {value};");
     }
+
+    private static string EscapeCssString(string value) =>
+        value.Replace("\\", "\\\\").Replace("\"", "\\\"").Replace("\n", "\\A ").Replace("\r", "");
 }

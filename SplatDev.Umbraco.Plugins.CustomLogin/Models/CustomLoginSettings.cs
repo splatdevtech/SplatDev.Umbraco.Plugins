@@ -8,6 +8,9 @@ public class CustomLoginSettings
     public string LogoAlternativeUrl { get; set; } = string.Empty;
     public string BackgroundImageUrl { get; set; } = string.Empty;
     public string SupportEmail { get; set; } = string.Empty;
+    public string LoginPageTitle { get; set; } = string.Empty;
+    public string FaviconUrl { get; set; } = string.Empty;
+    public string FooterText { get; set; } = string.Empty;
 
     // -- Colors (map to Umbraco CSS custom properties) --
     public string BackgroundColor { get; set; } = string.Empty;
