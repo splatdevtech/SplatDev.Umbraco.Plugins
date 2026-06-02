@@ -5,13 +5,22 @@
   "extensions": [
     {
       "type": "dashboard",
-      "alias": "liveVideo.dashboard",
+      "alias": "SplatDev.LiveVideo.Dashboard",
       "name": "Live Video Dashboard",
       "element": "/App_Plugins/LiveVideo/dist/dashboard.js",
-      "weight": -99,
+      "weight": -90,
       "conditions": [
-        { "alias": "Umb.Condition.SectionAlias", "match": "Umb.Section.Content" }
-      ]
+        {
+          "alias": "Umb.Condition.SectionAlias",
+          "match": "Umb.Section.Settings"
+        }
+      ],
+      "elementName": "live-video-dashboard",
+      "meta": {
+        "label": "Live Video",
+        "pathname": "live-video"
+      }
     }
-  ]
+  ],
+  "alias": "SplatDev.LiveVideo"
 }

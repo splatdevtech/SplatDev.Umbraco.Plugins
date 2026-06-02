@@ -5,13 +5,22 @@
   "extensions": [
     {
       "type": "dashboard",
-      "alias": "propertiesReport.dashboard",
+      "alias": "SplatDev.PropertiesReport.Dashboard",
       "name": "Properties Report Dashboard",
       "element": "/App_Plugins/PropertiesReport/dist/dashboard.js",
-      "weight": -99,
+      "weight": -90,
       "conditions": [
-        { "alias": "Umb.Condition.SectionAlias", "match": "Umb.Section.Content" }
-      ]
+        {
+          "alias": "Umb.Condition.SectionAlias",
+          "match": "Umb.Section.Settings"
+        }
+      ],
+      "elementName": "properties-report-dashboard",
+      "meta": {
+        "label": "Properties",
+        "pathname": "properties-report"
+      }
     }
-  ]
+  ],
+  "alias": "SplatDev.PropertiesReport"
 }

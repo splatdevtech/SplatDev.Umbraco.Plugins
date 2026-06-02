@@ -5,13 +5,22 @@
   "extensions": [
     {
       "type": "dashboard",
-      "alias": "socialMediaShare.dashboard",
+      "alias": "SplatDev.SocialShare.Dashboard",
       "name": "Social Media Share Dashboard",
       "element": "/App_Plugins/SocialMediaShare/dist/dashboard.js",
-      "weight": -99,
+      "weight": -90,
       "conditions": [
-        { "alias": "Umb.Condition.SectionAlias", "match": "Umb.Section.Content" }
-      ]
+        {
+          "alias": "Umb.Condition.SectionAlias",
+          "match": "Umb.Section.Settings"
+        }
+      ],
+      "elementName": "social-share-dashboard",
+      "meta": {
+        "label": "Social Share",
+        "pathname": "social-share"
+      }
     }
-  ]
+  ],
+  "alias": "SplatDev.SocialShare"
 }

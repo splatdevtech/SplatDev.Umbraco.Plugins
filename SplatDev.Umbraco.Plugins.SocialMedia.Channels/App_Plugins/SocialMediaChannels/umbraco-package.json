@@ -5,13 +5,22 @@
   "extensions": [
     {
       "type": "dashboard",
-      "alias": "socialMediaChannels.dashboard",
+      "alias": "SplatDev.SocialChannels.Dashboard",
       "name": "Social Media Channels Dashboard",
       "element": "/App_Plugins/SocialMediaChannels/dist/dashboard.js",
-      "weight": -99,
+      "weight": -90,
       "conditions": [
-        { "alias": "Umb.Condition.SectionAlias", "match": "Umb.Section.Content" }
-      ]
+        {
+          "alias": "Umb.Condition.SectionAlias",
+          "match": "Umb.Section.Settings"
+        }
+      ],
+      "elementName": "social-channels-dashboard",
+      "meta": {
+        "label": "Social Channels",
+        "pathname": "social-channels"
+      }
     }
-  ]
+  ],
+  "alias": "SplatDev.SocialChannels"
 }

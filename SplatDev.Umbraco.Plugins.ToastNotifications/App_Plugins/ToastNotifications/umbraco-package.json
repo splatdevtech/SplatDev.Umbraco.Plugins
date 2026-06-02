@@ -5,13 +5,22 @@
   "extensions": [
     {
       "type": "dashboard",
-      "alias": "toastNotifications.dashboard",
+      "alias": "SplatDev.ToastNotifications.Dashboard",
       "name": "Toast Notifications Dashboard",
       "element": "/App_Plugins/ToastNotifications/dist/dashboard.js",
-      "weight": -99,
+      "weight": -90,
       "conditions": [
-        { "alias": "Umb.Condition.SectionAlias", "match": "Umb.Section.Content" }
-      ]
+        {
+          "alias": "Umb.Condition.SectionAlias",
+          "match": "Umb.Section.Settings"
+        }
+      ],
+      "elementName": "toast-notifications-dashboard",
+      "meta": {
+        "label": "Notifications",
+        "pathname": "toast-notifications"
+      }
     }
-  ]
+  ],
+  "alias": "SplatDev.ToastNotifications"
 }

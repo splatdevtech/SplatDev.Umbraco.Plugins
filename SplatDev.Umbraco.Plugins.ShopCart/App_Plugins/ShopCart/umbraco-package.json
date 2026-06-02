@@ -5,11 +5,22 @@
   "extensions": [
     {
       "type": "dashboard",
-      "alias": "shopCart.dashboard",
+      "alias": "SplatDev.ShopCart.Dashboard",
       "name": "ShopCart Dashboard",
       "element": "/App_Plugins/ShopCart/dist/dashboard.js",
-      "weight": -99,
-      "conditions": [{ "alias": "Umb.Condition.SectionAlias", "match": "Umb.Section.Content" }]
+      "weight": -90,
+      "conditions": [
+        {
+          "alias": "Umb.Condition.SectionAlias",
+          "match": "Umb.Section.Settings"
+        }
+      ],
+      "elementName": "shop-cart-dashboard",
+      "meta": {
+        "label": "Shop Cart",
+        "pathname": "shop-cart"
+      }
     }
-  ]
+  ],
+  "alias": "SplatDev.ShopCart"
 }

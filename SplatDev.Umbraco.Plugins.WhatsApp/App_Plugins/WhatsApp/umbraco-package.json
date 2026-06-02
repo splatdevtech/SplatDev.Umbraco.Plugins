@@ -5,13 +5,22 @@
   "extensions": [
     {
       "type": "dashboard",
-      "alias": "whatsapp.dashboard",
+      "alias": "SplatDev.WhatsApp.Dashboard",
       "name": "WhatsApp Dashboard",
       "element": "/App_Plugins/WhatsApp/dist/dashboard.js",
-      "weight": -99,
+      "weight": -90,
       "conditions": [
-        { "alias": "Umb.Condition.SectionAlias", "match": "Umb.Section.Content" }
-      ]
+        {
+          "alias": "Umb.Condition.SectionAlias",
+          "match": "Umb.Section.Settings"
+        }
+      ],
+      "elementName": "whatsapp-dashboard",
+      "meta": {
+        "label": "WhatsApp",
+        "pathname": "whatsapp"
+      }
     }
-  ]
+  ],
+  "alias": "SplatDev.WhatsApp"
 }

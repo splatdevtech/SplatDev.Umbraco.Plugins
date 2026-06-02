@@ -5,13 +5,22 @@
   "extensions": [
     {
       "type": "dashboard",
-      "alias": "settings.dashboard",
+      "alias": "SplatDev.Settings.Dashboard",
       "name": "Settings Dashboard",
       "element": "/App_Plugins/Settings/dist/dashboard.js",
-      "weight": -99,
+      "weight": -90,
       "conditions": [
-        { "alias": "Umb.Condition.SectionAlias", "match": "Umb.Section.Content" }
-      ]
+        {
+          "alias": "Umb.Condition.SectionAlias",
+          "match": "Umb.Section.Settings"
+        }
+      ],
+      "elementName": "settings-dashboard",
+      "meta": {
+        "label": "Site Settings",
+        "pathname": "site-settings"
+      }
     }
-  ]
+  ],
+  "alias": "SplatDev.Settings"
 }

@@ -5,13 +5,22 @@
   "extensions": [
     {
       "type": "dashboard",
-      "alias": "socialMediaLogin.dashboard",
+      "alias": "SplatDev.SocialLogin.Dashboard",
       "name": "Social Login Dashboard",
       "element": "/App_Plugins/SocialMediaLogin/dist/dashboard.js",
-      "weight": -99,
+      "weight": -90,
       "conditions": [
-        { "alias": "Umb.Condition.SectionAlias", "match": "Umb.Section.Content" }
-      ]
+        {
+          "alias": "Umb.Condition.SectionAlias",
+          "match": "Umb.Section.Settings"
+        }
+      ],
+      "elementName": "social-login-dashboard",
+      "meta": {
+        "label": "Social Login",
+        "pathname": "social-login"
+      }
     }
-  ]
+  ],
+  "alias": "SplatDev.SocialLogin"
 }

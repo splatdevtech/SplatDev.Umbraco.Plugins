@@ -5,13 +5,22 @@
   "extensions": [
     {
       "type": "dashboard",
-      "alias": "rdpManager.dashboard",
+      "alias": "SplatDev.RdpManager.Dashboard",
       "name": "RDP Manager Dashboard",
       "element": "/App_Plugins/RdpManager/dist/dashboard.js",
-      "weight": -99,
+      "weight": -90,
       "conditions": [
-        { "alias": "Umb.Condition.SectionAlias", "match": "Umb.Section.Content" }
-      ]
+        {
+          "alias": "Umb.Condition.SectionAlias",
+          "match": "Umb.Section.Settings"
+        }
+      ],
+      "elementName": "rdp-manager-dashboard",
+      "meta": {
+        "label": "RDP Manager",
+        "pathname": "rdp-manager"
+      }
     }
-  ]
+  ],
+  "alias": "SplatDev.RdpManager"
 }

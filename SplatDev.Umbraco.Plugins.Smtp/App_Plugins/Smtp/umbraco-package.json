@@ -5,13 +5,22 @@
   "extensions": [
     {
       "type": "dashboard",
-      "alias": "smtp.dashboard",
+      "alias": "SplatDev.Smtp.Dashboard",
       "name": "SMTP Dashboard",
       "element": "/App_Plugins/Smtp/dist/dashboard.js",
-      "weight": -99,
+      "weight": -90,
       "conditions": [
-        { "alias": "Umb.Condition.SectionAlias", "match": "Umb.Section.Content" }
-      ]
+        {
+          "alias": "Umb.Condition.SectionAlias",
+          "match": "Umb.Section.Settings"
+        }
+      ],
+      "elementName": "smtp-dashboard",
+      "meta": {
+        "label": "SMTP",
+        "pathname": "smtp-settings"
+      }
     }
-  ]
+  ],
+  "alias": "SplatDev.Smtp"
 }

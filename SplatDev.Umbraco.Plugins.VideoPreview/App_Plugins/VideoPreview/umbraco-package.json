@@ -5,13 +5,22 @@
   "extensions": [
     {
       "type": "dashboard",
-      "alias": "videoPreview.dashboard",
+      "alias": "SplatDev.VideoPreview.Dashboard",
       "name": "Video Preview Dashboard",
       "element": "/App_Plugins/VideoPreview/dist/dashboard.js",
-      "weight": -99,
+      "weight": -90,
       "conditions": [
-        { "alias": "Umb.Condition.SectionAlias", "match": "Umb.Section.Content" }
-      ]
+        {
+          "alias": "Umb.Condition.SectionAlias",
+          "match": "Umb.Section.Settings"
+        }
+      ],
+      "elementName": "video-preview-dashboard",
+      "meta": {
+        "label": "Video Preview",
+        "pathname": "video-preview"
+      }
     }
-  ]
+  ],
+  "alias": "SplatDev.VideoPreview"
 }

@@ -5,11 +5,22 @@
   "extensions": [
     {
       "type": "dashboard",
-      "alias": "gdrp.dashboard",
+      "alias": "SplatDev.Gdrp.Dashboard",
       "name": "GDPR Dashboard",
       "element": "/App_Plugins/Gdrp/dist/dashboard.js",
-      "weight": -99,
-      "conditions": [{ "alias": "Umb.Condition.SectionAlias", "match": "Umb.Section.Content" }]
+      "weight": -90,
+      "conditions": [
+        {
+          "alias": "Umb.Condition.SectionAlias",
+          "match": "Umb.Section.Settings"
+        }
+      ],
+      "elementName": "gdrp-dashboard",
+      "meta": {
+        "label": "GDPR",
+        "pathname": "gdpr-compliance"
+      }
     }
-  ]
+  ],
+  "alias": "SplatDev.Gdrp"
 }
