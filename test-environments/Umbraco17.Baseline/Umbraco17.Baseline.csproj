@@ -1,0 +1,96 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Umbraco.Cms" Version="17.3.4" />
+    <PackageReference Include="Microsoft.Data.Sqlite" Version="10.0.4" />
+  </ItemGroup>
+
+  <!-- =====================================================================
+       SplatDev Plugins — U17-compatible packages from NuGet.org (net10.0)
+       Excluded: CodeFirst, PdfCurator (not published to NuGet)
+                 Schema2Yaml (Umbraco 14+ API, not compatible with standard U17 install)
+       Versions: most at 2.0.1; some packages only reached 1.0.1 in publish
+       Includes U17-only plugins: EmailTemplates, MemberNotifications, Newsletter
+       ===================================================================== -->
+  <ItemGroup>
+    <PackageReference Include="SplatDev.Umbraco.Plugins.Core"              Version="2.0.1" />
+    <PackageReference Include="SplatDev.Umbraco.Plugins.2fa"               Version="2.0.1" />
+    <PackageReference Include="SplatDev.Umbraco.Plugins.AdminBar"          Version="2.0.1" />
+    <PackageReference Include="SplatDev.Umbraco.Plugins.Analytics"         Version="2.0.1" />
+    <PackageReference Include="SplatDev.Umbraco.Plugins.Backups"           Version="3.1.1" />
+    <PackageReference Include="SplatDev.Umbraco.Plugins.Blog"              Version="2.0.1" />
+    <PackageReference Include="SplatDev.Umbraco.Plugins.CacheManager"      Version="2.0.1" />
+    <PackageReference Include="SplatDev.Umbraco.Plugins.CharLimit"         Version="1.0.1" />
+    <PackageReference Include="SplatDev.Umbraco.Plugins.CopyValue"         Version="2.0.1" />
+    <PackageReference Include="SplatDev.Umbraco.Plugins.Countries"         Version="2.0.1" />
+    <PackageReference Include="SplatDev.Umbraco.Plugins.CustomLogin"       Version="2.0.1" />
+    <PackageReference Include="SplatDev.Umbraco.Plugins.D4Sign"            Version="1.0.1" />
+    <PackageReference Include="SplatDev.Umbraco.Plugins.DefaultValue"      Version="2.0.1" />
+    <PackageReference Include="SplatDev.Umbraco.Plugins.DictionaryManager" Version="2.0.1" />
+    <PackageReference Include="SplatDev.Umbraco.Plugins.Dropzone"          Version="1.0.1" />
+    <PackageReference Include="SplatDev.Umbraco.Plugins.ENotAssina"        Version="1.0.1" />
+    <PackageReference Include="SplatDev.Umbraco.Plugins.EmailNotifications" Version="1.0.1" />
+    <PackageReference Include="SplatDev.Umbraco.Plugins.EmailTemplates"    Version="1.0.1" />
+    <PackageReference Include="SplatDev.Umbraco.Plugins.ExamineExtensions" Version="1.0.1" />
+    <PackageReference Include="SplatDev.Umbraco.Plugins.ExceptionManager"  Version="2.0.1" />
+    <PackageReference Include="SplatDev.Umbraco.Plugins.Exif"              Version="1.0.1" />
+    <PackageReference Include="SplatDev.Umbraco.Plugins.Faqs"              Version="2.0.1" />
+    <PackageReference Include="SplatDev.Umbraco.Plugins.Forums"            Version="2.0.1" />
+    <PackageReference Include="SplatDev.Umbraco.Plugins.Gdrp"              Version="2.0.1" />
+    <PackageReference Include="SplatDev.Umbraco.Plugins.HiddenContent"     Version="2.0.1" />
+    <PackageReference Include="SplatDev.Umbraco.Plugins.IspServices"       Version="2.0.1" />
+    <PackageReference Include="SplatDev.Umbraco.Plugins.JsonRpc"           Version="2.0.1" />
+    <PackageReference Include="SplatDev.Umbraco.Plugins.LazyLoad"          Version="1.0.1" />
+    <PackageReference Include="SplatDev.Umbraco.Plugins.LiveVideo"         Version="2.0.1" />
+    <PackageReference Include="SplatDev.Umbraco.Plugins.Mailer"            Version="2.0.1" />
+    <PackageReference Include="SplatDev.Umbraco.Plugins.MemberGroups"      Version="2.0.1" />
+    <PackageReference Include="SplatDev.Umbraco.Plugins.MemberLogin"       Version="2.0.1" />
+    <PackageReference Include="SplatDev.Umbraco.Plugins.MemberNotifications" Version="1.0.1" />
+    <PackageReference Include="SplatDev.Umbraco.Plugins.MemberRegistration" Version="2.0.1" />
+    <PackageReference Include="SplatDev.Umbraco.Plugins.MemberTypes"       Version="2.0.1" />
+    <PackageReference Include="SplatDev.Umbraco.Plugins.MostViewed"        Version="2.0.1" />
+    <PackageReference Include="SplatDev.Umbraco.Plugins.NewsTicker"        Version="2.0.1" />
+    <PackageReference Include="SplatDev.Umbraco.Plugins.Newsletter"        Version="1.0.1" />
+    <PackageReference Include="SplatDev.Umbraco.Plugins.Newsletters"       Version="2.0.1" />
+    <PackageReference Include="SplatDev.Umbraco.Plugins.OAuth"             Version="2.0.1" />
+    <PackageReference Include="SplatDev.Umbraco.Plugins.OnOff"             Version="2.0.1" />
+    <PackageReference Include="SplatDev.Umbraco.Plugins.PasswordSettings"  Version="2.0.1" />
+    <PackageReference Include="SplatDev.Umbraco.Plugins.Payments.BancoInter" Version="1.0.1" />
+    <PackageReference Include="SplatDev.Umbraco.Plugins.Payments.MercadoPago" Version="2.0.1" />
+    <PackageReference Include="SplatDev.Umbraco.Plugins.Payments.PagSeguro" Version="2.0.1" />
+    <PackageReference Include="SplatDev.Umbraco.Plugins.PhotoGallery"      Version="1.0.1" />
+    <PackageReference Include="SplatDev.Umbraco.Plugins.PropertiesReport"  Version="2.0.1" />
+    <PackageReference Include="SplatDev.Umbraco.Plugins.QuickPoll"         Version="2.0.1" />
+    <PackageReference Include="SplatDev.Umbraco.Plugins.RdpManager"        Version="2.0.1" />
+    <PackageReference Include="SplatDev.Umbraco.Plugins.RedirectManager"   Version="2.0.1" />
+    <PackageReference Include="SplatDev.Umbraco.Plugins.Restricted"        Version="2.0.1" />
+    <PackageReference Include="SplatDev.Umbraco.Plugins.Rsvp"              Version="2.0.1" />
+    <PackageReference Include="SplatDev.Umbraco.Plugins.SEO"               Version="2.0.1" />
+    <PackageReference Include="SplatDev.Umbraco.Plugins.Security"          Version="2.0.1" />
+    <PackageReference Include="SplatDev.Umbraco.Plugins.Settings"          Version="2.0.1" />
+    <PackageReference Include="SplatDev.Umbraco.Plugins.ShopCart"          Version="2.0.1" />
+    <PackageReference Include="SplatDev.Umbraco.Plugins.ShortUrls"         Version="2.0.1" />
+    <PackageReference Include="SplatDev.Umbraco.Plugins.Slider"            Version="1.0.1" />
+    <PackageReference Include="SplatDev.Umbraco.Plugins.Smtp"              Version="2.0.1" />
+    <PackageReference Include="SplatDev.Umbraco.Plugins.SocialMedia.Channels" Version="2.0.1" />
+    <PackageReference Include="SplatDev.Umbraco.Plugins.SocialMedia.Login" Version="2.0.1" />
+    <PackageReference Include="SplatDev.Umbraco.Plugins.SocialMedia.Share" Version="2.0.1" />
+    <PackageReference Include="SplatDev.Umbraco.Plugins.StarRatings"       Version="2.0.1" />
+    <PackageReference Include="SplatDev.Umbraco.Plugins.Surveys"           Version="2.0.1" />
+    <PackageReference Include="SplatDev.Umbraco.Plugins.SvgViewer"         Version="1.0.1" />
+    <PackageReference Include="SplatDev.Umbraco.Plugins.ToastNotifications" Version="2.0.1" />
+    <PackageReference Include="SplatDev.Umbraco.Plugins.Tweets"            Version="2.0.1" />
+    <PackageReference Include="SplatDev.Umbraco.Plugins.VideoPreview"      Version="2.0.1" />
+    <PackageReference Include="SplatDev.Umbraco.Plugins.VisitorCounter"    Version="2.0.1" />
+    <PackageReference Include="SplatDev.Umbraco.Plugins.WhatsApp"          Version="2.0.1" />
+    <PackageReference Include="SplatDev.Umbraco.Plugins.WordsApi"          Version="2.0.1" />
+    <PackageReference Include="SplatDev.Umbraco.Plugins.Yaml2Schema"       Version="1.0.39" />
+  </ItemGroup>
+
+</Project>

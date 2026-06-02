@@ -72,21 +72,20 @@ else
 fi
 
 # ---- Run Playwright E2E tests ----
-if [ -d "$E2E_DIR" ] && [ -n "$(ls -A "$E2E_DIR" 2>/dev/null)" ]; then
-  log "Running Playwright E2E tests from $E2E_DIR..."
+SPEC_COUNT=$(find "$E2E_DIR/tests" -name "*.spec.ts" 2>/dev/null | wc -l)
+if [ "$SPEC_COUNT" -gt 0 ]; then
+  log "Running $SPEC_COUNT Playwright spec file(s) from $E2E_DIR/tests..."
   cd "$E2E_DIR"
 
-  npx playwright test \
-    --reporter=list \
-    --output="$SCREENSHOT_DIR" \
+  npx playwright test --reporter=list \
     2>&1 | tee /output/playwright-results.log || {
       log "WARNING: Some Playwright tests failed (see /output/playwright-results.log)"
     }
 
   log "E2E test run complete"
 else
-  log "No E2E tests found at $E2E_DIR — skipping Playwright run"
-  log "To add tests, mount them at $E2E_DIR or add them to docker/test/e2e/"
+  log "No .spec.ts tests found at $E2E_DIR/tests — skipping Playwright run"
+  log "To add tests, place .spec.ts files in docker/test/e2e/tests/"
 fi
 
 # ---- Capture a smoke-test screenshot ----
