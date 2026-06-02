@@ -1,0 +1,8 @@
+# Ignore all evidence output artifacts; only directory .gitkeep placeholders are tracked
+*.png
+*.webm
+*.mp4
+*.zip
+*.log
+*.html
+playwright-report/

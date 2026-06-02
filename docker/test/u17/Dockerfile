@@ -343,7 +343,16 @@ WORKDIR /app
 
 COPY --from=dotnet-build /app/publish .
 
-RUN mkdir -p /app/umbraco/Data /output/screenshots /output/videos
+# Copy shared E2E test suite + Playwright config
+COPY docker/test/e2e/ /app/e2e/
+RUN cd /app/e2e && npm ci --ignore-scripts
+
+RUN mkdir -p \
+    /app/umbraco/Data \
+    /output/screenshots \
+    /output/videos \
+    /output/test-results \
+    /output/playwright-report
 
 COPY docker/test/u17/scripts/test-runner.sh /app/test-runner.sh
 RUN chmod +x /app/test-runner.sh

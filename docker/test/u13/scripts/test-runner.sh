@@ -6,11 +6,12 @@
 # =============================================================================
 set -euo pipefail
 
-readonly UMBRACO_URL="http://localhost:5001"
+readonly UMBRACO_URL="${UMBRACO_URL:-http://localhost:5001}"
 readonly HEALTH_ENDPOINT="${UMBRACO_URL}/umbraco"
 readonly MAX_WAIT=180
 readonly SCREENSHOT_DIR="/output/screenshots"
 readonly VIDEO_DIR="/output/videos"
+readonly TEST_RESULTS_DIR="/output/test-results"
 readonly E2E_DIR="/app/e2e"
 
 log() {
@@ -30,7 +31,7 @@ cleanup() {
 trap cleanup EXIT INT TERM
 
 # ---- Prepare output directories ----
-mkdir -p "$SCREENSHOT_DIR" "$VIDEO_DIR"
+mkdir -p "$SCREENSHOT_DIR" "$VIDEO_DIR" "$TEST_RESULTS_DIR"
 
 # ---- Start Umbraco in background ----
 log "Starting Umbraco 13 baseline..."
@@ -72,34 +73,37 @@ else
 fi
 
 # ---- Run Playwright E2E tests ----
-if [ -d "$E2E_DIR" ] && [ -n "$(ls -A "$E2E_DIR" 2>/dev/null)" ]; then
+if [ -d "$E2E_DIR/tests" ] && [ -n "$(find "$E2E_DIR/tests" -name '*.spec.ts' -o -name '*.spec.js' 2>/dev/null | head -1)" ]; then
   log "Running Playwright E2E tests from $E2E_DIR..."
   cd "$E2E_DIR"
 
+  UMBRACO_URL="$UMBRACO_URL" \
+  PLAYWRIGHT_OUTPUT_DIR="$TEST_RESULTS_DIR" \
   npx playwright test \
-    --reporter=list \
-    --output="$SCREENSHOT_DIR" \
+    --output="$TEST_RESULTS_DIR" \
     2>&1 | tee /output/playwright-results.log || {
       log "WARNING: Some Playwright tests failed (see /output/playwright-results.log)"
     }
 
   log "E2E test run complete"
 else
-  log "No E2E tests found at $E2E_DIR — skipping Playwright run"
-  log "To add tests, mount them at $E2E_DIR or add them to docker/test/e2e/"
+  log "No .spec.ts tests found at $E2E_DIR/tests — skipping Playwright run"
+  log "To add tests, mount them at $E2E_DIR/tests or add them to docker/test/e2e/tests/"
 fi
 
-# ---- Capture a smoke-test screenshot ----
+# ---- Capture smoke-test screenshots ----
 log "Capturing smoke-test screenshots..."
-node - <<'SMOKE_JS'
+cd "$E2E_DIR"
+UMBRACO_URL="$UMBRACO_URL" node -e "
 const { chromium } = require('playwright');
+const url = process.env.UMBRACO_URL || 'http://localhost:5001';
 
 (async () => {
-  const browser = await chromium.launch({ args: ['--no-sandbox'] });
-  const page = await browser.newPage();
+  const browser = await chromium.launch({ args: ['--no-sandbox', '--disable-setuid-sandbox'] });
+  const page = await browser.newPage({ viewport: { width: 1280, height: 800 } });
 
   try {
-    await page.goto('http://localhost:5001/umbraco', { waitUntil: 'networkidle', timeout: 30000 });
+    await page.goto(url + '/umbraco', { waitUntil: 'networkidle', timeout: 30000 });
     await page.screenshot({ path: '/output/screenshots/01-login-page.png', fullPage: true });
     console.log('Screenshot: login page captured');
   } catch (err) {
@@ -107,7 +111,7 @@ const { chromium } = require('playwright');
   }
 
   try {
-    await page.goto('http://localhost:5001/', { waitUntil: 'networkidle', timeout: 30000 });
+    await page.goto(url + '/', { waitUntil: 'networkidle', timeout: 30000 });
     await page.screenshot({ path: '/output/screenshots/02-frontend-home.png', fullPage: true });
     console.log('Screenshot: frontend home captured');
   } catch (err) {
@@ -116,7 +120,7 @@ const { chromium } = require('playwright');
 
   await browser.close();
 })();
-SMOKE_JS
+" || log "WARNING: Smoke screenshots failed (non-fatal)"
 
 log "Screenshots saved to $SCREENSHOT_DIR"
 log "Test run finished successfully"
