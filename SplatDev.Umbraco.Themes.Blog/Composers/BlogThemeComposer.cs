@@ -1,8 +1,10 @@
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using SplatDev.Umbraco.Plugins.Yaml2Schema.Services;
+using Umbraco.Cms.Core;
 using Umbraco.Cms.Core.Composing;
+using Umbraco.Cms.Core.Services;
+using Umbraco.Cms.Core.DependencyInjection;
 using Umbraco.Cms.Core.Events;
 using Umbraco.Cms.Core.Notifications;
 
@@ -18,104 +20,95 @@ public class BlogThemeComposer : IComposer
 
 internal sealed class BlogThemeStartedHandler : INotificationAsyncHandler<UmbracoApplicationStartedNotification>
 {
-    private const string YamlResourceName = "SplatDev.Umbraco.Themes.Blog.Config.umbraco.yml";
-    private const string DoneFileName = "blog-theme.done";
+    private const string ThemeName = "blog";
+    private const string EmbeddedYamlPath = "SplatDev.Umbraco.Themes.Blog.Config.umbraco.yml";
 
     private readonly ILogger<BlogThemeStartedHandler> _logger;
     private readonly IHostEnvironment _hostEnvironment;
-    private readonly IServiceProvider _serviceProvider;
+    private readonly IRuntimeState _runtimeState;
+    private readonly YamlParser _yamlParser;
+    private readonly DataTypeCreator _dataTypeCreator;
+    private readonly DocumentTypeCreator _documentTypeCreator;
+    private readonly TemplateCreator _templateCreator;
 
     public BlogThemeStartedHandler(
         ILogger<BlogThemeStartedHandler> logger,
         IHostEnvironment hostEnvironment,
-        IServiceProvider serviceProvider)
+        IRuntimeState runtimeState,
+        YamlParser yamlParser,
+        DataTypeCreator dataTypeCreator,
+        DocumentTypeCreator documentTypeCreator,
+        TemplateCreator templateCreator)
     {
         _logger = logger;
         _hostEnvironment = hostEnvironment;
-        _serviceProvider = serviceProvider;
+        _runtimeState = runtimeState;
+        _yamlParser = yamlParser;
+        _dataTypeCreator = dataTypeCreator;
+        _documentTypeCreator = documentTypeCreator;
+        _templateCreator = templateCreator;
     }
 
     public async Task HandleAsync(UmbracoApplicationStartedNotification notification, CancellationToken cancellationToken)
     {
+        if (_runtimeState.Level != RuntimeLevel.Run)
+        {
+            _logger.LogDebug("Blog theme setup skipped – runtime level is {Level}", _runtimeState.Level);
+            return;
+        }
+
+        var contentRoot = _hostEnvironment.ContentRootPath;
+        var themeDir = Path.Combine(contentRoot, "config", "themes", ThemeName);
+        var yamlDest = Path.Combine(themeDir, "umbraco.yml");
+        var doneFile = Path.Combine(themeDir, "umbraco.done");
+
+        if (File.Exists(doneFile))
+        {
+            _logger.LogDebug("Blog theme already installed (found {DoneFile})", doneFile);
+            return;
+        }
+
+        _logger.LogInformation("Installing Blog theme schema...");
+
         try
         {
-            var contentRoot = _hostEnvironment.ContentRootPath;
-            var themeConfigDir = Path.Combine(contentRoot, "config", "themes", "blog");
-            var doneFile = Path.Combine(themeConfigDir, DoneFileName);
+            Directory.CreateDirectory(themeDir);
 
-            if (File.Exists(doneFile))
+            var assembly = typeof(BlogThemeComposer).Assembly;
+            await using (var stream = assembly.GetManifestResourceStream(EmbeddedYamlPath)
+                ?? throw new InvalidOperationException($"Embedded resource '{EmbeddedYamlPath}' not found."))
+            await using (var fileStream = File.Create(yamlDest))
             {
-                _logger.LogDebug("[BlogTheme] Schema already installed. Skipping.");
-                return;
+                await stream.CopyToAsync(fileStream, cancellationToken);
             }
 
-            _logger.LogInformation("[BlogTheme] Installing blog theme schema...");
+            var yamlRoot = _yamlParser.ParseYaml(yamlDest);
+            var schema = yamlRoot.Umbraco;
 
-            Directory.CreateDirectory(themeConfigDir);
+            if (schema.DataTypes is { Count: > 0 })
+            {
+                _logger.LogInformation("Creating {Count} Blog data type(s)...", schema.DataTypes.Count);
+                _dataTypeCreator.CreateDataTypes(schema.DataTypes);
+            }
 
-            var yamlPath = Path.Combine(themeConfigDir, "umbraco.yml");
-            await ExtractEmbeddedYamlAsync(yamlPath, cancellationToken);
+            if (schema.DocumentTypes is { Count: > 0 })
+            {
+                _logger.LogInformation("Creating {Count} Blog document type(s)...", schema.DocumentTypes.Count);
+                _documentTypeCreator.CreateDocumentTypes(schema.DocumentTypes, schema.DataTypes);
+            }
 
-            await InstallSchemaAsync(yamlPath, cancellationToken);
+            if (schema.Templates is { Count: > 0 })
+            {
+                _logger.LogInformation("Creating {Count} Blog template(s)...", schema.Templates.Count);
+                _templateCreator.CreateTemplates(schema.Templates);
+            }
 
             await File.WriteAllTextAsync(doneFile, DateTime.UtcNow.ToString("O"), cancellationToken);
-            _logger.LogInformation("[BlogTheme] Blog theme schema installed successfully.");
+            _logger.LogInformation("Blog theme installed successfully.");
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "[BlogTheme] Failed to install blog theme schema.");
-        }
-    }
-
-    private async Task ExtractEmbeddedYamlAsync(string targetPath, CancellationToken cancellationToken)
-    {
-        var assembly = typeof(BlogThemeComposer).Assembly;
-        await using var stream = assembly.GetManifestResourceStream(YamlResourceName)
-            ?? throw new InvalidOperationException($"Embedded resource '{YamlResourceName}' not found in assembly '{assembly.FullName}'.");
-
-        await using var fileStream = File.Create(targetPath);
-        await stream.CopyToAsync(fileStream, cancellationToken);
-
-        _logger.LogDebug("[BlogTheme] Extracted embedded YAML to: {Path}", targetPath);
-    }
-
-    private async Task InstallSchemaAsync(string yamlPath, CancellationToken cancellationToken)
-    {
-        using var scope = _serviceProvider.CreateScope();
-
-        var yamlParser = scope.ServiceProvider.GetRequiredService<IYamlParser>();
-        var dataTypeCreator = scope.ServiceProvider.GetRequiredService<IDataTypeCreator>();
-        var documentTypeCreator = scope.ServiceProvider.GetRequiredService<IDocumentTypeCreator>();
-        var templateCreator = scope.ServiceProvider.GetRequiredService<ITemplateCreator>();
-
-        var yamlContent = await File.ReadAllTextAsync(yamlPath, cancellationToken);
-        var schema = yamlParser.Parse(yamlContent);
-
-        if (schema.DataTypes?.Count > 0)
-        {
-            _logger.LogDebug("[BlogTheme] Creating {Count} data types...", schema.DataTypes.Count);
-            foreach (var dataType in schema.DataTypes)
-            {
-                await dataTypeCreator.CreateOrUpdateAsync(dataType);
-            }
-        }
-
-        if (schema.DocumentTypes?.Count > 0)
-        {
-            _logger.LogDebug("[BlogTheme] Creating {Count} document types...", schema.DocumentTypes.Count);
-            foreach (var documentType in schema.DocumentTypes)
-            {
-                await documentTypeCreator.CreateOrUpdateAsync(documentType);
-            }
-        }
-
-        if (schema.Templates?.Count > 0)
-        {
-            _logger.LogDebug("[BlogTheme] Creating {Count} templates...", schema.Templates.Count);
-            foreach (var template in schema.Templates)
-            {
-                await templateCreator.CreateOrUpdateAsync(template);
-            }
+            _logger.LogError(ex, "Blog theme installation failed.");
         }
     }
 }

@@ -3,7 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 
 using SplatDev.DigitalBookCurator.Core.Models;
-using SplatDev.Umbraco.Plugins.Models;
+using SplatDev.DigitalBookCurator.Core.Repositories;
+using SplatDev.Umbraco.Plugins.PdfCurator.Models;
 
 using Umbraco.Cms.Web.Common.Controllers;
 

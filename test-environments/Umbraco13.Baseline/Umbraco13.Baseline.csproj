@@ -85,7 +85,7 @@
     <ProjectReference Include="../../SplatDev.Umbraco.Plugins.Payments.BancoInter/SplatDev.Umbraco.Plugins.Payments.BancoInter.csproj" PrivateAssets="none" />
     <ProjectReference Include="../../SplatDev.Umbraco.Plugins.Payments.MercadoPago/SplatDev.Umbraco.Plugins.Payments.MercadoPago.csproj" PrivateAssets="none" />
     <ProjectReference Include="../../SplatDev.Umbraco.Plugins.Payments.PagSeguro/SplatDev.Umbraco.Plugins.Payments.PagSeguro.csproj" PrivateAssets="none" />
-    <!-- SplatDev.Umbraco.Plugins.PdfCurator excluded: depends on SplatDev.DigitalBookCurator library not in repo (see SPL-XXXX) -->
+    <ProjectReference Include="../../SplatDev.Umbraco.Plugins.PdfCurator/SplatDev.Umbraco.Plugins.PdfCurator.csproj" PrivateAssets="none" />
     <ProjectReference Include="../../SplatDev.Umbraco.Plugins.PhotoGallery/SplatDev.Umbraco.Plugins.PhotoGallery.csproj" PrivateAssets="none" />
     <ProjectReference Include="../../SplatDev.Umbraco.Plugins.PropertiesReport/SplatDev.Umbraco.Plugins.PropertiesReport.csproj" PrivateAssets="none" />
     <ProjectReference Include="../../SplatDev.Umbraco.Plugins.QuickPoll/SplatDev.Umbraco.Plugins.QuickPoll.csproj" PrivateAssets="none" />
@@ -114,7 +114,22 @@
     <ProjectReference Include="../../SplatDev.Umbraco.Plugins.WordsApi/SplatDev.Umbraco.Plugins.WordsApi.csproj" PrivateAssets="none" />
     <ProjectReference Include="../../SplatDev.Umbraco.QueryStringFilters/SplatDev.Umbraco.QueryStringFilters.csproj" PrivateAssets="none" />
     <!-- U13-only plugins (net8.0) -->
-    <!-- SplatDev.Api.Common.ApiVersioning excluded: requires Microsoft.AspNetCore.Mvc.ApiExplorer >= 8.0.0 not available (see SPL-XXXX) -->
-    <!-- SplatDev.Umbraco.Themes.Tests excluded: depends on Yaml2Schema which is net10.0 only (see SPL-XXXX) -->
+    <ProjectReference Include="../../SplatDev.Api.Common.ApiVersioning/SplatDev.Api.Common.ApiVersioning.csproj" PrivateAssets="none" />
+    <!-- Themes -->
+    <ProjectReference Include="../../SplatDev.Umbraco.Themes.Base/SplatDev.Umbraco.Themes.Base.csproj" PrivateAssets="none" />
+    <ProjectReference Include="../../SplatDev.Umbraco.Themes.Blog/SplatDev.Umbraco.Themes.Blog.csproj" PrivateAssets="none" />
+    <ProjectReference Include="../../SplatDev.Umbraco.Themes.Commerce/SplatDev.Umbraco.Themes.Commerce.csproj" PrivateAssets="none" />
+    <ProjectReference Include="../../SplatDev.Umbraco.Themes.Conference/SplatDev.Umbraco.Themes.Conference.csproj" PrivateAssets="none" />
+    <ProjectReference Include="../../SplatDev.Umbraco.Themes.Corporate/SplatDev.Umbraco.Themes.Corporate.csproj" PrivateAssets="none" />
+    <ProjectReference Include="../../SplatDev.Umbraco.Themes.Forum/SplatDev.Umbraco.Themes.Forum.csproj" PrivateAssets="none" />
+    <ProjectReference Include="../../SplatDev.Umbraco.Themes.Hotel/SplatDev.Umbraco.Themes.Hotel.csproj" PrivateAssets="none" />
+    <ProjectReference Include="../../SplatDev.Umbraco.Themes.Landing/SplatDev.Umbraco.Themes.Landing.csproj" PrivateAssets="none" />
+    <ProjectReference Include="../../SplatDev.Umbraco.Themes.Portfolio/SplatDev.Umbraco.Themes.Portfolio.csproj" PrivateAssets="none" />
+    <ProjectReference Include="../../SplatDev.Umbraco.Themes.Tests/SplatDev.Umbraco.Themes.Tests.csproj" PrivateAssets="none" />
+    <!-- Tools -->
+    <ProjectReference Include="../../SplatDev.Umbraco.Tools.Packager/SplatDev.Umbraco.Tools.Packager.csproj" PrivateAssets="none" />
+    <ProjectReference Include="../../SplatDev.Umbraco.Tools.PackageActions/SplatDev.Umbraco.Tools.PackageActions.csproj" PrivateAssets="none" />
+    <ProjectReference Include="../../SplatDev.Umbraco.Tools.T4.Plugins/SplatDev.Umbraco.Tools.T4.Plugins.csproj" PrivateAssets="none" />
+    <ProjectReference Include="../../SplatDev.Umbraco.Tools.T4.Themes/SplatDev.Umbraco.Tools.T4.Themes.csproj" PrivateAssets="none" />
   </ItemGroup>
 </Project>
