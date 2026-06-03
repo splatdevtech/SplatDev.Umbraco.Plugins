@@ -1,4 +1,4 @@
-﻿namespace SplatDev.Umbraco.Plugins.Models;
+﻿namespace SplatDev.Umbraco.Plugins.PdfCurator.Models;
 public class FileImportAvailable
 {
     public string Name { get; set; } = string.Empty;

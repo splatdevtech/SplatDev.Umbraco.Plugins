@@ -1,9 +1,11 @@
 using System.Reflection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using SplatDev.Umbraco.Plugins.Yaml2Schema;
+using SplatDev.Umbraco.Plugins.Yaml2Schema.Services;
 using Umbraco.Cms.Core;
 using Umbraco.Cms.Core.Composing;
+using Umbraco.Cms.Core.Services;
+using Umbraco.Cms.Core.DependencyInjection;
 using Umbraco.Cms.Core.Events;
 using Umbraco.Cms.Core.Notifications;
 
@@ -100,16 +102,17 @@ internal sealed class ForumThemeStartupHandler : INotificationHandler<UmbracoApp
     {
         _logger.LogInformation("[ForumTheme] Starting schema import from {Path}.", yamlPath);
 
-        var schema = _yamlParser.ParseFile(yamlPath);
+        var yamlRoot = _yamlParser.ParseYaml(yamlPath);
+        var schema = yamlRoot.Umbraco;
 
-        foreach (var dataType in schema.DataTypes ?? [])
-            _dataTypeCreator.CreateOrUpdate(dataType);
+        if (schema.DataTypes is { Count: > 0 })
+            _dataTypeCreator.CreateDataTypes(schema.DataTypes);
 
-        foreach (var documentType in schema.DocumentTypes ?? [])
-            _documentTypeCreator.CreateOrUpdate(documentType);
+        if (schema.DocumentTypes is { Count: > 0 })
+            _documentTypeCreator.CreateDocumentTypes(schema.DocumentTypes, schema.DataTypes);
 
-        foreach (var template in schema.Templates ?? [])
-            _templateCreator.CreateOrUpdate(template);
+        if (schema.Templates is { Count: > 0 })
+            _templateCreator.CreateTemplates(schema.Templates);
 
         _logger.LogInformation("[ForumTheme] Schema import completed successfully.");
     }

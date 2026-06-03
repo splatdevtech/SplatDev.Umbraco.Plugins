@@ -24,17 +24,19 @@
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net8.0'">
     <PackageReference Include="Umbraco.Cms.Core" Version="13.12.0" />
+    <PackageReference Include="Umbraco.Cms.Infrastructure" Version="13.12.0" />
     <PackageReference Include="Umbraco.Cms.Web.Common" Version="13.12.0" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net10.0'">
     <PackageReference Include="Umbraco.Cms.Core" Version="17.3.4" />
+    <PackageReference Include="Umbraco.Cms.Infrastructure" Version="17.3.4" />
     <PackageReference Include="Umbraco.Cms.Web.Common" Version="17.3.4" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="SplatDev.Umbraco.Plugins.Yaml2Schema" Version="1.0.35" />
-    <PackageReference Include="SplatDev.Umbraco.Themes.Base" Version="1.0.0" />
+    <ProjectReference Include="..\SplatDev.Umbraco.Plugins.Yaml\SplatDev.Umbraco.Plugins.Yaml2Schema\SplatDev.Umbraco.Plugins.Yaml2Schema.csproj" />
+    <ProjectReference Include="..\SplatDev.Umbraco.Themes.Base\SplatDev.Umbraco.Themes.Base.csproj" />
   </ItemGroup>
 
   <ItemGroup>

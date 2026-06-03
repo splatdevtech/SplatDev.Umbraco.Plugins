@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 using SplatDev.Umbraco.Plugins.Yaml2Schema.Services;
 using Umbraco.Cms.Core;
 using Umbraco.Cms.Core.Composing;
+using Umbraco.Cms.Core.Services;
 using Umbraco.Cms.Core.DependencyInjection;
 using Umbraco.Cms.Core.Events;
 using Umbraco.Cms.Core.Notifications;
@@ -85,27 +86,28 @@ public class CorporateThemeStartupHandler : INotificationAsyncHandler<UmbracoApp
             _logger.LogInformation("Corporate theme YAML extracted to {Path}", yamlDest);
 
             // Parse YAML
-            var schema = await _yamlParser.ParseAsync(yamlDest, cancellationToken);
+            var yamlRoot = _yamlParser.ParseYaml(yamlDest);
+            var schema = yamlRoot.Umbraco;
 
             // Install data types
             if (schema.DataTypes is { Count: > 0 })
             {
                 _logger.LogInformation("Creating {Count} Corporate data type(s)…", schema.DataTypes.Count);
-                await _dataTypeCreator.CreateOrUpdateAsync(schema.DataTypes, cancellationToken);
+                _dataTypeCreator.CreateDataTypes(schema.DataTypes);
             }
 
             // Install document / element types
             if (schema.DocumentTypes is { Count: > 0 })
             {
                 _logger.LogInformation("Creating {Count} Corporate document type(s)…", schema.DocumentTypes.Count);
-                await _documentTypeCreator.CreateOrUpdateAsync(schema.DocumentTypes, cancellationToken);
+                _documentTypeCreator.CreateDocumentTypes(schema.DocumentTypes, schema.DataTypes);
             }
 
             // Install templates
             if (schema.Templates is { Count: > 0 })
             {
                 _logger.LogInformation("Creating {Count} Corporate template(s)…", schema.Templates.Count);
-                await _templateCreator.CreateOrUpdateAsync(schema.Templates, cancellationToken);
+                _templateCreator.CreateTemplates(schema.Templates);
             }
 
             // Mark as done
