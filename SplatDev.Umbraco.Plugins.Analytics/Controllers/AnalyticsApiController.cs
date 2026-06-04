@@ -6,7 +6,7 @@ using SplatDev.Umbraco.Plugins.Analytics.Services;
 namespace SplatDev.Umbraco.Plugins.Analytics.Controllers;
 
 [Route("umbraco/api/analytics/[action]")]
-public class AnalyticsApiController : UmbracoApiController
+public class AnalyticsApiController : ControllerBase
 {
     private readonly IAnalyticsService _service;
 
