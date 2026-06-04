@@ -1,0 +1,264 @@
+{
+  "version": "umbraco17",
+  "baseUrl": "http://172.23.0.21:5000",
+  "capturedAt": "2026-06-04T03:28:21.220Z",
+  "pluginCount": 64,
+  "plugins": [
+    {
+      "name": "Analytics",
+      "url": "analytics"
+    },
+    {
+      "name": "AdminBar",
+      "url": "admin-bar"
+    },
+    {
+      "name": "Backups",
+      "url": "backups"
+    },
+    {
+      "name": "Blog",
+      "url": "blog"
+    },
+    {
+      "name": "CacheManager",
+      "url": "cache-manager"
+    },
+    {
+      "name": "CharLimit",
+      "url": "char-limit"
+    },
+    {
+      "name": "Countries",
+      "url": "countries"
+    },
+    {
+      "name": "CustomLogin",
+      "url": "customlogin"
+    },
+    {
+      "name": "D4Sign",
+      "url": "d4sign"
+    },
+    {
+      "name": "DefaultValue",
+      "url": "default-value"
+    },
+    {
+      "name": "DictionaryManager",
+      "url": "dictionary-manager"
+    },
+    {
+      "name": "Dropzone",
+      "url": "dropzone"
+    },
+    {
+      "name": "ENotAssina",
+      "url": "enotassina"
+    },
+    {
+      "name": "EmailNotifications",
+      "url": "email-notifications"
+    },
+    {
+      "name": "EmailTemplates",
+      "url": "email-templates"
+    },
+    {
+      "name": "ExamineExtensions",
+      "url": "examine-extensions"
+    },
+    {
+      "name": "ExceptionManager",
+      "url": "exception-manager"
+    },
+    {
+      "name": "Faqs",
+      "url": "faqs"
+    },
+    {
+      "name": "FormBuilder",
+      "url": "formbuilder-dashboard"
+    },
+    {
+      "name": "Gdrp",
+      "url": "gdpr-compliance"
+    },
+    {
+      "name": "HiddenContent",
+      "url": "hiddencontent"
+    },
+    {
+      "name": "ImageProcessor",
+      "url": "image-processor"
+    },
+    {
+      "name": "LiveVideo",
+      "url": "live-video"
+    },
+    {
+      "name": "Mailer",
+      "url": "mailer"
+    },
+    {
+      "name": "MemberGroups",
+      "url": "membergroups"
+    },
+    {
+      "name": "MemberLogin",
+      "url": "memberlogin"
+    },
+    {
+      "name": "MemberNotifications",
+      "url": "member-notifications"
+    },
+    {
+      "name": "MemberRegistration",
+      "url": "memberregistration"
+    },
+    {
+      "name": "MemberTypes",
+      "url": "membertypes"
+    },
+    {
+      "name": "MostViewed",
+      "url": "most-viewed"
+    },
+    {
+      "name": "NewsTicker",
+      "url": "news-ticker"
+    },
+    {
+      "name": "Newsletter",
+      "url": "newsletter"
+    },
+    {
+      "name": "Newsletters",
+      "url": "newsletters"
+    },
+    {
+      "name": "OAuth",
+      "url": "oauth"
+    },
+    {
+      "name": "OnOff",
+      "url": "feature-toggles"
+    },
+    {
+      "name": "PasswordSettings",
+      "url": "passwordsettings"
+    },
+    {
+      "name": "PropertiesReport",
+      "url": "properties-report"
+    },
+    {
+      "name": "QuickPoll",
+      "url": "quick-poll"
+    },
+    {
+      "name": "RdpManager",
+      "url": "rdp-manager"
+    },
+    {
+      "name": "RedirectManager",
+      "url": "redirect-manager"
+    },
+    {
+      "name": "Restricted",
+      "url": "restricted"
+    },
+    {
+      "name": "Rsvp",
+      "url": "rsvp"
+    },
+    {
+      "name": "SEO",
+      "url": "seo"
+    },
+    {
+      "name": "Schema2Yaml",
+      "url": "schema-export"
+    },
+    {
+      "name": "Security",
+      "url": "security"
+    },
+    {
+      "name": "Settings",
+      "url": "site-settings"
+    },
+    {
+      "name": "ShopCart",
+      "url": "shop-cart"
+    },
+    {
+      "name": "ShortUrls",
+      "url": "short-urls"
+    },
+    {
+      "name": "Smtp",
+      "url": "smtp-settings"
+    },
+    {
+      "name": "SocialChannels",
+      "url": "social-channels"
+    },
+    {
+      "name": "SocialLogin",
+      "url": "social-login"
+    },
+    {
+      "name": "SocialShare",
+      "url": "social-share"
+    },
+    {
+      "name": "StarRatings",
+      "url": "star-ratings"
+    },
+    {
+      "name": "Surveys",
+      "url": "surveys"
+    },
+    {
+      "name": "SvgViewer",
+      "url": "svg-viewer"
+    },
+    {
+      "name": "ToastNotifications",
+      "url": "toast-notifications"
+    },
+    {
+      "name": "Tweets",
+      "url": "tweets"
+    },
+    {
+      "name": "VideoPreview",
+      "url": "video-preview"
+    },
+    {
+      "name": "VisitorCounter",
+      "url": "visitor-counter"
+    },
+    {
+      "name": "WhatsApp",
+      "url": "whatsapp"
+    },
+    {
+      "name": "Yaml2Schema",
+      "url": "yaml-import"
+    },
+    {
+      "name": "BancoInter",
+      "url": "banco-inter"
+    },
+    {
+      "name": "MercadoPago",
+      "url": "mercadopago"
+    },
+    {
+      "name": "PagSeguro",
+      "url": "pagseguro"
+    }
+  ]
+}

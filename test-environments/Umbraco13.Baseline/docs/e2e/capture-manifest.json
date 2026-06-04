@@ -1,0 +1,264 @@
+{
+  "version": "umbraco13",
+  "baseUrl": "http://172.23.0.22:5001",
+  "capturedAt": "2026-06-04T03:32:14.512Z",
+  "pluginCount": 64,
+  "plugins": [
+    {
+      "name": "Analytics",
+      "url": "/umbraco#/analytics"
+    },
+    {
+      "name": "AdminBar",
+      "url": "/umbraco#/umbraco-admin-bar"
+    },
+    {
+      "name": "Backups",
+      "url": "/umbraco#/backups"
+    },
+    {
+      "name": "Blog",
+      "url": "/umbraco#/content"
+    },
+    {
+      "name": "CacheManager",
+      "url": "/umbraco#/cache-manager"
+    },
+    {
+      "name": "CharLimit",
+      "url": "/umbraco#/settings"
+    },
+    {
+      "name": "Countries",
+      "url": "/umbraco#/countries"
+    },
+    {
+      "name": "CustomLogin",
+      "url": "/umbraco#/settings/customlogin"
+    },
+    {
+      "name": "D4Sign",
+      "url": "/umbraco#/d4sign"
+    },
+    {
+      "name": "DefaultValue",
+      "url": "/umbraco#/settings/default-value"
+    },
+    {
+      "name": "DictionaryManager",
+      "url": "/umbraco#/translation/dictionary"
+    },
+    {
+      "name": "Dropzone",
+      "url": "/umbraco#/dropzone"
+    },
+    {
+      "name": "ENotAssina",
+      "url": "/umbraco#/enotassina"
+    },
+    {
+      "name": "EmailNotifications",
+      "url": "/umbraco#/email-notifications"
+    },
+    {
+      "name": "EmailTemplates",
+      "url": "/umbraco#/email-templates"
+    },
+    {
+      "name": "ExamineExtensions",
+      "url": "/umbraco#/settings/examine-management"
+    },
+    {
+      "name": "ExceptionManager",
+      "url": "/umbraco#/exception-manager"
+    },
+    {
+      "name": "Faqs",
+      "url": "/umbraco#/content"
+    },
+    {
+      "name": "FormBuilder",
+      "url": "/umbraco#/form-builder"
+    },
+    {
+      "name": "Gdrp",
+      "url": "/umbraco#/gdpr"
+    },
+    {
+      "name": "HiddenContent",
+      "url": "/umbraco#/content"
+    },
+    {
+      "name": "ImageProcessor",
+      "url": "/umbraco#/image-processor"
+    },
+    {
+      "name": "LiveVideo",
+      "url": "/umbraco#/live-video"
+    },
+    {
+      "name": "Mailer",
+      "url": "/umbraco#/mailer"
+    },
+    {
+      "name": "MemberGroups",
+      "url": "/umbraco#/member/member-groups"
+    },
+    {
+      "name": "MemberLogin",
+      "url": "/umbraco#/settings/member-login"
+    },
+    {
+      "name": "MemberNotifications",
+      "url": "/umbraco#/member-notifications"
+    },
+    {
+      "name": "MemberRegistration",
+      "url": "/umbraco#/settings/member-registration"
+    },
+    {
+      "name": "MemberTypes",
+      "url": "/umbraco#/settings/member-types"
+    },
+    {
+      "name": "MostViewed",
+      "url": "/umbraco#/most-viewed"
+    },
+    {
+      "name": "NewsTicker",
+      "url": "/umbraco#/news-ticker"
+    },
+    {
+      "name": "Newsletter",
+      "url": "/umbraco#/newsletter"
+    },
+    {
+      "name": "Newsletters",
+      "url": "/umbraco#/newsletters"
+    },
+    {
+      "name": "OAuth",
+      "url": "/umbraco#/oauth"
+    },
+    {
+      "name": "OnOff",
+      "url": "/umbraco#/settings/feature-toggles"
+    },
+    {
+      "name": "PasswordSettings",
+      "url": "/umbraco#/settings/password-settings"
+    },
+    {
+      "name": "PropertiesReport",
+      "url": "/umbraco#/settings/properties-report"
+    },
+    {
+      "name": "QuickPoll",
+      "url": "/umbraco#/settings/quick-poll"
+    },
+    {
+      "name": "RdpManager",
+      "url": "/umbraco#/rdp-manager"
+    },
+    {
+      "name": "RedirectManager",
+      "url": "/umbraco#/settings/redirect-manager"
+    },
+    {
+      "name": "Restricted",
+      "url": "/umbraco#/settings/restricted-content"
+    },
+    {
+      "name": "Rsvp",
+      "url": "/umbraco#/settings/rsvp"
+    },
+    {
+      "name": "SEO",
+      "url": "/umbraco#/settings/seo"
+    },
+    {
+      "name": "Schema2Yaml",
+      "url": "/umbraco#/settings/schema-export"
+    },
+    {
+      "name": "Security",
+      "url": "/umbraco#/security"
+    },
+    {
+      "name": "Settings",
+      "url": "/umbraco#/settings/site-settings"
+    },
+    {
+      "name": "ShopCart",
+      "url": "/umbraco#/shop-cart"
+    },
+    {
+      "name": "ShortUrls",
+      "url": "/umbraco#/settings/short-urls"
+    },
+    {
+      "name": "Smtp",
+      "url": "/umbraco#/settings/smtp"
+    },
+    {
+      "name": "SocialChannels",
+      "url": "/umbraco#/settings/social-channels"
+    },
+    {
+      "name": "SocialLogin",
+      "url": "/umbraco#/settings/social-login"
+    },
+    {
+      "name": "SocialShare",
+      "url": "/umbraco#/settings/social-share"
+    },
+    {
+      "name": "StarRatings",
+      "url": "/umbraco#/settings/star-ratings"
+    },
+    {
+      "name": "Surveys",
+      "url": "/umbraco#/settings/surveys"
+    },
+    {
+      "name": "SvgViewer",
+      "url": "/umbraco#/settings/svg-viewer"
+    },
+    {
+      "name": "ToastNotifications",
+      "url": "/umbraco#/settings/toast-notifications"
+    },
+    {
+      "name": "Tweets",
+      "url": "/umbraco#/settings/tweets"
+    },
+    {
+      "name": "VideoPreview",
+      "url": "/umbraco#/settings/video-preview"
+    },
+    {
+      "name": "VisitorCounter",
+      "url": "/umbraco#/settings/visitor-counter"
+    },
+    {
+      "name": "WhatsApp",
+      "url": "/umbraco#/settings/whatsapp"
+    },
+    {
+      "name": "Yaml2Schema",
+      "url": "/umbraco#/settings/yaml-import"
+    },
+    {
+      "name": "BancoInter",
+      "url": "/umbraco#/banco-inter"
+    },
+    {
+      "name": "MercadoPago",
+      "url": "/umbraco#/mercadopago"
+    },
+    {
+      "name": "PagSeguro",
+      "url": "/umbraco#/pagseguro"
+    }
+  ]
+}
