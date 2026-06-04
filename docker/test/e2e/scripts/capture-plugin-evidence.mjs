@@ -236,11 +236,15 @@ async function main() {
 
   mkdirSync(OUTPUT_BASE, { recursive: true });
 
-  const CHROMIUM_PATH = process.env.CHROMIUM_EXECUTABLE || '/usr/bin/chromium';
-  const browser = await chromium.launch({
-    executablePath: CHROMIUM_PATH,
+  // When CHROMIUM_EXECUTABLE is not set, let playwright find its bundled browser
+  // (works in mcr.microsoft.com/playwright images and npx playwright install environments).
+  const launchOpts = {
     args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage', '--disable-gpu'],
-  });
+  };
+  if (process.env.CHROMIUM_EXECUTABLE) {
+    launchOpts.executablePath = process.env.CHROMIUM_EXECUTABLE;
+  }
+  const browser = await chromium.launch(launchOpts);
 
   const context = await browser.newContext({
     viewport: { width: 1280, height: 800 },
