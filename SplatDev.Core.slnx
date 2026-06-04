@@ -1,0 +1,490 @@
+<Solution>
+  <Configurations>
+    <Platform Name="Any CPU" />
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Folder Name="/API Common/">
+    <Project Path="SplatDev.Api.Common.ApiVersioning/SplatDev.Api.Common.ApiVersioning.csproj" />
+  </Folder>
+  <Folder Name="/Baselines/">
+    <Project Path="test-environments/Umbraco13.Baseline/Umbraco13.Baseline.csproj" />
+    <Project Path="test-environments/Umbraco17.Baseline/Umbraco17.Baseline.csproj" />
+  </Folder>
+  <Folder Name="/Core Libraries/">
+    <Project Path="SplatDev.Content/SplatDev.Content.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+    <Project Path="SplatDev.Database.MSSQLAdmin/SplatDev.Database.MSSQLAdmin.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+    <Project Path="SplatDev.Database/SplatDev.Database.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+    <Project Path="SplatDev.GeoLocation/SplatDev.GeoLocation.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+    <Project Path="SplatDev.Logger/SplatDev.Logger.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+    <Project Path="SplatDev.Mobile.Detection/SplatDev.Mobile.Detection.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+    <Project Path="SplatDev.Reflection.Helpers/SplatDev.Reflection.Helpers.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+    <Project Path="SplatDev.Routing/SplatDev.Routing.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+    <Project Path="SplatDev.ScheduledTasks/SplatDev.ScheduledTasks.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+    <Project Path="SplatDev.Security/SplatDev.Security.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+  </Folder>
+  <Folder Name="/Features/">
+    <Project Path="SplatDev.Umbraco.Plugins.PdfCurator/SplatDev.Umbraco.Plugins.PdfCurator.csproj" />
+  </Folder>
+  <Folder Name="/Messaging/">
+    <Project Path="SplatDev.Messaging.Mailgun/SplatDev.Messaging.Mailgun.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+    <Project Path="SplatDev.Messaging.Newsletter/SplatDev.Messaging.Newsletter.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+    <Project Path="SplatDev.Messaging.SendGrid/SplatDev.Messaging.SendGrid.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+    <Project Path="SplatDev.Messaging.SMSTools/SplatDev.Messaging.SMSTools.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+    <Project Path="SplatDev.Messaging.Smtp/SplatDev.Messaging.Smtp.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+    <Project Path="SplatDev.Messaging.SocketLabs/SplatDev.Messaging.SocketLabs.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+    <Project Path="SplatDev.Messaging.Twilio/SplatDev.Messaging.Twilio.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+    <Project Path="SplatDev.Messaging/SplatDev.Messaging.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+  </Folder>
+  <Folder Name="/Payments/">
+    <Project Path="SplatDev.Payments.BancoInter/SplatDev.Payments.BancoInter.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+    <Project Path="SplatDev.Payments.MercadoPago/SplatDev.Payments.MercadoPago.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+    <Project Path="SplatDev.Payments.PagSeguro/SplatDev.Payments.PagSeguro.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+    <Project Path="SplatDev.Payments.Stripe/SplatDev.Payments.Stripe.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+    <Project Path="SplatDev.Payments/SplatDev.Payments.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+  </Folder>
+  <Folder Name="/Plugins/">
+    <Project Path="SplatDev.Umbraco.Plugins.2fa/SplatDev.Umbraco.Plugins.2fa.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+    <Project Path="SplatDev.Umbraco.Plugins.AdminBar/SplatDev.Umbraco.Plugins.AdminBar.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+    <Project Path="SplatDev.Umbraco.Plugins.Analytics/SplatDev.Umbraco.Plugins.Analytics.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+    <Project Path="SplatDev.Umbraco.Plugins.Backups/SplatDev.Umbraco.Plugins.Backups.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+    <Project Path="SplatDev.Umbraco.Plugins.Blog/SplatDev.Umbraco.Plugins.Blog.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+    <Project Path="SplatDev.Umbraco.Plugins.CacheManager/SplatDev.Umbraco.Plugins.CacheManager.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+    <Project Path="SplatDev.Umbraco.Plugins.CharLimit/SplatDev.Umbraco.Plugins.CharLimit.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+    <Project Path="SplatDev.Umbraco.Plugins.CopyValue/SplatDev.Umbraco.Plugins.CopyValue.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+    <Project Path="SplatDev.Umbraco.Plugins.Core/SplatDev.Umbraco.Plugins.Core.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+    <Project Path="SplatDev.Umbraco.Plugins.Countries/SplatDev.Umbraco.Plugins.Countries.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+    <Project Path="SplatDev.Umbraco.Plugins.CustomLogin/SplatDev.Umbraco.Plugins.CustomLogin.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+    <Project Path="SplatDev.Umbraco.Plugins.D4Sign/SplatDev.Umbraco.Plugins.D4Sign.csproj" />
+    <Project Path="SplatDev.Umbraco.Plugins.DefaultValue/SplatDev.Umbraco.Plugins.DefaultValue.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+    <Project Path="SplatDev.Umbraco.Plugins.DictionaryManager/SplatDev.Umbraco.Plugins.DictionaryManager.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+    <Project Path="SplatDev.Umbraco.Plugins.Dropzone/SplatDev.Umbraco.Plugins.Dropzone.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+    <Project Path="SplatDev.Umbraco.Plugins.EmailNotifications/SplatDev.Umbraco.Plugins.EmailNotifications.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+    <Project Path="SplatDev.Umbraco.Plugins.EmailTemplates/SplatDev.Umbraco.Plugins.EmailTemplates.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+    <Project Path="SplatDev.Umbraco.Plugins.ENotAssina/SplatDev.Umbraco.Plugins.ENotAssina.csproj" />
+    <Project Path="SplatDev.Umbraco.Plugins.ExamineExtensions/SplatDev.Umbraco.Plugins.ExamineExtensions.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+    <Project Path="SplatDev.Umbraco.Plugins.ExceptionManager/SplatDev.Umbraco.Plugins.ExceptionManager.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+    <Project Path="SplatDev.Umbraco.Plugins.Exif/SplatDev.Umbraco.Plugins.Exif.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+    <Project Path="SplatDev.Umbraco.Plugins.Faqs/SplatDev.Umbraco.Plugins.Faqs.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+    <Project Path="SplatDev.Umbraco.Plugins.Forums/SplatDev.Umbraco.Plugins.Forums.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+    <Project Path="SplatDev.Umbraco.Plugins.Gdrp/SplatDev.Umbraco.Plugins.Gdrp.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+    <Project Path="SplatDev.Umbraco.Plugins.HiddenContent/SplatDev.Umbraco.Plugins.HiddenContent.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+    <Project Path="SplatDev.Umbraco.Plugins.IspServices/SplatDev.Umbraco.Plugins.IspServices.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+    <Project Path="SplatDev.Umbraco.Plugins.JsonRpc/SplatDev.Umbraco.Plugins.JsonRpc.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+    <Project Path="SplatDev.Umbraco.Plugins.LazyLoad/SplatDev.Umbraco.Plugins.LazyLoad.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+    <Project Path="SplatDev.Umbraco.Plugins.LiveVideo/SplatDev.Umbraco.Plugins.LiveVideo.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+    <Project Path="SplatDev.Umbraco.Plugins.Mailer/SplatDev.Umbraco.Plugins.Mailer.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+    <Project Path="SplatDev.Umbraco.Plugins.MemberGroups/SplatDev.Umbraco.Plugins.MemberGroups.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+    <Project Path="SplatDev.Umbraco.Plugins.MemberLogin/SplatDev.Umbraco.Plugins.MemberLogin.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+    <Project Path="SplatDev.Umbraco.Plugins.MemberNotifications/SplatDev.Umbraco.Plugins.MemberNotifications.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+    <Project Path="SplatDev.Umbraco.Plugins.MemberRegistration/SplatDev.Umbraco.Plugins.MemberRegistration.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+    <Project Path="SplatDev.Umbraco.Plugins.MemberTypes/SplatDev.Umbraco.Plugins.MemberTypes.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+    <Project Path="SplatDev.Umbraco.Plugins.MostViewed/SplatDev.Umbraco.Plugins.MostViewed.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+    <Project Path="SplatDev.Umbraco.Plugins.Newsletter/SplatDev.Umbraco.Plugins.Newsletter.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+    <Project Path="SplatDev.Umbraco.Plugins.Newsletters/SplatDev.Umbraco.Plugins.Newsletters.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+    <Project Path="SplatDev.Umbraco.Plugins.NewsTicker/SplatDev.Umbraco.Plugins.NewsTicker.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+    <Project Path="SplatDev.Umbraco.Plugins.OAuth/SplatDev.Umbraco.Plugins.OAuth.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+    <Project Path="SplatDev.Umbraco.Plugins.OnOff/SplatDev.Umbraco.Plugins.OnOff.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+    <Project Path="SplatDev.Umbraco.Plugins.PasswordSettings/SplatDev.Umbraco.Plugins.PasswordSettings.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+    <Project Path="SplatDev.Umbraco.Plugins.Payments.BancoInter/SplatDev.Umbraco.Plugins.Payments.BancoInter.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+    <Project Path="SplatDev.Umbraco.Plugins.Payments.MercadoPago/SplatDev.Umbraco.Plugins.Payments.MercadoPago.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+    <Project Path="SplatDev.Umbraco.Plugins.Payments.PagSeguro/SplatDev.Umbraco.Plugins.Payments.PagSeguro.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+    <Project Path="SplatDev.Umbraco.Plugins.PhotoGallery/SplatDev.Umbraco.Plugins.PhotoGallery.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+    <Project Path="SplatDev.Umbraco.Plugins.PropertiesReport/SplatDev.Umbraco.Plugins.PropertiesReport.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+    <Project Path="SplatDev.Umbraco.Plugins.QuickPoll/SplatDev.Umbraco.Plugins.QuickPoll.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+    <Project Path="SplatDev.Umbraco.Plugins.RdpManager/SplatDev.Umbraco.Plugins.RdpManager.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+    <Project Path="SplatDev.Umbraco.Plugins.RedirectManager/SplatDev.Umbraco.Plugins.RedirectManager.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+    <Project Path="SplatDev.Umbraco.Plugins.Restricted/SplatDev.Umbraco.Plugins.Restricted.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+    <Project Path="SplatDev.Umbraco.Plugins.Rsvp/SplatDev.Umbraco.Plugins.Rsvp.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+    <Project Path="SplatDev.Umbraco.Plugins.Security/SplatDev.Umbraco.Plugins.Security.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+    <Project Path="SplatDev.Umbraco.Plugins.SEO/SplatDev.Umbraco.Plugins.SEO.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+    <Project Path="SplatDev.Umbraco.Plugins.Settings/SplatDev.Umbraco.Plugins.Settings.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+    <Project Path="SplatDev.Umbraco.Plugins.ShopCart/SplatDev.Umbraco.Plugins.ShopCart.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+    <Project Path="SplatDev.Umbraco.Plugins.ShortUrls/SplatDev.Umbraco.Plugins.ShortUrls.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+    <Project Path="SplatDev.Umbraco.Plugins.Slider/SplatDev.Umbraco.Plugins.Slider.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+    <Project Path="SplatDev.Umbraco.Plugins.Smtp/SplatDev.Umbraco.Plugins.Smtp.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+    <Project Path="SplatDev.Umbraco.Plugins.SocialMedia.Channels/SplatDev.Umbraco.Plugins.SocialMedia.Channels.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+    <Project Path="SplatDev.Umbraco.Plugins.SocialMedia.Login/SplatDev.Umbraco.Plugins.SocialMedia.Login.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+    <Project Path="SplatDev.Umbraco.Plugins.SocialMedia.Share/SplatDev.Umbraco.Plugins.SocialMedia.Share.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+    <Project Path="SplatDev.Umbraco.Plugins.StarRatings/SplatDev.Umbraco.Plugins.StarRatings.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+    <Project Path="SplatDev.Umbraco.Plugins.Surveys/SplatDev.Umbraco.Plugins.Surveys.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+    <Project Path="SplatDev.Umbraco.Plugins.SvgViewer/SplatDev.Umbraco.Plugins.SvgViewer.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+    <Project Path="SplatDev.Umbraco.Plugins.ToastNotifications/SplatDev.Umbraco.Plugins.ToastNotifications.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+    <Project Path="SplatDev.Umbraco.Plugins.Tweets/SplatDev.Umbraco.Plugins.Tweets.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+    <Project Path="SplatDev.Umbraco.Plugins.VideoPreview/SplatDev.Umbraco.Plugins.VideoPreview.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+    <Project Path="SplatDev.Umbraco.Plugins.VisitorCounter/SplatDev.Umbraco.Plugins.VisitorCounter.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+    <Project Path="SplatDev.Umbraco.Plugins.WhatsApp/SplatDev.Umbraco.Plugins.WhatsApp.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+    <Project Path="SplatDev.Umbraco.Plugins.WordsApi/SplatDev.Umbraco.Plugins.WordsApi.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+    <Project Path="SplatDev.Umbraco.Plugins.Yaml/SplatDev.Umbraco.Plugins.Yaml2Schema/SplatDev.Umbraco.Plugins.Yaml2Schema.csproj" />
+  </Folder>
+  <Folder Name="/Tests/">
+    <Project Path="SplatDev.Tests/SplatDev.Tests.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+    <Project Path="SplatDev.Umbraco.Plugins.EmailNotifications.Tests/SplatDev.Umbraco.Plugins.EmailNotifications.Tests.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+    <Project Path="SplatDev.Umbraco.Plugins.Payments.BancoInter.Tests/SplatDev.Umbraco.Plugins.Payments.BancoInter.Tests.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+    <Project Path="SplatDev.Umbraco.Themes.Tests/SplatDev.Umbraco.Themes.Tests.csproj" />
+    <Project Path="SplatDev.Umbraco.Tools.Tests/SplatDev.Umbraco.Tools.Tests.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+  </Folder>
+  <Folder Name="/Themes/">
+    <Project Path="SplatDev.Umbraco.Themes.Base/SplatDev.Umbraco.Themes.Base.csproj" />
+    <Project Path="SplatDev.Umbraco.Themes.Blog/SplatDev.Umbraco.Themes.Blog.csproj" />
+    <Project Path="SplatDev.Umbraco.Themes.Commerce/SplatDev.Umbraco.Themes.Commerce.csproj" />
+    <Project Path="SplatDev.Umbraco.Themes.Conference/SplatDev.Umbraco.Themes.Conference.csproj" />
+    <Project Path="SplatDev.Umbraco.Themes.Corporate/SplatDev.Umbraco.Themes.Corporate.csproj" />
+    <Project Path="SplatDev.Umbraco.Themes.Forum/SplatDev.Umbraco.Themes.Forum.csproj" />
+    <Project Path="SplatDev.Umbraco.Themes.Hotel/SplatDev.Umbraco.Themes.Hotel.csproj" />
+    <Project Path="SplatDev.Umbraco.Themes.Landing/SplatDev.Umbraco.Themes.Landing.csproj" />
+    <Project Path="SplatDev.Umbraco.Themes.Portfolio/SplatDev.Umbraco.Themes.Portfolio.csproj" />
+  </Folder>
+  <Folder Name="/Tools/">
+    <Project Path="SplatDev.Umbraco.Tools.PackageActions/SplatDev.Umbraco.Tools.PackageActions.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+    <Project Path="SplatDev.Umbraco.Tools.Packager/SplatDev.Umbraco.Tools.Packager.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+    <Project Path="SplatDev.Umbraco.Tools.T4.Plugins/SplatDev.Umbraco.Tools.T4.Plugins.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+    <Project Path="SplatDev.Umbraco.Tools.T4.Themes/SplatDev.Umbraco.Tools.T4.Themes.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+  </Folder>
+  <Folder Name="/Umbraco Shared/">
+    <Project Path="SplatDev.Umbraco.2FA/SplatDev.Umbraco.2FA.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+    <Project Path="SplatDev.Umbraco.Authorization.Ldap/SplatDev.Umbraco.Authorization.Ldap.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+    <Project Path="SplatDev.Umbraco.Common/SplatDev.Umbraco.Common.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+    <Project Path="SplatDev.Umbraco.DataTypes.USStates/SplatDev.Umbraco.DataTypes.USStates.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+    <Project Path="SplatDev.Umbraco.EntityFramework/SplatDev.Umbraco.EntityFramework.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+    <Project Path="SplatDev.Umbraco.Examine/SplatDev.Umbraco.Examine.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+    <Project Path="SplatDev.Umbraco.Markup/SplatDev.Umbraco.Markup.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+    <Project Path="SplatDev.Umbraco.Membership/SplatDev.Umbraco.Membership.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+    <Project Path="SplatDev.Umbraco.NPoco/SplatDev.Umbraco.NPoco.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+    <Project Path="SplatDev.Umbraco.Pagination/SplatDev.Umbraco.Pagination.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+    <Project Path="SplatDev.Umbraco.QueryStringFilters/SplatDev.Umbraco.QueryStringFilters.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+  </Folder>
+</Solution>
