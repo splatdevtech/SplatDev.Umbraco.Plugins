@@ -133,6 +133,5 @@
     <ProjectReference Include="../../SplatDev.Umbraco.Plugins.EmailTemplates/SplatDev.Umbraco.Plugins.EmailTemplates.csproj" PrivateAssets="none" />
     <ProjectReference Include="../../SplatDev.Umbraco.Plugins.MemberNotifications/SplatDev.Umbraco.Plugins.MemberNotifications.csproj" PrivateAssets="none" />
     <ProjectReference Include="../../SplatDev.Umbraco.Plugins.Newsletter/SplatDev.Umbraco.Plugins.Newsletter.csproj" PrivateAssets="none" />
-    <ProjectReference Include="../../SplatDev.Umbraco.Plugins.Payments.BancoInter.Tests/SplatDev.Umbraco.Plugins.Payments.BancoInter.Tests.csproj" PrivateAssets="none" />
   </ItemGroup>
 </Project>

@@ -1,0 +1,591 @@
+# UmbracoCms.Themes.Conference – Umbraco Schema
+# Version: 1.0.0
+# Plugin: SplatDev.Umbraco.Plugins.Yaml2Schema
+
+# ─────────────────────────────────────────────
+# DATA TYPES
+# ─────────────────────────────────────────────
+dataTypes:
+
+  # Text
+  - alias: textString
+    name: Text String
+    editorUiAlias: Umbraco.TextBox
+    config:
+      maxLength: 512
+
+  - alias: textStringShort
+    name: Text String (Short)
+    editorUiAlias: Umbraco.TextBox
+    config:
+      maxLength: 160
+
+  - alias: textArea
+    name: Text Area
+    editorUiAlias: Umbraco.TextArea
+    config:
+      maxChars: 2000
+
+  - alias: richTextEditor
+    name: Rich Text Editor
+    editorUiAlias: Umbraco.TinyMCE
+
+  # Media
+  - alias: imagePicker
+    name: Image Picker
+    editorUiAlias: Umbraco.MediaPicker3
+    config:
+      multiple: false
+      onlyImages: true
+
+  - alias: multiImagePicker
+    name: Multi Image Picker
+    editorUiAlias: Umbraco.MediaPicker3
+    config:
+      multiple: true
+      onlyImages: true
+
+  # Link
+  - alias: urlPicker
+    name: URL Picker
+    editorUiAlias: Umbraco.MultiUrlPicker
+    config:
+      maxNumberOfItems: 1
+
+  # Toggle
+  - alias: toggle
+    name: Toggle
+    editorUiAlias: Umbraco.TrueFalse
+
+  # Date/Time
+  - alias: dateTimePicker
+    name: Date Time Picker
+    editorUiAlias: Umbraco.DateTime
+
+  # Numeric
+  - alias: integerField
+    name: Integer
+    editorUiAlias: Umbraco.Integer
+
+  # Conference-specific dropdowns
+  - alias: sessionType
+    name: Session Type
+    editorUiAlias: Umbraco.DropDown.Flexible
+    config:
+      multiple: false
+      items:
+        - Keynote
+        - Workshop
+        - Panel
+        - Lightning Talk
+        - Networking
+
+  - alias: difficultyLevel
+    name: Difficulty Level
+    editorUiAlias: Umbraco.DropDown.Flexible
+    config:
+      multiple: false
+      items:
+        - Beginner
+        - Intermediate
+        - Advanced
+
+  - alias: roomCapacity
+    name: Room Capacity
+    editorUiAlias: Umbraco.Integer
+
+# ─────────────────────────────────────────────
+# DOCUMENT TYPES
+# ─────────────────────────────────────────────
+documentTypes:
+
+  # ── Element Types ─────────────────────────
+
+  - alias: scheduleSessionElement
+    name: Schedule Session
+    icon: icon-calendar
+    isElement: true
+    tabs:
+      - name: Content
+        properties:
+          - alias: startTime
+            name: Start Time
+            dataType: textStringShort
+          - alias: endTime
+            name: End Time
+            dataType: textStringShort
+          - alias: title
+            name: Title
+            dataType: textString
+          - alias: speakerUrl
+            name: Speaker
+            dataType: urlPicker
+          - alias: room
+            name: Room
+            dataType: textStringShort
+          - alias: sessionType
+            name: Session Type
+            dataType: sessionType
+          - alias: difficultyLevel
+            name: Difficulty Level
+            dataType: difficultyLevel
+
+  - alias: scheduleDayElement
+    name: Schedule Day
+    icon: icon-calendar-alt
+    isElement: true
+    tabs:
+      - name: Content
+        properties:
+          - alias: dayDate
+            name: Day Date
+            dataType: dateTimePicker
+          - alias: dayTitle
+            name: Day Title
+            dataType: textString
+          - alias: sessions
+            name: Sessions
+            dataType: sessionBlockList
+
+  - alias: speakerLinkElement
+    name: Speaker Link
+    icon: icon-user
+    isElement: true
+    tabs:
+      - name: Content
+        properties:
+          - alias: speakerUrl
+            name: Speaker
+            dataType: urlPicker
+
+  - alias: socialLinkElement
+    name: Social Link
+    icon: icon-share
+    isElement: true
+    tabs:
+      - name: Content
+        properties:
+          - alias: platform
+            name: Platform
+            dataType: textStringShort
+          - alias: url
+            name: URL
+            dataType: urlPicker
+
+  - alias: venueRoomElement
+    name: Venue Room
+    icon: icon-door
+    isElement: true
+    tabs:
+      - name: Content
+        properties:
+          - alias: roomName
+            name: Room Name
+            dataType: textString
+          - alias: capacity
+            name: Capacity
+            dataType: roomCapacity
+          - alias: floor
+            name: Floor
+            dataType: textStringShort
+          - alias: features
+            name: Features
+            dataType: textArea
+
+  - alias: ticketTypeElement
+    name: Ticket Type
+    icon: icon-ticket
+    isElement: true
+    tabs:
+      - name: Content
+        properties:
+          - alias: ticketName
+            name: Ticket Name
+            dataType: textString
+          - alias: price
+            name: Price
+            dataType: textString
+          - alias: description
+            name: Description
+            dataType: textArea
+          - alias: available
+            name: Available
+            dataType: toggle
+          - alias: quantity
+            name: Quantity
+            dataType: integerField
+
+  - alias: sponsorTierElement
+    name: Sponsor Tier
+    icon: icon-medal
+    isElement: true
+    tabs:
+      - name: Content
+        properties:
+          - alias: tierName
+            name: Tier Name
+            dataType: textString
+          - alias: color
+            name: Color
+            dataType: textStringShort
+          - alias: sponsors
+            name: Sponsors
+            dataType: sponsorBlockList
+
+  - alias: sponsorElement
+    name: Sponsor
+    icon: icon-handshake
+    isElement: true
+    tabs:
+      - name: Content
+        properties:
+          - alias: sponsorName
+            name: Sponsor Name
+            dataType: textString
+          - alias: logo
+            name: Logo
+            dataType: imagePicker
+          - alias: website
+            name: Website
+            dataType: urlPicker
+          - alias: description
+            name: Description
+            dataType: textArea
+
+  # ── Block List Data Types (defined after element aliases) ──
+  # NOTE: These must reference the element aliases above
+
+  # ── Document Types ────────────────────────
+
+  - alias: conferenceRoot
+    name: Conference Root
+    icon: icon-calendar
+    allowAsRoot: true
+    allowedChildTypes:
+      - conferenceHome
+      - speakersListing
+      - schedulePage
+      - venuePage
+      - registrationPage
+      - sponsorsPage
+      - standardPage
+    tabs:
+      - name: Conference Settings
+        properties:
+          - alias: confName
+            name: Conference Name
+            dataType: textString
+            required: true
+          - alias: tagline
+            name: Tagline
+            dataType: textStringShort
+          - alias: logo
+            name: Logo
+            dataType: imagePicker
+          - alias: eventDate
+            name: Event Start Date
+            dataType: dateTimePicker
+          - alias: endDate
+            name: Event End Date
+            dataType: dateTimePicker
+          - alias: location
+            name: Location
+            dataType: textString
+          - alias: onlineStream
+            name: Online Stream
+            dataType: toggle
+          - alias: registrationUrl
+            name: Registration URL
+            dataType: urlPicker
+      - name: Contact
+        properties:
+          - alias: email
+            name: Email
+            dataType: textStringShort
+          - alias: phone
+            name: Phone
+            dataType: textStringShort
+          - alias: twitterHashtag
+            name: Twitter Hashtag
+            dataType: textStringShort
+
+  - alias: basePage
+    name: Base Page
+    icon: icon-document
+    isElement: false
+    tabs:
+      - name: SEO
+        properties:
+          - alias: metaTitle
+            name: Meta Title
+            dataType: textStringShort
+          - alias: metaDescription
+            name: Meta Description
+            dataType: textStringShort
+          - alias: ogImage
+            name: OG Image
+            dataType: imagePicker
+
+  - alias: conferenceHome
+    name: Conference Home
+    icon: icon-home
+    compositions:
+      - basePage
+    allowedTemplates:
+      - ConferenceHome
+    defaultTemplate: ConferenceHome
+    tabs:
+      - name: Hero
+        properties:
+          - alias: headline
+            name: Headline
+            dataType: textString
+            required: true
+          - alias: subtext
+            name: Subtext
+            dataType: textArea
+          - alias: heroImage
+            name: Hero Image
+            dataType: imagePicker
+          - alias: countdownVisible
+            name: Show Countdown Timer
+            dataType: toggle
+      - name: About
+        properties:
+          - alias: aboutTitle
+            name: About Title
+            dataType: textString
+          - alias: aboutText
+            name: About Text
+            dataType: richTextEditor
+          - alias: aboutImage
+            name: About Image
+            dataType: imagePicker
+      - name: Stats
+        properties:
+          - alias: attendeesCount
+            name: Attendees Count
+            dataType: integerField
+          - alias: speakersCount
+            name: Speakers Count
+            dataType: integerField
+          - alias: sessionsCount
+            name: Sessions Count
+            dataType: integerField
+          - alias: sponsorsCount
+            name: Sponsors Count
+            dataType: integerField
+      - name: Schedule Preview
+        properties:
+          - alias: scheduleHeadline
+            name: Schedule Headline
+            dataType: textString
+      - name: Sponsors Preview
+        properties:
+          - alias: sponsorsHeadline
+            name: Sponsors Headline
+            dataType: textString
+
+  - alias: speakersListing
+    name: Speakers Listing
+    icon: icon-users
+    allowedChildTypes:
+      - speaker
+    allowedTemplates:
+      - SpeakersListing
+    defaultTemplate: SpeakersListing
+    tabs:
+      - name: Content
+        properties:
+          - alias: pageTitle
+            name: Page Title
+            dataType: textString
+            required: true
+          - alias: intro
+            name: Introduction
+            dataType: textArea
+
+  - alias: speaker
+    name: Speaker
+    icon: icon-user
+    allowedTemplates:
+      - Speaker
+    defaultTemplate: Speaker
+    tabs:
+      - name: Profile
+        properties:
+          - alias: fullName
+            name: Full Name
+            dataType: textString
+            required: true
+          - alias: jobTitle
+            name: Job Title
+            dataType: textStringShort
+          - alias: company
+            name: Company
+            dataType: textStringShort
+          - alias: bio
+            name: Bio
+            dataType: richTextEditor
+          - alias: photo
+            name: Photo
+            dataType: imagePicker
+          - alias: country
+            name: Country
+            dataType: textStringShort
+      - name: Social
+        properties:
+          - alias: twitterUrl
+            name: Twitter URL
+            dataType: urlPicker
+          - alias: linkedInUrl
+            name: LinkedIn URL
+            dataType: urlPicker
+          - alias: websiteUrl
+            name: Website URL
+            dataType: urlPicker
+          - alias: youtubeUrl
+            name: YouTube URL
+            dataType: urlPicker
+
+  - alias: schedulePage
+    name: Schedule Page
+    icon: icon-time
+    allowedTemplates:
+      - SchedulePage
+    defaultTemplate: SchedulePage
+    tabs:
+      - name: Content
+        properties:
+          - alias: pageTitle
+            name: Page Title
+            dataType: textString
+            required: true
+          - alias: intro
+            name: Introduction
+            dataType: textArea
+
+  - alias: venuePage
+    name: Venue Page
+    icon: icon-map
+    compositions:
+      - basePage
+    allowedTemplates:
+      - VenuePage
+    defaultTemplate: VenuePage
+    tabs:
+      - name: Venue
+        properties:
+          - alias: venueName
+            name: Venue Name
+            dataType: textString
+            required: true
+          - alias: address
+            name: Address
+            dataType: textArea
+          - alias: description
+            name: Description
+            dataType: richTextEditor
+          - alias: mainImage
+            name: Main Image
+            dataType: imagePicker
+          - alias: gallery
+            name: Gallery
+            dataType: multiImagePicker
+          - alias: mapEmbedCode
+            name: Map Embed Code
+            dataType: textArea
+      - name: Travel
+        properties:
+          - alias: travelInfo
+            name: Travel Info
+            dataType: richTextEditor
+          - alias: nearbyHotels
+            name: Nearby Hotels
+            dataType: richTextEditor
+
+  - alias: registrationPage
+    name: Registration Page
+    icon: icon-edit
+    compositions:
+      - basePage
+    allowedTemplates:
+      - RegistrationPage
+    defaultTemplate: RegistrationPage
+    tabs:
+      - name: Content
+        properties:
+          - alias: pageTitle
+            name: Page Title
+            dataType: textString
+            required: true
+          - alias: intro
+            name: Introduction
+            dataType: textArea
+          - alias: registrationUrl
+            name: Registration URL
+            dataType: urlPicker
+          - alias: earlyBirdDeadline
+            name: Early Bird Deadline
+            dataType: dateTimePicker
+
+  - alias: sponsorsPage
+    name: Sponsors Page
+    icon: icon-medal
+    compositions:
+      - basePage
+    allowedTemplates:
+      - SponsorsPage
+    defaultTemplate: SponsorsPage
+    tabs:
+      - name: Content
+        properties:
+          - alias: pageTitle
+            name: Page Title
+            dataType: textString
+            required: true
+          - alias: intro
+            name: Introduction
+            dataType: textArea
+
+  - alias: standardPage
+    name: Standard Page
+    icon: icon-document
+    compositions:
+      - basePage
+    tabs:
+      - name: Content
+        properties:
+          - alias: pageTitle
+            name: Page Title
+            dataType: textString
+            required: true
+          - alias: bodyText
+            name: Body Text
+            dataType: richTextEditor
+
+# ─────────────────────────────────────────────
+# TEMPLATES
+# ─────────────────────────────────────────────
+templates:
+
+  - alias: ConferenceHome
+    name: Conference Home
+
+  - alias: SpeakersListing
+    name: Speakers Listing
+
+  - alias: Speaker
+    name: Speaker
+
+  - alias: SchedulePage
+    name: Schedule Page
+
+  - alias: VenuePage
+    name: Venue Page
+
+  - alias: RegistrationPage
+    name: Registration Page
+
+  - alias: SponsorsPage
+    name: Sponsors Page

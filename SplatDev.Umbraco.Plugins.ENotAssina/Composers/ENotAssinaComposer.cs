@@ -26,13 +26,18 @@ public class ENotAssinaComposer : IComposer
         // references and NuGet package installs.
         builder.Services.Configure<StaticFileOptions>(opts =>
         {
-            var embeddedProvider = new ManifestEmbeddedFileProvider(
-                typeof(ENotAssinaComposer).Assembly,
-                root: "App_Plugins");
+            var assembly = typeof(ENotAssinaComposer).Assembly;
+            var hasManifest = assembly.GetManifestResourceNames()
+                .Any(n => n.EndsWith("Manifest.xml", StringComparison.Ordinal));
 
-            opts.FileProvider = opts.FileProvider is null
-                ? embeddedProvider
-                : new CompositeFileProvider(opts.FileProvider, embeddedProvider);
+            if (hasManifest)
+            {
+                var embeddedProvider = new ManifestEmbeddedFileProvider(assembly, root: "App_Plugins");
+
+                opts.FileProvider = opts.FileProvider is null
+                    ? embeddedProvider
+                    : new CompositeFileProvider(opts.FileProvider, embeddedProvider);
+            }
         });
 
         // ── Options ────────────────────────────────────────────────────────────

@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "Umbraco17.Baseline": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:48431;http://localhost:48432"
+    }
+  }
+}

@@ -1,0 +1,407 @@
+# Landing Page Theme – Umbraco Schema
+# Package: UmbracoCms.Themes.Landing v1.0.0
+# Plugin: SplatDev.Umbraco.Plugins.Yaml2Schema
+
+# ─────────────────────────────────────────────
+# DATA TYPES
+# ─────────────────────────────────────────────
+dataTypes:
+
+  - alias: textString
+    name: Text String
+    editorUiAlias: Umbraco.TextBox
+    config:
+      maxLength: 512
+
+  - alias: textArea
+    name: Text Area
+    editorUiAlias: Umbraco.TextArea
+    config:
+      maxChars: 2000
+
+  - alias: richTextEditor
+    name: Rich Text Editor
+    editorUiAlias: Umbraco.TinyMCE
+    config:
+      toolbar:
+        - bold
+        - italic
+        - underline
+        - alignleft
+        - aligncenter
+        - alignright
+        - bullist
+        - numlist
+        - link
+        - unlink
+        - umbmediapicker
+      dimensions:
+        height: 400
+
+  - alias: imagePicker
+    name: Image Picker
+    editorUiAlias: Umbraco.MediaPicker3
+    config:
+      multiple: false
+      onlyImages: true
+
+  - alias: multiImagePicker
+    name: Multi Image Picker
+    editorUiAlias: Umbraco.MediaPicker3
+    config:
+      multiple: true
+      onlyImages: true
+
+  - alias: urlPicker
+    name: URL Picker
+    editorUiAlias: Umbraco.MultiUrlPicker
+    config:
+      maxNumberOfItems: 1
+
+  - alias: toggle
+    name: Toggle
+    editorUiAlias: Umbraco.TrueFalse
+
+  - alias: colorPicker
+    name: Color Picker
+    editorUiAlias: Umbraco.ColorPicker
+
+  - alias: integerField
+    name: Integer
+    editorUiAlias: Umbraco.Integer
+
+  - alias: pricingCurrency
+    name: Pricing Currency
+    editorUiAlias: Umbraco.DropDown.Flexible
+    config:
+      multiple: false
+      items:
+        - USD
+        - EUR
+        - GBP
+        - BRL
+
+  - alias: featureBlockList
+    name: Feature Block List
+    editorUiAlias: Umbraco.BlockList
+    valueType: NTEXT
+    update: true
+    config:
+      blocks:
+        - contentElementTypeAlias: featureItem
+
+  - alias: testimonialBlockList
+    name: Testimonial Block List
+    editorUiAlias: Umbraco.BlockList
+    valueType: NTEXT
+    update: true
+    config:
+      blocks:
+        - contentElementTypeAlias: testimonialItem
+
+  - alias: pricingPlanBlockList
+    name: Pricing Plan Block List
+    editorUiAlias: Umbraco.BlockList
+    valueType: NTEXT
+    update: true
+    config:
+      blocks:
+        - contentElementTypeAlias: pricingPlan
+
+  - alias: pricingFeatureBlockList
+    name: Pricing Feature Block List
+    editorUiAlias: Umbraco.BlockList
+    valueType: NTEXT
+    update: true
+    config:
+      blocks:
+        - contentElementTypeAlias: pricingFeature
+
+  - alias: faqBlockList
+    name: FAQ Block List
+    editorUiAlias: Umbraco.BlockList
+    valueType: NTEXT
+    update: true
+    config:
+      blocks:
+        - contentElementTypeAlias: faqItem
+
+  - alias: counterBlockList
+    name: Counter Block List
+    editorUiAlias: Umbraco.BlockList
+    valueType: NTEXT
+    update: true
+    config:
+      blocks:
+        - contentElementTypeAlias: counterItem
+
+# ─────────────────────────────────────────────
+# DOCUMENT TYPES
+# ─────────────────────────────────────────────
+documentTypes:
+
+  # ── Element Types ─────────────────────────
+
+  - alias: featureItem
+    name: Feature Item
+    icon: icon-star-alt
+    isElement: true
+    tabs:
+      - name: Content
+        properties:
+          - alias: icon
+            name: Icon Class
+            dataType: textString
+            description: "CSS icon class (e.g. icon-settings, or Font Awesome class)"
+          - alias: title
+            name: Title
+            dataType: textString
+            required: true
+          - alias: description
+            name: Description
+            dataType: textArea
+
+  - alias: testimonialItem
+    name: Testimonial Item
+    icon: icon-quote
+    isElement: true
+    tabs:
+      - name: Content
+        properties:
+          - alias: quote
+            name: Quote
+            dataType: textArea
+            required: true
+          - alias: authorName
+            name: Author Name
+            dataType: textString
+            required: true
+          - alias: authorRole
+            name: Author Role / Company
+            dataType: textString
+          - alias: authorPhoto
+            name: Author Photo
+            dataType: imagePicker
+          - alias: rating
+            name: Rating (1-5)
+            dataType: integerField
+
+  - alias: pricingFeature
+    name: Pricing Feature
+    icon: icon-check
+    isElement: true
+    tabs:
+      - name: Content
+        properties:
+          - alias: featureText
+            name: Feature Text
+            dataType: textString
+            required: true
+          - alias: included
+            name: Included
+            dataType: toggle
+
+  - alias: pricingPlan
+    name: Pricing Plan
+    icon: icon-price-tag
+    isElement: true
+    tabs:
+      - name: Content
+        properties:
+          - alias: planName
+            name: Plan Name
+            dataType: textString
+            required: true
+          - alias: price
+            name: Price
+            dataType: textString
+            description: "Numeric value or 'Custom'"
+          - alias: pricePeriod
+            name: Price Period
+            dataType: textString
+            description: "e.g. /month, /year, one-time"
+          - alias: currency
+            name: Currency
+            dataType: pricingCurrency
+          - alias: highlighted
+            name: Highlighted (Featured Plan)
+            dataType: toggle
+          - alias: features
+            name: Features
+            dataType: pricingFeatureBlockList
+          - alias: ctaText
+            name: CTA Button Text
+            dataType: textString
+          - alias: ctaUrl
+            name: CTA Button URL
+            dataType: urlPicker
+
+  - alias: faqItem
+    name: FAQ Item
+    icon: icon-help-alt
+    isElement: true
+    tabs:
+      - name: Content
+        properties:
+          - alias: question
+            name: Question
+            dataType: textString
+            required: true
+          - alias: answer
+            name: Answer
+            dataType: textArea
+            required: true
+
+  - alias: counterItem
+    name: Counter Item
+    icon: icon-chart-bar
+    isElement: true
+    tabs:
+      - name: Content
+        properties:
+          - alias: value
+            name: Value
+            dataType: textString
+            required: true
+            description: "The numeric value to count up to (e.g. 500)"
+          - alias: label
+            name: Label
+            dataType: textString
+            required: true
+            description: "Descriptive label (e.g. Happy Clients)"
+          - alias: suffix
+            name: Suffix
+            dataType: textString
+            description: "Optional suffix (e.g. +, %, K)"
+
+  # ── Landing Page ──────────────────────────
+
+  - alias: landingPage
+    name: Landing Page
+    icon: icon-browser
+    allowAsRoot: true
+    allowedTemplates:
+      - LandingPage
+    defaultTemplate: LandingPage
+    tabs:
+      - name: Hero
+        properties:
+          - alias: heroHeadline
+            name: Hero Headline
+            dataType: textString
+            required: true
+            description: "Primary heading shown in the hero section"
+          - alias: heroSubheadline
+            name: Hero Subheadline
+            dataType: textArea
+            description: "Supporting text below the main headline"
+          - alias: heroImage
+            name: Hero Background Image
+            dataType: imagePicker
+          - alias: heroCta1Text
+            name: Primary CTA Text
+            dataType: textString
+          - alias: heroCta1Url
+            name: Primary CTA URL
+            dataType: urlPicker
+          - alias: heroCta2Text
+            name: Secondary CTA Text
+            dataType: textString
+          - alias: heroCta2Url
+            name: Secondary CTA URL
+            dataType: urlPicker
+          - alias: heroVideoUrl
+            name: Hero Background Video URL
+            dataType: urlPicker
+            description: "MP4 or YouTube URL for video background"
+      - name: Features
+        properties:
+          - alias: featuresHeadline
+            name: Features Headline
+            dataType: textString
+          - alias: featuresSubtext
+            name: Features Subtext
+            dataType: textArea
+          - alias: featuresList
+            name: Features List
+            dataType: featureBlockList
+      - name: Social Proof
+        properties:
+          - alias: trustLogosHeadline
+            name: Trust Logos Headline
+            dataType: textString
+            description: "e.g. Trusted by leading companies"
+          - alias: trustLogos
+            name: Trust Logos
+            dataType: multiImagePicker
+          - alias: testimonialsHeadline
+            name: Testimonials Headline
+            dataType: textString
+          - alias: testimonialsList
+            name: Testimonials
+            dataType: testimonialBlockList
+          - alias: countersHeadline
+            name: Counters Headline
+            dataType: textString
+          - alias: countersList
+            name: Counters
+            dataType: counterBlockList
+      - name: Pricing
+        properties:
+          - alias: pricingHeadline
+            name: Pricing Headline
+            dataType: textString
+          - alias: pricingSubtext
+            name: Pricing Subtext
+            dataType: textArea
+          - alias: showPricing
+            name: Show Pricing Section
+            dataType: toggle
+          - alias: pricingPlans
+            name: Pricing Plans
+            dataType: pricingPlanBlockList
+      - name: FAQ
+        properties:
+          - alias: faqHeadline
+            name: FAQ Headline
+            dataType: textString
+          - alias: faqList
+            name: FAQ Items
+            dataType: faqBlockList
+      - name: CTA Banner
+        properties:
+          - alias: ctaHeadline
+            name: CTA Headline
+            dataType: textString
+          - alias: ctaText
+            name: CTA Text
+            dataType: textArea
+          - alias: ctaButtonText
+            name: CTA Button Text
+            dataType: textString
+          - alias: ctaButtonUrl
+            name: CTA Button URL
+            dataType: urlPicker
+          - alias: ctaBackground
+            name: CTA Background Image
+            dataType: imagePicker
+      - name: Meta
+        properties:
+          - alias: metaTitle
+            name: Meta Title
+            dataType: textString
+          - alias: metaDescription
+            name: Meta Description
+            dataType: textArea
+          - alias: canonical
+            name: Canonical URL
+            dataType: textString
+
+# ─────────────────────────────────────────────
+# TEMPLATES
+# ─────────────────────────────────────────────
+templates:
+
+  - alias: LandingPage
+    name: Landing Page
+    path: LandingPage.cshtml

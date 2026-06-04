@@ -1,0 +1,17 @@
+﻿@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Blog Category</title>
+</head>
+<body>
+    <h1>Blog Category</h1>
+    <main>
+        @Html.Raw(Model.Value("bodyText"))
+    </main>
+</body>
+</html>

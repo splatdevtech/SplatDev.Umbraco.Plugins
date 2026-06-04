@@ -1,0 +1,691 @@
+# UmbracoCms.Themes.Corporate – Umbraco Schema
+# Version: 1.0.0
+# Plugin: SplatDev.Umbraco.Plugins.Yaml2Schema
+
+# ─────────────────────────────────────────────
+# DATA TYPES
+# ─────────────────────────────────────────────
+dataTypes:
+
+  # Text
+  - alias: textString
+    name: Text String
+    editorUiAlias: Umbraco.TextBox
+    config:
+      maxLength: 512
+
+  - alias: textStringShort
+    name: Text String (Short)
+    editorUiAlias: Umbraco.TextBox
+    config:
+      maxLength: 160
+
+  - alias: textArea
+    name: Text Area
+    editorUiAlias: Umbraco.TextArea
+    config:
+      maxChars: 2000
+
+  - alias: richTextEditor
+    name: Rich Text Editor
+    editorUiAlias: Umbraco.TinyMCE
+
+  # Media
+  - alias: imagePicker
+    name: Image Picker
+    editorUiAlias: Umbraco.MediaPicker3
+    config:
+      multiple: false
+      onlyImages: true
+
+  - alias: multiImagePicker
+    name: Multi Image Picker
+    editorUiAlias: Umbraco.MediaPicker3
+    config:
+      multiple: true
+      onlyImages: true
+
+  # Link
+  - alias: urlPicker
+    name: URL Picker
+    editorUiAlias: Umbraco.MultiUrlPicker
+    config:
+      maxNumberOfItems: 1
+
+  # Toggle
+  - alias: toggle
+    name: Toggle
+    editorUiAlias: Umbraco.TrueFalse
+
+  # Numeric
+  - alias: integerField
+    name: Integer
+    editorUiAlias: Umbraco.Integer
+
+  # Corporate-specific dropdowns
+  - alias: serviceCategory
+    name: Service Category
+    editorUiAlias: Umbraco.DropDown.Flexible
+    config:
+      multiple: false
+      items:
+        - Consulting
+        - Technology
+        - Marketing
+        - Finance
+        - Legal
+        - HR
+
+  - alias: teamDepartment
+    name: Team Department
+    editorUiAlias: Umbraco.DropDown.Flexible
+    config:
+      multiple: false
+      items:
+        - Leadership
+        - Engineering
+        - Marketing
+        - Sales
+        - Operations
+
+  # Block Lists
+  - alias: serviceFeatureBlockList
+    name: Service Feature Block List
+    editorUiAlias: Umbraco.BlockList
+    valueType: NTEXT
+    config:
+      blocks:
+        - contentElementTypeAlias: serviceFeature
+
+  - alias: testimonialBlockList
+    name: Testimonial Block List
+    editorUiAlias: Umbraco.BlockList
+    valueType: NTEXT
+    config:
+      blocks:
+        - contentElementTypeAlias: testimonialItem
+
+  - alias: teamMemberBlockList
+    name: Team Member Block List
+    editorUiAlias: Umbraco.BlockList
+    valueType: NTEXT
+    config:
+      blocks:
+        - contentElementTypeAlias: teamMemberElement
+
+  - alias: statsBlockList
+    name: Stats Block List
+    editorUiAlias: Umbraco.BlockList
+    valueType: NTEXT
+    config:
+      blocks:
+        - contentElementTypeAlias: statsItem
+
+  - alias: timelineBlockList
+    name: Timeline Block List
+    editorUiAlias: Umbraco.BlockList
+    valueType: NTEXT
+    config:
+      blocks:
+        - contentElementTypeAlias: timelineItem
+
+  - alias: serviceItemBlockList
+    name: Service Item Block List
+    editorUiAlias: Umbraco.BlockList
+    valueType: NTEXT
+    config:
+      blocks:
+        - contentElementTypeAlias: serviceItemElement
+
+# ─────────────────────────────────────────────
+# DOCUMENT TYPES
+# ─────────────────────────────────────────────
+documentTypes:
+
+  # ── Element Types ─────────────────────────
+
+  - alias: serviceFeature
+    name: Service Feature
+    icon: icon-settings
+    isElement: true
+    tabs:
+      - name: Content
+        properties:
+          - alias: title
+            name: Title
+            dataType: textString
+          - alias: description
+            name: Description
+            dataType: textArea
+          - alias: icon
+            name: Icon
+            dataType: textStringShort
+
+  - alias: testimonialItem
+    name: Testimonial
+    icon: icon-quote
+    isElement: true
+    tabs:
+      - name: Content
+        properties:
+          - alias: quote
+            name: Quote
+            dataType: textArea
+          - alias: author
+            name: Author Name
+            dataType: textString
+          - alias: role
+            name: Role / Title
+            dataType: textStringShort
+          - alias: company
+            name: Company
+            dataType: textStringShort
+          - alias: photo
+            name: Author Photo
+            dataType: imagePicker
+          - alias: rating
+            name: Rating (1–5)
+            dataType: integerField
+
+  - alias: teamMemberElement
+    name: Team Member
+    icon: icon-user
+    isElement: true
+    tabs:
+      - name: Content
+        properties:
+          - alias: name
+            name: Full Name
+            dataType: textString
+          - alias: role
+            name: Role / Title
+            dataType: textStringShort
+          - alias: photo
+            name: Photo
+            dataType: imagePicker
+          - alias: linkedIn
+            name: LinkedIn URL
+            dataType: urlPicker
+          - alias: bio
+            name: Bio
+            dataType: textArea
+
+  - alias: statsItem
+    name: Stat Item
+    icon: icon-stats
+    isElement: true
+    tabs:
+      - name: Content
+        properties:
+          - alias: value
+            name: Value
+            dataType: textString
+          - alias: label
+            name: Label
+            dataType: textStringShort
+          - alias: description
+            name: Description
+            dataType: textStringShort
+
+  - alias: timelineItem
+    name: Timeline Item
+    icon: icon-time
+    isElement: true
+    tabs:
+      - name: Content
+        properties:
+          - alias: year
+            name: Year
+            dataType: textStringShort
+          - alias: title
+            name: Title
+            dataType: textString
+          - alias: description
+            name: Description
+            dataType: textArea
+
+  - alias: serviceItemElement
+    name: Service Item
+    icon: icon-briefcase
+    isElement: true
+    tabs:
+      - name: Content
+        properties:
+          - alias: serviceName
+            name: Service Name
+            dataType: textString
+          - alias: category
+            name: Category
+            dataType: serviceCategory
+          - alias: shortDescription
+            name: Short Description
+            dataType: textArea
+          - alias: fullDescription
+            name: Full Description
+            dataType: richTextEditor
+          - alias: icon
+            name: Icon
+            dataType: textStringShort
+          - alias: image
+            name: Image
+            dataType: imagePicker
+          - alias: features
+            name: Features
+            dataType: serviceFeatureBlockList
+
+  # ── Base Page ─────────────────────────────
+  - alias: basePage
+    name: Base Page
+    icon: icon-document
+    allowAsRoot: false
+    allowedChildTypes: []
+    update: true
+    tabs:
+      - name: SEO
+        properties:
+          - alias: metaTitle
+            name: Meta Title
+            dataType: textStringShort
+          - alias: metaDescription
+            name: Meta Description
+            dataType: textStringShort
+          - alias: ogImage
+            name: OG Image
+            dataType: imagePicker
+          - alias: hideFromNavigation
+            name: Hide from Navigation
+            dataType: toggle
+
+  # ── Corporate Root ────────────────────────
+  - alias: corporateRoot
+    name: Corporate Root
+    icon: icon-building
+    allowAsRoot: true
+    allowedChildTypes:
+      - homePage
+      - aboutPage
+      - servicesPage
+      - teamPage
+      - contactPage
+      - standardPage
+    update: true
+    allowedTemplates:
+      - Home
+    defaultTemplate: Home
+    tabs:
+      - name: Site Settings
+        properties:
+          - alias: companyName
+            name: Company Name
+            dataType: textString
+            required: true
+          - alias: tagline
+            name: Tagline
+            dataType: textStringShort
+          - alias: logo
+            name: Logo
+            dataType: imagePicker
+          - alias: email
+            name: Contact Email
+            dataType: textString
+          - alias: phone
+            name: Phone Number
+            dataType: textStringShort
+          - alias: address
+            name: Address
+            dataType: textArea
+      - name: Social
+        properties:
+          - alias: linkedIn
+            name: LinkedIn URL
+            dataType: urlPicker
+          - alias: twitter
+            name: Twitter / X URL
+            dataType: urlPicker
+          - alias: facebook
+            name: Facebook URL
+            dataType: urlPicker
+          - alias: instagram
+            name: Instagram URL
+            dataType: urlPicker
+          - alias: youtube
+            name: YouTube URL
+            dataType: urlPicker
+      - name: Navigation
+        properties:
+          - alias: headerCtaText
+            name: Header CTA Button Text
+            dataType: textStringShort
+          - alias: headerCtaUrl
+            name: Header CTA Button URL
+            dataType: urlPicker
+
+  # ── Home Page ─────────────────────────────
+  - alias: homePage
+    name: Home Page
+    icon: icon-home
+    allowAsRoot: false
+    allowedChildTypes: []
+    update: true
+    allowedTemplates:
+      - Home
+    defaultTemplate: Home
+    tabs:
+      - name: Hero
+        properties:
+          - alias: heroHeadline
+            name: Hero Headline
+            dataType: textString
+            required: true
+          - alias: heroSubtext
+            name: Hero Subtext
+            dataType: textArea
+          - alias: heroImage
+            name: Hero Background Image
+            dataType: imagePicker
+          - alias: heroCtaText
+            name: Primary CTA Text
+            dataType: textStringShort
+          - alias: heroCtaUrl
+            name: Primary CTA URL
+            dataType: urlPicker
+          - alias: heroCtaSecondaryText
+            name: Secondary CTA Text
+            dataType: textStringShort
+          - alias: heroCtaSecondaryUrl
+            name: Secondary CTA URL
+            dataType: urlPicker
+      - name: About Preview
+        properties:
+          - alias: aboutTitle
+            name: About Section Title
+            dataType: textString
+          - alias: aboutText
+            name: About Text
+            dataType: textArea
+          - alias: aboutImage
+            name: About Image
+            dataType: imagePicker
+          - alias: aboutCtaUrl
+            name: About CTA URL
+            dataType: urlPicker
+      - name: Services Preview
+        properties:
+          - alias: servicesHeadline
+            name: Services Section Headline
+            dataType: textString
+          - alias: servicesIntro
+            name: Services Intro Text
+            dataType: textArea
+      - name: Stats
+        properties:
+          - alias: statsHeadline
+            name: Stats Section Headline
+            dataType: textString
+          - alias: statsList
+            name: Stats Items
+            dataType: statsBlockList
+      - name: Testimonials
+        properties:
+          - alias: testimonialsHeadline
+            name: Testimonials Headline
+            dataType: textString
+          - alias: testimonialsList
+            name: Testimonials
+            dataType: testimonialBlockList
+      - name: CTA
+        properties:
+          - alias: ctaHeadline
+            name: CTA Headline
+            dataType: textString
+          - alias: ctaText
+            name: CTA Text
+            dataType: textArea
+          - alias: ctaButtonText
+            name: CTA Button Text
+            dataType: textStringShort
+          - alias: ctaButtonUrl
+            name: CTA Button URL
+            dataType: urlPicker
+      - name: SEO
+        properties:
+          - alias: metaTitle
+            name: Meta Title
+            dataType: textStringShort
+          - alias: metaDescription
+            name: Meta Description
+            dataType: textStringShort
+
+  # ── About Page ────────────────────────────
+  - alias: aboutPage
+    name: About Page
+    icon: icon-info
+    allowAsRoot: false
+    allowedChildTypes: []
+    update: true
+    allowedTemplates:
+      - About
+    defaultTemplate: About
+    tabs:
+      - name: Content
+        properties:
+          - alias: heroHeadline
+            name: Hero Headline
+            dataType: textString
+          - alias: heroText
+            name: Hero Text
+            dataType: textArea
+          - alias: heroImage
+            name: Hero Image
+            dataType: imagePicker
+      - name: Mission
+        properties:
+          - alias: missionTitle
+            name: Mission Title
+            dataType: textString
+          - alias: missionText
+            name: Mission Text
+            dataType: textArea
+          - alias: visionTitle
+            name: Vision Title
+            dataType: textString
+          - alias: visionText
+            name: Vision Text
+            dataType: textArea
+          - alias: valuesTitle
+            name: Values Title
+            dataType: textString
+      - name: History
+        properties:
+          - alias: historyTitle
+            name: History Section Title
+            dataType: textString
+          - alias: timelineItems
+            name: Timeline Items
+            dataType: timelineBlockList
+      - name: Leadership
+        properties:
+          - alias: leadershipTitle
+            name: Leadership Title
+            dataType: textString
+          - alias: leadershipText
+            name: Leadership Text
+            dataType: textArea
+      - name: SEO
+        properties:
+          - alias: metaTitle
+            name: Meta Title
+            dataType: textStringShort
+          - alias: metaDescription
+            name: Meta Description
+            dataType: textStringShort
+
+  # ── Services Page ─────────────────────────
+  - alias: servicesPage
+    name: Services Page
+    icon: icon-briefcase
+    allowAsRoot: false
+    allowedChildTypes: []
+    update: true
+    allowedTemplates:
+      - Services
+    defaultTemplate: Services
+    tabs:
+      - name: Content
+        properties:
+          - alias: pageTitle
+            name: Page Title
+            dataType: textString
+          - alias: intro
+            name: Introduction Text
+            dataType: textArea
+          - alias: servicesGrid
+            name: Services
+            dataType: serviceItemBlockList
+      - name: SEO
+        properties:
+          - alias: metaTitle
+            name: Meta Title
+            dataType: textStringShort
+          - alias: metaDescription
+            name: Meta Description
+            dataType: textStringShort
+
+  # ── Team Page ─────────────────────────────
+  - alias: teamPage
+    name: Team Page
+    icon: icon-users
+    allowAsRoot: false
+    allowedChildTypes: []
+    update: true
+    allowedTemplates:
+      - Team
+    defaultTemplate: Team
+    tabs:
+      - name: Content
+        properties:
+          - alias: pageTitle
+            name: Page Title
+            dataType: textString
+          - alias: intro
+            name: Introduction Text
+            dataType: textArea
+          - alias: teamMembers
+            name: Team Members
+            dataType: teamMemberBlockList
+      - name: SEO
+        properties:
+          - alias: metaTitle
+            name: Meta Title
+            dataType: textStringShort
+          - alias: metaDescription
+            name: Meta Description
+            dataType: textStringShort
+
+  # ── Contact Page ──────────────────────────
+  - alias: contactPage
+    name: Contact Page
+    icon: icon-mail
+    allowAsRoot: false
+    allowedChildTypes: []
+    update: true
+    allowedTemplates:
+      - Contact
+    defaultTemplate: Contact
+    tabs:
+      - name: Content
+        properties:
+          - alias: pageTitle
+            name: Page Title
+            dataType: textString
+          - alias: intro
+            name: Introduction Text
+            dataType: textArea
+          - alias: email
+            name: Contact Email
+            dataType: textString
+          - alias: phone
+            name: Phone Number
+            dataType: textStringShort
+          - alias: address
+            name: Address
+            dataType: textArea
+          - alias: mapEmbedCode
+            name: Map Embed Code
+            dataType: textArea
+      - name: Form
+        properties:
+          - alias: formHeadline
+            name: Form Headline
+            dataType: textString
+          - alias: successMessage
+            name: Success Message
+            dataType: textArea
+      - name: SEO
+        properties:
+          - alias: metaTitle
+            name: Meta Title
+            dataType: textStringShort
+          - alias: metaDescription
+            name: Meta Description
+            dataType: textStringShort
+
+  # ── Standard Page ─────────────────────────
+  - alias: standardPage
+    name: Standard Page
+    icon: icon-document
+    allowAsRoot: false
+    allowedChildTypes:
+      - standardPage
+    update: true
+    allowedTemplates:
+      - StandardPage
+    defaultTemplate: StandardPage
+    tabs:
+      - name: Content
+        properties:
+          - alias: pageTitle
+            name: Page Title
+            dataType: textString
+          - alias: bodyContent
+            name: Body Content
+            dataType: richTextEditor
+          - alias: heroImage
+            name: Hero Image
+            dataType: imagePicker
+      - name: SEO
+        properties:
+          - alias: metaTitle
+            name: Meta Title
+            dataType: textStringShort
+          - alias: metaDescription
+            name: Meta Description
+            dataType: textStringShort
+
+# ─────────────────────────────────────────────
+# TEMPLATES
+# ─────────────────────────────────────────────
+templates:
+  - alias: Home
+    name: Home
+    path: ~/Views/Home.cshtml
+
+  - alias: About
+    name: About
+    path: ~/Views/About.cshtml
+
+  - alias: Services
+    name: Services
+    path: ~/Views/Services.cshtml
+
+  - alias: Team
+    name: Team
+    path: ~/Views/Team.cshtml
+
+  - alias: Contact
+    name: Contact
+    path: ~/Views/Contact.cshtml
+
+  - alias: StandardPage
+    name: Standard Page
+    path: ~/Views/StandardPage.cshtml

@@ -73,13 +73,21 @@ namespace SplatDev.Umbraco.Plugins.Security.Composers
 
                         app.UseCsp(csp =>
                         {
-                            csp.ByDefaultAllow.FromSelf().From(defaultSrc);
-                            csp.AllowScripts.FromSelf().AllowUnsafeEval().AddNonce().AllowUnsafeInline().AddNonce().From(scriptSrc).AddNonce();
+                            var defaultSrcBuilder = csp.ByDefaultAllow.FromSelf();
+                            if (!string.IsNullOrWhiteSpace(defaultSrc)) defaultSrcBuilder.From(defaultSrc);
+                            var scriptSrcBuilder = csp.AllowScripts.FromSelf().AllowUnsafeEval().AddNonce().AllowUnsafeInline().AddNonce();
+                            if (!string.IsNullOrWhiteSpace(scriptSrc)) scriptSrcBuilder.From(scriptSrc);
+                            scriptSrcBuilder.AddNonce();
                             csp.AllowStyles.FromAnywhere().AllowUnsafeInline();
-                            csp.AllowImages.FromAnywhere().DataScheme().From(imageSrc);
-                            csp.AllowFonts.FromSelf().From(fontsSrc);
-                            csp.AllowFrames.FromSelf().From(framesSrc).OnlyOverHttps();
-                            csp.AllowConnections.ToSelf().To(connectionsSrc);
+                            var imageSrcBuilder = csp.AllowImages.FromAnywhere().DataScheme();
+                            if (!string.IsNullOrWhiteSpace(imageSrc)) imageSrcBuilder.From(imageSrc);
+                            var fontsSrcBuilder = csp.AllowFonts.FromSelf();
+                            if (!string.IsNullOrWhiteSpace(fontsSrc)) fontsSrcBuilder.From(fontsSrc);
+                            var framesSrcBuilder = csp.AllowFrames.FromSelf();
+                            if (!string.IsNullOrWhiteSpace(framesSrc)) framesSrcBuilder.From(framesSrc);
+                            framesSrcBuilder.OnlyOverHttps();
+                            var connectionsSrcBuilder = csp.AllowConnections.ToSelf();
+                            if (!string.IsNullOrWhiteSpace(connectionsSrc)) connectionsSrcBuilder.To(connectionsSrc);
                             csp.OnSendingHeader = context =>
                             {
                                 context.ShouldNotSend = context.HttpContext.Request.Path.StartsWithSegments("/umbraco");
