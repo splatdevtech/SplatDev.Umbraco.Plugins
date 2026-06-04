@@ -1,0 +1,94 @@
+# =============================================================================
+# SplatDev Umbraco Plugin Test Stack
+#
+# Brings up Umbraco 13, Umbraco 17, and a dedicated Playwright runner on a
+# shared Docker network so the runner can reach both Umbraco instances by
+# service name (umbraco13 / umbraco17).
+#
+# Usage:
+#   docker compose -f docker-compose.test.yml up --build --abort-on-container-exit
+#
+# Screenshots land in docker/test/output/screenshots/{u13,u17}/.
+# To run only one Umbraco version:
+#   SKIP_U13=1 docker compose -f docker-compose.test.yml up --build --abort-on-container-exit
+# =============================================================================
+
+services:
+
+  # ---------------------------------------------------------------------------
+  # Umbraco 13 baseline (AngularJS backoffice, .NET 8, port 5001)
+  # ---------------------------------------------------------------------------
+  umbraco13:
+    build:
+      context: .
+      dockerfile: docker/test/u13/Dockerfile
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      UMBRACO__CMS__GLOBAL__SMTP__HOST: ""
+    expose:
+      - "5001"
+    volumes:
+      - u13-data:/app/umbraco/Data
+    networks:
+      - splatdev-test
+    healthcheck:
+      test: ["CMD", "curl", "-sf", "http://127.0.0.1:5001/umbraco"]
+      interval: 20s
+      timeout: 5s
+      start_period: 120s
+      retries: 9
+
+  # ---------------------------------------------------------------------------
+  # Umbraco 17 baseline (Lit3/Web Components backoffice, .NET 10, port 5000)
+  # ---------------------------------------------------------------------------
+  umbraco17:
+    build:
+      context: .
+      dockerfile: docker/test/u17/Dockerfile
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      UMBRACO__CMS__GLOBAL__SMTP__HOST: ""
+    expose:
+      - "5000"
+    volumes:
+      - u17-data:/app/umbraco/Data
+    networks:
+      - splatdev-test
+    healthcheck:
+      test: ["CMD", "curl", "-sf", "http://127.0.0.1:5000/umbraco"]
+      interval: 20s
+      timeout: 5s
+      start_period: 180s
+      retries: 9
+
+  # ---------------------------------------------------------------------------
+  # Playwright runner — glibc/Ubuntu 24.04 — connects to both Umbraco instances
+  # ---------------------------------------------------------------------------
+  playwright-runner:
+    build:
+      context: .
+      dockerfile: docker/test/playwright-runner/Dockerfile
+    depends_on:
+      umbraco13:
+        condition: service_healthy
+      umbraco17:
+        condition: service_healthy
+    environment:
+      U13_URL: "http://umbraco13:5001"
+      U17_URL: "http://umbraco17:5000"
+      UMBRACO_ADMIN_USER: "${UMBRACO_ADMIN_USER:-admin@splatdev.com}"
+      UMBRACO_ADMIN_PASS: "${UMBRACO_ADMIN_PASS:-SplatDev123!}"
+      SKIP_U13: "${SKIP_U13:-0}"
+      SKIP_U17: "${SKIP_U17:-0}"
+    volumes:
+      - ./docker/test/output:/output
+    networks:
+      - splatdev-test
+
+volumes:
+  u13-data:
+  u17-data:
+
+networks:
+  splatdev-test:
+    driver: bridge
