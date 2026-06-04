@@ -3,3 +3,8 @@ wwwroot/App_Plugins/
 umbraco/Data/
 umbraco/Logs/
 umbraco/media/
+Smidge/
+docs/
+config/themes/base/umbraco.yml.done
+config/themes/corporate/umbraco.done
+nohup.out

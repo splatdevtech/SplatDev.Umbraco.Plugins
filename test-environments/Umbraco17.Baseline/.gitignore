@@ -1,0 +1,9 @@
+umbraco/
+wwwroot/
+config/
+Views/
+docs/
+appsettings-schema.*.json
+umbraco-package-schema.json
+nohup.out
+*.user

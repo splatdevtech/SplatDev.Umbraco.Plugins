@@ -10,6 +10,7 @@ using SplatDev.Umbraco.Plugins.RedirectManager.Repositories;
 namespace SplatDev.Umbraco.Plugins.RedirectManager.Controllers
 {
 #if NET10_0_OR_GREATER
+    [Route("umbraco/management/api/v{version:apiVersion}/redirect-manager")]
     public class RedirectManagerController(RedirectUrlsRepository redirectUrlsRepository) : ManagementApiControllerBase
 #else
     public class RedirectManagerController(RedirectUrlsRepository redirectUrlsRepository) : UmbracoAuthorizedApiController
@@ -17,37 +18,37 @@ namespace SplatDev.Umbraco.Plugins.RedirectManager.Controllers
     {
         private readonly RedirectUrlsRepository redirectUrlsRepository = redirectUrlsRepository;
 
-        [HttpGet]
+        [HttpGet("")]
         public IEnumerable<RedirectUrl>? GetAll()
         {
             return redirectUrlsRepository.GetAllRedirectionUrls();
         }
 
-        [HttpGet]
+        [HttpGet("{id:int}")]
         public RedirectUrl? Get(int id)
         {
             return redirectUrlsRepository.GetRedirectionUrl(id);
         }
 
-        [HttpPost]
+        [HttpPost("")]
         public void Post(RedirectUrl url)
         {
             redirectUrlsRepository.AddRedirectionUrl(url);
         }
 
-        [HttpPut]
+        [HttpPut("")]
         public void Put(RedirectUrl url)
         {
             redirectUrlsRepository.EditRedirectionUrl(url);
         }
 
-        [HttpDelete]
+        [HttpDelete("{id:int}")]
         public void Delete(int id)
         {
             redirectUrlsRepository.DeleteRedirectionUrl(id);
         }
 
-        [HttpDelete]
+        [HttpDelete("all")]
         public void DeleteAll()
         {
             redirectUrlsRepository.DeleteAll();

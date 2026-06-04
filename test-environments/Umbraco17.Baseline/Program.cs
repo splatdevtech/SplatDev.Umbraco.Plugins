@@ -6,6 +6,7 @@ builder.CreateUmbracoBuilder()
     .Build();
 var app = builder.Build();
 await app.BootUmbracoAsync();
+app.MapStaticAssets();
 app.UseUmbraco()
     .WithMiddleware(u =>
     {

@@ -11,8 +11,11 @@
     "install-screenshots": "node scripts/install-screenshots.mjs"
   },
   "devDependencies": {
-    "@playwright/test": "^1.49.0",
+    "@playwright/test": "^1.60.0",
     "@types/node": "^22.0.0",
     "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "playwright-core": "^1.60.0"
   }
 }

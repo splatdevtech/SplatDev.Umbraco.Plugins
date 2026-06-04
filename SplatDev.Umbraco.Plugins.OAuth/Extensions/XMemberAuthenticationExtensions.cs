@@ -32,7 +32,7 @@ namespace SplatDev.Umbraco.Plugins.OAuth.Extensions
                             schemeName,
                             options =>
                             {
-                                options.CallbackPath = config.GetValue<string>("OAuth:Applications:X:CallbackPath"); ///oauth%3Fp=x
+                                options.CallbackPath = config.GetValue<string>("OAuth:Applications:X:CallbackPath") ?? "/signin-twitter";
                                 options.ConsumerKey = config.GetValue<string>("OAuth:Applications:X:ConsumerKey") ?? "";
                                 options.ConsumerSecret = config.GetValue<string>("OAuth:Applications:X:ConsumerSecret") ?? "";
                                 options.RetrieveUserDetails = true;
