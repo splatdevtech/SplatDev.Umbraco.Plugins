@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Umbraco.Cms.Infrastructure.Migrations;
 using SplatDev.Umbraco.Plugins.Newsletter.Models;
@@ -5,9 +6,9 @@ using SplatDev.Umbraco.Plugins.Newsletter.Models;
 namespace SplatDev.Umbraco.Plugins.Newsletter.Migrations;
 
 public class CreateNewsletterTables(IMigrationContext context, ILogger<CreateNewsletterTables> logger)
-    : MigrationBase(context)
+    : AsyncMigrationBase(context)
 {
-    protected override void Migrate()
+    protected override async Task MigrateAsync()
     {
         logger.LogDebug("Running migration {MigrationStep}", "CreateNewsletterTables");
 

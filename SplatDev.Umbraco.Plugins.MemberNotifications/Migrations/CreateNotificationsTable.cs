@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Umbraco.Cms.Infrastructure.Migrations;
 using SplatDev.Umbraco.Plugins.MemberNotifications.Models;
@@ -5,9 +6,9 @@ using SplatDev.Umbraco.Plugins.MemberNotifications.Models;
 namespace SplatDev.Umbraco.Plugins.MemberNotifications.Migrations;
 
 public class CreateNotificationsTable(IMigrationContext context, ILogger<CreateNotificationsTable> logger)
-    : MigrationBase(context)
+    : AsyncMigrationBase(context)
 {
-    protected override void Migrate()
+    protected override async Task MigrateAsync()
     {
         logger.LogDebug("Running migration {MigrationStep}", "CreateNotificationsTable");
 

@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using NPoco;
 using Umbraco.Cms.Core.Packaging;
 using Umbraco.Cms.Infrastructure.Migrations;
@@ -50,11 +51,11 @@ public class AddExportProfilesTableMigration : AsyncMigrationBase
     }
 }
 #else
-public class AddExportProfilesTableMigration : MigrationBase
+public class AddExportProfilesTableMigration : AsyncMigrationBase
 {
     public AddExportProfilesTableMigration(IMigrationContext context) : base(context) { }
 
-    protected override void Migrate()
+    protected override async Task MigrateAsync()
     {
         if (!TableExists("schema2yamlExportProfiles"))
             Create.Table<ExportProfileDto>().Do();

@@ -1,10 +1,11 @@
+using System.Threading.Tasks;
 namespace SplatDev.Umbraco.Plugins.CodeFirst
 {
     using Microsoft.Extensions.Logging;
 
     using Umbraco.Cms.Infrastructure.Migrations;
 
-    public class InitialMigration : MigrationBase
+    public class InitialMigration : AsyncMigrationBase
     {
         private const string tableName = "pluginApiKeys";
 
@@ -12,7 +13,7 @@ namespace SplatDev.Umbraco.Plugins.CodeFirst
         {
         }
 
-        protected override void Migrate()
+        protected override async Task MigrateAsync()
         {
             Logger.LogDebug("Running Initial Migration with Api Keys");
 

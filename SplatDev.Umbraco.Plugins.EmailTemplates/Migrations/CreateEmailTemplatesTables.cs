@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Umbraco.Cms.Infrastructure.Migrations;
 using SplatDev.Umbraco.Plugins.EmailTemplates.Models;
@@ -5,9 +6,9 @@ using SplatDev.Umbraco.Plugins.EmailTemplates.Models;
 namespace SplatDev.Umbraco.Plugins.EmailTemplates.Migrations;
 
 public class CreateEmailTemplatesTables(IMigrationContext context, ILogger<CreateEmailTemplatesTables> logger)
-    : MigrationBase(context)
+    : AsyncMigrationBase(context)
 {
-    protected override void Migrate()
+    protected override async Task MigrateAsync()
     {
         logger.LogDebug("Running migration {MigrationStep}", "CreateEmailTemplatesTables");
 

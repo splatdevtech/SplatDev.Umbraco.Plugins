@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 ﻿using FormBuilder.Extension.Entities;
 
 using Microsoft.Extensions.Logging;
@@ -6,11 +7,11 @@ using Umbraco.Cms.Infrastructure.Migrations;
 
 namespace FormBuilder.Extension.Migrations
 {
-    public class FormBuilderMigration(IMigrationContext context, ILogger<FormBuilderMigration> logger) : MigrationBase(context)
+    public class FormBuilderMigration(IMigrationContext context, ILogger<FormBuilderMigration> logger) : AsyncMigrationBase(context)
     {
         private readonly ILogger<FormBuilderMigration> _logger = logger;
 
-        protected override void Migrate()
+        protected override async Task MigrateAsync()
         {
             _logger.LogDebug("Running migration {MigrationStep}", "AddFormBuilder");
             if (!TableExists(Form.TABLE_NAME))

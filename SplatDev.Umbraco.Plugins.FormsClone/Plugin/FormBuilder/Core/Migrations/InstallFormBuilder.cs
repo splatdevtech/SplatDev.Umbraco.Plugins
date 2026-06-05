@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 ﻿using FormBuilder.Core.Persistence;
 using FormBuilder.Core.Persistence.Dtos;
 using FormBuilder.Core.Persistence.Fields;
@@ -39,7 +40,7 @@ namespace FormBuilder.Core.Migrations
         private readonly IHostEnvironment _hostEnvironment = hostEnvironment;
         private readonly IScopeProvider _scopeProvider = scopeProvider;
 
-        protected override void Migrate()
+        protected override async Task MigrateAsync()
         {
             CreateTables();
             AddFormsApplicationPermission();

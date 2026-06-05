@@ -1,0 +1,215 @@
+# Umbraco YAML Configuration – Demo Web Project
+# Plugin: SplatDev.Umbraco.Plugins.Yaml2Schema v1.0.5+
+
+languages:
+  - isoCode: en-US
+    cultureName: English (United States)
+    isDefault: true
+    isMandatory: true
+    update: true
+
+dataTypes:
+  - alias: textString
+    name: Text String
+    editorUiAlias: Umbraco.TextBox
+    config:
+      maxLength: 512
+
+  - alias: richText
+    name: Rich Text
+    editorUiAlias: Umbraco.RichText
+
+  - alias: markdown
+    name: Markdown
+    editorUiAlias: Umbraco.MarkdownEditor
+
+documentTypes:
+  - alias: page
+    name: Page
+    icon: icon-document
+    allowAsRoot: true
+    update: true
+    allowedChildTypes:
+      - page
+      - article
+    allowedTemplates:
+      - page
+    defaultTemplate: page
+    tabs:
+      - name: Content
+        properties:
+          - alias: title
+            name: Title
+            dataType: textString
+            required: true
+          - alias: bodyContent
+            name: Body Content
+            dataType: richText
+      - name: Settings
+        properties:
+          - alias: pageTitle
+            name: Page Title
+            dataType: textString
+          - alias: metaDescription
+            name: Meta Description
+            dataType: textString
+
+  - alias: article
+    name: Article
+    icon: icon-article
+    allowAsRoot: false
+    update: true
+    allowedChildTypes: []
+    allowedTemplates:
+      - article
+    defaultTemplate: article
+    tabs:
+      - name: Content
+        properties:
+          - alias: articleTitle
+            name: Article Title
+            dataType: textString
+            required: true
+          - alias: articleBody
+            name: Article Body
+            dataType: richText
+            required: true
+          - alias: summary
+            name: Summary
+            dataType: textString
+      - name: Metadata
+        properties:
+          - alias: publishDate
+            name: Publish Date
+            dataType: textString
+            required: true
+          - alias: author
+            name: Author
+            dataType: textString
+            required: true
+          - alias: tags
+            name: Tags
+            dataType: textString
+
+templates:
+  - alias: page
+    name: Page
+    path: Page.cshtml
+    masterTemplate: null
+    update: true
+    content: |
+      @inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+      @{
+          Layout = null;
+      }
+      <!DOCTYPE html>
+      <html lang="en">
+      <head>
+          <meta charset="UTF-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <title>@(Model.Value<string>("pageTitle") ?? Model.Value<string>("title"))</title>
+          @if (Model.HasValue("metaDescription"))
+          {
+              <meta name="description" content="@Model.Value("metaDescription")">
+          }
+      </head>
+      <body>
+          <main>
+              <h1>@Model.Value("title")</h1>
+              @Html.Raw(Model.Value("bodyContent"))
+          </main>
+      </body>
+      </html>
+
+  - alias: article
+    name: Article
+    path: Article.cshtml
+    masterTemplate: page
+    update: true
+    content: |
+      @inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+      @{
+          Layout = "Page.cshtml";
+      }
+      <article>
+          <header>
+              <h1>@Model.Value("articleTitle")</h1>
+              <p>By @Model.Value("author") · @Model.Value("publishDate")</p>
+          </header>
+          @Html.Raw(Model.Value("articleBody"))
+          @if (Model.HasValue("tags"))
+          {
+              <footer><p>Tags: @Model.Value("tags")</p></footer>
+          }
+      </article>
+
+content:
+  - alias: home
+    name: Home
+    documentType: page
+    isPublished: true
+    sortOrder: 0
+    properties:
+      title: "Welcome to Our Website"
+      pageTitle: "Home – Our Website"
+      metaDescription: "Welcome to our professional website."
+      bodyContent: "<p>Getting started with YAML-driven Umbraco content.</p>"
+    children:
+      - alias: about-us
+        name: About Us
+        documentType: page
+        isPublished: true
+        sortOrder: 1
+        properties:
+          title: "About Our Company"
+          pageTitle: "About Us – Our Website"
+          metaDescription: "Learn more about our company, mission, and values."
+          bodyContent: "<p>Founded in 2020, our company has grown to serve hundreds of clients.</p>"
+
+      - alias: contact
+        name: Contact
+        documentType: page
+        isPublished: true
+        sortOrder: 2
+        properties:
+          title: "Get In Touch"
+          pageTitle: "Contact – Our Website"
+          metaDescription: "Contact us for inquiries and support."
+          bodyContent: "<p>Email: info@example.com · Phone: +1 (555) 123-4567</p>"
+
+      - alias: blog
+        name: Blog
+        documentType: page
+        isPublished: true
+        sortOrder: 3
+        properties:
+          title: "Blog Articles"
+          pageTitle: "Blog – Our Website"
+          metaDescription: "Read our latest articles and insights."
+          bodyContent: "<p>Explore our collection of informative articles.</p>"
+        children:
+          - alias: getting-started-yaml
+            name: "Getting Started with YAML"
+            documentType: article
+            isPublished: true
+            sortOrder: 0
+            properties:
+              articleTitle: "Getting Started with YAML Configuration"
+              articleBody: "<p>YAML provides a simple and intuitive way to configure your Umbraco installation.</p>"
+              summary: "Learn the fundamentals of YAML configuration for Umbraco"
+              publishDate: "2026-03-15"
+              author: "John Smith"
+              tags: "yaml, configuration, umbraco"
+
+          - alias: advanced-content-management
+            name: "Advanced Content Management"
+            documentType: article
+            isPublished: true
+            sortOrder: 1
+            properties:
+              articleTitle: "Advanced Content Management Techniques"
+              articleBody: "<p>Master the advanced features of Umbraco for managing complex content hierarchies.</p>"
+              summary: "Discover advanced strategies for managing content in Umbraco"
+              publishDate: "2026-03-22"
+              author: "Jane Doe"
+              tags: "umbraco, content-management, advanced"
