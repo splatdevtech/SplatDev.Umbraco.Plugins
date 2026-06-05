@@ -27,14 +27,16 @@ namespace SplatDev.Umbraco.Plugins.OAuth.Extensions
                         ArgumentNullException.ThrowIfNull(schemeName);
 
                         var config = builder.Config;
+                        var clientId = config.GetValue<string>("OAuth:Applications:Google:ClientId");
+                        if (string.IsNullOrEmpty(clientId)) return;
 
                         memberAuthenticationBuilder.AddGoogle(
                             schemeName,
                             options =>
                             {
                                 options.CallbackPath = config.GetValue<string>("OAuth:Applications:Google:CallbackPath") ?? "/signin-google";
-                                options.ClientId = config.GetValue<string>("OAuth:Applications:Google:ClientId") ?? "";
-                                options.ClientSecret = config.GetValue<string>("OAuth:Applications:Google:ClientSecret") ?? "";
+                                options.ClientId = clientId;
+                                options.ClientSecret = config.GetValue<string>("OAuth:Applications:Google:ClientSecret") ?? string.Empty;
                             });
                     });
             });
