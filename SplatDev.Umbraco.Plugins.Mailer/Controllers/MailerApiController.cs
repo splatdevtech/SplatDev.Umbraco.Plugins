@@ -10,6 +10,7 @@ using SplatDev.Umbraco.Plugins.Mailer.Services;
 
 namespace SplatDev.Umbraco.Plugins.Mailer.Controllers
 {
+    [Route("umbraco/management/api/v1/mailer")]
 #if NET10_0_OR_GREATER
     public class MailerApiController(MicrosoftGraphMailerService mailerService, ILogger<MailerApiController> logger) : ManagementApiControllerBase
 #else
@@ -19,7 +20,7 @@ namespace SplatDev.Umbraco.Plugins.Mailer.Controllers
         private readonly MicrosoftGraphMailerService _mailerService = mailerService;
         private readonly ILogger<MailerApiController> _logger = logger;
 
-        [HttpPost]
+        [HttpPost("send-test")]
         public async Task<IActionResult> SendTestAsync(string email)
         {
             try

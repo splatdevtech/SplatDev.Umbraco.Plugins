@@ -9,6 +9,7 @@ using SplatDev.Umbraco.Plugins.RedirectManager.Repositories;
 
 namespace SplatDev.Umbraco.Plugins.RedirectManager.Controllers
 {
+    [Route("umbraco/management/api/v1/redirectmanager")]
 #if NET10_0_OR_GREATER
     public class RedirectManagerController(RedirectUrlsRepository redirectUrlsRepository) : ManagementApiControllerBase
 #else
@@ -23,7 +24,7 @@ namespace SplatDev.Umbraco.Plugins.RedirectManager.Controllers
             return redirectUrlsRepository.GetAllRedirectionUrls();
         }
 
-        [HttpGet]
+        [HttpGet("{id:int}")]
         public RedirectUrl? Get(int id)
         {
             return redirectUrlsRepository.GetRedirectionUrl(id);
