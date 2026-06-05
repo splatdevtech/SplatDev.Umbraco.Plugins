@@ -61,18 +61,21 @@ namespace SplatDev.Umbraco.Plugins.CacheManager.Composers
                 {
                     PrePipeline = app =>
                     {
-                        app.UseStaticFiles(new StaticFileOptions()
+                        app.UseWhen(ctx => !ctx.Request.Path.StartsWithSegments("/umbraco/backoffice"), appBuilder =>
                         {
-                            HttpsCompression = Microsoft.AspNetCore.Http.Features.HttpsCompressionMode.Compress,
-                            OnPrepareResponse = (context) =>
+                            appBuilder.UseStaticFiles(new StaticFileOptions()
                             {
-                                var headers = context.Context.Response.GetTypedHeaders();
-                                headers.CacheControl = new Microsoft.Net.Http.Headers.CacheControlHeaderValue
+                                HttpsCompression = Microsoft.AspNetCore.Http.Features.HttpsCompressionMode.Compress,
+                                OnPrepareResponse = (context) =>
                                 {
-                                    Public = true,
-                                    MaxAge = CacheRefresh.MONTH
-                                };
-                            }
+                                    var headers = context.Context.Response.GetTypedHeaders();
+                                    headers.CacheControl = new Microsoft.Net.Http.Headers.CacheControlHeaderValue
+                                    {
+                                        Public = true,
+                                        MaxAge = CacheRefresh.MONTH
+                                    };
+                                }
+                            });
                         });
                     }
                 });
@@ -92,15 +95,18 @@ namespace SplatDev.Umbraco.Plugins.CacheManager.Composers
                         app.UseResponseCaching();
                         app.Use(async (context, next) =>
                         {
+                            await next();
+
+                            if (context.Request.Path.StartsWithSegments("/umbraco/backoffice"))
+                                return;
+
                             context.Response.GetTypedHeaders().CacheControl =
                                 new Microsoft.Net.Http.Headers.CacheControlHeaderValue()
                                 {
-                                    NoCache = true,
                                     Public = true,
                                     MaxAge = TimeSpan.FromMinutes(5)
                                 };
                             context.Response.Headers[Microsoft.Net.Http.Headers.HeaderNames.Vary] = middleware;
-                            await next();
                         });
                     }
                 });
