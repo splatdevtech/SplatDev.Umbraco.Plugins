@@ -12,7 +12,7 @@ namespace SplatDev.Umbraco.NPoco.Repositories
 {
     public interface IRepository<T> : IDisposable where T : IBaseEntity
     {
-        int? UserId { get; set; }
+        Guid? UserId { get; set; }
 
         int? Count();
 

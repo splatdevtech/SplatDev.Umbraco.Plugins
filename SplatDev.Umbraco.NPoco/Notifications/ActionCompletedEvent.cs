@@ -10,7 +10,7 @@ namespace SplatDev.Umbraco.NPoco.Notifications
         public int Id { get; set; }
         public IBaseEntity? Entity { get; set; }
         public AuditType AuditType { get; set; }
-        public int UserId { get; set; } = Constants.Security.SuperUserId;
+        public Guid UserId { get; set; } = Constants.Security.SuperUserKey;
         public string? Message = string.Empty;
         public bool Log { get; set; } = false;
     }
@@ -20,7 +20,7 @@ namespace SplatDev.Umbraco.NPoco.Notifications
         public KeyValuePair<int, int> Id { get; set; }
         public T? Entity { get; set; }
         public AuditType AuditType { get; set; }
-        public int UserId { get; set; } = Constants.Security.SuperUserId;
+        public Guid UserId { get; set; } = Constants.Security.SuperUserKey;
         public string? Message = string.Empty;
         public bool Log { get; set; } = false;
     }
