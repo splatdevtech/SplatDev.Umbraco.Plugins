@@ -9,7 +9,7 @@ namespace SplatDev.Umbraco.Plugins.EmailNotifications.Controllers;
 [Route("umbraco/api/newsletter")]
 public class NewsletterController(
     INewsletterService newsletterService,
-    ILogger<NewsletterController> logger) : UmbracoApiController
+    ILogger<NewsletterController> logger) : ControllerBase
 {
     public record SubscribeRequest(string Email, string? ListId = null, string? MemberId = null,
         string? FirstName = null, string? LastName = null);

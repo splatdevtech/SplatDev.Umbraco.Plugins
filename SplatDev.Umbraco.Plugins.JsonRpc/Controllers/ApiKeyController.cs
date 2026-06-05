@@ -5,7 +5,7 @@ using SplatDev.Umbraco.Plugins.JsonRpc.Services;
 namespace SplatDev.Umbraco.Plugins.JsonRpc.Controllers;
 
 [Route("umbraco/api/jsonrpc/apikey/[action]")]
-public class ApiKeyController : UmbracoApiController
+public class ApiKeyController : ControllerBase
 {
     private readonly IApiKeyService _service;
 

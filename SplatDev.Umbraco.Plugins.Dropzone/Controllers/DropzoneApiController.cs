@@ -7,7 +7,7 @@ using SplatDev.Umbraco.Plugins.Dropzone.Services;
 namespace SplatDev.Umbraco.Plugins.Dropzone.Controllers;
 
 [Route("umbraco/api/dropzone/[action]")]
-public class DropzoneApiController : UmbracoApiController
+public class DropzoneApiController : ControllerBase
 {
     private readonly IDropzoneService _service;
 

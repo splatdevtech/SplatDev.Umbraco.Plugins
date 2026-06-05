@@ -7,7 +7,7 @@ using SplatDev.Umbraco.Plugins.Blog.Services;
 namespace SplatDev.Umbraco.Plugins.Blog.Controllers;
 
 [Route("umbraco/api/blog/rss")]
-public class BlogRssController : UmbracoApiController
+public class BlogRssController : ControllerBase
 {
     private readonly IBlogService _service;
 

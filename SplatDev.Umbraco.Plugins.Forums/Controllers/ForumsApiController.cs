@@ -6,7 +6,7 @@ using SplatDev.Umbraco.Plugins.Forums.Services;
 namespace SplatDev.Umbraco.Plugins.Forums.Controllers;
 
 [Route("umbraco/api/forums/[action]")]
-public class ForumsApiController : UmbracoApiController
+public class ForumsApiController : ControllerBase
 {
     private readonly IForumsService _service;
 

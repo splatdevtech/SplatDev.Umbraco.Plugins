@@ -12,7 +12,7 @@ namespace SplatDev.Umbraco.Plugins.JsonRpc.Controllers;
 /// Supported methods: content.get, content.search, content.publish
 /// </summary>
 [Route("umbraco/api/jsonrpc/[action]")]
-public class JsonRpcController : UmbracoApiController
+public class JsonRpcController : ControllerBase
 {
     private readonly IJsonRpcService _rpcService;
     private readonly IApiKeyService _apiKeyService;

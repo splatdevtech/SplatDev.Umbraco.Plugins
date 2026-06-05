@@ -5,7 +5,7 @@ using SplatDev.Umbraco.Plugins.MemberLogin.Services;
 namespace SplatDev.Umbraco.Plugins.MemberLogin.Controllers;
 
 [Route("umbraco/api/memberlogin/[action]")]
-public class MemberLoginApiController : UmbracoApiController
+public class MemberLoginApiController : ControllerBase
 {
     private readonly IMemberLoginService _service;
 

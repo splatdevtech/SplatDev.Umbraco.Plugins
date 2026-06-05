@@ -6,7 +6,7 @@ using SplatDev.Umbraco.Plugins.Rsvp.Services;
 namespace SplatDev.Umbraco.Plugins.Rsvp.Controllers;
 
 [Route("umbraco/api/rsvp/[action]")]
-public class RsvpApiController : UmbracoApiController
+public class RsvpApiController : ControllerBase
 {
     private readonly IRsvpService _service;
 

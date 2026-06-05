@@ -5,7 +5,7 @@ using SplatDev.Umbraco.Plugins.TwoFactor.Services;
 namespace SplatDev.Umbraco.Plugins.TwoFactor.Controllers;
 
 [Route("umbraco/api/twofactor/[action]")]
-public class TwoFactorApiController : UmbracoApiController
+public class TwoFactorApiController : ControllerBase
 {
     private readonly ITwoFactorService _service;
 

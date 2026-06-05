@@ -6,7 +6,7 @@ using SplatDev.Umbraco.Plugins.DefaultValue.Services;
 namespace SplatDev.Umbraco.Plugins.DefaultValue.Controllers;
 
 [Route("umbraco/api/defaultvalue/[action]")]
-public class DefaultValueApiController : UmbracoApiController
+public class DefaultValueApiController : ControllerBase
 {
     private readonly IDefaultValueService _service;
 

@@ -8,7 +8,7 @@ using Umbraco.Cms.Web.Common.Controllers;
 
 namespace SplatDev.Umbraco.Plugins.PdfCurator.Controllers;
 
-public class UploadApiController : UmbracoApiController
+public class UploadApiController : ControllerBase
 {
     private readonly IConfiguration _config;
     private readonly IWebHostEnvironment _webHostEnvironment;

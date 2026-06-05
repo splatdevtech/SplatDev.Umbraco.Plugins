@@ -5,7 +5,7 @@ using SplatDev.Umbraco.Plugins.Exif.Services;
 namespace SplatDev.Umbraco.Plugins.Exif.Controllers;
 
 [Route("umbraco/api/exif/[action]")]
-public class ExifApiController : UmbracoApiController
+public class ExifApiController : ControllerBase
 {
     private readonly IExifService _service;
 

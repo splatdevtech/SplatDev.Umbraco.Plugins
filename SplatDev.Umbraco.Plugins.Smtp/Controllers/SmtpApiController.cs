@@ -6,7 +6,7 @@ using SplatDev.Umbraco.Plugins.Smtp.Services;
 namespace SplatDev.Umbraco.Plugins.Smtp.Controllers;
 
 [Route("umbraco/api/smtp/[action]")]
-public class SmtpApiController : UmbracoApiController
+public class SmtpApiController : ControllerBase
 {
     private readonly ISmtpService _service;
 

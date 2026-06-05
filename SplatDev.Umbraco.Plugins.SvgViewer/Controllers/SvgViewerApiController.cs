@@ -5,7 +5,7 @@ using SplatDev.Umbraco.Plugins.SvgViewer.Services;
 namespace SplatDev.Umbraco.Plugins.SvgViewer.Controllers;
 
 [Route("umbraco/api/svgviewer/[action]")]
-public class SvgViewerApiController : UmbracoApiController
+public class SvgViewerApiController : ControllerBase
 {
     private readonly ISvgViewerService _service;
 

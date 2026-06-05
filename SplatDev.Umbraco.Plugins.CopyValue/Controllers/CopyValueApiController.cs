@@ -6,7 +6,7 @@ using SplatDev.Umbraco.Plugins.CopyValue.Services;
 namespace SplatDev.Umbraco.Plugins.CopyValue.Controllers;
 
 [Route("umbraco/api/copyvalue/[action]")]
-public class CopyValueApiController : UmbracoApiController
+public class CopyValueApiController : ControllerBase
 {
     private readonly ICopyValueService _service;
 

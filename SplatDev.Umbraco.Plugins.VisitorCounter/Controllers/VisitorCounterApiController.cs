@@ -5,7 +5,7 @@ using SplatDev.Umbraco.Plugins.VisitorCounter.Services;
 namespace SplatDev.Umbraco.Plugins.VisitorCounter.Controllers;
 
 [Route("umbraco/api/visitorcounter/[action]")]
-public class VisitorCounterApiController : UmbracoApiController
+public class VisitorCounterApiController : ControllerBase
 {
     private readonly IVisitorCounterService _service;
 

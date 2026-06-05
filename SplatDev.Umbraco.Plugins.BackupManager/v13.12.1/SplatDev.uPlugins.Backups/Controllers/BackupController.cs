@@ -15,7 +15,7 @@ using Umbraco.Cms.Web.Common.Controllers;
 
 namespace SplatDev.uPlugins.Backups.Controllers
 {
-    public class BackupController : UmbracoApiController
+    public class BackupController : ControllerBase
     {
         public string DestinationPath { get; private set; }
         public string RootPath { get; private set; }

@@ -6,7 +6,7 @@ using SplatDev.Umbraco.Plugins.Gdrp.Services;
 namespace SplatDev.Umbraco.Plugins.Gdrp.Controllers;
 
 [Route("umbraco/api/gdrp/[action]")]
-public class GdrpApiController : UmbracoApiController
+public class GdrpApiController : ControllerBase
 {
     private readonly IGdrpService _service;
 

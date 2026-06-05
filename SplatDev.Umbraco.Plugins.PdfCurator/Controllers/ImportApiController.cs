@@ -11,7 +11,7 @@ using Umbraco.Cms.Web.Common.Controllers;
 namespace SplatDev.Umbraco.Plugins.PdfCurator.Controllers;
 
 
-public class ImportApiController : UmbracoApiController
+public class ImportApiController : ControllerBase
 {
     private readonly IWebHostEnvironment _webHostEnvironment;
     private readonly IConfiguration _config;

@@ -6,7 +6,7 @@ using SplatDev.Umbraco.Plugins.ToastNotifications.Services;
 namespace SplatDev.Umbraco.Plugins.ToastNotifications.Controllers;
 
 [Route("umbraco/api/toastnotifications/[action]")]
-public class ToastNotificationsApiController : UmbracoApiController
+public class ToastNotificationsApiController : ControllerBase
 {
     private readonly IToastNotificationsService _service;
 

@@ -6,7 +6,7 @@ using SplatDev.Umbraco.Plugins.LiveVideo.Services;
 namespace SplatDev.Umbraco.Plugins.LiveVideo.Controllers;
 
 [Route("umbraco/api/livevideo/[action]")]
-public class LiveVideoApiController : UmbracoApiController
+public class LiveVideoApiController : ControllerBase
 {
     private readonly ILiveVideoService _service;
 

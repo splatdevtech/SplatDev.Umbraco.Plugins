@@ -5,7 +5,7 @@ using SplatDev.Umbraco.Plugins.Payments.MercadoPago.Services;
 namespace SplatDev.Umbraco.Plugins.Payments.MercadoPago.Controllers;
 
 [Route("umbraco/api/mercadopago/[action]")]
-public class MercadoPagoApiController : UmbracoApiController
+public class MercadoPagoApiController : ControllerBase
 {
     private readonly IMercadoPagoService _service;
 

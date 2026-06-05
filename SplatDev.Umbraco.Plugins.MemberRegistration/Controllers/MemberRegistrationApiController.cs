@@ -5,7 +5,7 @@ using SplatDev.Umbraco.Plugins.MemberRegistration.Services;
 namespace SplatDev.Umbraco.Plugins.MemberRegistration.Controllers;
 
 [Route("umbraco/api/memberregistration/[action]")]
-public class MemberRegistrationApiController : UmbracoApiController
+public class MemberRegistrationApiController : ControllerBase
 {
     private readonly IMemberRegistrationService _service;
 

@@ -8,7 +8,7 @@ using SplatDev.Umbraco.Plugins.Settings.Services;
 namespace SplatDev.Umbraco.Plugins.Settings.Controllers
 {
     [Route("umbraco/api/SettingsApi/[action]")]
-    public class SettingsApiController(ISettingsService settingsService) : UmbracoApiController
+    public class SettingsApiController(ISettingsService settingsService) : ControllerBase
     {
         private readonly ISettingsService _settingsService = settingsService;
 

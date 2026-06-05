@@ -8,7 +8,7 @@ using SplatDev.Umbraco.Plugins.SocialMedia.Channels.Services;
 namespace SplatDev.Umbraco.Plugins.SocialMedia.Channels.Controllers
 {
     [Route("umbraco/api/SocialChannelsApi/[action]")]
-    public class SocialChannelsApiController(ISocialChannelsService socialChannelsService) : UmbracoApiController
+    public class SocialChannelsApiController(ISocialChannelsService socialChannelsService) : ControllerBase
     {
         private readonly ISocialChannelsService _socialChannelsService = socialChannelsService;
 

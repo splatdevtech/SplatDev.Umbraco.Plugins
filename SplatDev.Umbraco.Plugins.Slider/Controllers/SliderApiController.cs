@@ -6,7 +6,7 @@ using SplatDev.Umbraco.Plugins.Slider.Services;
 namespace SplatDev.Umbraco.Plugins.Slider.Controllers;
 
 [Route("umbraco/api/slider/[action]")]
-public class SliderApiController : UmbracoApiController
+public class SliderApiController : ControllerBase
 {
     private readonly ISliderService _service;
 

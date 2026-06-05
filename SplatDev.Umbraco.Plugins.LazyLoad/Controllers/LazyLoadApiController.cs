@@ -6,7 +6,7 @@ using SplatDev.Umbraco.Plugins.LazyLoad.Services;
 namespace SplatDev.Umbraco.Plugins.LazyLoad.Controllers;
 
 [Route("umbraco/api/lazyload/[action]")]
-public class LazyLoadApiController : UmbracoApiController
+public class LazyLoadApiController : ControllerBase
 {
     private readonly ILazyLoadService _service;
 

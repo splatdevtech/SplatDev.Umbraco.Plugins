@@ -5,7 +5,7 @@ using SplatDev.Umbraco.Plugins.HiddenContent.Services;
 namespace SplatDev.Umbraco.Plugins.HiddenContent.Controllers;
 
 [Route("umbraco/api/hiddencontent/[action]")]
-public class HiddenContentApiController : UmbracoApiController
+public class HiddenContentApiController : ControllerBase
 {
     private readonly IHiddenContentService _service;
 

@@ -7,7 +7,7 @@ using SplatDev.Umbraco.Plugins.NewsTicker.Services;
 namespace SplatDev.Umbraco.Plugins.NewsTicker.Controllers;
 
 [Route("umbraco/api/newsticker")]
-public class NewsTickerApiController : UmbracoApiController
+public class NewsTickerApiController : ControllerBase
 {
     private readonly INewsTickerService _service;
     private readonly NewsTickerSettings _settings;

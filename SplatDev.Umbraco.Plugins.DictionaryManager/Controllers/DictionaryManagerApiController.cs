@@ -6,7 +6,7 @@ using SplatDev.Umbraco.Plugins.DictionaryManager.Services;
 namespace SplatDev.Umbraco.Plugins.DictionaryManager.Controllers;
 
 [Route("umbraco/api/dictionarymanager/[action]")]
-public class DictionaryManagerApiController : UmbracoApiController
+public class DictionaryManagerApiController : ControllerBase
 {
     private readonly IDictionaryManagerService _service;
 

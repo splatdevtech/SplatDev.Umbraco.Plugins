@@ -14,7 +14,7 @@ namespace SplatDev.Umbraco.Plugins.MemberNotifications.Controllers;
 public class MemberNotificationsController(
     INotificationService notificationService,
     IMemberManager memberManager,
-    ILogger<MemberNotificationsController> logger) : UmbracoApiController
+    ILogger<MemberNotificationsController> logger) : ControllerBase
 {
     /// <summary>Returns the authenticated member's notifications, newest-first, paginated.</summary>
     [HttpGet]

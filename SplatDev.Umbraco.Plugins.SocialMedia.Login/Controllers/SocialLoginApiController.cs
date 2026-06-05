@@ -8,7 +8,7 @@ using SplatDev.Umbraco.Plugins.SocialMedia.Login.Services;
 namespace SplatDev.Umbraco.Plugins.SocialMedia.Login.Controllers
 {
     [Route("umbraco/api/SocialLoginApi/[action]")]
-    public class SocialLoginApiController(ISocialLoginService socialLoginService) : UmbracoApiController
+    public class SocialLoginApiController(ISocialLoginService socialLoginService) : ControllerBase
     {
         private readonly ISocialLoginService _socialLoginService = socialLoginService;
 

@@ -6,7 +6,7 @@ using SplatDev.Umbraco.Plugins.PasswordSettings.Services;
 namespace SplatDev.Umbraco.Plugins.PasswordSettings.Controllers;
 
 [Route("umbraco/api/passwordsettings/[action]")]
-public class PasswordSettingsApiController : UmbracoApiController
+public class PasswordSettingsApiController : ControllerBase
 {
     private readonly IPasswordSettingsService _service;
 

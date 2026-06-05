@@ -5,7 +5,7 @@ using SplatDev.Umbraco.Plugins.Tweets.Services;
 namespace SplatDev.Umbraco.Plugins.Tweets.Controllers;
 
 [Route("umbraco/api/tweets")]
-public class TweetsApiController : UmbracoApiController
+public class TweetsApiController : ControllerBase
 {
     private readonly ITweetsService _service;
 

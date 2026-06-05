@@ -8,7 +8,7 @@ using SplatDev.Umbraco.Plugins.RdpManager.Services;
 namespace SplatDev.Umbraco.Plugins.RdpManager.Controllers
 {
     [Route("umbraco/api/RdpManagerApi/[action]")]
-    public class RdpManagerApiController(IRdpManagerService rdpManagerService) : UmbracoApiController
+    public class RdpManagerApiController(IRdpManagerService rdpManagerService) : ControllerBase
     {
         private readonly IRdpManagerService _rdpManagerService = rdpManagerService;
 

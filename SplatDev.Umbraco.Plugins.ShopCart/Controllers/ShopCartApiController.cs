@@ -6,7 +6,7 @@ using SplatDev.Umbraco.Plugins.ShopCart.Services;
 namespace SplatDev.Umbraco.Plugins.ShopCart.Controllers;
 
 [Route("umbraco/api/shopcart/[action]")]
-public class ShopCartApiController : UmbracoApiController
+public class ShopCartApiController : ControllerBase
 {
     private readonly IShopCartService _service;
 

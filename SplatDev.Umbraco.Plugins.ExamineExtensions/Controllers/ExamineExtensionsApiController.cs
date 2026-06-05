@@ -6,7 +6,7 @@ using SplatDev.Umbraco.Plugins.ExamineExtensions.Services;
 namespace SplatDev.Umbraco.Plugins.ExamineExtensions.Controllers;
 
 [Route("umbraco/api/examineextensions/[action]")]
-public class ExamineExtensionsApiController : UmbracoApiController
+public class ExamineExtensionsApiController : ControllerBase
 {
     private readonly IExamineExtensionsService _service;
 

@@ -6,7 +6,7 @@ namespace SplatDev.Umbraco.Plugins.EmailNotifications.Controllers;
 
 /// <summary>Member-facing notification endpoints. Callers must supply memberId.</summary>
 [Route("umbraco/api/notifications")]
-public class NotificationsController(INotificationService notificationService) : UmbracoApiController
+public class NotificationsController(INotificationService notificationService) : ControllerBase
 {
     [HttpGet]
     public async Task<IActionResult> GetAll([FromQuery] string memberId, CancellationToken ct)

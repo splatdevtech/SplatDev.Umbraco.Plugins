@@ -7,7 +7,7 @@ using SplatDev.Umbraco.Plugins.Backups.Services;
 namespace SplatDev.Umbraco.Plugins.Backups.Controllers;
 
 [Route("umbraco/api/backups/[action]")]
-public class BackupsApiController : UmbracoApiController
+public class BackupsApiController : ControllerBase
 {
     private readonly IBackupsService _service;
 

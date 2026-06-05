@@ -6,7 +6,7 @@ using SplatDev.Umbraco.Plugins.Blog.Services;
 namespace SplatDev.Umbraco.Plugins.Blog.Controllers;
 
 [Route("umbraco/api/blog/[action]")]
-public class BlogApiController : UmbracoApiController
+public class BlogApiController : ControllerBase
 {
     private readonly IBlogService _service;
 

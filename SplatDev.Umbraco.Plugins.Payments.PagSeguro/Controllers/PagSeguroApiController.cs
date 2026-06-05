@@ -5,7 +5,7 @@ using SplatDev.Umbraco.Plugins.Payments.PagSeguro.Services;
 namespace SplatDev.Umbraco.Plugins.Payments.PagSeguro.Controllers;
 
 [Route("umbraco/api/pagseguro/[action]")]
-public class PagSeguroApiController : UmbracoApiController
+public class PagSeguroApiController : ControllerBase
 {
     private readonly IPagSeguroService _service;
 

@@ -5,7 +5,7 @@ using SplatDev.Umbraco.Plugins.StarRatings.Services;
 namespace SplatDev.Umbraco.Plugins.StarRatings.Controllers;
 
 [Route("umbraco/api/starratings/[action]")]
-public class StarRatingsApiController : UmbracoApiController
+public class StarRatingsApiController : ControllerBase
 {
     private readonly IStarRatingsService _service;
 

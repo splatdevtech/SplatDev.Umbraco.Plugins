@@ -6,7 +6,7 @@ using SplatDev.Umbraco.Plugins.Newsletters.Services;
 namespace SplatDev.Umbraco.Plugins.Newsletters.Controllers;
 
 [Route("umbraco/api/newsletters")]
-public class NewslettersApiController : UmbracoApiController
+public class NewslettersApiController : ControllerBase
 {
     private readonly INewslettersService _service;
 

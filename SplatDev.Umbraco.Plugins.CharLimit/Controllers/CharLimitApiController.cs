@@ -4,7 +4,7 @@ using Umbraco.Cms.Web.Common.Controllers;
 namespace SplatDev.Umbraco.Plugins.CharLimit.Controllers;
 
 [Route("umbraco/api/charlimit/[action]")]
-public class CharLimitApiController : UmbracoApiController
+public class CharLimitApiController : ControllerBase
 {
     [HttpGet]
     public IActionResult GetConfig()

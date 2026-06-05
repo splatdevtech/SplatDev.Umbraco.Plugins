@@ -7,7 +7,7 @@ using SplatDev.Umbraco.Plugins.QuickPoll.Services;
 namespace SplatDev.Umbraco.Plugins.QuickPoll.Controllers;
 
 [Route("umbraco/api/quickpoll/[action]")]
-public class QuickPollApiController : UmbracoApiController
+public class QuickPollApiController : ControllerBase
 {
     private readonly IQuickPollService _service;
     private readonly IHttpContextAccessor _httpContextAccessor;

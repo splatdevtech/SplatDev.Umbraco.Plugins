@@ -6,7 +6,7 @@ using SplatDev.Umbraco.Plugins.Faqs.Services;
 namespace SplatDev.Umbraco.Plugins.Faqs.Controllers;
 
 [Route("umbraco/api/faqs/[action]")]
-public class FaqsApiController : UmbracoApiController
+public class FaqsApiController : ControllerBase
 {
     private readonly IFaqsService _service;
 

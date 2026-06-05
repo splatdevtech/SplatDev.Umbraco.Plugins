@@ -6,7 +6,7 @@ using SplatDev.Umbraco.Plugins.CustomLogin.Services;
 namespace SplatDev.Umbraco.Plugins.CustomLogin.Controllers;
 
 [Route("umbraco/api/customlogin/[action]")]
-public class CustomLoginApiController : UmbracoApiController
+public class CustomLoginApiController : ControllerBase
 {
     private readonly ICustomLoginService _service;
 

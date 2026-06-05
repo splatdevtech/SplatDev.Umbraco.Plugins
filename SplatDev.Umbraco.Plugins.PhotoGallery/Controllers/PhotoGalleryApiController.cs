@@ -6,7 +6,7 @@ using SplatDev.Umbraco.Plugins.PhotoGallery.Services;
 namespace SplatDev.Umbraco.Plugins.PhotoGallery.Controllers;
 
 [Route("umbraco/api/photogallery/[action]")]
-public class PhotoGalleryApiController : UmbracoApiController
+public class PhotoGalleryApiController : ControllerBase
 {
     private readonly IPhotoGalleryService _service;
 

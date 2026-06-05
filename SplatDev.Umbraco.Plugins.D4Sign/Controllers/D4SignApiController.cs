@@ -7,7 +7,6 @@ using Umbraco.Cms.Infrastructure.Scoping;
 using Umbraco.Cms.Web.Common.Controllers;
 using NPoco;
 
-#pragma warning disable CS0618 // UmbracoApiController is obsolete in Umbraco 17 / net10.0 but still functional
 namespace SplatDev.Umbraco.Plugins.D4Sign.Controllers;
 
 /// <summary>
@@ -23,7 +22,7 @@ public class D4SignApiController(
     ID4SignService d4SignService,
     IScopeProvider scopeProvider,
     IOptions<D4SignOptions> options,
-    ILogger<D4SignApiController> logger) : UmbracoApiController
+    ILogger<D4SignApiController> logger) : ControllerBase
 {
     private readonly D4SignOptions _opts = options.Value;
 

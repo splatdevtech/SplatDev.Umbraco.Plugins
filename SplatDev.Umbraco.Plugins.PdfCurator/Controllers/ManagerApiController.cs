@@ -9,7 +9,7 @@ using Umbraco.Cms.Web.Common.Controllers;
 
 namespace SplatDev.Umbraco.Plugins.PdfCurator.Controllers
 {
-    public class ManagerApiController : UmbracoApiController
+    public class ManagerApiController : ControllerBase
     {
         private readonly IBookRepository _bookRepository;
 

@@ -15,7 +15,7 @@ using Umbraco.Extensions;
 namespace SplatDev.Umbraco.Plugins.AdminBar.Controllers;
 
 [Route("umbraco/api/adminbar/[action]")]
-public class AdminBarApiController : UmbracoApiController
+public class AdminBarApiController : ControllerBase
 {
     private readonly IContentService _contentService;
     private readonly IUmbracoContextAccessor _umbracoContextAccessor;

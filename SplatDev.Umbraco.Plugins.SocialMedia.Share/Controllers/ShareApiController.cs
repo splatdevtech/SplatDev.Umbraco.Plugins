@@ -7,7 +7,7 @@ using SplatDev.Umbraco.Plugins.SocialMedia.Share.Services;
 namespace SplatDev.Umbraco.Plugins.SocialMedia.Share.Controllers
 {
     [Route("umbraco/api/ShareApi/[action]")]
-    public class ShareApiController(IShareService shareService) : UmbracoApiController
+    public class ShareApiController(IShareService shareService) : ControllerBase
     {
         private readonly IShareService _shareService = shareService;
 

@@ -5,7 +5,7 @@ using SplatDev.Umbraco.Plugins.PropertiesReport.Services;
 namespace SplatDev.Umbraco.Plugins.PropertiesReport.Controllers;
 
 [Route("umbraco/api/propertiesreport/[action]")]
-public class PropertiesReportApiController : UmbracoApiController
+public class PropertiesReportApiController : ControllerBase
 {
     private readonly IPropertiesReportService _service;
 

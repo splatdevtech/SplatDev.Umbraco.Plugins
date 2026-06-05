@@ -5,7 +5,7 @@ using SplatDev.Umbraco.Plugins.MemberTypes.Services;
 namespace SplatDev.Umbraco.Plugins.MemberTypes.Controllers;
 
 [Route("umbraco/api/membertypes/[action]")]
-public class MemberTypesApiController : UmbracoApiController
+public class MemberTypesApiController : ControllerBase
 {
     private readonly IMemberTypesService _service;
 

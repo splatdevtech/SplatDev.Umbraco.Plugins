@@ -6,7 +6,7 @@ using SplatDev.Umbraco.Plugins.OnOff.Services;
 namespace SplatDev.Umbraco.Plugins.OnOff.Controllers;
 
 [Route("umbraco/api/onoff/[action]")]
-public class OnOffApiController : UmbracoApiController
+public class OnOffApiController : ControllerBase
 {
     private readonly IOnOffService _service;
 

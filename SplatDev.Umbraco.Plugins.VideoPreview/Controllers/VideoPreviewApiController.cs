@@ -5,7 +5,7 @@ using SplatDev.Umbraco.Plugins.VideoPreview.Services;
 namespace SplatDev.Umbraco.Plugins.VideoPreview.Controllers;
 
 [Route("umbraco/api/videopreview/[action]")]
-public class VideoPreviewApiController : UmbracoApiController
+public class VideoPreviewApiController : ControllerBase
 {
     private readonly IVideoPreviewService _service;
 

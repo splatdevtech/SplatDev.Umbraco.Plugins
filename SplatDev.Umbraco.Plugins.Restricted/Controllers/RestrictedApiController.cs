@@ -5,7 +5,7 @@ using SplatDev.Umbraco.Plugins.Restricted.Services;
 namespace SplatDev.Umbraco.Plugins.Restricted.Controllers;
 
 [Route("umbraco/api/restricted/[action]")]
-public class RestrictedApiController : UmbracoApiController
+public class RestrictedApiController : ControllerBase
 {
     private readonly IRestrictedContentService _service;
 

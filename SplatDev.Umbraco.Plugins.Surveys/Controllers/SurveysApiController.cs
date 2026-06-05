@@ -6,7 +6,7 @@ using SplatDev.Umbraco.Plugins.Surveys.Services;
 namespace SplatDev.Umbraco.Plugins.Surveys.Controllers;
 
 [Route("umbraco/api/surveys/[action]")]
-public class SurveysApiController : UmbracoApiController
+public class SurveysApiController : ControllerBase
 {
     private readonly ISurveysService _service;
 

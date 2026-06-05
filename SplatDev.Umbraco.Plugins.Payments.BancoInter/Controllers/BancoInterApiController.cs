@@ -13,7 +13,7 @@ public class BancoInterApiController(
     IBancoInterPixService pixService,
     IBancoInterBoletoService boletoService,
     IBancoInterBankingService bankingService,
-    BancoInterDbContext db) : UmbracoApiController
+    BancoInterDbContext db) : ControllerBase
 {
     [HttpPost]
     public async Task<IActionResult> CreatePixCharge([FromBody] CreatePixChargeRequest request, CancellationToken ct)

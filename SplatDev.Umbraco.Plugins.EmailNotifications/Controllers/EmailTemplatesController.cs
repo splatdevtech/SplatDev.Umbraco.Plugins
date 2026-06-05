@@ -9,7 +9,7 @@ namespace SplatDev.Umbraco.Plugins.EmailNotifications.Controllers;
 [Route("umbraco/api/email-templates")]
 public class EmailTemplatesController(
     IEmailTemplateService templateService,
-    ILogger<EmailTemplatesController> logger) : UmbracoApiController
+    ILogger<EmailTemplatesController> logger) : ControllerBase
 {
     [HttpGet]
     public async Task<IActionResult> GetAll(CancellationToken ct) =>

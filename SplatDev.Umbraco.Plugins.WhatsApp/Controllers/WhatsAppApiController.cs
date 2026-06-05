@@ -5,7 +5,7 @@ using SplatDev.Umbraco.Plugins.WhatsApp.Services;
 namespace SplatDev.Umbraco.Plugins.WhatsApp.Controllers;
 
 [Route("umbraco/api/whatsapp/[action]")]
-public class WhatsAppApiController : UmbracoApiController
+public class WhatsAppApiController : ControllerBase
 {
     private readonly IWhatsAppService _service;
 

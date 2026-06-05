@@ -7,7 +7,6 @@ using Umbraco.Cms.Infrastructure.Scoping;
 using Umbraco.Cms.Web.Common.Controllers;
 using NPoco;
 
-#pragma warning disable CS0618 // UmbracoApiController is obsolete in Umbraco 17 / net10.0 but still functional
 namespace SplatDev.Umbraco.Plugins.ENotAssina.Controllers;
 
 /// <summary>
@@ -24,7 +23,7 @@ public class ENotAssinaApiController(
     IENotAssinaService eNotService,
     IScopeProvider scopeProvider,
     IOptions<ENotAssinaOptions> options,
-    ILogger<ENotAssinaApiController> logger) : UmbracoApiController
+    ILogger<ENotAssinaApiController> logger) : ControllerBase
 {
     private readonly ENotAssinaOptions _opts = options.Value;
 

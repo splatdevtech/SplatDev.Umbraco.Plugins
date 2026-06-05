@@ -12,7 +12,7 @@ namespace SplatDev.Umbraco.Plugins.EmailNotifications.Controllers;
 public class MailgunWebhookController(
     EmailNotificationsDbContext db,
     MailgunMailProvider mailgunProvider,
-    ILogger<MailgunWebhookController> logger) : UmbracoApiController
+    ILogger<MailgunWebhookController> logger) : ControllerBase
 {
     private static readonly Dictionary<string, EmailEventType> EventTypeMap = new(StringComparer.OrdinalIgnoreCase)
     {

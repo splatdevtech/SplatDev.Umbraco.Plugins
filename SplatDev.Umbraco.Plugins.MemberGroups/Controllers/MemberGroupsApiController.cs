@@ -6,7 +6,7 @@ using SplatDev.Umbraco.Plugins.MemberGroups.Services;
 namespace SplatDev.Umbraco.Plugins.MemberGroups.Controllers
 {
     [Route("umbraco/api/membergroups/[action]")]
-    public class MemberGroupsApiController : UmbracoApiController
+    public class MemberGroupsApiController : ControllerBase
     {
         private readonly IMemberGroupsService _service;
 

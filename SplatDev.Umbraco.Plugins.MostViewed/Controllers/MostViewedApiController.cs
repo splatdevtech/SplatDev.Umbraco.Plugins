@@ -5,7 +5,7 @@ using SplatDev.Umbraco.Plugins.MostViewed.Services;
 namespace SplatDev.Umbraco.Plugins.MostViewed.Controllers;
 
 [Route("umbraco/api/mostviewed/[action]")]
-public class MostViewedApiController : UmbracoApiController
+public class MostViewedApiController : ControllerBase
 {
     private readonly IMostViewedService _service;
 
