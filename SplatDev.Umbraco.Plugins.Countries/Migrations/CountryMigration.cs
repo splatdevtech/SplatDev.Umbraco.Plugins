@@ -3,10 +3,11 @@ using CsvHelper.Configuration;
 
 using Microsoft.Extensions.Logging;
 
+using SplatDev.Umbraco.Plugins.Countries.Models;
+
 using System.Globalization;
 
 using Umbraco.Cms.Infrastructure.Migrations;
-using SplatDev.Umbraco.Plugins.Countries.Models;
 
 namespace SplatDev.Umbraco.Plugins.Countries.Migrations
 {
@@ -24,10 +25,21 @@ namespace SplatDev.Umbraco.Plugins.Countries.Migrations
 
                 Create.Table<Country>().Do();
                 //Seed
-                //TODO: set path to country csv
-                var csvFilePath = "C:\\Temp\\countries.csv";
+                var assemblyLocation = Path.GetDirectoryName(typeof(CountryMigration).Assembly.Location) ?? string.Empty;
+                var csvFilePath = Path.Combine(assemblyLocation, "App_Data", "countries.csv");
+
+                if (!File.Exists(csvFilePath))
+                {
+                    _logger.LogError("Countries CSV file not found at {CsvFilePath}", csvFilePath);
+                    throw new FileNotFoundException($"Countries CSV file not found at {csvFilePath}");
+                }
+
                 using var reader = new StreamReader(csvFilePath);
-                using var csv = new CsvReader(reader, new CsvConfiguration(CultureInfo.InvariantCulture));
+                using var csv = new CsvReader(reader, new CsvConfiguration(CultureInfo.InvariantCulture)
+                {
+                    HeaderValidated = null,
+                    MissingFieldFound = null
+                });
                 var countries = csv.GetRecords<Country>().ToList();
                 context.Database.InsertBulk(countries);
             }
