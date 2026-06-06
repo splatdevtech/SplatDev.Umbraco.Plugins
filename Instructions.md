@@ -5,6 +5,13 @@
      - Abstract plugins from Findlay Project (Like Azure Entra and Active Directory, etc) - in '/mnt/e/Source/Repos/Findlay Auto'
      - Abstract plugins from QuoteTab Project - in '/mnt/e/Source/Repos/Pinoter/QuoteTab Umbraco v13'
 
+## Branch Strategy
+* Major branches: `u13` (Umbraco 13, net8.0, AngularJS backoffice) and `u17` (Umbraco 17, net10.0, Lit 3 backoffice)
+* Feature branches: `feature/SPL-XXXX-description` — branched from `u13` or `u17` depending on target
+* Bugfix branches: `fix/SPL-XXXX-description` — same convention
+* Never commit directly to `u13`, `u17`, or `master`
+* Archived branches live under `archive/` — revive by branching off the appropriate major branch
+
 * Guidelines:
     + User Umbraco elements (Tags)
     + Lit 3 for backoffice plugins (angularjs for umbraco 13)

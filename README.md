@@ -237,6 +237,21 @@ Refer to each package's documentation for specific configuration options.
 
 ## Development
 
+### Branch Strategy
+
+This repository uses two major branches:
+
+| Branch | Target | Framework |
+|---|---|---|
+| `u13` | Umbraco 13 | net8.0, AngularJS backoffice |
+| `u17` | Umbraco 17 | net10.0, Lit 3 backoffice |
+
+- **One PR per feature/bug** — always target the correct major branch.
+- **Never commit directly to `u13`, `u17`, or `master`** — always use feature branches and PRs.
+- Plugins supporting both versions have separate U13 and U17 implementations. Merge U13 work into `u13`, U17 work into `u17`.
+- Cross-cutting changes (libs, infra, CI) target both branches via separate PRs.
+- Archived feature branches live under `archive/` — revive them by branching off the appropriate major branch.
+
 ### Building
 
 ```bash
@@ -272,10 +287,14 @@ git push github v2.0.1
 ## Contributing
 
 1. Fork the repository
-2. Create a feature branch: `git checkout -b feature/my-new-plugin`
+2. Create a feature branch from the correct major branch:
+   ```bash
+   git checkout u13   # or u17 for Umbraco 17 work
+   git checkout -b feature/my-new-plugin
+   ```
 3. Commit your changes: `git commit -m 'Add new plugin'`
 4. Push to the branch: `git push origin feature/my-new-plugin`
-5. Open a Pull Request targeting `master`
+5. Open a Pull Request targeting `u13` or `u17` (not `master`)
 
 Please ensure all existing tests pass and add tests for new functionality.
 
