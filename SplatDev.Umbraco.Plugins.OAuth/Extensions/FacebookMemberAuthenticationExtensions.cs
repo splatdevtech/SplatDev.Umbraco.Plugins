@@ -27,14 +27,16 @@ namespace SplatDev.Umbraco.Plugins.OAuth.Extensions
                         ArgumentNullException.ThrowIfNull(schemeName);
 
                         var config = builder.Config;
+                        var appId = config.GetValue<string>("OAuth:Applications:Facebook:AppId");
+                        if (string.IsNullOrEmpty(appId)) return;
 
                         memberAuthenticationBuilder.AddFacebook(
                             schemeName,
                             options =>
                             {
-                                options.CallbackPath = config.GetValue<string>("OAuth:Applications:Facebook:CallbackPath"); ///oauth%3Fp=facebook
-                                options.ClientId = config.GetValue<string>("OAuth:Applications:Facebook:AppId") ?? "";
-                                options.ClientSecret = config.GetValue<string>("OAuth:Applications:Facebook:AppSecret") ?? "";
+                                options.CallbackPath = config.GetValue<string>("OAuth:Applications:Facebook:CallbackPath") ?? "/signin-facebook";
+                                options.ClientId = appId;
+                                options.ClientSecret = config.GetValue<string>("OAuth:Applications:Facebook:AppSecret") ?? string.Empty;
                             });
                     });
             });

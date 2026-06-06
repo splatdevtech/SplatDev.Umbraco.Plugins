@@ -45,16 +45,20 @@ RUN curl -fsSL https://deb.nodesource.com/setup_22.x | bash - \
     && apt-get install -y --no-install-recommends nodejs \
     && rm -rf /var/lib/apt/lists/*
 
-# Install Playwright + Chromium browser + system dependencies
-RUN npx -y playwright@latest install --with-deps chromium
-
 WORKDIR /app
 
 COPY --from=build /app/publish .
 
 # Copy shared E2E test suite + Playwright config
 COPY docker/test/e2e/ /app/e2e/
-RUN cd /app/e2e && npm ci --ignore-scripts 2>/dev/null || npm install --ignore-scripts 2>/dev/null || true
+# Install the e2e deps, then install the browser with the SAME pinned Playwright
+# version the tests use (@playwright/test ^1.49) so the Chromium revision matches
+# and its system libs are present. Installing playwright@latest separately (the old
+# approach) downloaded a different Chromium build → launch/"missing dependencies".
+RUN cd /app/e2e \
+    && (npm ci 2>/dev/null || npm install) \
+    && npm install --no-save playwright@^1.49.0 \
+    && npx playwright install --with-deps chromium
 
 RUN mkdir -p \
     /app/umbraco/Data \

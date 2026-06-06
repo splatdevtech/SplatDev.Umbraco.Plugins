@@ -27,14 +27,16 @@ namespace SplatDev.Umbraco.Plugins.OAuth.Extensions
                         ArgumentNullException.ThrowIfNull(schemeName);
 
                         var config = builder.Config;
+                        var consumerKey = config.GetValue<string>("OAuth:Applications:X:ConsumerKey");
+                        if (string.IsNullOrEmpty(consumerKey)) return;
 
                         memberAuthenticationBuilder.AddTwitter(
                             schemeName,
                             options =>
                             {
-                                options.CallbackPath = config.GetValue<string>("OAuth:Applications:X:CallbackPath"); ///oauth%3Fp=x
-                                options.ConsumerKey = config.GetValue<string>("OAuth:Applications:X:ConsumerKey") ?? "";
-                                options.ConsumerSecret = config.GetValue<string>("OAuth:Applications:X:ConsumerSecret") ?? "";
+                                options.CallbackPath = config.GetValue<string>("OAuth:Applications:X:CallbackPath") ?? "/signin-twitter";
+                                options.ConsumerKey = consumerKey;
+                                options.ConsumerSecret = config.GetValue<string>("OAuth:Applications:X:ConsumerSecret") ?? string.Empty;
                                 options.RetrieveUserDetails = true;
                             });
                     });
