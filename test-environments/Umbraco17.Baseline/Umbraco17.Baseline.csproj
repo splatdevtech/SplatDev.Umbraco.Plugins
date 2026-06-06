@@ -6,6 +6,30 @@
 		<CompressionEnabled>false</CompressionEnabled>
 	</PropertyGroup>
 	<ItemGroup>
+		<AdditionalFiles Remove="bin\**" />
+		<AdditionalFiles Remove="umbraco\Logs\**" />
+		<Compile Remove="bin\**" />
+		<Content Remove="bin\**" />
+		<EmbeddedResource Remove="bin\**" />
+		<None Remove="bin\**" />
+	</ItemGroup>
+	<ItemGroup>
+		<None Include="umbraco\Data\TEMP\ExamineIndexes\ExternalIndex\segments.gen" />
+		<None Include="umbraco\Data\TEMP\ExamineIndexes\ExternalIndex\segments_8" />
+		<None Include="umbraco\Data\TEMP\ExamineIndexes\ExternalIndex\write.lock" />
+		<None Include="umbraco\Data\TEMP\ExamineIndexes\InternalIndex\segments.gen" />
+		<None Include="umbraco\Data\TEMP\ExamineIndexes\InternalIndex\segments_8" />
+		<None Include="umbraco\Data\TEMP\ExamineIndexes\InternalIndex\write.lock" />
+		<None Include="umbraco\Data\TEMP\ExamineIndexes\MembersIndex\segments.gen" />
+		<None Include="umbraco\Data\TEMP\ExamineIndexes\MembersIndex\segments_8" />
+		<None Include="umbraco\Data\TEMP\ExamineIndexes\MembersIndex\write.lock" />
+		<None Include="umbraco\Data\TEMP\MainDom_29091bb657f675394f228a0a6234bc86a05bc788.lock" />
+		<None Include="umbraco\Data\TEMP\MainDom_8e237c4ff751a082305cc21333490c5d2fa99dda.lock" />
+		<None Include="umbraco\Data\Umbraco.sqlite.db" />
+		<None Include="umbraco\Data\Umbraco.sqlite.db-shm" />
+		<None Include="umbraco\Data\Umbraco.sqlite.db-wal" />
+	</ItemGroup>
+	<ItemGroup>
 		<PackageReference Include="Umbraco.Cms" Version="17.4.2" />
 		<PackageReference Include="Umbraco.Cms.DevelopmentMode.Backoffice" Version="17.4.2" />
 		<PackageReference Include="Umbraco.Cms.StaticAssets" Version="17.4.2" />
@@ -134,5 +158,12 @@
 		<ProjectReference Include="../../SplatDev.Umbraco.Plugins.EmailTemplates/SplatDev.Umbraco.Plugins.EmailTemplates.csproj" PrivateAssets="none" />
 		<ProjectReference Include="../../SplatDev.Umbraco.Plugins.MemberNotifications/SplatDev.Umbraco.Plugins.MemberNotifications.csproj" PrivateAssets="none" />
 		<ProjectReference Include="../../SplatDev.Umbraco.Plugins.Newsletter/SplatDev.Umbraco.Plugins.Newsletter.csproj" PrivateAssets="none" />
+	</ItemGroup>
+	<ItemGroup>
+		<Folder Include="umbraco\Data\TEMP\FileUploads\" />
+		<Folder Include="umbraco\Data\TEMP\InMemoryAuto\" />
+		<Folder Include="umbraco\Data\TEMP\TemporaryFile\" />
+		<Folder Include="Views\Partials\" />
+		<Folder Include="wwwroot\media\" />
 	</ItemGroup>
 </Project>
