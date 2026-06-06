@@ -34,7 +34,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\SplatDev.DigitalBookCurator.Core\SplatDev.DigitalBookCurator.Core.csproj" />
+		<!--<ProjectReference Include="..\SplatDev.DigitalBookCurator.Core\SplatDev.DigitalBookCurator.Core.csproj" />-->
 	</ItemGroup>
 
 </Project>

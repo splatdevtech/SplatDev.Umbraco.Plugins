@@ -29,8 +29,20 @@
 	</ItemGroup>
 
 
+  <Target Name="CopyCountriesAppDataToOutput" BeforeTargets="BeforeBuild">
+    <ItemGroup>
+      <_CountriesAppDataFiles Include="$(MSBuildThisFileDirectory)App_Data\**\*.*" />
+    </ItemGroup>
+    <Copy SourceFiles="@(_CountriesAppDataFiles)"
+          DestinationFiles="@(_CountriesAppDataFiles->'$(OutDir)App_Data\SplatDev.Umbraco.Plugins.Countries\%(RecursiveDir)%(Filename)%(Extension)')"
+          SkipUnchangedFiles="true" />
+  </Target>
+
   <ItemGroup>
     <None Include="README.md" Pack="true" PackagePath="\" />
     <None Include="umbraco-marketplace.json" Pack="true" PackagePath="\" Condition="Exists('umbraco-marketplace.json')" />
+    <Content Include="App_Data\countries.csv" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" Pack="true" PackagePath="contentFiles\any\any\App_Data\SplatDev.Umbraco.Plugins.Countries\" />
+    <None Include="App_Data\countries.csv" Pack="true" PackagePath="App_Data\" />
+    <None Include="buildTransitive\**" Pack="true" PackagePath="buildTransitive" />
   </ItemGroup>
 </Project>

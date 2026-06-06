@@ -73,12 +73,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<Content Include="App_Plugins\Umbraco.Plugins.CacheWarmer\**" ExcludeFromSingleFile="true" CopyToPublishDirectory="Always" />
 		<None Include="buildTransitive\**" Pack="true" PackagePath="buildTransitive" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<Content Remove="App_Plugins\Umbraco.Plugins.CacheWarmer\package.manifest" />
 	</ItemGroup>
 
   <ItemGroup>

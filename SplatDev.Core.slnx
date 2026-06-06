@@ -53,9 +53,6 @@
       <Platform Solution="*|x86" Project="x86" />
     </Project>
   </Folder>
-  <Folder Name="/Features/">
-    <Project Path="SplatDev.Umbraco.Plugins.PdfCurator/SplatDev.Umbraco.Plugins.PdfCurator.csproj" />
-  </Folder>
   <Folder Name="/Messaging/">
     <Project Path="SplatDev.Messaging.Mailgun/SplatDev.Messaging.Mailgun.csproj">
       <Platform Solution="*|x64" Project="x64" />

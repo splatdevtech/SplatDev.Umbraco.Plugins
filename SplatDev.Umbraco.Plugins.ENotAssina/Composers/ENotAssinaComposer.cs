@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Polly;
@@ -24,21 +25,20 @@ public class ENotAssinaComposer : IComposer
         // so the Lit 3 dashboard.js and umbraco-package.json are accessible at
         // runtime without copying files to wwwroot. Works for both direct project
         // references and NuGet package installs.
-        builder.Services.Configure<StaticFileOptions>(opts =>
-        {
-            var assembly = typeof(ENotAssinaComposer).Assembly;
-            var hasManifest = assembly.GetManifestResourceNames()
-                .Any(n => n.EndsWith("Manifest.xml", StringComparison.Ordinal));
-
-            if (hasManifest)
+        builder.Services.AddOptions<StaticFileOptions>()
+            .PostConfigure<IWebHostEnvironment>((opts, environment) =>
             {
-                var embeddedProvider = new ManifestEmbeddedFileProvider(assembly, root: "App_Plugins");
+                var assembly = typeof(ENotAssinaComposer).Assembly;
+                var hasManifest = assembly.GetManifestResourceNames()
+                    .Any(n => n.EndsWith("Manifest.xml", StringComparison.Ordinal));
 
-                opts.FileProvider = opts.FileProvider is null
-                    ? embeddedProvider
-                    : new CompositeFileProvider(opts.FileProvider, embeddedProvider);
-            }
-        });
+                if (hasManifest)
+                {
+                    var embeddedProvider = new ManifestEmbeddedFileProvider(assembly, root: "App_Plugins");
+                    var baseProvider = opts.FileProvider ?? environment.WebRootFileProvider;
+                    opts.FileProvider = new CompositeFileProvider(baseProvider, embeddedProvider);
+                }
+            });
 
         // ── Options ────────────────────────────────────────────────────────────
         builder.Services.Configure<ENotAssinaOptions>(

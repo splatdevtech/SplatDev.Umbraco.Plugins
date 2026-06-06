@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Polly;
@@ -24,16 +25,16 @@ public class D4SignComposer : IComposer
         // so the Lit 3 dashboard.js and umbraco-package.json are accessible at
         // runtime without copying files to wwwroot. Works for both direct project
         // references and NuGet package installs.
-        builder.Services.Configure<StaticFileOptions>(opts =>
-        {
-            var embeddedProvider = new ManifestEmbeddedFileProvider(
-                typeof(D4SignComposer).Assembly,
-                root: "App_Plugins");
+        builder.Services.AddOptions<StaticFileOptions>()
+            .PostConfigure<IWebHostEnvironment>((opts, environment) =>
+            {
+                var embeddedProvider = new ManifestEmbeddedFileProvider(
+                    typeof(D4SignComposer).Assembly,
+                    root: "App_Plugins");
 
-            opts.FileProvider = opts.FileProvider is null
-                ? embeddedProvider
-                : new CompositeFileProvider(opts.FileProvider, embeddedProvider);
-        });
+                var baseProvider = opts.FileProvider ?? environment.WebRootFileProvider;
+                opts.FileProvider = new CompositeFileProvider(baseProvider, embeddedProvider);
+            });
 
         // ── Options ────────────────────────────────────────────────────────────
         builder.Services.Configure<D4SignOptions>(

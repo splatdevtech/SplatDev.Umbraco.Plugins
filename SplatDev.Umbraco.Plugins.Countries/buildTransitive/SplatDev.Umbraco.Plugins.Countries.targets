@@ -1,0 +1,24 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+	<_CountriesAppDataPackagePath>$(MSBuildThisFileDirectory)..\App_Data\**\*.*</_CountriesAppDataPackagePath>
+	<_CountriesPluginDataTargetRoot>$(MSBuildProjectDirectory)\App_Data\SplatDev.Umbraco.Plugins.Countries</_CountriesPluginDataTargetRoot>
+  </PropertyGroup>
+
+  <Target Name="CopyCountriesAppDataFromPackage" BeforeTargets="BeforeBuild">
+	<ItemGroup>
+	  <_CountriesAppDataFiles Include="$(_CountriesAppDataPackagePath)" />
+	</ItemGroup>
+
+	<Message Text="Copying SplatDev.Umbraco.Plugins.Countries App_Data files to $(_CountriesPluginDataTargetRoot)" Importance="high" />
+	<Copy SourceFiles="@(_CountriesAppDataFiles)"
+		  DestinationFiles="@(_CountriesAppDataFiles->'$(_CountriesPluginDataTargetRoot)\%(RecursiveDir)%(Filename)%(Extension)')"
+		  SkipUnchangedFiles="true" />
+  </Target>
+
+  <Target Name="ClearCountriesAppDataFromPackage" BeforeTargets="Clean">
+	<ItemGroup>
+	  <_CountriesAppDataDir Include="$(_CountriesPluginDataTargetRoot)" />
+	</ItemGroup>
+	<RemoveDir Directories="@(_CountriesAppDataDir)" />
+  </Target>
+</Project>

@@ -26,12 +26,21 @@ namespace SplatDev.Umbraco.Plugins.Countries.Migrations
                 Create.Table<Country>().Do();
                 //Seed
                 var assemblyLocation = Path.GetDirectoryName(typeof(CountryMigration).Assembly.Location) ?? string.Empty;
-                var csvFilePath = Path.Combine(assemblyLocation, "App_Data", "countries.csv");
-
-                if (!File.Exists(csvFilePath))
+                var contentRoot = Directory.GetCurrentDirectory();
+                var csvCandidates = new[]
                 {
-                    _logger.LogError("Countries CSV file not found at {CsvFilePath}", csvFilePath);
-                    throw new FileNotFoundException($"Countries CSV file not found at {csvFilePath}");
+                    Path.Combine(contentRoot, "App_Data", "SplatDev.Umbraco.Plugins.Countries", "countries.csv"),
+                    Path.Combine(assemblyLocation, "App_Data", "SplatDev.Umbraco.Plugins.Countries", "countries.csv"),
+                    Path.Combine(contentRoot, "App_Data", "countries.csv"),
+                    Path.Combine(assemblyLocation, "App_Data", "countries.csv")
+                };
+
+                var csvFilePath = csvCandidates.FirstOrDefault(File.Exists);
+
+                if (string.IsNullOrWhiteSpace(csvFilePath))
+                {
+                    _logger.LogError("Countries CSV file not found. Checked paths: {CsvPaths}", string.Join(", ", csvCandidates));
+                    throw new FileNotFoundException($"Countries CSV file not found. Checked paths: {string.Join(", ", csvCandidates)}");
                 }
 
                 using var reader = new StreamReader(csvFilePath);
