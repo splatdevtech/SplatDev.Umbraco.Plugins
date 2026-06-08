@@ -1,5 +1,6 @@
 {
-  "url": "http://splatdev-u17:5000/umbraco/settings/d4sign",
+  "url": "http://localhost:5000/umbraco/section/settings/dashboard/d4sign",
   "errors": [],
-  "errorCount": 0
+  "errorCount": 0,
+  "note": "Mock screenshot — generated offline per SPL-2000"
 }

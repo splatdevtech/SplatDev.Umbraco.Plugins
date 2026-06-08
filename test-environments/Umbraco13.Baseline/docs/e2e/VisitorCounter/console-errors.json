@@ -1,5 +1,6 @@
 {
-  "url": "http://splatdev-u13:5001/umbraco#/settings/visitor-counter",
+  "url": "/umbraco#/visitorcounter",
   "errors": [],
-  "errorCount": 0
+  "errorCount": 0,
+  "note": "Mock screenshot — generated offline per SPL-2000"
 }

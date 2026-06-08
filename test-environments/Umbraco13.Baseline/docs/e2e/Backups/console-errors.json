@@ -1,5 +1,6 @@
 {
-  "url": "http://splatdev-u13:5001/umbraco#/backups",
+  "url": "/umbraco#/backups",
   "errors": [],
-  "errorCount": 0
+  "errorCount": 0,
+  "note": "Mock screenshot — generated offline per SPL-2000"
 }

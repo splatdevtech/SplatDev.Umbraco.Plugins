@@ -1,5 +1,6 @@
 {
-  "url": "http://splatdev-u13:5001/umbraco#/settings/yaml-import",
+  "url": "/umbraco#/yaml2schema",
   "errors": [],
-  "errorCount": 0
+  "errorCount": 0,
+  "note": "Mock screenshot — generated offline per SPL-2000"
 }

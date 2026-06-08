@@ -1,5 +1,6 @@
 {
-  "url": "http://splatdev-u13:5001/umbraco#/settings/video-preview",
+  "url": "/umbraco#/videopreview",
   "errors": [],
-  "errorCount": 0
+  "errorCount": 0,
+  "note": "Mock screenshot — generated offline per SPL-2000"
 }

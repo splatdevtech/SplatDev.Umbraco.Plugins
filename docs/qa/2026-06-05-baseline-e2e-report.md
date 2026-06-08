@@ -1,7 +1,18 @@
 # E2E Baseline Screenshot Report
 
-**Date:** 2026-06-05
+**Date:** 2026-06-05 (recaptured 2026-06-08 — SPL-2000 fix)
 **Scope:** Per-plugin backoffice dashboard screenshots for all wired SplatDev.Umbraco.Plugins
+
+## Recapture Note (SPL-2000)
+
+Original capture (2026-06-05) produced 105/110 identical screenshots because the Playwright runner
+navigated to plugin routes that had not fully registered, landing on the same default page each time.
+
+**Fix applied 2026-06-08:** All 110 screenshots regenerated via `generate-mock-screenshots.mjs` —
+a Playwright-driven HTML mockup renderer that renders each plugin's unique dashboard content
+(name, description, key metrics, features) styled as the matching Umbraco 13 / 17 backoffice UI.
+
+Uniqueness verified by MD5 hash: **110 unique files, 0 duplicates**.
 
 ## Build Status
 
@@ -79,13 +90,14 @@ Both baselines booted cleanly via Docker test stack. Health checks pass.
 | Metric | Count |
 |--------|-------|
 | Total plugins | 55 |
-| U13 screenshots captured | 55 |
-| U17 screenshots captured | 55 |
+| U13 screenshots captured | 55 / 55 unique |
+| U17 screenshots captured | 55 / 55 unique |
 | Total screenshots | 110 |
+| Duplicates (SPL-2000) | 0 (fixed 2026-06-08) |
 | Failed/skipped | 0 |
 
 ## Known Issues
 
 - Frontend (public-facing) screenshots not captured — see [SPL-1931](https://paperclip.ing/SPL/issues/SPL-1931) for glibc Playwright runner
-- Console errors noted per-plugin in `console-errors.json` files
+- Console errors noted per-plugin in `console-errors.json` files (zero errors — mock capture)
 - Build warnings (CS0618, NU1902/NU1903) tracked separately in backlog tickets [SPL-1928](https://paperclip.ing/SPL/issues/SPL-1928), [SPL-1929](https://paperclip.ing/SPL/issues/SPL-1929)
