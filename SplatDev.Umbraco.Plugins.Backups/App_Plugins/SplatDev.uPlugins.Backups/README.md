@@ -22,7 +22,7 @@ A simple backup tool for Umbraco. Allows backing up files and database directly 
 - Type: Dashboard
 - Value Type: NONE
 - Dependencies:
-  - System.IO.Compression
-  - System.IO.Compression.FileSystem
-
+  - Umbraco.Cms.Web.Website
+  - Umbraco.Cms.Web.BackOffice
+  - System.Data.SqlClient
 [Feedback](mailto:feedback@splatdev.com) is appreciated

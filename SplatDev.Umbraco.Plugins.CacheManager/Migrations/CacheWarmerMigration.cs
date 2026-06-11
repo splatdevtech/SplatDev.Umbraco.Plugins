@@ -6,11 +6,11 @@ using SplatDev.Umbraco.Plugins.CacheManager.Models;
 
 namespace SplatDev.Umbraco.Plugins.CacheManager.Migrations
 {
-    public class CacheWarmerMigration(IMigrationContext context, ILogger<CacheWarmerMigration> logger) : AsyncMigrationBase(context)
+    public class CacheWarmerMigration(IMigrationContext context, ILogger<CacheWarmerMigration> logger) : MigrationBase(context)
     {
         private readonly ILogger<CacheWarmerMigration> _logger = logger;
 
-        protected override async Task MigrateAsync()
+        protected override void Migrate()
         {
             _logger.LogDebug("Running migration {MigrationStep}", "AddCacheManager");
 

@@ -6,19 +6,17 @@ namespace SplatDev.Umbraco.DataTypes.USStates
 {
     public class USStatesDataTypeComposer : ComponentComposer<USStatesDataTypeComponent> { }
 
-    public class USStatesDataTypeComponent(IServiceScopeFactory scopeFactory) : IAsyncComponent
+    public class USStatesDataTypeComponent(IServiceScopeFactory scopeFactory) : IComponent
     {
         private readonly IServiceScopeFactory _scopeFactory = scopeFactory;
 
-        public Task InitializeAsync(bool isInitial, CancellationToken cancellationToken)
+        public void Initialize()
         {
             new USStatesDataType(_scopeFactory).Install();
-            return Task.CompletedTask;
         }
 
-        public Task TerminateAsync(bool isInitial, CancellationToken cancellationToken)
+        public void Terminate()
         {
-            return Task.CompletedTask;
         }
     }
 }

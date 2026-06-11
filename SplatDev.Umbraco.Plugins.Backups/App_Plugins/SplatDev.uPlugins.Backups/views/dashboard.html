@@ -1,0 +1,42 @@
+﻿<div ng-controller="splatDev.SiteBackup.Controller as vm" class="editor-sitebackup">
+    <umb-load-indicator ng-if="vm.model.busy"></umb-load-indicator>
+    <div class="editor-sitebackup__panel">
+        <h2><localize key="@ui_title" /></h2>
+        <p><localize key="@ui_description" /></p>
+        <div class="editor-sitebackup__panel__buttons" ng-show="!vm.model.busy">
+            <button class="btn btn-primary" ng-click="vm.backupAll()" ng-show="vm.model.details.connectionString"><localize key="@buttons_all" /></button>
+            <button class="btn btn-secondary" ng-click="vm.backupFiles()"><localize key="@buttons_files" /></button>
+            <button class="btn btn-secondary" ng-click="vm.backupDb()" ng-show="vm.model.details.connectionString"><localize key="@buttons_db" /></button>
+        </div>
+        <div class="editor-sitebackup__panel__content">
+            <fieldset>
+                <legend><localize key="@ui_performed" /></legend>
+                <div class="alert alert-info" ng-if="!vm.model.details.connectionString"><i class="icon-alert"></i>&nbsp;<localize key="@ui_nosqlserver" /></div>
+                <ul class="list-group" ng-if="vm.model.details.connectionString">
+                    <li class="list-group-item"><strong><localize key="@ui_database" /></strong><strong><localize key="@ui_created" /></strong></li>
+                    <li class="list-group-item" ng-if="vm.model.dbKeys.length===0"><localize key="@ui_nobackup" /></li>
+                    <li class="list-group-item" ng-if="vm.model.dbKeys.length>0" ng-repeat="key in vm.model.dbKeys">
+                        <span><a ng-href="{{(vm.getBackupFilename(key, vm.model.performedDb)).fullname}}" download>{{key}}</a><i class="icon-delete" localize="title" title="@ui_delete" ng-click="vm.deleteBackup(key)"></i></span> <span>{{(vm.getBackupFilename(key, vm.model.performedDb)).createDate | formatDate }}</span>
+                    </li>
+                </ul>
+                <div class="spacer"></div>
+                <ul class="list-group">
+                    <li class="list-group-item"><strong><localize key="@ui_files" /></strong><strong><localize key="@ui_created" /></strong></li>
+                    <li class="list-group-item" ng-if="vm.model.filesKeys.length===0"><localize key="@ui_nobackup" /></li>
+                    <li class="list-group-item" ng-if="vm.model.filesKeys.length>0" ng-repeat="key in vm.model.filesKeys">
+                        <span><a ng-href="{{(vm.getBackupFilename(key, vm.model.performedFiles)).fullname}}" download>{{key}}</a><i class="icon-delete" localize="title" title="@ui_delete" ng-click="vm.deleteBackup(key)"></i></span> <span>{{(vm.getBackupFilename(key, vm.model.performedFiles)).createDate | formatDate }}</span>
+                    </li>
+                </ul>
+            </fieldset>
+        </div>
+
+        <div class="editor-sitebackup__panel__content details" ng-click="vm.model.showDetails=!vm.model.showDetails">
+            <fieldset>
+                <legend><localize key="@ui_details" /></legend>
+                <ul class="list-group" ng-show="vm.model.showDetails">
+                    <li class="list-group-item" ng-repeat="prop in vm.model.props" ng-if="vm.model.details[prop]!==''"><strong><localize key="@ui_{{prop}}" /></strong><span>{{vm.model.details[prop]}}</span></li>
+                </ul>
+            </fieldset>
+        </div>
+    </div>
+</div>

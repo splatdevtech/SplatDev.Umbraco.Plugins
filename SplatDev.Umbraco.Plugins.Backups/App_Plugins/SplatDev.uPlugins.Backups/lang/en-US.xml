@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<language alias="en_us" intName="English (US)" localName="English (US)" lcid="" culture="en-US">
+  <creator>
+    <name>SplatDev Ltda</name>
+    <link>https://splatdev.com</link>
+  </creator>
+  <area alias="dashboardTabs">
+    <key alias="SplatDev.Umbraco.Plugin.Backups">Backups</key>
+  </area>
+  <area alias="ui">
+    <key alias="title">Files and Database Backup</key>
+    <key alias="description">Create backups directly from the BackOffice, each backup is time-stamped and there are no restrictions on how many can be done. Make sure to watch your storage space! Click on a file to download the archive.</key>
+    <key alias="nosqlserver">Your database is not in a server, it will be backed up along with the files.</key>
+    <key alias="details">Server Details</key>
+    <key alias="connectionString">Connection String</key>
+    <key alias="server">Database Server</key>
+    <key alias="database">Database</key>
+    <key alias="files">Files</key>
+    <key alias="destinationPath">Backup Folder</key>
+    <key alias="rootPath">Site Root</key>
+    <key alias="databasePath">Database backup path</key>
+    <key alias="filesPath">Files backup path</key>
+    <key alias="performed">Backups Completed</key>
+    <key alias="created">Create Date</key>
+    <key alias="nobackup">No backups yet</key>
+    <key alias="delete">Delete Backup</key>
+  </area>
+  <area alias="buttons">
+    <key alias="all">Backup All</key>
+    <key alias="files">Backup Files</key>
+    <key alias="db">Backup Database</key>
+  </area>
+  <area alias="notifications">
+    <key alias="successdb">Database backed up successfully!</key>
+    <key alias="successfiles">Files backed up successfully!</key>
+    <key alias="success">Database and Files backed up successfully!</key>
+    <key alias="failure">Could not perform backup :'-(</key>
+    <key alias="deleted">Backup archive deleted</key>
+  </area>
+</language>

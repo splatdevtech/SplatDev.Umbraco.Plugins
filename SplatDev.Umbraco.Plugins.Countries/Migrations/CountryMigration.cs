@@ -11,12 +11,12 @@ using SplatDev.Umbraco.Plugins.Countries.Models;
 
 namespace SplatDev.Umbraco.Plugins.Countries.Migrations
 {
-    internal class CountryMigration(IMigrationContext context, ILogger<CountryMigration> logger) : AsyncMigrationBase(context)
+    internal class CountryMigration(IMigrationContext context, ILogger<CountryMigration> logger) : MigrationBase(context)
     {
         private readonly ILogger<CountryMigration> _logger = logger;
         private const string _skipping = "The database table {DbTable} already exists, skipping";
 
-        protected override async Task MigrateAsync()
+        protected override void Migrate()
         {
             _logger.LogDebug("Running migration {Migration Step}", "HireologyIntegration");
 

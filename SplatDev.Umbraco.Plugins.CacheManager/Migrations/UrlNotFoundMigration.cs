@@ -6,11 +6,11 @@ using SplatDev.Umbraco.Plugins.CacheManager.Models;
 
 namespace SplatDev.Umbraco.Plugins.CacheManager.Migrations
 {
-    public class UrlNotFoundMigration(IMigrationContext context, ILogger<UrlNotFoundMigration> logger) : AsyncMigrationBase(context)
+    public class UrlNotFoundMigration(IMigrationContext context, ILogger<UrlNotFoundMigration> logger) : MigrationBase(context)
     {
         private readonly ILogger<UrlNotFoundMigration> _logger = logger;
 
-        protected override async Task MigrateAsync()
+        protected override void Migrate()
         {
             _logger.LogDebug("Running migration {MigrationStep}", "UrlNotFound");
 

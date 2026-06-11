@@ -6,11 +6,11 @@ using SplatDev.Umbraco.Plugins.RedirectManager.Models;
 
 namespace SplatDev.Umbraco.Plugins.RedirectManager.Migrations
 {
-    public class RedirectUrlsMigration(IMigrationContext context, ILogger<RedirectUrlsMigration> logger) : AsyncMigrationBase(context)
+    public class RedirectUrlsMigration(IMigrationContext context, ILogger<RedirectUrlsMigration> logger) : MigrationBase(context)
     {
         private readonly ILogger<RedirectUrlsMigration> _logger = logger;
 
-        protected override async Task MigrateAsync()
+        protected override void Migrate()
         {
             _logger.LogDebug("Running migration {MigrationStep}", "RedirectionUrls");
 
