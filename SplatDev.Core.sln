@@ -1,3 +1,4 @@
+﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 18
 VisualStudioVersion = 18.7.11822.327
@@ -279,6 +280,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SplatDev.Umbraco.Plugins.PdfCurator", "SplatDev.Umbraco.Plugins.PdfCurator\SplatDev.Umbraco.Plugins.PdfCurator.csproj", "{FE623B26-2334-4008-B383-8F9AD9202938}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SplatDev.Api.Common.ApiVersioning", "SplatDev.Api.Common.ApiVersioning\SplatDev.Api.Common.ApiVersioning.csproj", "{78E1E8D2-7693-4F36-8D2B-D6F9838B82B0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SplatDev.Umbraco.Plugins.Backups.Tests", "SplatDev.Umbraco.Plugins.Backups.Tests\SplatDev.Umbraco.Plugins.Backups.Tests.csproj", "{E34E9E6B-799A-4546-A36F-6CA755BE0AC2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -1826,6 +1829,18 @@ Global
 		{78E1E8D2-7693-4F36-8D2B-D6F9838B82B0}.Release|x64.Build.0 = Release|Any CPU
 		{78E1E8D2-7693-4F36-8D2B-D6F9838B82B0}.Release|x86.ActiveCfg = Release|Any CPU
 		{78E1E8D2-7693-4F36-8D2B-D6F9838B82B0}.Release|x86.Build.0 = Release|Any CPU
+		{E34E9E6B-799A-4546-A36F-6CA755BE0AC2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E34E9E6B-799A-4546-A36F-6CA755BE0AC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E34E9E6B-799A-4546-A36F-6CA755BE0AC2}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{E34E9E6B-799A-4546-A36F-6CA755BE0AC2}.Debug|x64.Build.0 = Debug|Any CPU
+		{E34E9E6B-799A-4546-A36F-6CA755BE0AC2}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{E34E9E6B-799A-4546-A36F-6CA755BE0AC2}.Debug|x86.Build.0 = Debug|Any CPU
+		{E34E9E6B-799A-4546-A36F-6CA755BE0AC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E34E9E6B-799A-4546-A36F-6CA755BE0AC2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E34E9E6B-799A-4546-A36F-6CA755BE0AC2}.Release|x64.ActiveCfg = Release|Any CPU
+		{E34E9E6B-799A-4546-A36F-6CA755BE0AC2}.Release|x64.Build.0 = Release|Any CPU
+		{E34E9E6B-799A-4546-A36F-6CA755BE0AC2}.Release|x86.ActiveCfg = Release|Any CPU
+		{E34E9E6B-799A-4546-A36F-6CA755BE0AC2}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
