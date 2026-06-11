@@ -40,6 +40,14 @@
     <PackageReference Include="SSH.NET" Version="2025.1.0" />
   </ItemGroup>
 
+  <!-- Exclude legacy archive — these files have their own sub-projects with missing SDKs -->
+  <ItemGroup>
+    <Compile Remove="v13.12.1\**" />
+    <None Remove="v13.12.1\**" />
+    <Content Remove="v13.12.1\**" />
+    <EmbeddedResource Remove="v13.12.1\**" />
+  </ItemGroup>
+
   <ItemGroup>
     <EmbeddedResource Include="App_Plugins\**\*" />
   </ItemGroup>
