@@ -1,0 +1,7 @@
+<div class="blockelement__draggable-element animate-numbered-list" ng-controller="splatDev.AnimatedNumberedList.Controller as vm" ng-click="block.edit()">
+    <div class="appear-animation" data-appear-animation="fadeInUp" data-appear-animation-delay="{{vm.settings.delay * 200}}" ng-class="'align-'+vm.toLower(vm.settings.textAlignment)">
+        <span class="d-inline-block font-weight-extra-bold text-color-primary font-italic line-height-1 text-14 ls-0 mb-2 w100" ng-bind="vm.settings.heading"></span>
+        <h4 class="font-weight-bold text-5 pl-1 mb-2" ng-bind="vm.settings.caption"></h4>
+        <p class="pl-1" ng-bind="vm.settings.description"></p>
+    </div>
+</div>

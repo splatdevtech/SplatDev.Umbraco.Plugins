@@ -1,0 +1,28 @@
+﻿.alignments-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.alignment {
+    cursor: pointer;
+    margin-right: 5px;
+    border: 3px solid transparent;
+}
+
+    .alignment:hover {
+        background: #f2f2f2;
+        outline: 2px solid #5b67f1;
+    }
+
+    .alignment.active {
+        border: 1px solid transparent;
+        outline: 3px solid #5ebe31;
+    }
+
+    .alignment img {
+        width: 64px;
+        height: 64px;
+    }

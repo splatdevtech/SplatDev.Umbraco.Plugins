@@ -1,0 +1,20 @@
+<div class="button-wrapper" ng-controller="splatdev.editor.controller">
+    <!-- CTA Button -->
+    <div ng-style="{'text-align': block.data.btnPosition}">
+        <button prevent-default
+                ng-click="watch($scope.block.data)"
+                ng-class="block.data.btnClass.value"
+                class="ctaButton btn">
+            {{block.data.btnText}}
+        </button>
+    </div>
+
+    <!-- Edit Overlay -->
+    <umb-overlay ng-if="watch.show"
+                 model="watch"
+                 view="watch.view"
+                 position="right">
+    </umb-overlay>
+
+    <div class="show-url-button" ng-click="watch($scope.block.data)" title="edit button link"><i class="icon-link"></i></div>
+</div>

@@ -1,0 +1,6 @@
+﻿.umb-dashboard__header {
+    background: #1e1e1e;
+}
+.umb-tab--active > .umb-tab-button {
+    color: #fff;
+}

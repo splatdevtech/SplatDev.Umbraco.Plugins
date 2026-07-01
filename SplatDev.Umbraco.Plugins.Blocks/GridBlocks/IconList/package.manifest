@@ -1,0 +1,6 @@
+﻿{
+  "name": "splatDev.GridBlocks.IconList",
+  "javascript": [
+    "~/App_Plugins/GridBlocks/IconList/icon-list.controller.js"
+  ]
+}

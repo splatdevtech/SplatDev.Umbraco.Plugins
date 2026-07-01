@@ -1,0 +1,6 @@
+{
+  "name": "splatDev.GridBlocks.ServicesSection",
+  "javascript": [
+    "~/App_Plugins/GridBlocks/ServicesSection/services.controller.js"
+  ]
+}

@@ -1,0 +1,14 @@
+<div class="blockelement__draggable-element cta-box" ng-controller="splatDev.CtaBox.Controller as vm" ng-click="block.edit()">
+    <div class="card" ng-class="{'bordered':vm.settings.outsideBorder==='1'}">
+        <div class="card-body flex-fill" ng-class="'align-'+vm.toLower(vm.settings.textAlignment)">
+            <h4 class="card-title" ng-bind="vm.settings.heading"></h4>
+            <p class="card-sub-title" ng-bind="vm.settings.caption"></p>
+            <p class="card-text" ng-bind="vm.settings.description"></p>
+            <div class="button-block">
+                <div class="btn" ng-class="vm.button.css" role="button" data-href="{{vm.button.url}}" data-target="{{vm.button.target}}">
+                    <i class="{{vm.button.icon}}" ng-if="vm.settings.showIcon==='1'"></i> {{vm.button.name}}
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 

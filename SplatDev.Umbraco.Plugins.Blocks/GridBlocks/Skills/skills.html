@@ -1,0 +1,65 @@
+﻿<style>
+    @import '/css/bootstrap.min.css';
+
+    .custom-progress-bars .progress {
+        float: none;
+        margin: 20px auto;
+        width: 80%;
+        height: 3px;
+    }
+
+    .custom-progress-bars .progress-label {
+        width: 30%;
+        display: inline-block;
+        margin: 10px 0 0 0;
+    }
+
+    .progress {
+        border-radius: 25px;
+        height: 20px;
+        background: #666;
+        overflow: visible;
+    }
+
+    .progress-bars {
+        display: flex;
+        flex-wrap: wrap;
+        column-gap: 15px;
+    }
+
+    .custom-progress-bars .progress .progress-bar {
+        background-color: #1e1e1e;
+        overflow: visible !important;
+        height: auto;
+    }
+
+    .progress-bar-item {
+        width: 48%;
+        display: flex;
+        column-gap: 5px;
+    }
+</style>
+<section id="skills" class="section section-no-border">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-10 col-lg-10 col-sml-10 offset-lg-1 offset-md-1 offset-sm-0 mb-4 mb-md-0">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <h2 class="text-color-quaternary text-uppercase font-weight-extra-bold">Skills</h2>
+                        <div class="progress-bars custom-progress-bars">
+                            <div ng-repeat="skill in block.data.list.contentData" class="progress-bar-item">
+                                <div class="progress-label text-color-dark font-weight-semibold text-uppercase text-2">
+                                    <span>{{skill.skillName}}</span>
+                                </div>
+
+                                <div class="progress mb-2">
+                                    <div class="progress-bar" data-appear-progress-animation="{{skill.percentage}}%" ng-style="{ 'width' : skill.percentage + '%' }"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

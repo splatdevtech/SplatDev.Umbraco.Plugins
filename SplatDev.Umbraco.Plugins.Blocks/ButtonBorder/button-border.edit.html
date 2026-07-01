@@ -1,0 +1,97 @@
+﻿<div ng-controller="GoogleAddressEditorController as vm" class="editor-rollback">
+
+    <umb-editor-view>
+
+        <umb-editor-header name="model.title"
+                           name-locked="true"
+                           hide-alias="true"
+                           hide-icon="true"
+                           hide-description="true">
+        </umb-editor-header>
+
+        <umb-editor-container>
+
+            <umb-load-indicator ng-if="vm.loading">
+            </umb-load-indicator>
+
+            <umb-box>
+
+                <umb-box-content>
+                    <p>Start typing and Google will return a list of addresses</p>
+                    <div class="address-wrapper">
+
+                        <div class="address-form">
+                            <form id="address-form" action="" method="get" autocomplete="off">
+
+                                <label>
+                                    Address *
+                                </label>
+                                <input type="text"
+                                       ng-model="vm.location.addressLine1"
+                                       id="address1"
+                                       name="address1"
+                                       required
+                                       autocomplete="off"
+                                       placeholder="Start typing the address.." />
+                                <br />
+                                <label>
+                                    Apartment, unit, suite, or floor #
+                                </label>
+                                <input type="text" ng-model="vm.location.addressLine2" placeholder="Apartment, unit, suite, or floor #" />
+                                <br />
+                                <label>
+                                    City
+                                </label>
+                                <input type="text" ng-model="vm.location.city" placeholder="City" />
+                                <br />
+                                <label>
+                                    County
+                                </label>
+                                <input type="text" ng-model="vm.location.county" placeholder="County" />
+                                <br />
+                                <label>
+                                    State
+                                </label>
+                                <input type="text" ng-model="vm.location.state" placeholder="State" />
+                                <br />
+                                <label>
+                                    Postal Code
+                                </label>
+                                <input type="text" ng-model="vm.location.zip" placeholder="postal code" />
+                                <br />
+                                <label style="color:#ff0000">* Required</label>
+                            </form>
+                        </div>
+
+                        <div class="map-wrapper" ng-show="vm.locationSelected">
+                            <label>Location map</label>
+                            <br />
+                            <div class="map" id="map"></div>
+                        </div>
+
+                    </div>
+
+                </umb-box-content>
+            </umb-box>
+
+        </umb-editor-container>
+
+        <umb-editor-footer>
+            <umb-editor-footer-content-right>
+                <umb-button type="button"
+                            button-style="link"
+                            label-key="general_close"
+                            shortcut="esc"
+                            action="vm.close()">
+                </umb-button>
+                <umb-button type="button"
+                            button-style="success"
+                            label-key="buttons_save"
+                            action="vm.save()">
+                </umb-button>
+            </umb-editor-footer-content-right>
+        </umb-editor-footer>
+
+    </umb-editor-view>
+
+</div>

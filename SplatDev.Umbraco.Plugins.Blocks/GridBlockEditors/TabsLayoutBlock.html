@@ -1,0 +1,8 @@
+﻿<style>
+    .brown * {
+        color: #999 !important;
+    }
+</style>
+<section ng-style="{'background': 'no-repeat center/cover url(' + (block.settingsData.backgroundImage[0].mediaKey | mediaItemResolver).mediaLink + ')', 'background-attachment': (block.settingsData.backgroundImageParallax === '1' ? 'fixed':'inherit'), 'background-color': '#' + block.settingsData.sectionBackgroundColor.value}" class="padded-section" ng-class="block.settingsData.customCSSClass">
+    <umb-block-grid-render-area-slots ng-style="{'background': (block.settingsData.background === '' ? 'transparent':block.settingsData.background)};"></umb-block-grid-render-area-slots>
+</section>

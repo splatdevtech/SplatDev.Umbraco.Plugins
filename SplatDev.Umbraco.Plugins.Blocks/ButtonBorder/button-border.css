@@ -1,0 +1,29 @@
+﻿.button-borders .borders-list {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.button-borders .btn-rounded {
+    border-radius: 4px;
+}
+
+.button-borders .btn-bullet {
+    border-radius: 25rem;
+}
+
+
+.button-borders .btn {
+    border: 3px solid transparent;
+    margin-right: 10px;
+    width: 32px;
+    height: 24px;
+    background: #ccc;
+}
+
+.button-borders .btn-square {
+    border-radius: 0 !important;
+}
+
+.button-borders .btn.active {
+    outline: 3px solid #5ebe31;
+}

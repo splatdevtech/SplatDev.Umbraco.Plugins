@@ -1,0 +1,22 @@
+{
+  "propertyEditors": [
+    {
+      "alias": "splatDev.ButonStyle",
+      "name": "Button visual styles",
+      "icon": "icon-sweatshirt",
+      "editor": {
+        "hideLabel": false,
+        "view": "/App_Plugins/ButtonStyle/button-style.html",
+        "valueType": "TEXT"
+      }
+    }
+  ],
+  "javascript": [
+    "~/App_Plugins/ButtonStyle/button-style.controller.js"
+
+  ],
+  "css": [
+    "~/App_Plugins/ButtonStyle/button-style.css"
+
+  ]
+}

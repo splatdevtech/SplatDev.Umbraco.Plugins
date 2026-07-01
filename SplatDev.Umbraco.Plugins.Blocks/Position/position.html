@@ -1,0 +1,5 @@
+<div ng-controller="splatDev.Position.Controller as vm">
+    <div class="positions-list">
+        <div class="position" ng-class="{'active': vm.isPositionActive(pos)}" ng-repeat="pos in vm.positions track by $index" ng-click="vm.setPosition(pos)" title="{{pos[0]}} {{pos[1]}}" data-x="{{pos[0]}}" data-y="{{pos[1]}}" role="button"></div>
+    </div>
+</div>

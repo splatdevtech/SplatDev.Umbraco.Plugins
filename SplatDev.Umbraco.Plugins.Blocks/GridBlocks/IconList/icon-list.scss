@@ -1,0 +1,89 @@
+﻿@import 'css/all.min.css';
+@import '/css/bootstrap.min.css';
+
+.icon-list {
+    margin: 30px 0;
+
+    .centered {
+        margin: 0 auto;
+    }
+
+    .font-weight-normal {
+        font-weight: 400 !important;
+    }
+
+    .feature-box {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+
+        .feature-box-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            flex: 1 0 auto;
+            background: rgba(0, 0, 0, 0.06);
+            border-radius: 100%;
+            color: #FFF;
+            font-size: 16px;
+            font-size: 1rem;
+            position: relative;
+            top: 7px;
+            text-align: center;
+            padding: 0.8em;
+            height: 1px;
+            width: 2.7em;
+            height: 2.7em;
+        }
+
+        &.feature-box-style-2 {
+
+            .feature-box-icon {
+                background: transparent;
+                top: -10px;
+                margin-right: 10px;
+                max-width: 40px;
+
+                [class*="fa-"] {
+                    color: #0088CC;
+                }
+
+                img.text-color-primary {
+                    color: #0088CC !important;
+                    display: inline-block;
+                    margin-right: 10px;
+                    position: relative;
+                    top: -1px;
+                }
+
+                i {
+                    font-size: 32px;
+                }
+
+                .icons {
+                    color: #0088CC !important;
+                    display: inline-block;
+                    margin-right: 5px;
+                    position: relative;
+                    top: -1px;
+                }
+
+                h4 {
+                    color: #212529;
+                    font-size: 16px;
+                }
+            }
+        }
+    }
+
+    .icon-list-behavior- {
+
+        &Vertical {
+            flex-direction: column;
+        }
+
+        &Horizontal {
+            flex-direction: row;
+        }
+    }
+}

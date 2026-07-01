@@ -1,0 +1,6 @@
+{
+  "name": "splatDev.GridBlocks.CtaBox",
+  "javascript": [
+    "~/App_Plugins/GridBlocks/CtaBox/ctabox.controller.js"
+  ]
+}

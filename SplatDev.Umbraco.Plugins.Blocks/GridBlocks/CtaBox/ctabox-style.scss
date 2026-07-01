@@ -1,0 +1,215 @@
+@import '../../UmbracoIcons/css/icons.css';
+
+.cta-box {
+    width: 95%;
+    height: 95%;
+    margin: 5px auto;
+
+    h4 {
+        font-size: 1.3rem;
+    }
+
+    .btn {
+        padding: 5px 10px;
+        border: 3px solid transparent;
+        text-align: center;
+    }
+
+    .btn-primary {
+        color: #fff;
+        background: #00add2;
+    }
+
+    .btn-primary:hover {
+        color: #f2f2f2;
+        background: #0069d9;
+    }
+
+    .btn-outline {
+        border: 3px solid #00add2;
+        color: #00add2;
+        background: transparent;
+    }
+
+    .btn-outline:hover {
+        border: 3px solid #005769;
+        color: #005769;
+        background: transparent;
+    }
+
+    .btn-secondary {
+        color: #fff;
+        background: #1b264f;
+    }
+
+    .btn-secondary:hover {
+        color: #f2f2f2;
+        background: #495172;
+    }
+
+    .btn-alert {
+        color: #fff;
+        background: #6f6959;
+    }
+
+    .btn-alert:hover {
+        color: #f2f2f2;
+        background: #2d291d;
+    }
+
+    .btn-success {
+        color: #fff;
+        background: #124354;
+    }
+
+    .btn-success:hover {
+        color: #f2f2f2;
+        background: #416976;
+    }
+
+    .btn-rounded {
+        border-radius: 4px;
+    }
+
+    .btn-bullet {
+        border-radius: 25rem;
+    }
+
+    .btn-square {
+        border-radius: 0;
+    }
+
+    .btn.active {
+        border: 3px solid #1b264f;
+    }
+
+    .button-block {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: repeat(3, 1fr);
+        grid-template-areas: "top-left top-center top-right" "middle-left middle-center middle-right" "bottom-left bottom-center bottom-right";
+        grid-column-gap: 1px;
+        grid-row-gap: 1px;
+        width: 100%;
+    }
+
+    .top-left {
+        grid-area: top-left;
+    }
+
+    .top-center {
+        grid-area: top-center;
+    }
+
+    .top-right {
+        grid-area: top-right;
+    }
+
+    .middle-left {
+        grid-area: middle-left;
+    }
+
+    .middle-center {
+        grid-area: middle-center;
+    }
+
+    .middle-right {
+        grid-area: middle-right;
+    }
+
+    .bottom-left {
+        grid-area: bottom-left;
+    }
+
+    .bottom-center {
+        grid-area: bottom-middle;
+    }
+
+    .bottom-right {
+        grid-area: bottom-right;
+    }
+
+    .card {
+        position: relative;
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-direction: column;
+        flex-direction: column;
+        min-width: 0;
+        word-wrap: break-word;
+        background-color: transparent;
+        background-clip: border-box;
+
+        &.bordered {
+            border: 1px solid rgba(0,0,0,.2);
+            border-radius: .25rem;
+        }
+    }
+
+    .card-body {
+        -ms-flex: 1 1 auto;
+        flex: 1 1 auto;
+        min-height: 1px;
+        padding: 1.25rem;
+    }
+
+    .card-title {
+        font-size: 2.2rem;
+        color: #000;
+        margin-bottom: .75rem;
+    }
+
+    .card-title-control {
+        padding: 20px 10px 0 0;
+        box-sizing: border-box;
+    }
+
+    .flex-fill {
+        -ms-flex: 1 1 auto;
+        flex: 1 1 auto;
+    }
+
+    .card-text {
+        margin: 0 0 1em 0;
+        color: #000;
+    }
+
+    .card-text .card-sub-header {
+        font-size: 19px;
+        margin: 0 0 1em 0;
+        min-height: 32px;
+    }
+
+    .card-title-control {
+        font-weight: 700;
+        margin: 0 0 .25em 0;
+        font-size: 2rem;
+    }
+
+    .button-text {
+        width: 100%;
+        color: #fff;
+        font-weight: 900;
+        text-align: center;
+        font-size: 18px;
+        font-weight: 700;
+        border-radius: 30px;
+    }
+
+
+    .align-left * {
+        text-align: left;
+    }
+
+    .align-center * {
+        text-align: center;
+    }
+
+    .align-right * {
+        text-align: right;
+    }
+
+    .align-justified * {
+        text-align: justify;
+    }
+}

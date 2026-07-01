@@ -1,0 +1,6 @@
+﻿{
+  "name": "splatDev.GridBlocks.FeaturedList",
+  "javascript": [
+    "~/App_Plugins/GridBlocks/FeaturedList/featured-list.controller.js"
+  ]
+}

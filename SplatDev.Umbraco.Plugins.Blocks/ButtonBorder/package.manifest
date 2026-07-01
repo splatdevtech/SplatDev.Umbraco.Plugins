@@ -1,0 +1,22 @@
+{
+  "propertyEditors": [
+    {
+      "alias": "splatDev.ButonBorder",
+      "name": "Button borders",
+      "icon": "icon-sweatshirt",
+      "editor": {
+        "hideLabel": false,
+        "view": "/App_Plugins/ButtonBorder/button-border.html",
+        "valueType": "TEXT"
+      }
+    }
+  ],
+  "javascript": [
+    "~/App_Plugins/ButtonBorder/button-border.controller.js"
+
+  ],
+  "css": [
+    "~/App_Plugins/ButtonBorder/button-border.css"
+
+  ]
+}

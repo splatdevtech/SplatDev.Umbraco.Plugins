@@ -1,0 +1,74 @@
+﻿.button-styles .styles-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.button-styles .btn {
+    height: 24px;
+    width: 32px;
+    border: 3px solid transparent;
+}
+
+    .button-styles .btn.mr-1 {
+        margin-right: 10px;
+    }
+
+.button-styles .btn-primary {
+    color: #fff;
+    background: #00add2;
+}
+
+    .button-styles .btn-primary:hover {
+        color: #f2f2f2;
+        background: #0069d9;
+    }
+
+.button-styles .btn-outline {
+    border: 3px solid #00add2;
+    color: #00add2;
+    background: transparent;
+}
+
+    .button-styles .btn-outline:hover {
+        border: 3px solid #005769;
+        color: #005769;
+        background: transparent;
+    }
+
+.button-styles .btn-secondary {
+    color: #fff;
+    background: #1b264f;
+}
+
+    .button-styles .btn-secondary:hover {
+        color: #f2f2f2;
+        background: #495172;
+    }
+
+.button-styles .btn-alert {
+    color: #fff;
+    background: #6f6959;
+}
+
+    .button-styles .btn-alert:hover {
+        color: #f2f2f2;
+        background: #2d291d;
+    }
+
+.button-styles .btn-success {
+    color: #fff;
+    background: #124354;
+}
+
+    .button-styles .btn-success:hover {
+        color: #f2f2f2;
+        background: #416976;
+    }
+
+
+.button-styles .btn.active {
+    outline: 3px solid #5ebe31;
+}

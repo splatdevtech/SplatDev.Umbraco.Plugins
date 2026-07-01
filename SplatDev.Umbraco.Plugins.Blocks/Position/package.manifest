@@ -1,0 +1,22 @@
+{
+  "propertyEditors": [
+    {
+      "alias": "splatDev.Position",
+      "name": "Visual Position Grid",
+      "icon": "icon-grid",
+      "editor": {
+        "hideLabel": false,
+        "view": "/App_Plugins/Position/position.html",
+        "valueType": "TEXT"
+      }
+    }
+  ],
+  "javascript": [
+    "~/App_Plugins/Position/position.controller.js"
+
+  ],
+  "css": [
+    "~/App_Plugins/Position/position.css"
+
+  ]
+}

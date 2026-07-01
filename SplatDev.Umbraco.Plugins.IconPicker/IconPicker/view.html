@@ -1,0 +1,38 @@
+<div ng-controller="splatdev.IconPicker.Controller as vm" class="select-wrapper">
+    <span class="spin" ng-if="vm.loading"><i class="icon-time"></i></span>
+    <div class="icons-header">
+        <div class="icon">
+            <div class="selected-icon" title="Current Selection">
+                <span ng-if="vm.renderIcon.length > 0 && vm.icons.length > 0">
+                    <i class="{{'fa-' + vm.renderIcon[0] + ' fa-2x fa-' + vm.renderIcon[1]}}"></i> [<span class="text">style:  {{vm.renderIcon[0]}} | icon: {{vm.renderIcon[1]}}</span>]
+                </span>
+            </div>
+            <div class="actions">
+                <i class="icon-undo" ng-click="vm.undo()" ng-if="vm.undo[0] !== undefined && (vm.undo[0][1] !== vm.renderIcon[1])" title="Undo"></i>
+                <i class="icon-delete" ng-click="vm.clear()" ng-if="vm.renderIcon.length > 0" title="Remove/ Clear"></i>
+            </div>
+        </div>
+        <div class="search-icon">
+            <input class="search-input" type="search" ng-model="vm.search" placeholder="Type icon name" />
+            <div class="font-awesome-ref-link">
+                <a href="https://fontawesome.com/search?m=free&o=r" target="_blank">See complete list here</a>
+            </div>
+        </div>
+    </div>
+    <hr />
+    <div class="select" ng-if="vm.icons.length > 0" ng-class="{ 'expanded': vm.expanded }" ng-click="vm.expanded = !vm.expanded" ng-mouseleave="vm.expanded=false">
+        <ul class="select-list">
+            <li ng-repeat="icon in vm.icons | filter:vm.search | limitTo: vm.limit" ng-mouseover="" data-value="{{icon.id}}" title="{{icon.label}}" ng-click="vm.select(icon)">
+                <span class="fontawesome-icon">
+                    <i class="fa-{{icon.familyStylesByLicense.free[0].style}} fa-{{icon.id}}" title="{{icon.label}}"></i>
+                </span>
+            </li>
+            <li ng-click="vm.loadMore()" title="Load More">
+                <span class="fontawesome-icon">
+                    ...
+                </span>
+            </li>
+        </ul>
+    </div>
+
+</div>

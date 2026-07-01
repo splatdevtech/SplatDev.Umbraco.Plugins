@@ -1,0 +1,68 @@
+﻿@import 'css/all.min.css';
+.service-list {
+  /* Featured Boxes - Style 4 */
+}
+.service-list .row {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  margin-right: 15px;
+  margin-left: 15px;
+  min-height: 300px;
+}
+.service-list .col-lg-3 {
+  -ms-flex: 0 0 25%;
+  flex: 0 0 25%;
+  max-width: 25%;
+}
+.service-list .featured-boxes-style-4 .featured-box {
+  background: none;
+  border: 0;
+  margin: 10px 0;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+.service-list .featured-boxes-style-4 .featured-box .box-content {
+  border: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+  margin: 0 10px;
+}
+.service-list .featured-boxes-style-4 .featured-box .icon-featured {
+  display: inline-block;
+  font-size: 35px;
+  height: 45px;
+  line-height: 45px;
+  padding: 0;
+  width: 45px;
+  margin-top: 0;
+  margin-bottom: 10px;
+  background: transparent;
+  border-radius: 0;
+  border-color: #00ADD2;
+  color: #00ADD2;
+}
+.service-list .feature-box.reverse-allres.feature-box-style-4 .feature-box-icon {
+  -webkit-box-pack: end;
+  -ms-flex-pack: end;
+  justify-content: flex-end;
+}
+.service-list .feature-box.reverse-allres.feature-box-style-4 .feature-box-info {
+  padding-right: 0;
+}
+.service-list html .text-color-dark, .service-list html .text-dark {
+  color: #212529 !important;
+}
+.service-list .featured-box h4 {
+  font-size: 1.3em;
+  font-weight: 400;
+  letter-spacing: -0.7px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+.service-list p {
+  color: #777;
+  line-height: 26px;
+  margin: 0 0 20px;
+}

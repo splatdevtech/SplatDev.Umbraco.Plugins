@@ -1,0 +1,20 @@
+﻿//{
+//  "dashboards": [
+//    {
+//      "alias": "darkMode",
+//      "view": "/App_Plugins/Darkmode/panel.html",
+//      "sections": [ "content" ],
+//      "weight": 999,
+//      "access": [
+//        { "grant": "admin" }
+//      ]
+//    }
+//  ],
+//  "javascript": [
+//    "~/App_Plugins/Darkmode/controller.js"
+//  ],
+//  "css": [
+//    "~/App_Plugins/Darkmode/style.css"
+//  ],
+//  "bundleOptions": "None"
+//}

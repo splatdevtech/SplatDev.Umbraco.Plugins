@@ -1,0 +1,133 @@
+﻿@import 'css/all.min.css';
+@import '/css/bootstrap.min.css';
+
+.featured-list {
+    margin: 0 15px;
+
+    .pb-3, .py-3 {
+        padding-bottom: 1rem !important;
+    }
+
+    .col-lg-8 {
+        -ms-flex: 0 0 66.666667%;
+        flex: 0 0 66.666667%;
+        max-width: 66.666667%;
+    }
+
+    .font-weight-normal {
+        font-weight: 400 !important;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+        color: #212529;
+        font-weight: 200;
+        letter-spacing: -.05em;
+        margin: 0;
+        -webkit-font-smoothing: antialiased;
+    }
+
+    h2 {
+        font-size: 2.2em;
+        font-weight: 300;
+        line-height: 42px;
+        margin: 0 0 32px 0;
+    }
+
+    .text-7 {
+        font-size: 2em !important;
+    }
+
+    a {
+        &.accordion-toggle.text-color-dark.font-weight-bold {
+            text-decoration: none;
+            color: #212529 !important;
+            font-size: 16px;
+        }
+
+        &.d-block.text-color-dark.font-weight-semibold.pt-4 {
+            color: #212529 !important;
+        }
+    }
+
+    .feature-box {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+
+        .feature-box-icon {
+            display: -webkit-inline-box;
+            display: -ms-inline-flexbox;
+            display: inline-flex;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            align-items: center;
+            -webkit-box-pack: center;
+            -ms-flex-pack: center;
+            justify-content: center;
+            -webkit-box-flex: 1;
+            -ms-flex: 1 0 auto;
+            flex: 1 0 auto;
+            background: rgba(0, 0, 0, 0.06);
+            border-radius: 100%;
+            color: #FFF;
+            font-size: 16px;
+            font-size: 1rem;
+            position: relative;
+            top: 7px;
+            text-align: center;
+            padding: 0.8em;
+            height: 1px;
+            width: 2.7em;
+            height: 2.7em;
+        }
+
+        &.feature-box-style-2 {
+
+            .feature-box-icon {
+                background: transparent;
+                top: -3px;
+
+                [class*="fa-"] {
+                    color: #0088CC;
+                }
+
+                img.text-color-primary {
+                    color: #0088CC !important;
+                    display: inline-block;
+                    margin-right: 10px;
+                    position: relative;
+                    top: -1px;
+                }
+
+                i {
+                    font-size: 32px;
+                }
+
+                .icons {
+                    color: #0088CC !important;
+                    display: inline-block;
+                    margin-right: 5px;
+                    position: relative;
+                    top: -1px;
+                }
+
+                h4 {
+                    color: #212529;
+                }
+            }
+        }
+
+
+        .font-weight-bold, b, strong {
+            font-weight: 700 !important;
+        }
+
+        .text-4 {
+            font-size: 1.2em !important;
+        }
+
+        .mb-4, .my-4 {
+            margin-bottom: 1.5rem !important;
+        }
+    }
+}

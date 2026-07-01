@@ -1,0 +1,22 @@
+{
+  "propertyEditors": [
+    {
+      "alias": "splatDev.TextAlign",
+      "name": "Text Alignment",
+      "icon": "icon-list",
+      "editor": {
+        "hideLabel": false,
+        "view": "/App_Plugins/TextAlignment/text-align.html",
+        "valueType": "TEXT"
+      }
+    }
+  ],
+  "javascript": [
+    "~/App_Plugins/TextAlignment/text-align.controller.js"
+
+  ],
+  "css": [
+    "~/App_Plugins/TextAlignment/text-align.css"
+
+  ]
+}

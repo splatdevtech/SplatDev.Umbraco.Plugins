@@ -1,0 +1,6 @@
+{
+  "name": "splatDev.GridBlocks.AnimatedNumberedList",
+  "javascript": [
+    "~/App_Plugins/GridBlocks/AnimatedNumberedList/animated-numbered-list.controller.js"
+  ]
+}

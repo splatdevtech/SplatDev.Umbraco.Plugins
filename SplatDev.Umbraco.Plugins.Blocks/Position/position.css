@@ -1,0 +1,29 @@
+﻿.positions-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    grid-template-areas: "top-left top-center top-right"
+        "middle-left middle-center middle-right"
+        "bottom-left bottom-center bottom-right";
+    grid-column-gap: 1px;
+    grid-row-gap: 1px;
+    width: calc(32px * 3);
+}
+
+.position {
+    width: 32px;
+    height: 32px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+}
+
+    .position:hover {
+        background: #f2f2f2;
+        outline: 2px solid #5b67f1;
+    }
+
+    .position.active {
+        background: #1b264f;
+        border: 1px solid transparent;
+        outline: 3px solid #5ebe31;
+    }

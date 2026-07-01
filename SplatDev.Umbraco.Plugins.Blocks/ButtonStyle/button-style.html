@@ -1,0 +1,5 @@
+<div ng-controller="splatDev.ButtonStyle.Controller as vm" class="button-styles">
+    <div class="styles-list">
+        <div class="btn mr-1" ng-class="vm.class(style)" ng-repeat="style in vm.styles track by $index" ng-click="vm.select(style)" title="{{style}}"></div>
+    </div>
+</div>

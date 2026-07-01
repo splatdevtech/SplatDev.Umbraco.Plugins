@@ -1,0 +1,5 @@
+<div ng-controller="splatDev.ButtonBorder.Controller as vm" class="button-borders">
+    <div class="borders-list">
+        <div class="btn mr-1" ng-class="vm.class(border)" ng-repeat="border in vm.borders track by $index" ng-click="vm.select(border)" title="{{border}}"></div>
+    </div>
+</div>

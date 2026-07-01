@@ -1,0 +1,23 @@
+﻿{
+  "propertyEditors": [
+    {
+      "alias": "iconPicker",
+      "name": "Font Awesome Icon Picker",
+      "description": "FontAwesome 6.3.0 Icon picker",
+      "isReadOnly": false,
+      "icon": "icon-app color-black",
+      "editor": {
+        "view": "~/App_Plugins/IconPicker/view.html",
+        "valueType": "STRING",
+        "hideLabel": false
+      }
+    }
+  ],
+  "javascript": [
+    "~/App_Plugins/IconPicker/controller.js"
+  ],
+  "css": [
+    "~/App_Plugins/IconPicker/style.css",
+    "~/App_Plugins/IconPicker/css/all.min.css"
+  ]
+}

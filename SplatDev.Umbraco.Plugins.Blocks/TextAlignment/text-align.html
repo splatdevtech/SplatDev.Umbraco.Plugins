@@ -1,0 +1,5 @@
+<div ng-controller="splatDev.TextAlign.Controller as vm">
+    <ul class="alignments-list">
+        <li ng-repeat="align in vm.alignments" class="alignment" ng-class="{'active':vm.align===align}" ng-click="vm.select(align)"><img ng-if="align" ng-src="{{'/App_Plugins/TextAlignment/assets/'+align+'.png'}}" title="{{align}}" /></li>
+    </ul>
+</div>

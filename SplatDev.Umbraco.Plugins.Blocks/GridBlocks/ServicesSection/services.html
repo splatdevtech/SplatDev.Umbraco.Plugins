@@ -1,0 +1,17 @@
+﻿<div ng-controller="splatDev.ServiceList.Controller" class="service-list">
+    <section class="section section-default border-0 mt-5 appear-animation animated fadeIn appear-animation-visible" data-appear-animation="fadeIn" data-appear-animation-delay="1200" style="animation-delay: 1200ms; background: #f7f7f7; padding:50px 0">
+        <div class="container py-4" ng-if="services">
+            <div class="row featured-boxes featured-boxes-style-4">
+                <div class="col-md-6 col-lg-3 my-2" ng-repeat="service in services">
+                    <div class="m-0 featured-box featured-box-primary featured-box-effect-4 appear-animation animated {{service.class}} appear-animation-visible" data-appear-animation="{{service.class}}" data-appear-animation-delay="{{service.delay}}">
+                        <div class="box-content p-0 text-left">
+                            <i class="icon-featured text-12 m-0 p-0" ng-class="'fa-' + service.icon[0] + ' fa-' + service.icon[1]"></i>
+                            <h4 class="font-weight-bold text-color-dark">{{service.title}}</h4>
+                            <p class="mb-0">{{service.summary}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

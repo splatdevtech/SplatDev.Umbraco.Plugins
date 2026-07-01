@@ -1,0 +1,70 @@
+﻿@import 'css/all.min.css';
+@import '/css/bootstrap.min.css';
+.icon-list {
+  margin: 30px 0;
+}
+.icon-list .centered {
+  margin: 0 auto;
+}
+.icon-list .font-weight-normal {
+  font-weight: 400 !important;
+}
+.icon-list .feature-box {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+.icon-list .feature-box .feature-box-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1 0 auto;
+  background: rgba(0, 0, 0, 0.06);
+  border-radius: 100%;
+  color: #FFF;
+  font-size: 16px;
+  font-size: 1rem;
+  position: relative;
+  top: 7px;
+  text-align: center;
+  padding: 0.8em;
+  height: 1px;
+  width: 2.7em;
+  height: 2.7em;
+}
+.icon-list .feature-box.feature-box-style-2 .feature-box-icon {
+  background: transparent;
+  top: -10px;
+  margin-right: 10px;
+  max-width: 40px;
+}
+.icon-list .feature-box.feature-box-style-2 .feature-box-icon [class*=fa-] {
+  color: #0088CC;
+}
+.icon-list .feature-box.feature-box-style-2 .feature-box-icon img.text-color-primary {
+  color: #0088CC !important;
+  display: inline-block;
+  margin-right: 10px;
+  position: relative;
+  top: -1px;
+}
+.icon-list .feature-box.feature-box-style-2 .feature-box-icon i {
+  font-size: 32px;
+}
+.icon-list .feature-box.feature-box-style-2 .feature-box-icon .icons {
+  color: #0088CC !important;
+  display: inline-block;
+  margin-right: 5px;
+  position: relative;
+  top: -1px;
+}
+.icon-list .feature-box.feature-box-style-2 .feature-box-icon h4 {
+  color: #212529;
+  font-size: 16px;
+}
+.icon-list .icon-list-behavior-Vertical {
+  flex-direction: column;
+}
+.icon-list .icon-list-behavior-Horizontal {
+  flex-direction: row;
+}

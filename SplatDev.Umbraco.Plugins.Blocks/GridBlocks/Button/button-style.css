@@ -1,0 +1,52 @@
+﻿.button-styles .button-wrapper {
+    width: 100%;
+    margin: 20px auto;
+}
+
+.control-group {
+    margin-top: 30px !important;
+    color: #000;
+}
+
+.btn-primary {
+    background-color: #e37224;
+    border: 1px solid #fff;
+    color: #ffffff;
+}
+
+    .btn-primary:hover {
+        color: #fff;
+        background-color: #0062cc;
+        border-color: #005cbf;
+        cursor: pointer;
+    }
+
+.btn-rounded {
+    font-family: 'Raleway';
+    cursor: pointer;
+    border-radius: 30px;
+}
+
+.turquoise {
+    background: #40E0D0;
+    color: #003a48;
+    font-weight:900;
+    transition: all 0.3s ease;
+}
+
+    .turquoise:hover {
+        color: #40E0D0;
+        background: #003a48;
+    }
+
+.show-url-button {
+    position: absolute;
+    bottom: -10px;
+    right: 5px;
+    cursor: pointer;
+    color: #ccc;
+}
+
+    .show-url-button:hover {
+        color: #000;
+    }
