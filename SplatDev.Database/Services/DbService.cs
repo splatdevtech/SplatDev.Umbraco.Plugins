@@ -5,6 +5,7 @@
 
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Threading.Tasks;
 
     using NPoco;
@@ -31,7 +32,7 @@
         /// <returns>Async Task</returns>
         public virtual async Task DeleteAll()
         {
-            await Task.FromResult(Database.Execute($"DELETE FROM {_tableName}")).ConfigureAwait(false);
+            await Database.ExecuteAsync($"DELETE FROM {_tableName}").ConfigureAwait(false);
         }
 
         /// <summary>
@@ -41,7 +42,7 @@
         /// <returns>IEnumerable of all records</returns>
         public virtual async Task<IEnumerable<T>> GetAll()
         {
-            return await Task.FromResult(Database.Query<T>($"SELECT * FROM {_tableName}")).ConfigureAwait(false);
+            return await Database.FetchAsync<T>($"SELECT * FROM {_tableName}").ConfigureAwait(false);
         }
 
         /// <summary>
@@ -52,7 +53,7 @@
         /// <returns>A record of type T</returns>
         public virtual async Task<T> GetById(string id, params string[] navigationProperties)
         {
-            return await Task.FromResult(Database.Single<T>(id, navigationProperties)).ConfigureAwait(false);
+            return await Database.SingleAsync<T>(id, navigationProperties).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -62,7 +63,7 @@
         /// <returns>IEnumerable of records</returns>
         public virtual async Task<IEnumerable<T>> Query(string sql)
         {
-            return await Task.FromResult(Database.Query<T>(sql)).ConfigureAwait(false);
+            return await Database.FetchAsync<T>(sql).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -73,7 +74,7 @@
         /// <returns>IEnumerable of records</returns>
         public virtual async Task<IEnumerable<T>> GetAllIds(params int[] ids)
         {
-            return await Task.FromResult(Database.Query<T>($"SELECT * FROM {_tableName} WHERE Id in ({ids})")).ConfigureAwait(false);
+            return await Database.FetchAsync<T>($"SELECT * FROM {_tableName} WHERE Id in ({ids})").ConfigureAwait(false);
         }
         #endregion
 
@@ -84,9 +85,9 @@
         /// <returns>True or False (Success or Failure)</returns>
         public async Task<bool> Delete(int id)
         {
-            var item = GetById(id);
+            var item = await GetById(id).ConfigureAwait(false);
             var result = Database.Delete(item);
-            return await Task.FromResult<bool>(Convert.ToBoolean(result)).ConfigureAwait(false);
+            return Convert.ToBoolean(result);
         }
 
         /// <summary>
@@ -97,7 +98,7 @@
         public async Task<T> GetById(int id)
         {
             if (await Exists(id).ConfigureAwait(false))
-                return await Task.FromResult(Database.Single<T>(id.ToString())).ConfigureAwait(false);
+                return await Database.SingleAsync<T>(id.ToString()).ConfigureAwait(false);
             else return new T();
         }
 
@@ -108,7 +109,7 @@
         /// <returns>True or False (Success or Failure)</returns>
         public async Task<bool> Insert(T data)
         {
-            var result = await Task.FromResult(Database.Insert(data)).ConfigureAwait(false);
+            var result = await Database.InsertAsync(data).ConfigureAwait(false);
             return Convert.ToBoolean(result);
         }
 
@@ -122,9 +123,8 @@
         {
             try
             {
-                var result = await Task.FromResult(Database.Update(data, primaryKeyValue)).ConfigureAwait(false);
-                return Convert.ToBoolean(result);
-
+                var result = await Database.UpdateAsync(data).ConfigureAwait(false);
+                return result > 0;
             }
             catch (Exception)
             {
@@ -139,7 +139,8 @@
         /// <returns>True or False (Exists or Does not exist)</returns>
         public async Task<bool> Exists(int id)
         {
-            return await Task.FromResult(Database.Exists<T>(id)).ConfigureAwait(false);
+            var result = await Database.FetchAsync<T>($"WHERE Id = @0", id).ConfigureAwait(false);
+            return result.Count > 0;
         }
     }
 }
