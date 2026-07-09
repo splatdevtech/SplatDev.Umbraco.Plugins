@@ -2,6 +2,7 @@ namespace SplatDev.Routing
 {
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Routing;
+    using Microsoft.Extensions.DependencyInjection;
     using SplatDev.Routing.Interfaces;
     using System;
     using System.Linq;
@@ -9,21 +10,21 @@ namespace SplatDev.Routing
 
     public static class RouteServiceExtensions
     {
-        /// <summary>
-        /// Scans the provided assemblies for IRoute implementations and registers each as a conventional route.
-        /// </summary>
         public static IEndpointRouteBuilder MapSplatDevRoutes(this IEndpointRouteBuilder endpoints, params Assembly[] assemblies)
         {
-            var targetAssemblies = assemblies.Length > 0 ? assemblies : AppDomain.CurrentDomain.GetAssemblies();
+            if (assemblies.Length == 0)
+            {
+                throw new ArgumentException("At least one assembly must be provided.", nameof(assemblies));
+            }
 
-            foreach (var assembly in targetAssemblies)
+            foreach (var assembly in assemblies)
             {
                 var routeTypes = assembly.GetTypes()
                     .Where(t => typeof(IRoute).IsAssignableFrom(t) && !t.IsInterface && !t.IsAbstract);
 
                 foreach (var routeType in routeTypes)
                 {
-                    var route = (IRoute)Activator.CreateInstance(routeType)!;
+                    var route = (IRoute)ActivatorUtilities.CreateInstance(endpoints.ServiceProvider, routeType);
                     endpoints.MapControllerRoute(
                         name: route.RouteAlias,
                         pattern: route.Url,
