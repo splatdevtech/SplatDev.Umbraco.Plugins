@@ -117,6 +117,16 @@ namespace SplatDev.Umbraco.NPoco.Repositories
 
         public IList<T> Fetch(string query)
         {
+            if (string.IsNullOrWhiteSpace(query))
+            {
+                return [];
+            }
+
+            if (query.IndexOfAny([';', '\0']) >= 0)
+            {
+                throw new ArgumentException("Query contains disallowed characters", nameof(query));
+            }
+
             using var scope = _scopeProvider.CreateScope(autoComplete: true);
             return [.. scope.Database.Query<T>(query)];
         }
@@ -137,20 +147,32 @@ namespace SplatDev.Umbraco.NPoco.Repositories
             return dto;
         }
 
+        private static string ValidateColumnName(string column)
+        {
+            if (string.IsNullOrWhiteSpace(column)
+                || column.IndexOfAny([';', '\'', '"', ' ', '\\', '/', '(', ')', '\0', '-', '=']) >= 0)
+            {
+                throw new ArgumentException($"Invalid column name: {column}", nameof(column));
+            }
+
+            return column;
+        }
+
         public T? Get(string column, object? value)
         {
             if (value == null)
                 return null;
 
-            // Early validation for int columns (optional)
             if (value is int intValue && intValue <= 0)
                 return null;
+
+            var safeColumn = ValidateColumnName(column);
 
             using var scope = _scopeProvider.CreateScope(autoComplete: true);
             var sql = scope.SqlContext.Sql()
                 .Select<T>()
                 .From<T>()
-                .Where($"{column} = @0", value);
+                .Where($"{safeColumn} = @0", value);
 
             T dto = scope.Database.FirstOrDefault<T>(sql);
             return dto;
