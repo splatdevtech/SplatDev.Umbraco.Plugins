@@ -15,12 +15,27 @@
         public IDatabase Database { get; }
 
         protected DbService() { }
-        protected DbService(string tableName) { _tableName = tableName; }
+        protected DbService(string tableName) { _tableName = ValidateTableName(tableName); }
 
         protected DbService(IDatabase database, string tableName = "")
         {
             Database = database;
-            _tableName = tableName;
+            _tableName = ValidateTableName(tableName);
+        }
+
+        private static string ValidateTableName(string tableName)
+        {
+            if (string.IsNullOrWhiteSpace(tableName))
+            {
+                return tableName;
+            }
+
+            if (tableName.IndexOfAny([';', '\'', '"', ' ', '\\', '/', '(', ')', '\0']) >= 0)
+            {
+                throw new ArgumentException($"Invalid table name: {tableName}", nameof(tableName));
+            }
+
+            return tableName;
         }
 
         #region virtual Methods

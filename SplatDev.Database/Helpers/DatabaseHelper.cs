@@ -72,6 +72,12 @@
 
         public static void InsertData<T>(Database db, List<T> list, bool SkipIfHasData = false, string Table = "")
         {
+            if (string.IsNullOrWhiteSpace(Table)
+                || Table.IndexOfAny([';', '\'', '"', ' ', '\\', '/', '(', ')', '\0']) >= 0)
+            {
+                throw new ArgumentException($"Invalid table name: {Table}", nameof(Table));
+            }
+
             bool hasData = db.ExecuteScalar<int>($"SELECT count(*) [Exists] FROM {Table}") > 0;
             if (!hasData)
                 foreach (var item in list) db.Insert(item);
@@ -86,6 +92,12 @@
 
         public static bool TableExistsQuery(this Database db, string tableName)
         {
+            if (string.IsNullOrWhiteSpace(tableName)
+                || tableName.IndexOfAny([';', '\'', '"', ' ', '\\', '/', '(', ')', '\0']) >= 0)
+            {
+                throw new ArgumentException($"Invalid table name: {tableName}", nameof(tableName));
+            }
+
             return db.ExecuteScalar<bool>($"SELECT 1 [Exists] FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = '{tableName}'");
         }
     }
