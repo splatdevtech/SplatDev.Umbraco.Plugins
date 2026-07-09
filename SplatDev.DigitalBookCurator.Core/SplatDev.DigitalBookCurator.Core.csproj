@@ -8,8 +8,12 @@
     <Version>1.0.0</Version>
     <Authors>SplatDev</Authors>
     <Company>SplatDev Ltda</Company>
-    <Description>Core library for the Digital Book Curator - PDF/eBook management with EF Core persistence</Description>
+    <Description>Core library for the Digital Book Curator — PDF/eBook management with EF Core persistence</Description>
+    <PackageTags>digital-book;ebook;pdf;entity-framework-core;sqlite</PackageTags>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/SplatDev-Ltda/SplatDev.Umbraco.Plugins</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/SplatDev-Ltda/SplatDev.Umbraco.Plugins</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
   </PropertyGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net8.0'">
