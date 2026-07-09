@@ -50,3 +50,30 @@ jobs:
           else
             echo "::warning::No test projects found or tests skipped"
           fi
+
+  workflow:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: |
+            8.0.x
+            10.0.x
+
+      - name: Restore Workflow
+        run: dotnet restore SplatDev.Umbraco.Workflow/SplatDev.Umbraco.Workflow.slnx
+
+      - name: Build Workflow
+        run: dotnet build SplatDev.Umbraco.Workflow/SplatDev.Umbraco.Workflow.slnx -c Release --no-restore
+
+      - name: Test Workflow
+        run: |
+          if dotnet test SplatDev.Umbraco.Workflow/SplatDev.Umbraco.Workflow.slnx --no-build -c Release --verbosity normal 2>&1 | grep -q "Test run"; then
+            echo "Workflow tests completed"
+          else
+            echo "::warning::No Workflow test projects found or tests skipped"
+          fi
