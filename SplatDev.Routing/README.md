@@ -100,4 +100,5 @@ If no assemblies are provided, all assemblies in the current `AppDomain` are sca
 
 ---
 
-Copyright SplatDev
+
+**SplatDev.Routing** — part of the [SplatDev.Umbraco.Plugins](https://github.com/SplatDev-Ltda/SplatDev.Umbraco.Plugins) suite. Licensed under MIT. © SplatDev Ltda.

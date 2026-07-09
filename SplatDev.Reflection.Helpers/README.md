@@ -103,4 +103,5 @@ Netstandard — no external NuGet dependencies.
 
 ---
 
-Copyright SplatDev
+
+**SplatDev.Reflection.Helpers** — part of the [SplatDev.Umbraco.Plugins](https://github.com/SplatDev-Ltda/SplatDev.Umbraco.Plugins) suite. Licensed under MIT. © SplatDev Ltda.

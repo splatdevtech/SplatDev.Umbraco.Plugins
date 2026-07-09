@@ -124,4 +124,5 @@ The `SplatDev.Umbraco.Markup` package shares several extension methods with `Spl
 
 ---
 
-Copyright SplatDev
+
+**SplatDev.Umbraco.Markup** — part of the [SplatDev.Umbraco.Plugins](https://github.com/SplatDev-Ltda/SplatDev.Umbraco.Plugins) suite. Licensed under MIT. © SplatDev Ltda.

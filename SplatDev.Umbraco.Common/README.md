@@ -181,4 +181,5 @@ No DI registration needed. All extension classes are static. Use directly via `u
 
 ---
 
-Copyright SplatDev
+
+**SplatDev.Umbraco.Common** — part of the [SplatDev.Umbraco.Plugins](https://github.com/SplatDev-Ltda/SplatDev.Umbraco.Plugins) suite. Licensed under MIT. © SplatDev Ltda.

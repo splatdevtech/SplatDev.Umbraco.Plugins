@@ -78,4 +78,5 @@ No external NuGet dependencies. Uses only `System.Security.Cryptography`.
 
 ---
 
-Copyright SplatDev
+
+**SplatDev.Umbraco.2FA** — part of the [SplatDev.Umbraco.Plugins](https://github.com/SplatDev-Ltda/SplatDev.Umbraco.Plugins) suite. Licensed under MIT. © SplatDev Ltda.

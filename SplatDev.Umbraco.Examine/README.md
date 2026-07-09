@@ -157,4 +157,5 @@ index.FieldDefinitionCollection.AddOrUpdate(
 
 ---
 
-Copyright SplatDev
+
+**SplatDev.Umbraco.Examine** — part of the [SplatDev.Umbraco.Plugins](https://github.com/SplatDev-Ltda/SplatDev.Umbraco.Plugins) suite. Licensed under MIT. © SplatDev Ltda.
