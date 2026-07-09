@@ -264,6 +264,87 @@ namespace SplatDev.Umbraco.NPoco.Repositories
         }
         #endregion
 
+        #region Async Methods
+        public async Task<T?> GetAsync(int? id)
+        {
+            if (id == null || id <= 0)
+            {
+                return default;
+            }
+            using var scope = _scopeProvider.CreateScope(autoComplete: true);
+            Sql<ISqlContext> sql = scope.SqlContext.Sql()
+                .Select<T>()
+                .From<T>()
+                .Where<T>(x => x.Id == id);
+
+            var results = await scope.Database.FetchAsync<T>(sql.SQL, sql.Arguments).ConfigureAwait(false);
+            return results.FirstOrDefault();
+        }
+
+        public async Task<IEnumerable<T>> GetAllAsync()
+        {
+            using var scope = _scopeProvider.CreateScope(autoComplete: true);
+            return await scope.Database.FetchAsync<T>().ConfigureAwait(false);
+        }
+
+        public async Task<T> InsertAsync(T entity)
+        {
+            using var scope = _scopeProvider.CreateScope(autoComplete: true);
+            var result = await scope.Database.InsertAsync(entity).ConfigureAwait(false);
+            var id = Convert.ToInt32(result);
+            entity.Id = id;
+            OnActionCompleted(new ActionCompletedEvent
+            {
+                AuditType = AuditType.Save,
+                Entity = entity,
+                Id = id,
+                UserId = UserId ?? Constants.Security.SuperUserKey,
+            });
+            return entity;
+        }
+
+        public async Task UpdateAsync(T entity)
+        {
+            using var scope = _scopeProvider.CreateScope(autoComplete: true);
+            await scope.Database.UpdateAsync(entity).ConfigureAwait(false);
+            OnActionCompleted(new ActionCompletedEvent
+            {
+                AuditType = AuditType.Save,
+                Entity = entity,
+                Id = entity.Id,
+                UserId = UserId ?? Constants.Security.SuperUserKey,
+            });
+        }
+
+        public async Task DeleteAsync(int id)
+        {
+            using var scope = _scopeProvider.CreateScope(autoComplete: true);
+            await scope.Database.DeleteAsync<T>(id).ConfigureAwait(false);
+            OnActionCompleted(new ActionCompletedEvent
+            {
+                AuditType = AuditType.Delete,
+                Id = id,
+                UserId = UserId ?? Constants.Security.SuperUserKey,
+                Message = $"T with id {id} has been deleted",
+                Log = true,
+            });
+        }
+
+        public async Task<bool> ExistsAsync(int id)
+        {
+            using var scope = _scopeProvider.CreateScope(autoComplete: true);
+            var results = await scope.Database.FetchAsync<T>("WHERE Id = @0", id).ConfigureAwait(false);
+            return results.Count > 0;
+        }
+
+        public async Task<int?> CountAsync()
+        {
+            using var scope = _scopeProvider.CreateScope(autoComplete: true);
+            var results = await scope.Database.FetchAsync<T>().ConfigureAwait(false);
+            return results.Count;
+        }
+        #endregion
+
         #region Query Methods
         protected static void ApplyOrdering(ref Sql<ISqlContext> sql, Ordering ordering, string field = "id")
         {

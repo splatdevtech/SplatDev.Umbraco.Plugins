@@ -35,19 +35,23 @@ public class ImportApiController : ControllerBase
     {
         var path = Path.Combine(_contentRootPath, _path);
         if (done) path = Path.Combine(_contentRootPath, Constants.Imports.DONE_FOLDER);
-        var files = Directory.GetFiles(path);
-        var list = new List<FileImportAvailable>();
-        foreach (var file in files)
+
+        return await Task.Run(() =>
         {
-            var fileInfo = new FileInfo(file);
-            list.Add(new FileImportAvailable
+            var files = Directory.EnumerateFiles(path);
+            var list = new List<FileImportAvailable>();
+            foreach (var file in files)
             {
-                Name = fileInfo.Name,
-                Size = fileInfo.Length / 1024
-            });
-        }
-        await Task.FromResult(0);
-        return list;
+                var fileInfo = new FileInfo(file);
+                list.Add(new FileImportAvailable
+                {
+                    Name = fileInfo.Name,
+                    Size = fileInfo.Length / 1024,
+                });
+            }
+
+            return list;
+        }).ConfigureAwait(false);
     }
 
     [HttpGet]

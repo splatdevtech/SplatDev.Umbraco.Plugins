@@ -10,6 +10,7 @@
     using System;
     using System.Collections.Generic;
     using System.Runtime.InteropServices;
+    using System.Threading;
     using System.Threading.Tasks;
 
     public class SocketLabsController : IMessagingController<BasicMessage, SendResponse>
@@ -42,14 +43,22 @@
 
         public async Task<SendResponse> SendMessageAsync(BasicMessage message)
         {
-            await Task.FromResult(0);
-            return SendMessage(message);
+            var response = await client.SendAsync(message, CancellationToken.None).ConfigureAwait(false);
+            return response;
         }
 
         public async Task<SendResponse> SendMessageAsync(string subject, string from, string fromAddress, string to, string toAddress, string message, string plainMessage = "", IEnumerable<IAddress> bcc = null, IEnumerable<IAddress> cc = null)
         {
-            await Task.FromResult(0);
-            return SendMessage(subject, from, fromAddress, to, toAddress, message, plainMessage, bcc, cc);
+            var msg = new BasicMessage
+            {
+                Subject = subject,
+                HtmlBody = message,
+                PlainTextBody = plainMessage,
+            };
+            msg.From.Email = fromAddress;
+            msg.To.Add(toAddress, to);
+            var response = await client.SendAsync(msg, CancellationToken.None).ConfigureAwait(false);
+            return response;
         }
 
         #region Dispose

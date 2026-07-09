@@ -10,6 +10,7 @@
     using System;
     using System.Collections.Generic;
     using System.Runtime.InteropServices;
+    using System.Threading;
     using System.Threading.Tasks;
 
     public class SocketLabsBulkController : IBulkMessagingController<BulkMessage, SendResponse>
@@ -84,8 +85,18 @@
         /// <remarks>placeholders surrounded by %% ex. %%Name%%</remarks>
         public async Task<SendResponse> BulkSendMessageAsync(BulkMessage message, IEnumerable<IBulkAddress> to = null)
         {
-            await Task.FromResult(0);
-            return BulkSendMessage(message, to);
+            if (to != null)
+            {
+                foreach (var p in to)
+                {
+                    var recipient = message.To.Add(p.Address);
+                    foreach (var d in p.Data)
+                        recipient.MergeData.Add(d.Placeholder, d.Value);
+                }
+            }
+
+            var response = await client.SendAsync(message, CancellationToken.None).ConfigureAwait(false);
+            return response;
         }
 
         /// <summary>
@@ -100,8 +111,23 @@
         /// <remarks>placeholders surrounded by %% ex. %%Name%%</remarks>
         public async Task<SendResponse> BulkSendMessageAsync(IEnumerable<IBulkAddress> to, string from, string subject, string message, string plainMessage)
         {
-            await Task.FromResult(0);
-            return BulkSendMessage(to, from, subject, message, plainMessage);
+            var msg = new BulkMessage
+            {
+                PlainTextBody = plainMessage,
+                HtmlBody = message,
+                Subject = subject,
+            };
+            msg.From.Email = from;
+
+            foreach (var p in to)
+            {
+                var recipient = msg.To.Add(p.Address);
+                foreach (var d in p.Data)
+                    recipient.MergeData.Add(d.Placeholder, d.Value);
+            }
+
+            var response = await client.SendAsync(msg, CancellationToken.None).ConfigureAwait(false);
+            return response;
         }
 
         #region Dispose
