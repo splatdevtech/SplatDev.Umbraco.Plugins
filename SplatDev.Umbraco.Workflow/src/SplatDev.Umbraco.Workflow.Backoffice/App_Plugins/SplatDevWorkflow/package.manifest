@@ -1,0 +1,45 @@
+{
+  "javascript": [
+    "/App_Plugins/SplatDevWorkflow/splatWorkflow.module.js",
+    "/App_Plugins/SplatDevWorkflow/ConfigEditor/configEditor.controller.js",
+    "/App_Plugins/SplatDevWorkflow/QueueView/queueView.controller.js",
+    "/App_Plugins/SplatDevWorkflow/Chart/chart.directive.js",
+    "/App_Plugins/SplatDevWorkflow/InstanceDetail/instanceDetail.controller.js",
+    "/App_Plugins/SplatDevWorkflow/Themes/themes.controller.js"
+  ],
+  "css": [
+    "/App_Plugins/SplatDevWorkflow/splatWorkflow.css",
+    "/App_Plugins/SplatDevWorkflow/Themes/default/theme.css",
+    "/App_Plugins/SplatDevWorkflow/Themes/high-contrast/theme.css",
+    "/App_Plugins/SplatDevWorkflow/Themes/playful/theme.css"
+  ],
+  "dashboards": [
+    {
+      "alias": "SplatDevWorkflow.Queue",
+      "view": "/App_Plugins/SplatDevWorkflow/QueueView/queueView.html",
+      "sections": ["SplatDevWorkflow"],
+      "weight": 0,
+      "access": []
+    },
+    {
+      "alias": "SplatDevWorkflow.Definitions",
+      "view": "/App_Plugins/SplatDevWorkflow/ConfigEditor/configEditor.html",
+      "sections": ["SplatDevWorkflow"],
+      "weight": 1,
+      "access": [{"grant": "admin"}]
+    },
+    {
+      "alias": "SplatDevWorkflow.Themes",
+      "view": "/App_Plugins/SplatDevWorkflow/Themes/themes.html",
+      "sections": ["SplatDevWorkflow"],
+      "weight": 2,
+      "access": [{"grant": "admin"}]
+    }
+  ],
+  "sections": [
+    {
+      "alias": "SplatDevWorkflow",
+      "name": "Workflow"
+    }
+  ]
+}

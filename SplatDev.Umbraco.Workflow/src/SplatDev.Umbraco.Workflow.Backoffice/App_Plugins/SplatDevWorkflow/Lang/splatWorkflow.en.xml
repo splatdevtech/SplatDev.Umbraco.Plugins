@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<language culture="en">
+  <area alias="splatWorkflow">
+    <key alias="section_name">Workflow</key>
+    <key alias="queue_title">Queue</key>
+    <key alias="definitions_title">Definitions</key>
+    <key alias="themes_title">Themes</key>
+    <key alias="no_instances">No workflow instances found</key>
+    <key alias="loading">Loading...</key>
+    <key alias="save">Save</key>
+    <key alias="cancel">Cancel</key>
+    <key alias="delete">Delete</key>
+    <key alias="activate">Activate</key>
+    <key alias="add_step">Add Step</key>
+    <key alias="add_action">Add Action</key>
+    <key alias="status_open">Open</key>
+    <key alias="status_completed">Completed</key>
+    <key alias="status_cancelled">Cancelled</key>
+  </area>
+</language>

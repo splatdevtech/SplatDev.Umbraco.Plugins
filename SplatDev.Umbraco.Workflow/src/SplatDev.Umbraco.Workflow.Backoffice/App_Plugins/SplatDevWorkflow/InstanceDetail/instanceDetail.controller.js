@@ -1,0 +1,10 @@
+angular.module("umbraco").controller("SplatDevWorkflow.InstanceDetailController",["$scope","$http",function(s,h){
+s.loading=false;s.transitioning=false;s.taskSaving=false;s.toast=null;s.chartSteps=[];s.availableActions=[];
+var A="/umbraco/api/Workflow";
+function t(m,y){s.toast={message:m,type:y||"info"};setTimeout(function(){s.$apply(function(){s.toast=null})},3500)}
+function B(){if(!s.instance||!s.instance.currentStepKey)return;s.availableActions=[];h.get(A+"/definitions/"+s.instance.workflowKey).then(function(r){var d=typeof r.data.definitionJson==="string"?JSON.parse(r.data.definitionJson):(r.data.definitionJson||{});var steps=d.steps||[];var f=false;s.chartSteps=steps.map(function(st){var u="pending";if(st.key===s.instance.currentStepKey){u="active";f=true;s.availableActions=(st.actions||[]).map(function(a){return{key:a.key,label:a.label}})}else if(!f){u="done"}return{key:st.key,label:st.label,status:u,assignedTo:st.department||st.group||null}});if(s.instance.status===1){s.chartSteps.forEach(function(x){x.status="done"});s.availableActions=[]}else if(s.instance.status===2){s.availableActions=[]}})}
+s.$watch("instance",function(i){if(i)B()})
+s.doTransition=function(a){s.transitioning=true;h.post(A+"/instances/"+s.instance.id+"/transition",{actionKey:a}).then(function(r){t("Transition completed","success");if(r.data)s.instance=r.data;s.transitioning=false;B()}).catch(function(e){t(e.data&&e.data.detail||"Failed","error");s.transitioning=false})}
+s.toggleTask=function(task){s.taskSaving=true;h.post(A+"/instances/"+s.instance.id+"/tasks",{taskId:task.id,isCompleted:!!task.isCompleted}).then(function(){t("Task updated","success")}).catch(function(){task.isCompleted=!task.isCompleted;t("Failed","error")}).finally(function(){s.taskSaving=false})}
+s.close=function(){s.$parent.closeDetail()}
+}]);

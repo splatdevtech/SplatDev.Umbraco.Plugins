@@ -1,0 +1,1 @@
+angular.module("umbraco").directive("swfChart",[function(){return{restrict:"E",scope:{steps:"=",layout:"@",instanceId:"="},templateUrl:"/App_Plugins/SplatDevWorkflow/Chart/chart.html"}}]);
