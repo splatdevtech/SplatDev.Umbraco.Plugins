@@ -6,9 +6,11 @@ namespace SplatDev.Tests
 
     using SplatDev.Messaging.SendGrid.Controllers;
     using SplatDev.Messaging.Smtp.Controllers;
+    using SplatDev.Messaging.Smtp.Models;
     using SplatDev.Messaging.SocketLabs.Controllers;
     using SplatDev.Messaging.SocketLabs.Models;
     using SplatDev.Messaging.Twilio.Controllers;
+    using SplatDev.Messaging.Twilio.Models;
 
     using System.Configuration;
 
@@ -41,7 +43,13 @@ namespace SplatDev.Tests
         public void Messaging_Smtp_Send()
         {
             // Arrange
-            var smtpController = new SmtpController();
+            var smtpController = new SmtpController(new SmtpOptions
+            {
+                Host = ConfigurationManager.AppSettings["Smtp.Host"] ?? "localhost",
+                Port = int.TryParse(ConfigurationManager.AppSettings["Smtp.Port"], out var p) ? p : 587,
+                User = ConfigurationManager.AppSettings["Smtp.User"],
+                Password = ConfigurationManager.AppSettings["Smtp.Password"],
+            });
             var msg = "<h1>This is a test with Html</h1>";
 
             // Act
@@ -114,9 +122,11 @@ namespace SplatDev.Tests
         public void Messaging_Twilio_Send()
         {
             // Arrange
-            string accountSid = "TWILIO_ACCOUNT_SID_REMOVED";
-            string authToken = "TWILIO_AUTH_TOKEN_REMOVED";
-            var twilio = new TwilioSmsController(accountSid, authToken);
+            var twilio = new TwilioSmsController(new TwilioOptions
+            {
+                AccountSid = ConfigurationManager.AppSettings["Twilio.AccountSid"] ?? "TWILIO_ACCOUNT_SID_REMOVED",
+                AuthToken = ConfigurationManager.AppSettings["Twilio.AuthToken"] ?? "TWILIO_AUTH_TOKEN_REMOVED",
+            });
 
             // Act
             var response = twilio.SendMessage(new SplatDev.Messaging.Twilio.Models.Sms
