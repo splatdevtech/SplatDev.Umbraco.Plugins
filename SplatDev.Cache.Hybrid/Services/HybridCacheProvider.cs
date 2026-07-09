@@ -81,24 +81,6 @@ public sealed class HybridCacheProvider : ICacheProvider
         await _hybridCache.RemoveAsync(key, cancellationToken);
     }
 
-    public async Task<bool> ExistsAsync(string key, CancellationToken cancellationToken = default)
-    {
-        var value = await GetAsync<object>(key, cancellationToken);
-        return value is not null;
-    }
-
-    public Task<bool> RemoveByPatternAsync(string pattern, CancellationToken cancellationToken = default)
-    {
-        throw new NotSupportedException(
-            "Pattern-based key removal is not supported by the HybridCache provider.");
-    }
-
-    public async Task<bool> RemoveByTagAsync(string tag, CancellationToken cancellationToken = default)
-    {
-        await _hybridCache.RemoveByTagAsync(tag, cancellationToken);
-        return true;
-    }
-
     private static HybridCacheEntryOptions? ToHybridOptions(CacheEntryOptions? options)
     {
         if (options is null)

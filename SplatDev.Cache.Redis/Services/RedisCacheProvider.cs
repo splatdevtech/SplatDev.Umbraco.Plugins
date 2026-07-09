@@ -103,44 +103,6 @@ public sealed class RedisCacheProvider : ICacheProvider, IDisposable
         return null;
     }
 
-    public async Task<bool> ExistsAsync(string key, CancellationToken cancellationToken = default)
-    {
-        return await _database.KeyExistsAsync(key);
-    }
-
-    public async Task<bool> RemoveByPatternAsync(string pattern, CancellationToken cancellationToken = default)
-    {
-        var endpoints = _connection.GetEndPoints();
-        var keys = new List<RedisKey>();
-
-        foreach (var endpoint in endpoints)
-        {
-            var server = _connection.GetServer(endpoint);
-            if (!server.IsConnected)
-            {
-                continue;
-            }
-
-            await foreach (var redisKey in server.KeysAsync(pattern: pattern))
-            {
-                keys.Add(redisKey);
-            }
-        }
-
-        if (keys.Count == 0)
-        {
-            return false;
-        }
-
-        await _database.KeyDeleteAsync(keys.ToArray());
-        return true;
-    }
-
-    public Task<bool> RemoveByTagAsync(string tag, CancellationToken cancellationToken = default)
-    {
-        throw new NotSupportedException("Tag-based invalidation is not supported by the Redis cache provider.");
-    }
-
     public void Dispose()
     {
         _connection?.Dispose();
