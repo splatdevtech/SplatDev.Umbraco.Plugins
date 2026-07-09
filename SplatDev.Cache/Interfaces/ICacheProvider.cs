@@ -17,12 +17,6 @@ public interface ICacheProvider
 
     Task RemoveAsync(string key, CancellationToken cancellationToken = default);
 
-    Task<bool> ExistsAsync(string key, CancellationToken cancellationToken = default);
-
-    Task<bool> RemoveByPatternAsync(string pattern, CancellationToken cancellationToken = default);
-
-    Task<bool> RemoveByTagAsync(string tag, CancellationToken cancellationToken = default);
-
     [return: MaybeNull]
     T GetOrCreate<T>(string key, Func<T> factory, CacheEntryOptions? options = null);
 
