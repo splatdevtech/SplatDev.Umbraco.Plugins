@@ -9,12 +9,11 @@ namespace SplatDev.Tests
     using SplatDev.Messaging.Smtp.Models;
     using SplatDev.Messaging.SocketLabs.Controllers;
     using SplatDev.Messaging.SocketLabs.Models;
+    using SplatDev.Messaging.Models;
     using SplatDev.Messaging.Twilio.Controllers;
     using SplatDev.Messaging.Twilio.Models;
 
     using System.Configuration;
-
-    using Twilio.Types;
 
     public class Messaging
     {
@@ -129,12 +128,12 @@ namespace SplatDev.Tests
             });
 
             // Act
-            var response = twilio.SendMessage(new SplatDev.Messaging.Twilio.Models.Sms
+            var response = twilio.SendMessage(new SplatDev.Messaging.Models.Sms
             {
                 Body = "This is a c# test",
-                From = new PhoneNumber("+19096374988"),
-                To = new PhoneNumber("+18017061898")
-            }); ;
+                From = "+19096374988",
+                To = "+18017061898"
+            });
 
             // Assert
             Assert.NotNull(response);

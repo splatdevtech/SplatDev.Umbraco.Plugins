@@ -5,6 +5,7 @@ namespace SplatDev.Messaging.Twilio.Controllers
     using global::Twilio.Types;
 
     using SplatDev.Messaging.Interfaces;
+    using SplatDev.Messaging.Models;
     using SplatDev.Messaging.Twilio.Models;
 
     using System;
@@ -29,8 +30,8 @@ namespace SplatDev.Messaging.Twilio.Controllers
 
         public Task<MessageResource> SendMessageAsync(Sms message)
             => MessageResource.CreateAsync(
-                to: message.To,
-                from: message.From,
+                to: new PhoneNumber(message.To),
+                from: new PhoneNumber(message.From),
                 body: message.Body,
                 client: client);
 
