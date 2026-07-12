@@ -10,6 +10,8 @@ namespace SplatDev.Tests
     using SplatDev.Messaging.SocketLabs.Controllers;
     using SplatDev.Messaging.SocketLabs.Models;
     using SplatDev.Messaging.Models;
+    using SplatDev.Messaging.SMSTools.Controllers;
+    using SplatDev.Messaging.SMSTools.Models;
     using SplatDev.Messaging.Twilio.Controllers;
     using SplatDev.Messaging.Twilio.Models;
 
@@ -137,6 +139,27 @@ namespace SplatDev.Tests
 
             // Assert
             Assert.NotNull(response);
+        }
+
+        [Fact]
+        public void Messaging_SMSTools_Send()
+        {
+            var controller = new SmsToolsController(new SmsToolsOptions
+            {
+                ApiKey = ConfigurationManager.AppSettings["SMSTools.ApiKey"] ?? "SMSTOOLS_API_KEY_REMOVED",
+                BaseUrl = ConfigurationManager.AppSettings["SMSTools.BaseUrl"] ?? "https://api.smstools24.com",
+                DefaultFrom = "+19096374988",
+            });
+
+            var response = controller.SendMessage(new SplatDev.Messaging.Models.Sms
+            {
+                Body = "This is a C# test from SplatDev.Messaging.SMSTools",
+                From = "+19096374988",
+                To = "+18017061898"
+            });
+
+            Assert.NotNull(response);
+            Assert.True(response.Success);
         }
     }
 }

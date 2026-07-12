@@ -16,7 +16,7 @@ Targets: `net8.0`, `net10.0`. Published to nuget.org. References the official [`
 
 Implements the SMS-shaped [`ISmsMessagingController<TMessage, TResult>`](../SplatDev.Messaging/Interfaces/ISmsMessagingController.cs) — no `subject`, no `CC`/`BCC`, no HTML: just `from`, `to`, `body`.
 
-- **Message type**: `Sms { Body, From, To }` — `From`/`To` are `Twilio.Types.PhoneNumber` (E.164 like `+15551234567`).
+- **Message type**: [`SplatDev.Messaging.Models.Sms`](../SplatDev.Messaging/Models/Sms.cs) — string-based `Body`, `From`, `To`. The controller converts strings to `Twilio.Types.PhoneNumber` internally (E.164 like `+15551234567`).
 - **Result type**: `Twilio.Rest.Api.V2010.Account.MessageResource` — the SDK's response object (SID, status, error code, etc.).
 - **Async is real**: `SendMessageAsync` calls `MessageResource.CreateAsync` directly; `SendMessage` (sync) delegates to it.
 - **Per-instance `TwilioRestClient`**: constructed in the ctor from `TwilioOptions.AccountSid` + `AuthToken`. **No** global `TwilioClient.Init(...)` — safe for multi-tenant apps and multiple Twilio subaccounts.
@@ -45,14 +45,19 @@ Binds `TwilioOptions` and registers `TwilioSmsController` as transient.
 
 ### `Sms` model
 
+The shared [`SplatDev.Messaging.Models.Sms`](../SplatDev.Messaging/Models/Sms.cs) is used as the message type — provider-neutral with plain `string` phone numbers:
+
 ```csharp
+// in SplatDev.Messaging.Models
 public class Sms
 {
-    public string      Body { get; set; }
-    public PhoneNumber From { get; set; }
-    public PhoneNumber To   { get; set; }
+    public string Body { get; set; } = string.Empty;
+    public string From { get; set; } = string.Empty;
+    public string To   { get; set; } = string.Empty;
 }
 ```
+
+`TwilioSmsController` converts the strings to `Twilio.Types.PhoneNumber` internally, so you never need to reference the Twilio SDK directly in your application code.
 
 ## Usage
 
@@ -102,11 +107,13 @@ public sealed class OtpSender(TwilioSmsController sms)
 Or with the typed `Sms` DTO when you need finer control over the request:
 
 ```csharp
+using SplatDev.Messaging.Models;
+
 var msg = await sms.SendMessageAsync(new Sms
 {
     Body = "Hi there",
-    From = new PhoneNumber("+15551234567"),
-    To   = new PhoneNumber("+15559876543"),
+    From = "+15551234567",
+    To   = "+15559876543",
 });
 ```
 
