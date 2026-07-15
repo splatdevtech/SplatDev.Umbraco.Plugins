@@ -27,5 +27,7 @@
     <ProjectReference Include="../SplatDev.Mobile.Detection/SplatDev.Mobile.Detection.csproj" />
     <ProjectReference Include="../SplatDev.Payments.MercadoPago/SplatDev.Payments.MercadoPago.csproj" />
     <ProjectReference Include="../SplatDev.Security/SplatDev.Security.csproj" />
+    <ProjectReference Include="../SplatDev.Payments.Santander/SplatDev.Payments.Santander.csproj" />
+    <ProjectReference Include="../SplatDev.Payments.Getnet/SplatDev.Payments.Getnet.csproj" />
   </ItemGroup>
 </Project>
