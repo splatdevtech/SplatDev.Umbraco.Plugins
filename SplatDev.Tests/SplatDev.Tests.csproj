@@ -23,6 +23,7 @@
     <ProjectReference Include="../SplatDev.Messaging.SendGrid/SplatDev.Messaging.SendGrid.csproj" />
     <ProjectReference Include="../SplatDev.Messaging.Smtp/SplatDev.Messaging.Smtp.csproj" />
     <ProjectReference Include="../SplatDev.Messaging.SocketLabs/SplatDev.Messaging.SocketLabs.csproj" />
+    <ProjectReference Include="../SplatDev.Messaging.SMSTools/SplatDev.Messaging.SMSTools.csproj" />
     <ProjectReference Include="../SplatDev.Messaging.Twilio/SplatDev.Messaging.Twilio.csproj" />
     <ProjectReference Include="../SplatDev.Mobile.Detection/SplatDev.Mobile.Detection.csproj" />
     <ProjectReference Include="../SplatDev.Payments.MercadoPago/SplatDev.Payments.MercadoPago.csproj" />
