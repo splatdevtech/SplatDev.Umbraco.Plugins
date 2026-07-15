@@ -44,9 +44,9 @@ public sealed class SantanderPixQrCodeService(
         return await apiClient.GetAsync(url, cancellationToken);
     }
 
-    /// <summary>BACEN txid: 26-35 alphanumeric chars.</summary>
+    /// <summary>BACEN txid: 26-35 alphanumeric chars. Uses full GUID without truncation.</summary>
     public static string GerarTxid() =>
-        ("RISIN" + Guid.NewGuid().ToString("N")).ToUpperInvariant()[..32];
+        Guid.NewGuid().ToString("N").ToUpperInvariant();
 }
 
 public sealed record SantanderPixCharge(string Txid, string Status, string? PixCopiaECola, string? Location, string Raw);
