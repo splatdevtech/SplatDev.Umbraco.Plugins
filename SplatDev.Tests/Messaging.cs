@@ -6,13 +6,16 @@ namespace SplatDev.Tests
 
     using SplatDev.Messaging.SendGrid.Controllers;
     using SplatDev.Messaging.Smtp.Controllers;
+    using SplatDev.Messaging.Smtp.Models;
     using SplatDev.Messaging.SocketLabs.Controllers;
     using SplatDev.Messaging.SocketLabs.Models;
+    using SplatDev.Messaging.Models;
+    using SplatDev.Messaging.SMSTools.Controllers;
+    using SplatDev.Messaging.SMSTools.Models;
     using SplatDev.Messaging.Twilio.Controllers;
+    using SplatDev.Messaging.Twilio.Models;
 
     using System.Configuration;
-
-    using Twilio.Types;
 
     public class Messaging
     {
@@ -41,7 +44,13 @@ namespace SplatDev.Tests
         public void Messaging_Smtp_Send()
         {
             // Arrange
-            var smtpController = new SmtpController();
+            var smtpController = new SmtpController(new SmtpOptions
+            {
+                Host = ConfigurationManager.AppSettings["Smtp.Host"] ?? "localhost",
+                Port = int.TryParse(ConfigurationManager.AppSettings["Smtp.Port"], out var p) ? p : 587,
+                User = ConfigurationManager.AppSettings["Smtp.User"],
+                Password = ConfigurationManager.AppSettings["Smtp.Password"],
+            });
             var msg = "<h1>This is a test with Html</h1>";
 
             // Act
@@ -114,20 +123,43 @@ namespace SplatDev.Tests
         public void Messaging_Twilio_Send()
         {
             // Arrange
-            string accountSid = "TWILIO_ACCOUNT_SID_REMOVED";
-            string authToken = "TWILIO_AUTH_TOKEN_REMOVED";
-            var twilio = new TwilioSmsController(accountSid, authToken);
+            var twilio = new TwilioSmsController(new TwilioOptions
+            {
+                AccountSid = ConfigurationManager.AppSettings["Twilio.AccountSid"] ?? "TWILIO_ACCOUNT_SID_REMOVED",
+                AuthToken = ConfigurationManager.AppSettings["Twilio.AuthToken"] ?? "TWILIO_AUTH_TOKEN_REMOVED",
+            });
 
             // Act
-            var response = twilio.SendMessage(new SplatDev.Messaging.Twilio.Models.Sms
+            var response = twilio.SendMessage(new SplatDev.Messaging.Models.Sms
             {
                 Body = "This is a c# test",
-                From = new PhoneNumber("+19096374988"),
-                To = new PhoneNumber("+18017061898")
-            }); ;
+                From = "+19096374988",
+                To = "+18017061898"
+            });
 
             // Assert
             Assert.NotNull(response);
+        }
+
+        [Fact]
+        public void Messaging_SMSTools_Send()
+        {
+            var controller = new SmsToolsController(new SmsToolsOptions
+            {
+                ApiKey = ConfigurationManager.AppSettings["SMSTools.ApiKey"] ?? "SMSTOOLS_API_KEY_REMOVED",
+                BaseUrl = ConfigurationManager.AppSettings["SMSTools.BaseUrl"] ?? "https://api.smstools24.com",
+                DefaultFrom = "+19096374988",
+            });
+
+            var response = controller.SendMessage(new SplatDev.Messaging.Models.Sms
+            {
+                Body = "This is a C# test from SplatDev.Messaging.SMSTools",
+                From = "+19096374988",
+                To = "+18017061898"
+            });
+
+            Assert.NotNull(response);
+            Assert.True(response.Success);
         }
     }
 }
