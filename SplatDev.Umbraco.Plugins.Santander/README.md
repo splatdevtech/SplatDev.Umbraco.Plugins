@@ -1,0 +1,26 @@
+# SplatDev.Umbraco.Plugins.Santander
+
+Umbraco 17 (net10.0) plugin for the **Santander Open Banking** suite. Wires up
+[`SplatDev.Payments.Santander`](../SplatDev.Payments.Santander) and exposes a guarded banking API.
+
+## What it provides
+- **`SantanderComposer`** (`IComposer`) — binds the `Santander:*` config section into `SantanderApiOptions`,
+  registers the `SantanderApiClient` (singleton, so the OAuth token cache is shared) and the 8 product
+  services, and configures the named `HttpClient` (`"Santander"`) with the **mTLS** ICP-Brasil e-CNPJ
+  certificate (`CertificatePath`/`CertificateBase64` + password) and a Polly transient-error retry policy.
+- **`SantanderBankingApiController`** — route `umbraco/backoffice/santander-banking`, guarded by the
+  `X-RISIN-Api-Key` header (value from `Santander:ApiKey`; returns 401 while unset). Endpoints: `diagnostics`,
+  `balance`, `statement`, `pix/qrcode`(+`{txid}`), `payments`(+`{id}`), `boletos/workspaces`, `boletos`(+`{billId}`),
+  `fx/quotes`(+`{id}`).
+
+> The guard header alias is `X-RISIN-Api-Key` (kept for compatibility with the originating app). Rename the
+> `ApiKeyHeader` const if you want a neutral alias.
+
+## Not included (application-specific — stays in the consuming app)
+- Payment-persistence schema (`risin_santander_pagamento` migration) and any domain orchestration.
+- The Getnet backoffice dashboard (`App_Plugins/SantanderManager`) belongs to the **Getnet** integration
+  (`SplatDev.Umbraco.Plugins.Getnet`), not this Open Banking plugin.
+
+## Config (appsettings `Santander` section)
+`BaseUrl`, `TokenPath`, `ClientId`, `ClientSecret`, `CertificatePath`/`CertificateBase64`/`CertificatePassword`,
+`ApiKey`, `WorkspaceId`, `CovenantCode`, `BankId`, `AccountId`, `PixKey`, and per-product path overrides.
