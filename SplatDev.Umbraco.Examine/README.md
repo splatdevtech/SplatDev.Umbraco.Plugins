@@ -147,6 +147,17 @@ index.FieldDefinitionCollection.AddOrUpdate(
     new FieldDefinition("content", analyzer));
 ```
 
+## Search options in the SplatDev suite
+
+Both this package and [`SplatDev.Search.*`](/SplatDev.Search) coexist in the SplatDev ecosystem. They serve different purposes and can run together in the same host.
+
+| Use case | Choose |
+|----------|--------|
+| Index Umbraco content nodes for backoffice/frontend search | **This package** — in-process Lucene, tightly integrated with Umbraco's content pipeline |
+| Index domain data (products, tickets, cross-site aggregates) | **[`SplatDev.Search.*`](/SplatDev.Search)** — out-of-process (Elasticsearch / OpenSearch / Meilisearch) |
+| Multi-tenant search across many Umbraco sites from one index | **[`SplatDev.Search.*`](/SplatDev.Search)** — Examine is per-instance |
+| Zero-ops single-site search on Umbraco content | **This package** — no external service to provision |
+
 ## Dependencies
 
 | Package | Purpose |
@@ -156,6 +167,5 @@ index.FieldDefinitionCollection.AddOrUpdate(
 | `SplatDev.Umbraco.Pagination` | `IEntity`, `IDescription`, `IText` interfaces; `PublishedContentWrapped` base class |
 
 ---
-
 
 **SplatDev.Umbraco.Examine** — part of the [SplatDev.Umbraco.Plugins](https://github.com/SplatDev-Ltda/SplatDev.Umbraco.Plugins) suite. Licensed under MIT. © SplatDev Ltda.
