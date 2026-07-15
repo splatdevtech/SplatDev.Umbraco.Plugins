@@ -1,3 +1,4 @@
+using System.Security.Cryptography;
 using System.Text.Json;
 using Microsoft.AspNetCore.Mvc;
 using SplatDev.Payments.Santander;
@@ -35,12 +36,6 @@ public class SantanderBankingApiController(
         return Ok(new
         {
             environment = options.BaseUrl.Contains("sandbox", StringComparison.OrdinalIgnoreCase) ? "sandbox" : "production",
-            baseUrl = options.BaseUrl,
-            hasClientId = !string.IsNullOrWhiteSpace(options.ClientId),
-            hasClientSecret = !string.IsNullOrWhiteSpace(options.ClientSecret),
-            hasCertificate = !string.IsNullOrWhiteSpace(options.CertificatePath) || !string.IsNullOrWhiteSpace(options.CertificateBase64),
-            hasPixKey = !string.IsNullOrWhiteSpace(options.PixKey),
-            hasWorkspaceId = !string.IsNullOrWhiteSpace(options.WorkspaceId),
             products = new
             {
                 pixQrCode = Describe(options.PixQrCode),
@@ -182,7 +177,10 @@ public class SantanderBankingApiController(
     private bool Unauthorized(out IActionResult challenge)
     {
         var supplied = Request.Headers[ApiKeyHeader].ToString();
-        if (string.IsNullOrWhiteSpace(options.ApiKey) || supplied != options.ApiKey)
+        if (string.IsNullOrWhiteSpace(options.ApiKey) ||
+            !CryptographicOperations.FixedTimeEquals(
+                System.Text.Encoding.UTF8.GetBytes(supplied),
+                System.Text.Encoding.UTF8.GetBytes(options.ApiKey)))
         {
             challenge = StatusCode(401, new { error = "Missing or invalid API key." });
             return true;
