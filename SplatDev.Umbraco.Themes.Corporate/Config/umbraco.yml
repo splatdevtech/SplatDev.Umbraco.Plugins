@@ -662,6 +662,46 @@ documentTypes:
             name: Meta Description
             dataType: textStringShort
 
+  # ── RISIN Cadastro Listing ─────────────────
+  - alias: risinCadastroListing
+    name: Cadastro Listing
+    icon: icon-addressbook
+    allowAsRoot: false
+    allowedChildTypes: []
+    update: true
+    tabs:
+      - name: Content
+        properties:
+          - alias: nome
+            name: Nome
+            dataType: textString
+          - alias: cnpj
+            name: CNPJ
+            dataType: textStringShort
+          - alias: setor
+            name: Setor
+            dataType: textStringShort
+          - alias: segmento
+            name: Segmento
+            dataType: textStringShort
+          - alias: descricaoCurta
+            name: Descrição Curta
+            dataType: textArea
+          - alias: linkLoja
+            name: Link da Loja
+            dataType: urlPicker
+          - alias: logo
+            name: Logo
+            dataType: imagePicker
+      - name: SEO
+        properties:
+          - alias: metaTitle
+            name: Meta Title
+            dataType: textStringShort
+          - alias: metaDescription
+            name: Meta Description
+            dataType: textStringShort
+
 # ─────────────────────────────────────────────
 # TEMPLATES
 # ─────────────────────────────────────────────
