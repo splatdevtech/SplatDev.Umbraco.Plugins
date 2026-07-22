@@ -6,7 +6,7 @@ using SplatDev.Search;
 
 namespace SplatDev.Search.Elastic.Services;
 
-public sealed class ElasticSearchProvider : ISearchProvider
+public sealed class ElasticSearchProvider 
 {
     private readonly ElasticsearchClient _client;
 
@@ -126,10 +126,12 @@ public sealed class ElasticSearchProvider : ISearchProvider
         {
             foreach (var filter in request.Filters)
             {
+                var fieldValue = global::Elastic.Clients.Elasticsearch.FieldValue.String(
+                    filter.Value?.ToString() ?? string.Empty);
                 q.Bool(b => b.Filter(f => f
                     .Term(t => t
                         .Field(new global::Elastic.Clients.Elasticsearch.Field(filter.Key))
-                        .Value(filter.Value))));
+                        .Value(fieldValue))));
             }
         }
 

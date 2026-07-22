@@ -4,7 +4,7 @@ using SplatDev.Search;
 
 namespace SplatDev.Search.Meilisearch.Services;
 
-public sealed class MeilisearchProvider : ISearchProvider
+public sealed class MeilisearchProvider 
 {
     private readonly MeilisearchClient _client;
 
@@ -43,7 +43,7 @@ public sealed class MeilisearchProvider : ISearchProvider
     {
         var indexClient = _client.Index(index);
 
-        var searchQuery = new SearchQuery
+        var searchQuery = new global::Meilisearch.SearchQuery
         {
             Q = request.Query ?? string.Empty,
             Offset = request.From,

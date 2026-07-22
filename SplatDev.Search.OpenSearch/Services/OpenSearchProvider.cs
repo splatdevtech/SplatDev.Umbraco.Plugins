@@ -5,7 +5,7 @@ using SplatDev.Search;
 
 namespace SplatDev.Search.OpenSearch.Services;
 
-public sealed class OpenSearchProvider : ISearchProvider
+public sealed class OpenSearchProvider 
 {
     private readonly OpenSearchClient _client;
 

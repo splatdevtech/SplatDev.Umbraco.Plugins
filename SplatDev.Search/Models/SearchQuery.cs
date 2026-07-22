@@ -135,6 +135,8 @@ public sealed record SortClause(string Field, SortDirection Direction = SortDire
 
 public enum SortDirection
 {
-    Asc,
-    Desc,
+    Asc = 0,
+    Ascending = 0,
+    Desc = 1,
+    Descending = 1,
 }

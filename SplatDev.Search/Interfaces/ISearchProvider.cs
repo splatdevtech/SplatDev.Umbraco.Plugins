@@ -1,9 +1,9 @@
 namespace SplatDev.Search;
 
-public interface ISearchProvider<TDoc>
-    where TDoc : class
+public interface ISearchProvider
 {
-    Task<SearchResult<TDoc>> SearchAsync(SearchQuery query, CancellationToken cancellationToken = default);
+    Task<SearchResult<T>> SearchAsync<T>(SearchQuery query, CancellationToken cancellationToken = default)
+        where T : class;
 
     Task<AutocompleteResult> AutocompleteAsync(string prefix, AutocompleteOptions? options = null, CancellationToken cancellationToken = default);
 
