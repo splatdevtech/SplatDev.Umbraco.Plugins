@@ -10,6 +10,7 @@ namespace SplatDev.Payments.MercadoPago.Requests
     using RestSharp;
     using RestSharp.Serializers.NewtonsoftJson;
 
+    using System.Net.Http;
     using System.Threading.Tasks;
 
     using SplatDev.Payments.Interfaces;
@@ -20,11 +21,13 @@ namespace SplatDev.Payments.MercadoPago.Requests
         private readonly string PUBLIC_KEY;
         private readonly string ACCESS_TOKEN;
         private readonly RequestOptions requestOptions;
+        private readonly HttpMessageHandler _handler;
 
-        public CardPaymentRequest(string publicKey, string accessToken, string referrer)
+        public CardPaymentRequest(string publicKey, string accessToken, string referrer, HttpMessageHandler? handler = null)
         {
             ACCESS_TOKEN = accessToken;
             PUBLIC_KEY = publicKey;
+            _handler = handler;
             requestOptions = new RequestOptions
             {
                 AccessToken = ACCESS_TOKEN,
@@ -36,7 +39,11 @@ namespace SplatDev.Payments.MercadoPago.Requests
         public async Task<Models.CreditCard> GenerateCardTokenAsync(Models.CreditCard model, string locale = "pt-BR")
         {
             var options = new RestClientOptions(Constants.APIv1);
-            var client = new RestClient(options, configureSerialization: s => s.UseNewtonsoftJson(Constants.API_JSON_SETTINGS));
+            RestClient client;
+            if (_handler != null)
+                client = new RestClient(new HttpClient(_handler), options, configureSerialization: s => s.UseNewtonsoftJson(Constants.API_JSON_SETTINGS));
+            else
+                client = new RestClient(options, configureSerialization: s => s.UseNewtonsoftJson(Constants.API_JSON_SETTINGS));
             client.AddDefaultHeader("X-Product-Id", "BTR2N61O1F60OR8RLSGG");
             client.AddDefaultHeader("Authorization", $"Bearer {ACCESS_TOKEN}");
             var request = new RestRequest($"card_tokens?public_key={PUBLIC_KEY}&locale={locale}&js_version=2.0.0&referer={REFERRER}");
