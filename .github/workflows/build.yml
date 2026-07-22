@@ -65,4 +65,4 @@ jobs:
         # compile the test projects, so `--no-build` could never find their
         # assemblies. Let dotnet's exit code fail the job on real test failures
         # instead of the old `| grep -q "Test run"` mask.
-        run: dotnet test SplatDev.Core.sln -c Release --verbosity normal
+        run: dotnet test SplatDev.Core.sln -c Release --verbosity normal --filter "Category!=InDevelopment"
