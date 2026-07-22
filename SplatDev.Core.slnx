@@ -52,6 +52,10 @@
       <Platform Solution="*|x64" Project="x64" />
       <Platform Solution="*|x86" Project="x86" />
     </Project>
+    <Project Path="SplatDev.Search/SplatDev.Search.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
     <Project Path="SplatDev.Security/SplatDev.Security.csproj">
       <Platform Solution="*|x64" Project="x64" />
       <Platform Solution="*|x86" Project="x86" />

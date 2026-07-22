@@ -27,6 +27,7 @@
     <ProjectReference Include="../SplatDev.Messaging.Twilio/SplatDev.Messaging.Twilio.csproj" />
     <ProjectReference Include="../SplatDev.Mobile.Detection/SplatDev.Mobile.Detection.csproj" />
     <ProjectReference Include="../SplatDev.Payments.MercadoPago/SplatDev.Payments.MercadoPago.csproj" />
+    <ProjectReference Include="../SplatDev.Search/SplatDev.Search.csproj" />
     <ProjectReference Include="../SplatDev.Security/SplatDev.Security.csproj" />
   </ItemGroup>
 </Project>
