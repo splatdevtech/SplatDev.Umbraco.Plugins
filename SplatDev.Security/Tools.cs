@@ -3,7 +3,7 @@
     using Google.Apis.Safebrowsing.v4.Data;
 
     using System.Text.Json;
-using System.Text.Json.Serialization;
+    using System.Text.Json.Serialization;
 
     using RestSharp;
 
@@ -19,6 +19,11 @@ using System.Text.Json.Serialization;
 
     public static class Tools
     {
+        private static readonly JsonSerializerOptions _jsonDeserializeOptions = new()
+        {
+            PropertyNameCaseInsensitive = true,
+        };
+
         private static readonly Regex _regex = new Regex("[^a-zA-Z0-9]");
 
         /// <summary>
@@ -36,7 +41,7 @@ using System.Text.Json.Serialization;
             await Task.FromResult(0);
             var response = client.Post(request);
 
-            var job = JsonSerializer.Deserialize<CheckPhishResponse>(response.Content);
+            var job = JsonSerializer.Deserialize<CheckPhishResponse>(response.Content, _jsonDeserializeOptions);
             //var response = await client.PostAsync<CheckPhishResponse>(request);
 
             // check for finished
@@ -54,7 +59,7 @@ using System.Text.Json.Serialization;
             //var responseStatus = await client.PostAsync<CheckPhishResponse>(requestStatus);
             //return responseStatus;
 
-            return JsonSerializer.Deserialize<CheckPhishResponse>(responseStatus.Content);
+            return JsonSerializer.Deserialize<CheckPhishResponse>(responseStatus.Content, _jsonDeserializeOptions);
         }
 
         /// <summary>
@@ -71,7 +76,7 @@ using System.Text.Json.Serialization;
             requestStatus.AddJsonBody(new { apiKey, jobID = jobId, insights });
             var responseStatus = client.Post(requestStatus);
             await Task.FromResult(0);
-            return JsonSerializer.Deserialize<CheckPhishResponse>(responseStatus.Content);
+            return JsonSerializer.Deserialize<CheckPhishResponse>(responseStatus.Content, _jsonDeserializeOptions);
         }
 
         /// <summary>
