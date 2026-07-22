@@ -43,10 +43,12 @@ jobs:
             | grep -v "Tests\|BackupManager\|FormsClone\|obj\|bin\|CodeFirst\|PdfCurator" \
             | sort); do
             name=$(basename "$csproj" .csproj)
-            # Drive pass/fail off dotnet's exit code, not a grep of its stdout.
-            # The previous `| grep -q "Build succeeded"` swallowed the exit code,
-            # so the job stayed green even when a plugin failed to compile.
-            if dotnet build "$csproj" -c Release --no-restore; then
+            # Some publishable plugins (e.g. Getnet, Santander, Schema2Yaml)
+            # aren't in SplatDev.Core.sln, so the solution-level restore above
+            # doesn't populate their obj/project.assets.json. Let dotnet build
+            # restore per-plugin (cheap when NuGet cache is warm) instead of
+            # using --no-restore, which fails with NETSDK1004 for those plugins.
+            if dotnet build "$csproj" -c Release; then
               PASS_COUNT=$((PASS_COUNT+1))
             else
               echo "::error::Build failed: $name"
