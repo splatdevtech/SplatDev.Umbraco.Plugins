@@ -60,9 +60,10 @@ jobs:
             exit 1
           fi
 
-      - name: Test
+      - name: Test (unit)
         # Build-on-demand (no --no-build): the per-plugin build step above does not
         # compile the test projects, so `--no-build` could never find their
         # assemblies. Let dotnet's exit code fail the job on real test failures
         # instead of the old `| grep -q "Test run"` mask.
-        run: dotnet test SplatDev.Core.sln -c Release --verbosity normal
+        # Exclude Integration-tagged tests (live API calls) — run those manually.
+        run: dotnet test SplatDev.Core.sln -c Release --verbosity normal --filter "Category!=Integration"

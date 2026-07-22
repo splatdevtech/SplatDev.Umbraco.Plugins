@@ -4,6 +4,7 @@ namespace SplatDev.Tests
 
     using SplatDev.Security;
 
+    [Trait("Category", "Integration")]
     public class Security
     {
         [Fact]
