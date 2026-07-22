@@ -9,6 +9,7 @@ namespace UmbracoCms.Plugins.Tests
     using SplatDev.Payments.MercadoPago.Models;
     using SplatDev.Payments.MercadoPago.Requests;
 
+    [Trait("Category", "Integration")]
     public class Plugins_Payments_MercadoPago : IDisposable
     {
         private readonly string PUBLIC_KEY = "TEST-f29badf4-23ce-44f7-8031-1e6f6baac960";
@@ -44,7 +45,7 @@ namespace UmbracoCms.Plugins.Tests
                 },
                 CardNumber = "4235647728025682",
                 ExpirationMonth = 11,
-                ExpirationYear = 2025,
+                ExpirationYear = 2030,
                 PaymentMethodId = "visa",
                 SecurityCode = "123"
             };

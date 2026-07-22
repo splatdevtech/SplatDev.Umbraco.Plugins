@@ -14,6 +14,7 @@ namespace SplatDev.Tests
 
     using Twilio.Types;
 
+    [Trait("Category", "Integration")]
     public class Messaging
     {
         private readonly string subject = "Test Message";
