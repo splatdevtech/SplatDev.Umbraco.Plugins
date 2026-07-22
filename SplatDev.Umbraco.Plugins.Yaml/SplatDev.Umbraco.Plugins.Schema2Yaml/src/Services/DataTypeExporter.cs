@@ -141,7 +141,7 @@ public class DataTypeExporter
                     dict[kvp.Key] = ConvertJsonNode(kvp.Value);
                     return dict;
                 }),
-            JsonArray arr => arr.Select(ConvertJsonNode).Where(x => x is not null).ToList()!,
+            JsonArray arr => arr.Select(ConvertJsonNode).ToList()!,
             JsonValue val when val.TryGetValue<long>(out var l) => l,
             JsonValue val when val.TryGetValue<double>(out var d) => d,
             JsonValue val when val.TryGetValue<bool>(out var b) => b,
