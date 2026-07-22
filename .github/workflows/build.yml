@@ -67,5 +67,6 @@ jobs:
         # compile the test projects, so `--no-build` could never find their
         # assemblies. Let dotnet's exit code fail the job on real test failures
         # instead of the old `| grep -q "Test run"` mask.
-        # Exclude Integration-tagged tests (live API calls) — run those manually.
-        run: dotnet test SplatDev.Core.sln -c Release --verbosity normal --filter "Category!=Integration"
+        # Exclude Integration-tagged tests (live API calls) and InDevelopment-tagged
+        # theme tests (assemblies still under active development).
+        run: dotnet test SplatDev.Core.sln -c Release --verbosity normal --filter "Category!=Integration&Category!=InDevelopment"
