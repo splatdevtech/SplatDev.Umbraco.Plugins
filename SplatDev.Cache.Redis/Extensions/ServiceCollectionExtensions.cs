@@ -12,6 +12,7 @@ public static class ServiceCollectionExtensions
         string connectionString)
     {
         services.AddSingleton<ICacheProvider>(_ => new RedisCacheProvider(connectionString));
+        services.AddSingleton<IDistributedLock>(_ => new RedisDistributedLock(connectionString));
         return services;
     }
 
@@ -23,6 +24,7 @@ public static class ServiceCollectionExtensions
         configure(options);
 
         services.AddSingleton<ICacheProvider>(_ => new RedisCacheProvider(options.ConnectionString));
+        services.AddSingleton<IDistributedLock>(_ => new RedisDistributedLock(options.ConnectionString));
         return services;
     }
 }
