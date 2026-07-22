@@ -1,6 +1,6 @@
 # SplatDev.Payments.PagSeguro
 
-PagSeguro payment provider for the SplatDev.Payments abstraction layer — intended to implement `IPayment<T>` and related interfaces.
+PagSeguro / PagBank Order API v4 payment provider for the SplatDev.Payments abstraction layer.
 
 [![NuGet](https://img.shields.io/nuget/v/SplatDev.Payments.PagSeguro.svg)](https://www.nuget.org/packages/SplatDev.Payments.PagSeguro)
 
@@ -11,45 +11,122 @@ PagSeguro payment provider for the SplatDev.Payments abstraction layer — inten
 | 8.0  | 1.0.0           |
 | 10.0 | 1.0.0           |
 
+## Target API
+
+**PagBank Order API v4** (`api.pagseguro.com` production, `sandbox.api.pagseguro.com` sandbox). The legacy PagSeguro v2 API is sunset — this adapter targets v4 exclusively.
+
 ## Installation
 
 ```sh
 dotnet add package SplatDev.Payments.PagSeguro
 ```
 
-## What's implemented
-
-This package is a **scaffold** — it references `SplatDev.Payments` (the base abstraction package defining `IPayment<T>`, `IPayment`, `ICard`, `IPayer`, `IOrder`, `IPaymentMethod`, `IShipment`, and `ISubscription`), along with `RestSharp` and `Newtonsoft.Json` as HTTP/JSON dependencies, but contains **no implementation code**. It is a placeholder for a future PagSeguro payment adapter.
-
-> For a working, Umbraco-integrated PagSeguro solution, see **`SplatDev.Umbraco.Plugins.Payments.PagSeguro`** (v2.0.1), which integrates directly with Umbraco via `IComposer` and EF Core.
-
 ## Configuration
 
-No configuration is required. This package does not bind any options POCO, appsettings keys, or DI registration extensions.
+```json
+{
+  "SplatDev": {
+    "Payments": {
+      "PagSeguro": {
+        "Token": "YOUR_PAGBANK_TOKEN",
+        "Environment": "Sandbox",
+        "WebhookSecret": "YOUR_WEBHOOK_SECRET",
+        "TimeoutSeconds": 30
+      }
+    }
+  }
+}
+```
 
 ## Usage
 
-Not yet available. Once implemented, usage will follow the `SplatDev.Payments` provider pattern:
+```csharp
+// Program.cs
+builder.Services.AddSplatDevPagSeguro(builder.Configuration);
+
+// In your controller
+public class CheckoutController : ControllerBase
+{
+    private readonly PagSeguroService _pagSeguro;
+
+    public CheckoutController(PagSeguroService pagSeguro)
+    {
+        _pagSeguro = pagSeguro;
+    }
+
+    public async Task<IActionResult> CreateOrder()
+    {
+        var order = new PagSeguroOrderRequest
+        {
+            ReferenceId = "ORDER-001",
+            Customer = new PagSeguroCustomer { Name = "John Doe", Email = "john@example.com", TaxId = "12345678909" },
+            Items = new() { new PagSeguroItem { Name = "Product", Quantity = 1, UnitAmount = 10000 } },
+            Charges = new()
+            {
+                new PagSeguroCharge
+                {
+                    Description = "First charge",
+                    Amount = new PagSeguroAmount { Value = 10000, Currency = "BRL" },
+                    PaymentMethod = new PagSeguroPaymentMethod
+                    {
+                        Type = "CREDIT_CARD",
+                        Installments = 1,
+                        Capture = true,
+                        Card = new PagSeguroCard
+                        {
+                            Number = "4111111111111111",
+                            ExpMonth = "12",
+                            ExpYear = "2026",
+                            SecurityCode = "123",
+                            Holder = new PagSeguroCardHolder { Name = "John Doe", TaxId = "12345678909" }
+                        }
+                    }
+                }
+            }
+        };
+
+        var result = await _pagSeguro.CreateOrderAsync(order);
+        return Ok(result);
+    }
+}
+```
+
+## Supported payment methods
+
+| Method         | Type value       |
+|----------------|------------------|
+| Credit card    | `CREDIT_CARD`    |
+| Debit card     | `DEBIT_CARD`     |
+| Boleto         | `BOLETO`         |
+| PIX            | `PIX`             |
+
+## Webhook verification
 
 ```csharp
-// Planned pattern — not functional yet
-services.AddSplatDevPayments()
-        .AddPagSeguro(options => { options.Token = "..."; });
+[HttpPost("webhook")]
+public async Task<IActionResult> Webhook()
+{
+    using var reader = new StreamReader(Request.Body);
+    var rawBody = await reader.ReadToEndAsync();
+
+    if (!_pagSeguro.VerifyWebhookSignatureAsync(rawBody, Request.Headers["X-Hub-Signature"]))
+        return Unauthorized();
+
+    var payload = JsonSerializer.Deserialize<PagSeguroWebhookPayload>(rawBody);
+    // handle order status update
+    return Ok();
+}
 ```
 
 ## Dependencies
 
 | Package | Purpose |
 |---------|---------|
-| `SplatDev.Payments` | Base payment abstractions (`IPayment<T>`, `IOrder`, etc.) |
-| `Newtonsoft.Json` 13.0.3 | JSON serialization |
-| `RestSharp` 112.1.0 | HTTP client for PagSeguro API |
+| `SplatDev.Payments` | Base payment abstractions |
+| `Microsoft.AspNetCore.App` | HttpClient + IOptions |
 
-## Caveats
-
-- **Empty assembly.** This package produces a DLL with no public types. Do not install expecting a working payment provider.
-- **Development status.** Awaiting assignment and implementation. Track progress in the [Umbraco Plugins repository](https://github.com/SplatDev-Ltda/SplatDev.Umbraco.Plugins).
+Built on `System.Text.Json` — no third-party JSON library required.
 
 ---
 
-**SplatDev.Payments.PagSeguro** — part of the [SplatDev.Umbraco.Plugins](https://github.com/SplatDev-Ltda/SplatDev.Umbraco.Plugins) suite. Licensed under MIT. &copy; SplatDev Ltda.
+*SplatDev — pragmatic tools for .NET developers.*
