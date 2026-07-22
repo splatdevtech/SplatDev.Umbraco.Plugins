@@ -14,6 +14,13 @@ namespace SplatDev.Tests
 
     using Twilio.Types;
 
+    // SPL-2950: every test in this class hits a live SaaS API (SendGrid,
+    // SMTP relay, SocketLabs, Twilio). CI cannot reach them reliably and the
+    // API keys are stale placeholders after the SPL-2805 secret scrub. Gate
+    // the class under ExternalNetwork so the CI test-filter skips them; the
+    // Fact-level Skip attributes remain as belt-and-suspenders for any run
+    // that doesn't apply the filter.
+    [Trait("Category", "ExternalNetwork")]
     public class Messaging
     {
         private readonly string subject = "Test Message";
@@ -22,7 +29,7 @@ namespace SplatDev.Tests
         private readonly string toEmail = "carlos.casalicchio@gmail.com";
         private readonly string to = "Carlos Casalicchio (Gmail)";
 
-        [Fact]
+        [Fact(Skip = "SPL-2950: external SendGrid API call — needs HttpClient mock")]
         public void Messaging_SendGrid_Send()
         {
             // Arrange
@@ -37,7 +44,7 @@ namespace SplatDev.Tests
             Assert.Equal(response.StatusCode, System.Net.HttpStatusCode.Accepted);
         }
 
-        [Fact]
+        [Fact(Skip = "SPL-2950: opens SMTP connection — needs SmtpClient mock")]
         public void Messaging_Smtp_Send()
         {
             // Arrange
@@ -51,7 +58,7 @@ namespace SplatDev.Tests
             Assert.False(false);
         }
 
-        [Fact]
+        [Fact(Skip = "SPL-2950: external SocketLabs API call — needs HttpClient mock")]
         public void Messaging_SocketLabs_Send()
         {
             // Arrange
@@ -73,7 +80,7 @@ namespace SplatDev.Tests
             Assert.NotNull(response);
         }
 
-        [Fact]
+        [Fact(Skip = "SPL-2950: external SocketLabs API call — needs HttpClient mock")]
         public void Messaging_SocketLabs_BulkSend()
         {
             // Arrange
@@ -110,7 +117,7 @@ namespace SplatDev.Tests
             Assert.NotNull(response);
         }
 
-        [Fact]
+        [Fact(Skip = "SPL-2950: external Twilio API call — needs HttpClient mock")]
         public void Messaging_Twilio_Send()
         {
             // Arrange

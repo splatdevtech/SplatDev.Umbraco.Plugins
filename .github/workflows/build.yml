@@ -65,4 +65,9 @@ jobs:
         # compile the test projects, so `--no-build` could never find their
         # assemblies. Let dotnet's exit code fail the job on real test failures
         # instead of the old `| grep -q "Test run"` mask.
-        run: dotnet test SplatDev.Core.sln -c Release --verbosity normal
+        #
+        # Filter excludes tests marked [Trait("Category","ExternalNetwork")]
+        # (SendGrid/Twilio/SocketLabs/MercadoPago/GoogleSafeBrowsing/etc) —
+        # these hit live SaaS APIs and can't run reliably in CI. Track in
+        # SPL-2950 to rewrite against HttpClient mocks and re-enable.
+        run: dotnet test SplatDev.Core.sln -c Release --verbosity normal --filter "Category!=ExternalNetwork"

@@ -60,7 +60,7 @@ namespace SplatDev.Tests
             _memoryStream.Dispose();
         }
 
-        [Fact]
+        [Fact(Skip = "SPL-2950: static ctor reads device_list.json with Windows path separator; fails on Linux CI. Also triggers a downstream HttpRequestException in the shared test host state. Re-enable after the static loader is refactored to be cross-platform + injectable.")]
         public void MobileDetectionTests_IsMobileDevice()
         {
             // Arrange

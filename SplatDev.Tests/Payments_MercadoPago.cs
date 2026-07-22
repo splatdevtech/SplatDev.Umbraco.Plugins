@@ -9,6 +9,7 @@ namespace UmbracoCms.Plugins.Tests
     using SplatDev.Payments.MercadoPago.Models;
     using SplatDev.Payments.MercadoPago.Requests;
 
+    [Trait("Category", "ExternalNetwork")]
     public class Plugins_Payments_MercadoPago : IDisposable
     {
         private readonly string PUBLIC_KEY = "TEST-f29badf4-23ce-44f7-8031-1e6f6baac960";
