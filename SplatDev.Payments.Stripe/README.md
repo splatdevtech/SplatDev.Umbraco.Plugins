@@ -1,6 +1,6 @@
 # SplatDev.Payments.Stripe
 
-Stripe payment provider for the SplatDev.Payments abstraction layer — intended to implement `IPayment<T>` and related interfaces.
+Stripe payment provider for the SplatDev.Payments abstraction layer — PaymentIntents, refunds, customers, subscriptions, and webhooks.
 
 [![NuGet](https://img.shields.io/nuget/v/SplatDev.Payments.Stripe.svg)](https://www.nuget.org/packages/SplatDev.Payments.Stripe)
 
@@ -17,37 +17,113 @@ Stripe payment provider for the SplatDev.Payments abstraction layer — intended
 dotnet add package SplatDev.Payments.Stripe
 ```
 
-## What's implemented
-
-This package is a **scaffold** — it references `SplatDev.Payments` (the base abstraction package defining `IPayment<T>`, `IPayment`, `ICard`, `IPayer`, `IOrder`, `IPaymentMethod`, `IShipment`, and `ISubscription`) and the official `Stripe.net` SDK (v46.2.1), but contains **no implementation code**. It is a placeholder for a future Stripe payment adapter.
-
 ## Configuration
 
-No configuration is required. This package does not bind any options POCO, appsettings keys, or DI registration extensions.
+```json
+{
+  "SplatDev": {
+    "Payments": {
+      "Stripe": {
+        "ApiKey": "sk_test_YOUR_SECRET_KEY",
+        "WebhookSecret": "whsec_YOUR_WEBHOOK_SECRET",
+        "PublishableKey": "pk_test_YOUR_PUBLISHABLE_KEY",
+        "ApiVersion": "2024-12-18.acacia"
+      }
+    }
+  }
+}
+```
 
 ## Usage
 
-Not yet available. Once implemented, usage will follow the `SplatDev.Payments` provider pattern:
+```csharp
+// Program.cs
+builder.Services.AddSplatDevStripe(builder.Configuration);
+
+// In your controller
+public class PaymentController : ControllerBase
+{
+    private readonly StripeService _stripe;
+
+    public PaymentController(StripeService stripe)
+    {
+        _stripe = stripe;
+    }
+
+    public async Task<IActionResult> Charge()
+    {
+        var intent = await _stripe.CreatePaymentIntentAsync(
+            amount: 5000,       // 50.00 USD in cents
+            currency: "usd",
+            description: "Order #1234");
+
+        return Ok(new { clientSecret = intent.ClientSecret });
+    }
+}
+```
+
+## Webhook verification
 
 ```csharp
-// Planned pattern — not functional yet
-services.AddSplatDevPayments()
-        .AddStripe(options => { options.ApiKey = "..."; });
+[HttpPost("webhook")]
+public async Task<IActionResult> Webhook()
+{
+    using var reader = new StreamReader(Request.Body);
+    var json = await reader.ReadToEndAsync();
+
+    try
+    {
+        var stripeEvent = _stripe.ConstructWebhookEvent(
+            json,
+            Request.Headers["Stripe-Signature"],
+            _configuration["SplatDev:Payments:Stripe:WebhookSecret"]);
+
+        switch (stripeEvent.Type)
+        {
+            case "payment_intent.succeeded":
+                var intent = stripeEvent.Data.Object as PaymentIntent;
+                // handle success
+                break;
+            case "payment_intent.payment_failed":
+                // handle failure
+                break;
+        }
+        return Ok();
+    }
+    catch (StripeException)
+    {
+        return BadRequest();
+    }
+}
 ```
+
+## Supported operations
+
+| Operation | Method |
+|-----------|--------|
+| PaymentIntent create | `CreatePaymentIntentAsync` |
+| PaymentIntent confirm | `ConfirmPaymentIntentAsync` |
+| PaymentIntent get | `GetPaymentIntentAsync` |
+| PaymentIntent cancel | `CancelPaymentIntentAsync` |
+| PaymentIntent capture | `CapturePaymentIntentAsync` |
+| Refund | `RefundPaymentIntentAsync` |
+| Customer create | `CreateCustomerAsync` |
+| Customer get | `GetCustomerAsync` |
+| Checkout session | `CreateCheckoutSessionAsync` |
+| Subscription create | `CreateSubscriptionAsync` |
+| Subscription cancel | `CancelSubscriptionAsync` |
+| Webhook verification | `ConstructWebhookEvent` |
 
 ## Dependencies
 
 | Package | Purpose |
 |---------|---------|
-| `SplatDev.Payments` | Base payment abstractions (`IPayment<T>`, `IOrder`, etc.) |
-| `Stripe.net` 46.2.1 | Official Stripe .NET SDK |
-| `Newtonsoft.Json` 13.0.3 | JSON serialization |
+| `SplatDev.Payments` | Base payment abstractions |
+| `Stripe.net` 47.2.0 | Stripe API SDK (uses System.Text.Json) |
+| `Microsoft.AspNetCore.App` | IOptions |
 
-## Caveats
-
-- **Empty assembly.** This package produces a DLL with no public types. Do not install expecting a working payment provider.
-- **Development status.** Awaiting assignment and implementation. Track progress in the [Umbraco Plugins repository](https://github.com/SplatDev-Ltda/SplatDev.Umbraco.Plugins).
+No third-party JSON library required — Stripe.net uses `System.Text.Json` internally.
 
 ---
 
-**SplatDev.Payments.Stripe** — part of the [SplatDev.Umbraco.Plugins](https://github.com/SplatDev-Ltda/SplatDev.Umbraco.Plugins) suite. Licensed under MIT. &copy; SplatDev Ltda.
+*SplatDev — pragmatic tools for .NET developers.*
