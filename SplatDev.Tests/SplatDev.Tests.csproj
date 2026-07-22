@@ -18,6 +18,7 @@
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="../SplatDev.Cache/SplatDev.Cache.csproj" />
     <ProjectReference Include="../SplatDev.GeoLocation/SplatDev.GeoLocation.csproj" />
     <ProjectReference Include="../SplatDev.Messaging/SplatDev.Messaging.csproj" />
     <ProjectReference Include="../SplatDev.Messaging.SendGrid/SplatDev.Messaging.SendGrid.csproj" />
