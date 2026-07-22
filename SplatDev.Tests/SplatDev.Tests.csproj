@@ -29,5 +29,6 @@
     <ProjectReference Include="../SplatDev.Payments.MercadoPago/SplatDev.Payments.MercadoPago.csproj" />
     <ProjectReference Include="../SplatDev.Search/SplatDev.Search.csproj" />
     <ProjectReference Include="../SplatDev.Security/SplatDev.Security.csproj" />
+    <ProjectReference Include="../SplatDev.Database.MSSQLAdmin/SplatDev.Database.MSSQLAdmin.csproj" />
   </ItemGroup>
 </Project>
