@@ -2,7 +2,8 @@
 {
     using Google.Apis.Safebrowsing.v4.Data;
 
-    using Newtonsoft.Json;
+    using System.Text.Json;
+using System.Text.Json.Serialization;
 
     using RestSharp;
 
@@ -35,7 +36,7 @@
             await Task.FromResult(0);
             var response = client.Post(request);
 
-            var job = JsonConvert.DeserializeObject<CheckPhishResponse>(response.Content);
+            var job = JsonSerializer.Deserialize<CheckPhishResponse>(response.Content);
             //var response = await client.PostAsync<CheckPhishResponse>(request);
 
             // check for finished
@@ -53,7 +54,7 @@
             //var responseStatus = await client.PostAsync<CheckPhishResponse>(requestStatus);
             //return responseStatus;
 
-            return JsonConvert.DeserializeObject<CheckPhishResponse>(responseStatus.Content);
+            return JsonSerializer.Deserialize<CheckPhishResponse>(responseStatus.Content);
         }
 
         /// <summary>
@@ -70,7 +71,7 @@
             requestStatus.AddJsonBody(new { apiKey, jobID = jobId, insights });
             var responseStatus = client.Post(requestStatus);
             await Task.FromResult(0);
-            return JsonConvert.DeserializeObject<CheckPhishResponse>(responseStatus.Content);
+            return JsonSerializer.Deserialize<CheckPhishResponse>(responseStatus.Content);
         }
 
         /// <summary>
@@ -137,14 +138,14 @@
                     ThreatEntries = entries
                 }
             };
-            var jsonSettings = new JsonSerializerSettings
+            var jsonOptions = new JsonSerializerOptions
             {
-                ContractResolver = new Newtonsoft.Json.Serialization.CamelCasePropertyNamesContractResolver(),
-                NullValueHandling = NullValueHandling.Ignore
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
             };
             var client = new RestClient(Constants.GOOGLE_SAFE_BROWSING);
             var request = new RestRequest($"v4/threatMatches:find");
-            request.AddStringBody(JsonConvert.SerializeObject(body, jsonSettings), ContentType.Json);
+            request.AddStringBody(JsonSerializer.Serialize(body, jsonOptions), ContentType.Json);
             request.AddQueryParameter("key", apiKey);
             var response = await client.PostAsync<GoogleSecuritySafebrowsingV4FindThreatMatchesResponse>(request);
             return response;
