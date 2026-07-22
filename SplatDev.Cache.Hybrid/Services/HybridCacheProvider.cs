@@ -81,6 +81,11 @@ public sealed class HybridCacheProvider : ICacheProvider
         await _hybridCache.RemoveAsync(key, cancellationToken);
     }
 
+    public async Task RemoveByTagAsync(string tag, CancellationToken cancellationToken = default)
+    {
+        await _hybridCache.RemoveByTagAsync(tag, cancellationToken);
+    }
+
     private static HybridCacheEntryOptions? ToHybridOptions(CacheEntryOptions? options)
     {
         if (options is null)
