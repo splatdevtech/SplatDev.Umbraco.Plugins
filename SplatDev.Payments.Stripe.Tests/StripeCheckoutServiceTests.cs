@@ -1,6 +1,4 @@
-using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Moq;
 using SplatDev.Payments.Stripe.Interfaces;
 using SplatDev.Payments.Stripe.Services;
 using Xunit;
@@ -14,9 +12,7 @@ public class StripeCheckoutServiceTests
     public async Task DevMock_ReturnsMockSessionUrl()
     {
         var settings = Options.Create(new StripeSettings { DevMock = true });
-        var repoMock = new Mock<IPaymentIntentRepository>();
-        using var httpClient = new HttpClient();
-        var service = new StripeCheckoutService(httpClient, settings, repoMock.Object);
+        var service = new StripeCheckoutService(settings);
 
         var result = await service.CreateSessionAsync(new CheckoutRequest
         {
@@ -33,9 +29,7 @@ public class StripeCheckoutServiceTests
     public async Task InvalidCheckout_NoApiKey_ThrowsGracefully()
     {
         var settings = Options.Create(new StripeSettings());
-        var repoMock = new Mock<IPaymentIntentRepository>();
-        using var httpClient = new HttpClient();
-        var service = new StripeCheckoutService(httpClient, settings, repoMock.Object);
+        var service = new StripeCheckoutService(settings);
 
         var result = await service.CreateSessionAsync(new CheckoutRequest
         {

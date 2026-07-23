@@ -1,6 +1,4 @@
 using Microsoft.Extensions.Options;
-using Moq;
-using SplatDev.Payments.Stripe.Interfaces;
 using SplatDev.Payments.Stripe.Services;
 using WireMock.RequestBuilders;
 using WireMock.ResponseBuilders;
@@ -53,8 +51,7 @@ public sealed class StripeCheckoutServiceIntegrationTests : IDisposable
                 .WithBody(@"{""id"":""cs_test_abc"",""object"":""checkout.session"",""url"":""https://checkout.stripe.com/pay/cs_test_abc""}"));
 
         var options = Options.Create(_settings);
-        var repoMock = new Mock<IPaymentIntentRepository>();
-        var service = new StripeCheckoutService(_httpClient, options, repoMock.Object);
+        var service = new StripeCheckoutService(options);
 
         var result = await service.CreateSessionAsync(new CheckoutRequest
         {
@@ -87,8 +84,7 @@ public sealed class StripeCheckoutServiceIntegrationTests : IDisposable
                 .WithBody(@"{""error"":{""type"":""invalid_request_error"",""message"":""Invalid currency""}}"));
 
         var options = Options.Create(_settings);
-        var repoMock = new Mock<IPaymentIntentRepository>();
-        var service = new StripeCheckoutService(_httpClient, options, repoMock.Object);
+        var service = new StripeCheckoutService(options);
 
         var result = await service.CreateSessionAsync(new CheckoutRequest
         {
@@ -114,8 +110,7 @@ public sealed class StripeCheckoutServiceIntegrationTests : IDisposable
                 .WithBody(@"{""id"":""cs_test_xyz"",""object"":""checkout.session"",""url"":""https://checkout.stripe.com/pay/cs_test_xyz""}"));
 
         var options = Options.Create(_settings);
-        var repoMock = new Mock<IPaymentIntentRepository>();
-        var service = new StripeCheckoutService(_httpClient, options, repoMock.Object);
+        var service = new StripeCheckoutService(options);
 
         var result = await service.CreateSessionAsync(new CheckoutRequest
         {
@@ -143,8 +138,7 @@ public sealed class StripeCheckoutServiceIntegrationTests : IDisposable
                 .WithBody(@"{""id"":""cs_test_auth"",""object"":""checkout.session"",""url"":""https://checkout.stripe.com/pay/cs_test_auth""}"));
 
         var options = Options.Create(_settings);
-        var repoMock = new Mock<IPaymentIntentRepository>();
-        var service = new StripeCheckoutService(_httpClient, options, repoMock.Object);
+        var service = new StripeCheckoutService(options);
 
         var result = await service.CreateSessionAsync(new CheckoutRequest
         {

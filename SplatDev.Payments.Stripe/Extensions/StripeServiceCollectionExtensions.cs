@@ -21,19 +21,14 @@ public static class StripeServiceCollectionExtensions
                             ?? throw new InvalidOperationException(
                                 "Connection string 'umbracoDbDSN' or 'DefaultConnection' not found.");
 
-        services.AddDbContext<StripePaymentDbContext>(options =>
+        services.AddScoped<StripeAuditInterceptor>();
+        services.AddDbContext<StripePaymentDbContext>((sp, options) =>
         {
             options.UseSqlServer(connectionString);
-            options.AddInterceptors(new StripeAuditInterceptor(
-                services.BuildServiceProvider().GetRequiredService<Microsoft.Extensions.Logging.ILogger<StripeAuditInterceptor>>()));
+            options.AddInterceptors(sp.GetRequiredService<StripeAuditInterceptor>());
         });
 
-        services.AddHttpClient<IStripeCheckoutService, StripeCheckoutService>("Stripe", client =>
-        {
-            client.BaseAddress = new Uri("https://api.stripe.com/");
-            client.Timeout = TimeSpan.FromSeconds(30);
-            client.DefaultRequestHeaders.Accept.Clear();
-        });
+        services.AddScoped<IStripeCheckoutService, StripeCheckoutService>();
 
         services.AddScoped<IPaymentIntentRepository, PaymentIntentRepository>();
         services.AddScoped<IStripeWebhookHandler, StripeWebhookHandler>();

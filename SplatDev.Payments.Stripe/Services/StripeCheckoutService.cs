@@ -4,9 +4,7 @@ using SplatDev.Payments.Stripe.Interfaces;
 namespace SplatDev.Payments.Stripe.Services;
 
 public sealed class StripeCheckoutService(
-    HttpClient httpClient,
-    IOptions<StripeSettings> options,
-    IPaymentIntentRepository repository) : IStripeCheckoutService
+    IOptions<StripeSettings> options) : IStripeCheckoutService
 {
     private readonly StripeSettings _settings = options.Value;
 
