@@ -16,7 +16,6 @@ namespace SplatDev.Tests
     using System.Text;
 
     //borrowed from https://mahmutcanga.com/2019/12/13/unit-testing-httprequest-in-c/
-    [Trait("Category", "Integration")]
     public class MobileDetectionTests : IDisposable
     {
         private MemoryStream _memoryStream;

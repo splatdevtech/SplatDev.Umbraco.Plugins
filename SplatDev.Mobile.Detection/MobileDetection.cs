@@ -15,8 +15,8 @@ using SplatDev.Mobile.Detection.Models;
         public static MobileDevice[] MobileDevices { get; private set; }
         static MobileDetection()
         {
-            var path = new DirectoryInfo(Assembly.GetCallingAssembly().CodeBase.Substring(8)).Parent.FullName;
-            var file = File.ReadAllText($"{path}\\device_list.json");
+            var assemblyPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? string.Empty;
+            var file = File.ReadAllText(Path.Combine(assemblyPath, "device_list.json"));
             MobileDevices = JsonSerializer.Deserialize<MobileDevice[]>(file);
         }
 
