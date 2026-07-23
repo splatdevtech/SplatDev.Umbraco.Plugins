@@ -107,12 +107,28 @@
       <Platform Solution="*|x64" Project="x64" />
       <Platform Solution="*|x86" Project="x86" />
     </Project>
+    <Project Path="SplatDev.Payments.Getnet/SplatDev.Payments.Getnet.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+    <Project Path="SplatDev.Payments.Santander/SplatDev.Payments.Santander.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
     <Project Path="SplatDev.Payments/SplatDev.Payments.csproj">
       <Platform Solution="*|x64" Project="x64" />
       <Platform Solution="*|x86" Project="x86" />
     </Project>
   </Folder>
   <Folder Name="/Plugins/">
+    <Project Path="SplatDev.Umbraco.Plugins.Getnet/SplatDev.Umbraco.Plugins.Getnet.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+    <Project Path="SplatDev.Umbraco.Plugins.Santander/SplatDev.Umbraco.Plugins.Santander.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
     <Project Path="SplatDev.Umbraco.Plugins.2fa/SplatDev.Umbraco.Plugins.2fa.csproj">
       <Platform Solution="*|x64" Project="x64" />
       <Platform Solution="*|x86" Project="x86" />

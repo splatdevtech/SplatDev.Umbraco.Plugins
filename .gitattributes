@@ -1,0 +1,31 @@
+# Normalize all text files to LF in the repo and on checkout.
+# This stops the CRLF<->LF churn caused by editing across Windows and WSL.
+* text=auto eol=lf
+
+# Windows-only scripts keep CRLF
+*.bat   text eol=crlf
+*.cmd   text eol=crlf
+*.ps1   text eol=crlf
+
+# Binary assets — never touch EOLs
+*.png   binary
+*.jpg   binary
+*.jpeg  binary
+*.gif   binary
+*.ico   binary
+*.webp  binary
+*.svg   binary
+*.otf   binary
+*.ttf   binary
+*.woff  binary
+*.woff2 binary
+*.eot   binary
+*.pdf   binary
+*.zip   binary
+*.7z    binary
+*.gz    binary
+*.bacpac binary
+*.snk   binary
+*.dll   binary
+*.exe   binary
+*.pfx   binary
