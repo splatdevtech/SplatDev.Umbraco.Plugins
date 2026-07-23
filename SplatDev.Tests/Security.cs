@@ -4,42 +4,29 @@ namespace SplatDev.Tests
 
     using SplatDev.Security;
 
-    [Trait("Category", "Integration")]
     public class Security
     {
         [Fact]
+        [Trait("Category", "Integration")]
         public void UrlShortening_CheckPhish()
         {
-            // arrange
-
-            // act
             var response = Tools.CheckPhish("ux904vysg7jhbakonldt53cmzhyrgdxc19c0xvnbbrffr83qshrdrozbu3lqqtb0", "http://maliciouswebsitetest.com/", true).GetAwaiter().GetResult();
-
-            // assert
             Assert.NotNull(response);
         }
 
         [Fact]
+        [Trait("Category", "Integration")]
         public void UrlShortening_GoogleSafeBrowsing()
         {
-            // arrange
-
-            // act
             var response = Tools.GoogleSafeBrowing("AIzaSyCHCEGziKvWkas-zw7DFSQ4W_66mlDQKN8", new string[] { "http://maliciouswebsitetest.com/" }, "splatdev").GetAwaiter().GetResult();
-
-            // assert
             Assert.NotNull(response);
         }
 
         [Fact]
+        [Trait("Category", "Integration")]
         public void UrlShortening_IpQualityScore()
         {
-            // arrange
-
-            // act
             var response = Tools.IpQualityScore("kNc64pBCcMNpQcW2cR85bQsKhzbnnxVw", "http://maliciouswebsitetest.com/").GetAwaiter().GetResult();
-
-            // assert
             Assert.NotNull(response);
         }
 
