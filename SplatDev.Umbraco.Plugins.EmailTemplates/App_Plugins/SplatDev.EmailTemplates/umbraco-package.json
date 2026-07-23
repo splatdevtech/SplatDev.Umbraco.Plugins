@@ -47,6 +47,42 @@
         "entityType": "email-style",
         "menus": ["Umb.Menu.Default"]
       }
+    },
+    {
+      "type": "dashboard",
+      "alias": "SplatDev.EmailTemplates.Dashboard",
+      "name": "Email Templates Dashboard",
+      "element": "/App_Plugins/SplatDev.EmailTemplates/dist/emailtemplates-dashboard.element.js",
+      "elementName": "emailtemplates-dashboard",
+      "weight": 0,
+      "meta": {
+        "label": "Templates",
+        "pathname": "templates"
+      },
+      "conditions": [
+        {
+          "alias": "Umb.Condition.SectionAlias",
+          "match": "SplatDev.Section.EmailTemplates"
+        }
+      ]
+    },
+    {
+      "type": "dashboard",
+      "alias": "SplatDev.EmailStyle.Dashboard",
+      "name": "Email Style Dashboard",
+      "element": "/App_Plugins/SplatDev.EmailTemplates/dist/emailstyles-dashboard.element.js",
+      "elementName": "emailstyles-dashboard",
+      "weight": 10,
+      "meta": {
+        "label": "Style Settings",
+        "pathname": "style-settings"
+      },
+      "conditions": [
+        {
+          "alias": "Umb.Condition.SectionAlias",
+          "match": "SplatDev.Section.EmailTemplates"
+        }
+      ]
     }
   ]
 }

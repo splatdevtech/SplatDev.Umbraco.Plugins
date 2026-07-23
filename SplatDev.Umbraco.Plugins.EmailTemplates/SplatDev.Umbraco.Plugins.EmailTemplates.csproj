@@ -6,7 +6,7 @@
     <PackageId>SplatDev.Umbraco.Plugins.EmailTemplates</PackageId>
     <Version>1.0.1</Version>
     <PackageReadmeFile>README.md</PackageReadmeFile>
-    <Description>Email template engine with variable substitution, preview, and singleton style settings for Umbraco 17 (net10.0).</Description>
+    <Description>Email template engine with variable substitution, preview, and singleton style settings for Umbraco 17 (net10.0). Includes Bellissima Lit dashboards for template management and style configuration.</Description>
     <PackageTags>umbraco umbraco-marketplace email templates</PackageTags>
     <ContentTargetFolders>.</ContentTargetFolders>
   </PropertyGroup>
@@ -19,7 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="App_Plugins\**" ExcludeFromSingleFile="true" CopyToPublishDirectory="Always" />
+    <EmbeddedResource Include="App_Plugins\**\*" />
     <None Include="buildTransitive\**" Pack="true" PackagePath="buildTransitive" />
   </ItemGroup>
 
