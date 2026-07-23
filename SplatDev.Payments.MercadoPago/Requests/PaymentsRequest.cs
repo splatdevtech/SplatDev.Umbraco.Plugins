@@ -55,7 +55,11 @@ namespace SplatDev.Payments.MercadoPago.Requests
 
         public async Task<ResourcesList<PaymentMethod>> GetAvailablePaymentMethodsAsync()
         {
-            var client = new PaymentMethodClient();
+            PaymentMethodClient client;
+            if (_handler != null)
+                client = new PaymentMethodClient(new DefaultHttpClient(new HttpClient(_handler)));
+            else
+                client = new PaymentMethodClient();
             ResourcesList<PaymentMethod> paymentMethods = await client.ListAsync();
             return paymentMethods;
         }

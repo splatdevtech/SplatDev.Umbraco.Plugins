@@ -18,17 +18,44 @@ namespace UmbracoCms.Plugins.Tests
 
     public class Plugins_Payments_MercadoPago
     {
-        private static HttpMessageHandler CreateHandler(string responseJson)
+        private static HttpMessageHandler CreateHandler(string responseJson, HttpStatusCode statusCode = HttpStatusCode.OK)
         {
             var handler = new Mock<HttpMessageHandler>();
             handler.Protected()
                 .Setup<Task<HttpResponseMessage>>("SendAsync",
                     ItExpr.IsAny<HttpRequestMessage>(),
                     ItExpr.IsAny<CancellationToken>())
-                .Returns(() => Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
+                .Returns(() => Task.FromResult(new HttpResponseMessage(statusCode)
                 {
-                    Content = new StringContent(responseJson),
+                    Content = new StringContent(responseJson, System.Text.Encoding.UTF8, "application/json"),
                 }));
+            return handler.Object;
+        }
+
+        private static HttpMessageHandler CreateMultiHandler(Dictionary<string, (string Json, HttpStatusCode Status)> responses)
+        {
+            var handler = new Mock<HttpMessageHandler>();
+            handler.Protected()
+                .Setup<Task<HttpResponseMessage>>("SendAsync",
+                    ItExpr.IsAny<HttpRequestMessage>(),
+                    ItExpr.IsAny<CancellationToken>())
+                .Returns((HttpRequestMessage req, CancellationToken _) =>
+                {
+                    foreach (var kvp in responses)
+                    {
+                        if (req.RequestUri!.AbsolutePath.Contains(kvp.Key, StringComparison.OrdinalIgnoreCase))
+                        {
+                            return Task.FromResult(new HttpResponseMessage(kvp.Value.Status)
+                            {
+                                Content = new StringContent(kvp.Value.Json, System.Text.Encoding.UTF8, "application/json"),
+                            });
+                        }
+                    }
+                    return Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
+                    {
+                        Content = new StringContent(responses.Values.First().Json, System.Text.Encoding.UTF8, "application/json"),
+                    });
+                });
             return handler.Object;
         }
 
@@ -51,7 +78,7 @@ namespace UmbracoCms.Plugins.Tests
             Assert.NotEmpty(result);
         }
 
-        [Fact(Skip = "SDK-based — PaymentMethodClient.ListAsync uses mercadopago-sdk")]
+        [Fact(Skip = "SDK PaymentMethodClient.ListAsync uses internal parsing incompatible with HTTP mock")]
         public void MercadoPago_GetAvailablePaymentMethods()
         {
             var request = new PaymentRequests("pk", "at");
@@ -175,10 +202,15 @@ namespace UmbracoCms.Plugins.Tests
             Assert.Equal("tok-abc123", result.Id);
         }
 
-        [Fact(Skip = "SDK-based — PaymentClient.CreateAsync uses mercadopago-sdk")]
-        public void MercadoPago_CreateCardPaymentRequest()
+        [Fact]
+        public async Task MercadoPago_CreateCardPaymentRequest()
         {
-            var request = new CardPaymentRequest("pk", "at", "https://splatdev.com/");
+            var handler = CreateMultiHandler(new Dictionary<string, (string, HttpStatusCode)>
+            {
+                ["card_tokens"] = ("""{"id":"tok-abc","status":"active"}""", HttpStatusCode.OK),
+                ["payments"] = ("""{"id":12345,"status":"approved","status_detail":"accredited"}""", HttpStatusCode.OK),
+            });
+            var request = new CardPaymentRequest("pk", "at", "https://splatdev.com/", handler);
             var model = new Payment
             {
                 Email = "john.doe@email.com",
@@ -196,14 +228,15 @@ namespace UmbracoCms.Plugins.Tests
                     SecurityCode = "123"
                 }
             };
-            var result = request.CreatePaymentRequestAsync(model).GetAwaiter().GetResult();
+            var result = await request.CreatePaymentRequestAsync(model);
             Assert.NotNull(result);
         }
 
-        [Fact(Skip = "SDK-based — PaymentClient.CreateAsync uses mercadopago-sdk")]
-        public void MercadoPago_CreatePixPaymentRequest()
+        [Fact]
+        public async Task MercadoPago_CreatePixPaymentRequest()
         {
-            var request = new PixPaymentRequest("pk", "at");
+            var handler = CreateHandler("""{"id":12345,"status":"pending"}""");
+            var request = new PixPaymentRequest("pk", "at", handler);
             var pix = new Pix
             {
                 Description = "Pix Product",
@@ -217,14 +250,15 @@ namespace UmbracoCms.Plugins.Tests
                 },
                 TransactionAmount = 99.99m
             };
-            var result = request.CreatePaymentRequestAsync(pix).GetAwaiter().GetResult();
+            var result = await request.CreatePaymentRequestAsync(pix);
             Assert.NotNull(result);
         }
 
-        [Fact(Skip = "SDK-based — PaymentClient.CreateAsync uses mercadopago-sdk")]
-        public void MercadoPago_CreateTicketPaymentRequest()
+        [Fact]
+        public async Task MercadoPago_CreateTicketPaymentRequest()
         {
-            var request = new TicketPaymentRequest("pk", "at");
+            var handler = CreateHandler("""{"id":67890,"status":"pending"}""");
+            var request = new TicketPaymentRequest("pk", "at", handler);
             var boleto = new Ticket
             {
                 Description = "Boleto Product",
@@ -238,7 +272,7 @@ namespace UmbracoCms.Plugins.Tests
                 },
                 TransactionAmount = 99.99m
             };
-            var result = request.CreatePaymentRequestAsync(boleto).GetAwaiter().GetResult();
+            var result = await request.CreatePaymentRequestAsync(boleto);
             Assert.NotNull(result);
         }
     }

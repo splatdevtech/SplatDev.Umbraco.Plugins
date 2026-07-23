@@ -21,7 +21,7 @@ namespace SplatDev.Payments.MercadoPago.Requests
         private readonly string PUBLIC_KEY;
         private readonly string ACCESS_TOKEN;
         private readonly RequestOptions requestOptions;
-        private readonly HttpMessageHandler _handler;
+        private readonly HttpMessageHandler? _handler;
 
         public CardPaymentRequest(string publicKey, string accessToken, string referrer, HttpMessageHandler? handler = null)
         {
@@ -74,7 +74,7 @@ namespace SplatDev.Payments.MercadoPago.Requests
                 Capture = payModel.Capture
             };
 
-            var client = new PaymentClient();
+            var client = CreatePaymentClient();
             Payment payment = await client.CreateAsync(request, requestOptions);
 
             return payment;
@@ -85,7 +85,7 @@ namespace SplatDev.Payments.MercadoPago.Requests
             MercadoPagoConfig.AccessToken = ACCESS_TOKEN;
             Payment payment;
 
-            var client = new PaymentClient();
+            var client = CreatePaymentClient();
 
             if (amount == 0.0m)
                 payment = await client.CaptureAsync(paymentId);
@@ -99,9 +99,16 @@ namespace SplatDev.Payments.MercadoPago.Requests
         {
             MercadoPagoConfig.AccessToken = ACCESS_TOKEN;
 
-            var client = new PaymentClient();
+            var client = CreatePaymentClient();
             Payment payment = await client.CancelAsync(paymentId);
             return payment;
+        }
+
+        private PaymentClient CreatePaymentClient()
+        {
+            if (_handler != null)
+                return new PaymentClient(new DefaultHttpClient(new HttpClient(_handler)));
+            return new PaymentClient();
         }
 
         #region Not Implemented
