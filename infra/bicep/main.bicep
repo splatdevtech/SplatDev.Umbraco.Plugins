@@ -63,11 +63,13 @@ resource webApp 'Microsoft.Web/sites@2021-02-01' = {
   }
   properties: {
     serverFarmId: appServicePlan.id
+    // Restrict inbound access to private networking; public endpoint is disabled.
+    publicNetworkAccess: 'Disabled'
     // Enforce HTTPS for all HTTP requests to the App Service.
     httpsOnly: true
-    siteConfig: {
-      alwaysOn: true
-    }
+  }
+  siteConfig: {
+    alwaysOn: true
   }
 }
 
