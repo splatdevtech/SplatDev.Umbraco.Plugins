@@ -29,11 +29,15 @@ az deployment sub create \
 
 Works with Azure CLI 2.60+ and Bicep CLI 0.28+. The templates target the Azure Resource Manager API versions current as of 2024.
 
+## Security Defaults
+
+The template applies secure defaults in every environment: GRS storage replication, storage and Key Vault firewall deny rules with public access disabled, zone-redundant App Service Plans, and App Service health checks, HTTP/2, TLS 1.2, required client certificates, two minimum instances, and public access disabled. Private endpoints and the `/health` application endpoint must be provisioned by the consuming deployment.
+
 ## Known Limitations
 
-- This is a minimal skeleton — production deployments should add an App Service Plan, SQL Server/database, Application Insights, and network security groups.
-- Storage account name uses a static prefix (`stgdev`) — multi-environment deployments with the same subscription require unique names.
-- Key Vault access policies are not defined in this skeleton; add them per environment before use.
+- SQL Server/database, Application Insights, private endpoints, and network integration are outside this minimal template.
+- Resource names must remain within Azure naming limits; the environment allow-list prevents accidental cross-environment names.
+- Key Vault access policies are intentionally empty; grant access through the deployment's managed identity configuration.
 
 ## License
 

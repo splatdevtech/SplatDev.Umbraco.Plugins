@@ -1,4 +1,5 @@
 param location string = 'East US'
+@description('Deployment environment. Used to isolate resource names and security settings.')
 @allowed([
   'dev'
   'staging'
@@ -13,29 +14,33 @@ resource rg 'Microsoft.Resources/resourceGroups@2021-04-01' = {
   location: location
 }
 
-// Transport security only: network reachability remains unchanged until the
-// environment's VNet/private-endpoint design is approved.
-resource storage 'Microsoft.Storage/storageAccounts@2023-05-01' = {
-  name: 'stgdev${environment}sa'
+// Storage is private by default. Use a private endpoint or an explicitly approved
+// network rule when an application needs to access it.
+resource storage 'Microsoft.Storage/storageAccounts@2021-09-01' = {
+  name: 'stg${environment}splatdev'
   location: location
-  sku: {
-    name: 'Standard_LRS'
-  }
+  sku: { name: 'Standard_GRS' }
   kind: 'StorageV2'
   properties: {
+    publicNetworkAccess: 'Disabled'
     allowBlobPublicAccess: false
-    allowCrossTenantReplication: false
-    minimumTlsVersion: 'TLS1_2'
-    supportsHttpsTrafficOnly: true
+    networkAcls: {
+      bypass: 'AzureServices'
+      defaultAction: 'Deny'
+    }
   }
 }
 
-resource keyVault 'Microsoft.KeyVault/vaults@2023-07-01' = {
+resource keyVault 'Microsoft.KeyVault/vaults@2021-10-01' = {
   name: 'kv-splatdev-${environment}'
   location: location
   properties: {
     enableSoftDelete: true
-    enablePurgeProtection: true
+    publicNetworkAccess: 'Disabled'
+    networkAcls: {
+      bypass: 'AzureServices'
+      defaultAction: 'Deny'
+    }
     sku: {
       name: 'standard'
       family: 'A'
@@ -45,8 +50,7 @@ resource keyVault 'Microsoft.KeyVault/vaults@2023-07-01' = {
   }
 }
 
-// Service Bus (messaging backbone)
-resource serviceBus 'Microsoft.ServiceBus/namespaces@2022-10-01-preview' = {
+resource serviceBus 'Microsoft.ServiceBus/namespaces@2021-06-01' = {
   name: 'sb-splatdev-${environment}'
   location: location
   sku: {
@@ -56,29 +60,30 @@ resource serviceBus 'Microsoft.ServiceBus/namespaces@2022-10-01-preview' = {
   properties: {}
 }
 
-// App Service Plan and Web App (minimal skeleton)
 resource appServicePlan 'Microsoft.Web/serverfarms@2021-02-01' = {
   name: 'asp-splatdev-${environment}'
   location: location
   sku: { name: 'P1v2', tier: 'PremiumV2' }
   properties: {
     perSiteScaling: false
+    zoneRedundant: true
   }
 }
 
-resource webApp 'Microsoft.Web/sites@2022-03-01' = {
+resource webApp 'Microsoft.Web/sites@2021-02-01' = {
   name: 'web-splatdev-${environment}'
   location: location
-  identity: {
-    type: 'SystemAssigned'
-  }
   properties: {
     serverFarmId: appServicePlan.id
-    httpsOnly: true
+    publicNetworkAccess: 'Disabled'
     siteConfig: {
       alwaysOn: true
+      http20Enabled: true
       minTlsVersion: '1.2'
-      ftpsState: 'Disabled'
+      clientCertEnabled: true
+      clientCertMode: 'Required'
+      minimumElasticInstanceCount: 2
+      healthCheckPath: '/health'
     }
   }
 }
