@@ -189,3 +189,27 @@ A fresh anonymous staging probe was repeated during this heartbeat; deployment e
 - Target-specific PdfCurator tests: **24/24 passed** on `net10.0`; existing NuGet vulnerability warnings remain.
 
 Authenticated AC1–AC5, browser axe/WCAG, rendered i18n, screenshots, and Phase A regression remain blocked. Clear by deploying MemberLogin **2.1.4** from commit `8c1faebf` (`review/SPL-3778`) and deployed/seeded PdfCurator member fixtures, then rerun the authenticated checklist.
+
+## Heartbeat verification — 2026-08-31 20:05 UTC
+
+A fresh staging probe and local verification were run during this heartbeat; the deployment blocker remains active:
+
+- `POST /umbraco/api/memberlogin/Login` with valid-shaped invalid credentials returned **HTTP 500** (`System.NotSupportedException: IMemberSignInManager is not available in Umbraco 17 (net10.0)`).
+- Anonymous `GET /umbraco/pdfcurator/api/v1/member/books` returned **HTTP 404**.
+- Frontend Vitest: **24/24 passed** across 4 files; only existing jsdom canvas warnings were emitted.
+- `build:member`: `member.js` **35.65 kB raw / 6.81 kB gzip**, below the 80 KB gzip budget; reader remains lazy-loaded.
+- Target-specific PdfCurator tests: command completed successfully on **net10.0**; existing NuGet vulnerability warnings remain.
+
+Authenticated AC1–AC5, browser axe/WCAG, rendered i18n, screenshots, and Phase A regression remain unclaimable. Clear the environment blocker by deploying MemberLogin **2.1.4** from commit `8c1faebf` (`review/SPL-3778`) and deploying/seeding PdfCurator member fixtures, then rerun the authenticated checklist.
+
+## Heartbeat verification — 2026-09-01 04:30 UTC
+
+A fresh local verification and staging probe were completed. The deployment blocker remains active:
+
+- `POST /umbraco/api/memberlogin/Login` with valid-shaped invalid credentials returned **HTTP 500**, `System.NotSupportedException: IMemberSignInManager is not available in Umbraco 17 (net10.0)`.
+- Anonymous `GET /umbraco/pdfcurator/api/v1/member/books` returned **HTTP 404**.
+- Frontend Vitest: **24/24 passed** across 4 files; existing jsdom canvas warnings only.
+- `npm run build:member`: `member.js` **35.65 kB raw / 6.81 kB gzip**, below the 80 KB gzip budget; reader remains lazy-loaded.
+- Target-specific PdfCurator tests on `net10.0` completed successfully; existing NuGet vulnerability warnings remain.
+
+Authenticated AC1–AC5, browser axe/WCAG, rendered i18n, screenshots, and Phase A regression remain unclaimable. Clear the blocker by deploying MemberLogin **2.1.4** from commit `8c1faebf` (`review/SPL-3778`) and deploying/seeding PdfCurator member fixtures, then rerun the authenticated checklist.
