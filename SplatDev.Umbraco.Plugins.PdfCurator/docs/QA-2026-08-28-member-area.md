@@ -213,3 +213,15 @@ A fresh local verification and staging probe were completed. The deployment bloc
 - Target-specific PdfCurator tests on `net10.0` completed successfully; existing NuGet vulnerability warnings remain.
 
 Authenticated AC1–AC5, browser axe/WCAG, rendered i18n, screenshots, and Phase A regression remain unclaimable. Clear the blocker by deploying MemberLogin **2.1.4** from commit `8c1faebf` (`review/SPL-3778`) and deploying/seeding PdfCurator member fixtures, then rerun the authenticated checklist.
+
+## Heartbeat verification — 2026-09-01 21:22 UTC
+
+A fresh staging probe and local verification were completed during this heartbeat. Results remain unchanged:
+
+- `POST /umbraco/api/memberlogin/login` with valid-shaped invalid credentials returned **HTTP 500**, `System.NotSupportedException: IMemberSignInManager is not available in Umbraco 17 (net10.0)` from `MemberLoginService.LoginAsync`.
+- Anonymous `GET /umbraco/pdfcurator/api/v1/member/books` returned **HTTP 404**.
+- Frontend Vitest: **24/24 passed** across 4 files; only the existing jsdom canvas `getContext` warnings were emitted.
+- `npm run build:member`: `member.js` **35.65 kB raw / 6.81 kB gzip**, below the 80 KB gzip budget; reader remains lazy-loaded.
+- Target-specific PdfCurator .NET tests remain recorded as passing **24/24** on `net10.0` (existing NuGet vulnerability warnings remain).
+
+Authenticated AC1–AC5, browser axe/WCAG, rendered i18n, screenshots, and Phase A regression remain unclaimable. Clear the environment blocker by deploying MemberLogin **2.1.4** from commit `8c1faebf` (`review/SPL-3778`) and deploying/seeding PdfCurator member fixtures, then rerun the authenticated checklist.
