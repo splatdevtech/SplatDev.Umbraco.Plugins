@@ -238,3 +238,15 @@ A fresh local verification and staging probe were completed during this heartbea
 - The staging MemberLogin manifest probe encountered an HTTP/2 transport error (`curl` HTTP 000), so no new deployment-version evidence is claimed from that probe.
 
 Authenticated AC1–AC5, browser axe/WCAG, rendered i18n, screenshots, and Phase A regression remain unclaimable. Clear the blocker by deploying MemberLogin **2.1.4** from `8c1faebf` (`review/SPL-3778`) and deploying/seeding PdfCurator member fixtures, then rerun the authenticated checklist.
+
+## Heartbeat verification — 2026-09-02 06:02 UTC
+
+Fresh local checks and HTTP/1.1 staging probes were run. Results remain unchanged:
+
+- `POST /umbraco/api/memberlogin/login` with valid-shaped invalid credentials returned **HTTP 500** (`System.NotSupportedException: IMemberSignInManager is not available in Umbraco 17 (net10.0)`).
+- Anonymous `GET /umbraco/pdfcurator/api/v1/member/books` returned **HTTP 404**.
+- Frontend Vitest: **24/24 passed** across 4 files; existing jsdom canvas `getContext` warnings only.
+- `npm run build:member`: `member.js` **35.65 kB raw / 6.81 kB gzip**, under the 80 KB gzip budget; reader remains lazy-loaded.
+- Target-specific PdfCurator tests completed successfully on **net10.0** with no test failures; existing NuGet vulnerability warnings remain.
+
+Authenticated AC1–AC5, browser axe/WCAG, rendered i18n, screenshots, and Phase A regression remain unclaimable. The environment blocker is unchanged: deploy MemberLogin **2.1.4** from `8c1faebf` (`review/SPL-3778`) and deploy/seed PdfCurator member fixtures, then rerun the authenticated checklist.
