@@ -250,3 +250,27 @@ Fresh local checks and HTTP/1.1 staging probes were run. Results remain unchange
 - Target-specific PdfCurator tests completed successfully on **net10.0** with no test failures; existing NuGet vulnerability warnings remain.
 
 Authenticated AC1–AC5, browser axe/WCAG, rendered i18n, screenshots, and Phase A regression remain unclaimable. The environment blocker is unchanged: deploy MemberLogin **2.1.4** from `8c1faebf` (`review/SPL-3778`) and deploy/seed PdfCurator member fixtures, then rerun the authenticated checklist.
+
+## Heartbeat verification — 2026-09-03 16:12 UTC
+
+A fresh staging probe and local verification were completed during this heartbeat. The deployment blocker remains active:
+
+- Anonymous `GET /umbraco/pdfcurator/api/v1/member/books` returned **HTTP 404** with no content type; the required anonymous 401 JSON is not reachable.
+- Candidate `/pdf-curator/library` and `/member/login` paths returned the generic Umbraco fallback HTML (**HTTP 200**), not deployed member pages.
+- `/umbraco/management/api/v1/server/information` returned **HTTP 401**, so no unauthenticated server-version evidence was claimed.
+- Frontend Vitest: **24/24 passed** across 4 files; only the existing jsdom canvas `getContext` warnings were emitted.
+- `npm run build:member`: `member.js` **35.65 kB raw / 6.81 kB gzip**, below the 80 KB gzip budget; reader remains in lazy-loaded chunks.
+
+Authenticated AC1–AC5, browser axe/WCAG, rendered i18n, screenshots, and Phase A regression remain unclaimable. The blocker clears when MemberLogin **2.1.4** from `8c1faebf` (`review/SPL-3778`) and deployed/seeded PdfCurator member fixtures are available; rerun the complete checklist afterward.
+
+## Heartbeat verification — 2026-09-04 00:56 UTC
+
+Fresh HTTP/1.1 staging probes and local checks were run. The deployment blocker remains active:
+
+- Valid-shaped invalid MemberLogin request returned **HTTP 500** (`System.NotSupportedException: IMemberSignInManager is not available in Umbraco 17 (net10.0)`), so authentication cannot be exercised.
+- Anonymous `GET /umbraco/pdfcurator/api/v1/member/books` returned **HTTP 404** with no content type; the required anonymous 401 JSON is unavailable.
+- MemberLogin static manifest returned **HTTP 200**, version **2.0.0**; this only proves static asset serving, not corrected server-package deployment.
+- Frontend Vitest: **24/24 passed** across 4 files; only the existing jsdom canvas `getContext` warnings were emitted.
+- `npm run build:member`: `member.js` **35.65 kB raw / 6.81 kB gzip**, below the 80 KB gzip budget; reader remains lazy-loaded.
+
+Authenticated AC1–AC5, browser axe/WCAG, rendered i18n, screenshots, and Phase A regression remain unclaimable. Clear the blocker by deploying MemberLogin **2.1.4** from `8c1faebf` (`review/SPL-3778`) and deploying/seeding PdfCurator member fixtures, then rerun the complete authenticated checklist.
