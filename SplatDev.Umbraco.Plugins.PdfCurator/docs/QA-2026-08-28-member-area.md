@@ -239,6 +239,15 @@ A fresh local verification and staging probe were completed during this heartbea
 
 Authenticated AC1–AC5, browser axe/WCAG, rendered i18n, screenshots, and Phase A regression remain unclaimable. Clear the blocker by deploying MemberLogin **2.1.4** from `8c1faebf` (`review/SPL-3778`) and deploying/seeding PdfCurator member fixtures, then rerun the authenticated checklist.
 
+## Heartbeat verification — 2026-09-04 18:18 UTC
+
+A fresh HTTP/1.1 staging probe confirms the environment blocker remains unchanged:
+
+- Anonymous `GET /umbraco/pdfcurator/api/v1/member/books` returned **HTTP 404**, zero-byte body, and no JSON content type (required anonymous 401 Problem Details response is unavailable).
+- `/member/login` returned **HTTP 200** generic Umbraco HTML; `/pdf-curator/library` returned **HTTP 200** generic Umbraco HTML. Neither is evidence that the deployed member components/routes are available.
+
+No authenticated acceptance, browser axe/WCAG audit, rendered en/es verification, screenshots, or Phase A regression claim is made. The required unblock remains deployment of MemberLogin **2.1.4** from `8c1faebf` (`review/SPL-3778`) plus deployed and seeded PdfCurator member fixtures; then rerun the complete checklist.
+
 ## Heartbeat verification — 2026-09-02 06:02 UTC
 
 Fresh local checks and HTTP/1.1 staging probes were run. Results remain unchanged:
