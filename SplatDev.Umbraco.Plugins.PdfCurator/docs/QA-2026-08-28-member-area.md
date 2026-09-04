@@ -274,3 +274,15 @@ Fresh HTTP/1.1 staging probes and local checks were run. The deployment blocker 
 - `npm run build:member`: `member.js` **35.65 kB raw / 6.81 kB gzip**, below the 80 KB gzip budget; reader remains lazy-loaded.
 
 Authenticated AC1–AC5, browser axe/WCAG, rendered i18n, screenshots, and Phase A regression remain unclaimable. Clear the blocker by deploying MemberLogin **2.1.4** from `8c1faebf` (`review/SPL-3778`) and deploying/seeding PdfCurator member fixtures, then rerun the complete authenticated checklist.
+
+## Heartbeat verification — 2026-09-04 09:39 UTC
+
+Fresh HTTP/1.1 probes and local frontend checks were run during this heartbeat. The staging deployment blocker remains active:
+
+- Anonymous `GET /umbraco/pdfcurator/api/v1/member/books` returned **HTTP 404** with no content type; the required anonymous 401 JSON is not reachable.
+- `/member/login` and `/pdf-curator/library` returned generic Umbraco fallback HTML (**HTTP 200**), not deployed member-page evidence.
+- Frontend Vitest: **24/24 passed** across 4 files.
+- `npm run build:member`: `member.js` **35.65 kB raw / 6.81 kB gzip**, below the 80 KB gzip budget; the reader remains in separate lazy-loaded chunks.
+- The attempted `--runInBand` option is unsupported by this Vitest version; the standard `npm test` command passed. Existing jsdom canvas `getContext` warnings remain non-fatal.
+
+Authenticated AC1–AC5, browser axe/WCAG, rendered i18n, screenshots, and Phase A regression remain unclaimable. Clear the blocker by deploying MemberLogin **2.1.4** from `8c1faebf` (`review/SPL-3778`) and deploying/seeding PdfCurator member fixtures, then rerun the complete authenticated checklist.
