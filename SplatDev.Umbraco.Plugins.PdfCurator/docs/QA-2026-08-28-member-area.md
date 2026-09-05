@@ -307,3 +307,17 @@ Fresh local and staging verification was completed after issue reassignment. Res
 - `/member/login` over HTTP/1.1: **HTTP 200**, generic Umbraco HTML; no deployed member login page evidence.
 
 Authenticated AC1–AC5, browser axe/WCAG, rendered en/es verification, screenshots, and Phase A regression remain unclaimable. Clear the blocker by deploying MemberLogin **2.1.4** from `8c1faebf` (`review/SPL-3778`) and deploying/seeding PdfCurator member fixtures and routes, then rerun the complete checklist.
+
+## Heartbeat verification — 2026-09-05 09:49 UTC
+
+A fresh QA heartbeat reran all reproducible local checks and anonymous staging probes. Results:
+
+- Frontend Vitest: **24/24 passed** across 4 files; only the existing jsdom canvas `getContext` warnings were emitted.
+- `npm run build:member`: `member.js` **35.65 kB raw / 6.81 kB gzip**, below the 80 KB gzip budget; reader remains in lazy-loaded chunks.
+- Target-specific PdfCurator tests: **passed on net10.0** with no test failures; existing NuGet vulnerability warnings remain.
+- Staging `POST /umbraco/api/memberlogin/login` with valid-shaped invalid credentials: **HTTP 500**, `System.NotSupportedException: IMemberSignInManager is not available in Umbraco 17`.
+- Staging empty MemberLogin payload: **HTTP 400** JSON required-field validation (route reachability only).
+- Staging anonymous `GET /umbraco/pdfcurator/api/v1/member/books`: **HTTP 404**, zero-byte response.
+- Static MemberLogin manifest: **HTTP 200**, version **2.0.0**; this is static asset evidence only and does not prove corrected server-package deployment.
+
+Authenticated AC1–AC5, browser axe/WCAG, rendered en/es i18n, screenshots, and Phase A regression remain unclaimable because staging member routes/fixtures are unavailable. The blocker remains deployment of MemberLogin **2.1.4** from `review/SPL-3778` commit `8c1faebf`, plus deployed/seeded PdfCurator member fixtures and routes; rerun the authenticated checklist after deployment.
