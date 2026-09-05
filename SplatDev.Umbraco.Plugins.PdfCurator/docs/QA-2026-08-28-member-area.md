@@ -321,3 +321,16 @@ A fresh QA heartbeat reran all reproducible local checks and anonymous staging p
 - Static MemberLogin manifest: **HTTP 200**, version **2.0.0**; this is static asset evidence only and does not prove corrected server-package deployment.
 
 Authenticated AC1–AC5, browser axe/WCAG, rendered en/es i18n, screenshots, and Phase A regression remain unclaimable because staging member routes/fixtures are unavailable. The blocker remains deployment of MemberLogin **2.1.4** from `review/SPL-3778` commit `8c1faebf`, plus deployed/seeded PdfCurator member fixtures and routes; rerun the authenticated checklist after deployment.
+
+## Heartbeat verification — 2026-09-05 19:42 UTC
+
+A fresh staging probe and local verification were completed. The staging prerequisite remains unavailable:
+
+- `GET /` returned **HTTP 200**.
+- `GET /umbraco/api/pdfcurator/ping` returned **HTTP 404**, zero-byte body.
+- Anonymous `GET /umbraco/pdfcurator/api/v1/member/books` returned **HTTP 404**, zero-byte body.
+- `/member/login` and `/pdf-curator/library` returned **HTTP 200** generic Umbraco HTML (2,139 bytes), not deployed member routes/components.
+- Frontend Vitest: **24/24 passed** across 4 files.
+- `npm run build:member`: `member.js` **35.65 kB raw / 6.81 kB gzip**, under the 80 KB gzip budget; reader remains lazy-loaded.
+
+Because the PdfCurator assembly/routes and member fixtures are absent from staging, authenticated AC1–AC5, rendered axe/WCAG, keyboard/focus checks, en/es browser rendering, screenshots, and Phase A regression remain unclaimable. This report therefore records evidence and does not claim acceptance. The environment must receive the host-integrated PdfCurator image/package and seeded member fixtures before the complete browser checklist can run.
