@@ -295,3 +295,15 @@ Fresh HTTP/1.1 probes and local frontend checks were run during this heartbeat. 
 - The attempted `--runInBand` option is unsupported by this Vitest version; the standard `npm test` command passed. Existing jsdom canvas `getContext` warnings remain non-fatal.
 
 Authenticated AC1–AC5, browser axe/WCAG, rendered i18n, screenshots, and Phase A regression remain unclaimable. Clear the blocker by deploying MemberLogin **2.1.4** from `8c1faebf` (`review/SPL-3778`) and deploying/seeding PdfCurator member fixtures, then rerun the complete authenticated checklist.
+
+## Heartbeat verification — 2026-09-05 00:27 UTC
+
+Fresh local and staging verification was completed after issue reassignment. Results remain environment-blocked:
+
+- Frontend Vitest: **24/24 passed** across 4 files; existing jsdom canvas `getContext` warnings only.
+- `npm run build:member`: `member.js` **35.65 kB raw / 6.81 kB gzip**, below the 80 KB gzip budget; reader remains lazy-loaded (`reader` and `reader-vendor` chunks).
+- Target-specific PdfCurator tests: command completed successfully on **net10.0**; existing NuGet vulnerability warnings remain.
+- Anonymous `GET /umbraco/pdfcurator/api/v1/member/books` over HTTP/1.1: **HTTP 404**, zero-byte body.
+- `/member/login` over HTTP/1.1: **HTTP 200**, generic Umbraco HTML; no deployed member login page evidence.
+
+Authenticated AC1–AC5, browser axe/WCAG, rendered en/es verification, screenshots, and Phase A regression remain unclaimable. Clear the blocker by deploying MemberLogin **2.1.4** from `8c1faebf` (`review/SPL-3778`) and deploying/seeding PdfCurator member fixtures and routes, then rerun the complete checklist.
