@@ -26,10 +26,17 @@ RUN dotnet nuget add source /local-packages --name local-plugins
 # Directory.Build.props from the project directory automatically, so one restore covers
 # the lot. Regenerate with tools/../make-props.py when the plugin set changes.
 COPY plugins.props /src/U17Testing/Directory.Build.props
+# Keep the member API in the host image: a generated props file that omits PdfCurator
+# produces a successful Umbraco host build with no controller assembly at runtime.
+RUN grep -q "PdfCurator" /src/U17Testing/Directory.Build.props
 
 RUN dotnet restore
 RUN dotnet build -c Release --no-restore
 RUN dotnet publish -c Release -o /app/publish --no-restore
+# PdfCurator is an opt-in U17 plugin and must be present in the generated props/local feed.
+# Fail the image build here instead of shipping a healthy-looking host without its API.
+RUN test -f /app/publish/SplatDev.Umbraco.Plugins.PdfCurator.dll \
+    && test -f /app/publish/App_Plugins/PdfCurator/umbraco-package.json
 
 FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS runtime
 WORKDIR /app
