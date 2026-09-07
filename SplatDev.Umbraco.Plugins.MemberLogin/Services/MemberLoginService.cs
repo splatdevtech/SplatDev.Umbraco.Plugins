@@ -2,9 +2,7 @@ using Microsoft.Extensions.Logging;
 using Umbraco.Cms.Core.Models;
 using Umbraco.Cms.Core.Security;
 using Umbraco.Cms.Core.Services;
-#if !NET10_0_OR_GREATER
 using Umbraco.Cms.Web.Common.Security;
-#endif
 
 namespace SplatDev.Umbraco.Plugins.MemberLogin.Services;
 
@@ -12,7 +10,9 @@ public class MemberLoginService : IMemberLoginService
 {
     private readonly IMemberService _memberService;
     private readonly IPublicAccessService _publicAccessService;
-#if !NET10_0_OR_GREATER
+#if NET10_0_OR_GREATER
+    private readonly MemberSignInManager _signInManager;
+#else
     private readonly IMemberSignInManager _signInManager;
 #endif
     private readonly IMemberManager _memberManager;
@@ -22,11 +22,13 @@ public class MemberLoginService : IMemberLoginService
     public MemberLoginService(
         IMemberService memberService,
         IPublicAccessService publicAccessService,
+        MemberSignInManager signInManager,
         IMemberManager memberManager,
         ILogger<MemberLoginService> logger)
     {
         _memberService = memberService;
         _publicAccessService = publicAccessService;
+        _signInManager = signInManager;
         _memberManager = memberManager;
         _logger = logger;
     }
@@ -48,13 +50,6 @@ public class MemberLoginService : IMemberLoginService
 
     public async Task<LoginResult> LoginAsync(string username, string password, bool rememberMe)
     {
-#if NET10_0_OR_GREATER
-        // IMemberSignInManager was removed in Umbraco 17.
-        // A proper implementation should use the new authentication APIs.
-        throw new NotSupportedException(
-            "IMemberSignInManager is not available in Umbraco 17 (net10.0). " +
-            "Member sign-in must be implemented using the new authentication approach.");
-#else
         try
         {
             var member = _memberService.GetByUsername(username)
@@ -69,7 +64,10 @@ public class MemberLoginService : IMemberLoginService
             if (!member.IsApproved)
                 return new LoginResult(false, false, "Account is not yet approved.");
 
-            var result = await _signInManager.PasswordSignInAsync(username, password, rememberMe, lockoutOnFailure: true);
+            // PasswordSignInAsync resolves the member by username.  The public API also
+            // accepts email addresses, so use the canonical username after the lookup.
+            var signInUsername = member.Username;
+            var result = await _signInManager.PasswordSignInAsync(signInUsername, password, rememberMe, lockoutOnFailure: true);
 
             if (result.Succeeded)
             {
@@ -90,21 +88,12 @@ public class MemberLoginService : IMemberLoginService
             _logger.LogError(ex, "Error during login for {Username}.", username);
             return new LoginResult(false, false, "An error occurred during login.");
         }
-#endif
     }
 
     public async Task LogoutAsync()
     {
-#if NET10_0_OR_GREATER
-        // IMemberSignInManager was removed in Umbraco 17.
-        // A proper implementation should use the new authentication APIs.
-        throw new NotSupportedException(
-            "IMemberSignInManager is not available in Umbraco 17 (net10.0). " +
-            "Member sign-out must be implemented using the new authentication approach.");
-#else
         await _signInManager.SignOutAsync();
         _logger.LogInformation("Member signed out.");
-#endif
     }
 
     public async Task<bool> ForgotPasswordAsync(string email)
