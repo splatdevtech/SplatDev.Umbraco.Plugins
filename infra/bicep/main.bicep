@@ -24,6 +24,9 @@ resource storage 'Microsoft.Storage/storageAccounts@2021-09-01' = {
   properties: {
     publicNetworkAccess: 'Disabled'
     allowBlobPublicAccess: false
+    supportsHttpsTrafficOnly: true
+    minimumTlsVersion: 'TLS1_2'
+    allowCrossTenantReplication: false
     networkAcls: {
       bypass: 'AzureServices'
       defaultAction: 'Deny'
@@ -36,6 +39,7 @@ resource keyVault 'Microsoft.KeyVault/vaults@2021-10-01' = {
   location: location
   properties: {
     enableSoftDelete: true
+    enablePurgeProtection: true
     publicNetworkAccess: 'Disabled'
     networkAcls: {
       bypass: 'AzureServices'
@@ -73,8 +77,12 @@ resource appServicePlan 'Microsoft.Web/serverfarms@2021-02-01' = {
 resource webApp 'Microsoft.Web/sites@2021-02-01' = {
   name: 'web-splatdev-${environment}'
   location: location
+  identity: {
+    type: 'SystemAssigned'
+  }
   properties: {
     serverFarmId: appServicePlan.id
+    httpsOnly: true
     publicNetworkAccess: 'Disabled'
     siteConfig: {
       alwaysOn: true
@@ -84,6 +92,7 @@ resource webApp 'Microsoft.Web/sites@2021-02-01' = {
       clientCertMode: 'Required'
       minimumElasticInstanceCount: 2
       healthCheckPath: '/health'
+      ftpsState: 'Disabled'
     }
   }
 }
