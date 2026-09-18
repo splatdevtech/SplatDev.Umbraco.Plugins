@@ -22,5 +22,8 @@
     "ImageUrl": "https://github.com/splatdevtech.png",
     "SyncContributorsFromRepository": true
   },
-  "Screenshots": []
+  "Screenshots": [
+    "https://raw.githubusercontent.com/splatdevtech/SplatDev.Umbraco.Plugins/master/assets/screenshots/SplatDev.Umbraco.Plugins.FormBuilder-dashboard.png"
+  ],
+  "ImageUrl": "https://raw.githubusercontent.com/splatdevtech/SplatDev.Umbraco.Plugins/master/assets/icons/SplatDev.Umbraco.Plugins.FormBuilder.png"
 }

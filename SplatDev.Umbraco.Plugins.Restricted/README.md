@@ -56,3 +56,9 @@ This plugin uses Umbraco's own public access infrastructure — no additional da
 ## License
 
 MIT © [SplatDev](https://github.com/SplatDev-Ltda)
+
+## Screenshots
+
+The following screenshot shows the plugin in the Umbraco backoffice:
+
+![Umbraco backoffice screenshot](https://raw.githubusercontent.com/splatdevtech/SplatDev.Umbraco.Plugins/master/assets/screenshots/SplatDev.Umbraco.Plugins.Restricted-dashboard.png)

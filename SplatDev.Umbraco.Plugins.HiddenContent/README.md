@@ -33,3 +33,9 @@ This plugin uses Umbraco's `IContentService` — no additional database tables n
 ## How It Works
 
 HideNodeAsync sets `umbracoNaviHide = "1"` and publishes. ShowNodeAsync sets it to `"0"` and publishes. Standard Umbraco navigation helpers and sitemap generators respect this property automatically.
+
+## Screenshots
+
+The following screenshot shows the plugin in the Umbraco backoffice:
+
+![Umbraco backoffice screenshot](https://raw.githubusercontent.com/splatdevtech/SplatDev.Umbraco.Plugins/master/assets/screenshots/SplatDev.Umbraco.Plugins.HiddenContent-dashboard.png)

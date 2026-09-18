@@ -46,3 +46,9 @@ dotnet ef database update --context OnOffDbContext
 | POST | `/umbraco/api/onoff/Schedule?alias=x&enableAt=...&disableAt=...` | Schedule changes |
 | DELETE | `/umbraco/api/onoff/Delete?id=1` | Delete a feature |
 | POST | `/umbraco/api/onoff/ApplyScheduled` | Trigger scheduled changes |
+
+## Screenshots
+
+The following screenshot shows the plugin in the Umbraco backoffice:
+
+![Umbraco backoffice screenshot](https://raw.githubusercontent.com/splatdevtech/SplatDev.Umbraco.Plugins/master/assets/screenshots/SplatDev.Umbraco.Plugins.OnOff-dashboard.png)

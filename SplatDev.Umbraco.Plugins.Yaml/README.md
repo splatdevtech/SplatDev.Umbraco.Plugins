@@ -95,3 +95,9 @@ Issues and pull requests welcome at <https://github.com/SplatDev-Ltda/umbraco-ya
 ## License
 
 MIT © 2026 SplatDev
+
+## Screenshots
+
+The following screenshot shows the plugin in the Umbraco backoffice:
+
+![Umbraco backoffice screenshot](https://raw.githubusercontent.com/splatdevtech/SplatDev.Umbraco.Plugins/master/assets/screenshots/SplatDev.Umbraco.Plugins.Yaml-dashboard.png)

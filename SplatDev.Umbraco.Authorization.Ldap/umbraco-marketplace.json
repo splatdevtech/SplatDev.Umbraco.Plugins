@@ -14,5 +14,7 @@
     "Active Directory",
     "AAD"
   ],
-  "Category": "Developer Tools"
+  "Category": "Developer Tools",
+  "ImageUrl": "https://raw.githubusercontent.com/splatdevtech/SplatDev.Umbraco.Plugins/master/assets/icons/SplatDev.Umbraco.Authorization.Ldap.png",
+  "Screenshots": []
 }

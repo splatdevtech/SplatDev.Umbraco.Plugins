@@ -69,3 +69,9 @@ The plugin creates a `NewsTickerItems` table via EF Core. Run migrations or call
 ## License
 
 MIT © [SplatDev](https://github.com/SplatDev-Ltda)
+
+## Screenshots
+
+The following screenshot shows the plugin in the Umbraco backoffice:
+
+![Umbraco backoffice screenshot](https://raw.githubusercontent.com/splatdevtech/SplatDev.Umbraco.Plugins/master/assets/screenshots/SplatDev.Umbraco.Plugins.NewsTicker-dashboard.png)

@@ -69,3 +69,9 @@ MIT © [SplatDev](https://github.com/SplatDev-Ltda)
 ## Architecture
 
 This is a **headless library** — no standalone backoffice dashboard or property editors. It extends Umbraco's built-in Examine backoffice UI with additional API endpoints and index features, operating as a DI-registered service.
+
+## Screenshots
+
+The following screenshot shows the plugin in the Umbraco backoffice:
+
+![Umbraco backoffice screenshot](https://raw.githubusercontent.com/splatdevtech/SplatDev.Umbraco.Plugins/master/assets/screenshots/SplatDev.Umbraco.Plugins.ExamineExtensions-dashboard.png)

@@ -22,3 +22,9 @@ Visits use the host's configured `umbracoDbDSN` SQL Server database. This releas
 - Added first-party visit storage, daily totals, unique visitor counts, browser, country and path breakdowns.
 - Added Lit/Bellissima-compatible dashboard API surface.
 - Analytics 3.x is not compatible with or a continuation of Google Analytics integration or SimpleAnalytics 2.x data.
+
+## Screenshots
+
+The following screenshot shows the plugin in the Umbraco backoffice:
+
+![Umbraco backoffice screenshot](https://raw.githubusercontent.com/splatdevtech/SplatDev.Umbraco.Plugins/master/assets/screenshots/SplatDev.Umbraco.Plugins.Analytics-dashboard.png)

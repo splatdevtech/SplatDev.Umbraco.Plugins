@@ -4,7 +4,8 @@
 		<Nullable>enable</Nullable>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<ContentTargetFolders>.</ContentTargetFolders>
-	</PropertyGroup>
+	    <PackageIcon>icon.png</PackageIcon>
+  </PropertyGroup>
 
 	<PropertyGroup>
 		<PackageId>SplatDev.uPlugins.Backups</PackageId>
@@ -29,5 +30,8 @@
 		<Content Include="App_Plugins\SplatDev.uPlugins.Backups\**" ExcludeFromSingleFile="true" CopyToPublishDirectory="Always" />
 		<None Include="buildTransitive\**" Pack="true" PackagePath="buildTransitive" />
 	</ItemGroup>
+  <ItemGroup>
+    <None Include="icon.png" Pack="true" PackagePath="\" />
+  </ItemGroup>
 </Project>
 

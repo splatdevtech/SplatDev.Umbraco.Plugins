@@ -33,3 +33,9 @@ dotnet ef database update
 ```cshtml
 @await Component.InvokeAsync("MemberRegistration", new { redirectUrl = "/welcome" })
 ```
+
+## Screenshots
+
+The following screenshot shows the plugin in the Umbraco backoffice:
+
+![Umbraco backoffice screenshot](https://raw.githubusercontent.com/splatdevtech/SplatDev.Umbraco.Plugins/master/assets/screenshots/SplatDev.Umbraco.Plugins.MemberRegistration-dashboard.png)

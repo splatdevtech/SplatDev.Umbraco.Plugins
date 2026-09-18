@@ -62,3 +62,9 @@ Run EF Core migrations to create the tables:
 dotnet ef migrations add InitialCreate
 dotnet ef database update
 ```
+
+## Screenshots
+
+The following screenshot shows the plugin in the Umbraco backoffice:
+
+![Umbraco backoffice screenshot](https://raw.githubusercontent.com/splatdevtech/SplatDev.Umbraco.Plugins/master/assets/screenshots/SplatDev.Umbraco.Plugins.Surveys-dashboard.png)

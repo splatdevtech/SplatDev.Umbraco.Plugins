@@ -46,3 +46,9 @@ Upgraded from Umbraco 8 (net472) to modern SDK-style multi-targeting.
 In Umbraco 13+, direct password hash assignment (`RawPasswordValue`) is not available.
 Password operations must use the Umbraco Users API or `IMemberService.SavePassword()`.
 The `ChangeUserPassword` and `ResetUserPassword` methods log a warning and return guidance.
+
+## Screenshots
+
+The following screenshot shows the plugin in the Umbraco backoffice:
+
+![Umbraco backoffice screenshot](https://raw.githubusercontent.com/splatdevtech/SplatDev.Umbraco.Plugins/master/assets/screenshots/SplatDev.Umbraco.Plugins.MemberGroups-dashboard.png)

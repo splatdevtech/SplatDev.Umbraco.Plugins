@@ -5,7 +5,8 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 		<StaticWebAssetBasePath>/</StaticWebAssetBasePath>
 		<AddRazorSupportForMvc>true</AddRazorSupportForMvc>
-	</PropertyGroup>
+	    <PackageIcon>icon.png</PackageIcon>
+  </PropertyGroup>
 
 	<PropertyGroup>
 		<PackageId>FormBuilder</PackageId>
@@ -235,4 +236,7 @@
 	  <Folder Include="wwwroot\App_Plugins\" />
 	</ItemGroup>
 
+  <ItemGroup>
+    <None Include="icon.png" Pack="true" PackagePath="\" />
+  </ItemGroup>
 </Project>

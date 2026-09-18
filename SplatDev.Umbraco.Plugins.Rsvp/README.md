@@ -60,3 +60,9 @@ Tables in the `rsvp` schema:
 | 0 | Confirmed |
 | 1 | Waitlisted |
 | 2 | Cancelled |
+
+## Screenshots
+
+The following screenshot shows the plugin in the Umbraco backoffice:
+
+![Umbraco backoffice screenshot](https://raw.githubusercontent.com/splatdevtech/SplatDev.Umbraco.Plugins/master/assets/screenshots/SplatDev.Umbraco.Plugins.Rsvp-dashboard.png)

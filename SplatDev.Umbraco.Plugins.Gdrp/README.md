@@ -64,3 +64,9 @@ After registration, the plugin injects a cookie consent banner on the front-end 
 ## License
 
 MIT © [SplatDev](https://github.com/SplatDev-Ltda)
+
+## Screenshots
+
+The following screenshot shows the plugin in the Umbraco backoffice:
+
+![Umbraco backoffice screenshot](https://raw.githubusercontent.com/splatdevtech/SplatDev.Umbraco.Plugins/master/assets/screenshots/SplatDev.Umbraco.Plugins.Gdrp-dashboard.png)

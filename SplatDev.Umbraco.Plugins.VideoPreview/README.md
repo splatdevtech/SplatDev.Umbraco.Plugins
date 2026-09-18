@@ -60,3 +60,9 @@ fetch('/umbraco/api/videopreview/GetVideoInfo?url=https://www.youtube.com/watch?
 ## License
 
 MIT © [SplatDev](https://github.com/SplatDev-Ltda)
+
+## Screenshots
+
+The following screenshot shows the plugin in the Umbraco backoffice:
+
+![Umbraco backoffice screenshot](https://raw.githubusercontent.com/splatdevtech/SplatDev.Umbraco.Plugins/master/assets/screenshots/SplatDev.Umbraco.Plugins.VideoPreview-dashboard.png)

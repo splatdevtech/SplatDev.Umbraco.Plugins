@@ -168,3 +168,9 @@ MIT — see [LICENSE](https://github.com/SplatDev-Ltda/SplatDev.Umbraco.Plugins/
 ## Contributing
 
 Issues and PRs welcome at [github.com/SplatDev-Ltda/SplatDev.Umbraco.Plugins](https://github.com/SplatDev-Ltda/SplatDev.Umbraco.Plugins).
+
+## Screenshots
+
+The following screenshot shows the plugin in the Umbraco backoffice:
+
+![Umbraco backoffice screenshot](https://raw.githubusercontent.com/splatdevtech/SplatDev.Umbraco.Plugins/master/assets/screenshots/SplatDev.Umbraco.Plugins.Backups-dashboard.png)

@@ -15,5 +15,6 @@
     "ImageUrl": "https://github.com/splatdevtech.png",
     "SyncContributorsFromRepository": true
   },
-  "Screenshots": []
+  "Screenshots": [],
+  "ImageUrl": "https://raw.githubusercontent.com/splatdevtech/SplatDev.Umbraco.Plugins/master/assets/icons/SplatDev.Umbraco.Plugins.PhotoGallery.png"
 }

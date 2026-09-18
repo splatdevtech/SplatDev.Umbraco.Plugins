@@ -46,3 +46,9 @@ MIT
 ## Architecture
 
 This is a **headless API plugin** — the backoffice UI is served by the consuming Umbraco Forms application. This plugin provides the API controllers, services, and DI wiring; the Lit dashboard and property editors are external to this package.
+
+## Screenshots
+
+The following screenshot shows the plugin in the Umbraco backoffice:
+
+![Umbraco backoffice screenshot](https://raw.githubusercontent.com/splatdevtech/SplatDev.Umbraco.Plugins/master/assets/screenshots/SplatDev.Umbraco.Plugins.FormBuilder-dashboard.png)

@@ -55,3 +55,9 @@ The view component renders the login form and sets `ViewBag` properties for stat
 ## License
 
 MIT © [SplatDev](https://github.com/SplatDev-Ltda)
+
+## Screenshots
+
+The following screenshot shows the plugin in the Umbraco backoffice:
+
+![Umbraco backoffice screenshot](https://raw.githubusercontent.com/splatdevtech/SplatDev.Umbraco.Plugins/master/assets/screenshots/SplatDev.Umbraco.Plugins.MemberLogin-dashboard.png)

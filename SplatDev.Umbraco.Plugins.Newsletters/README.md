@@ -47,3 +47,9 @@ Embed the subscribe form in any Razor view:
 The `SendCampaignAsync` method records send entries and marks the campaign as Sent.
 Wire it up to an email delivery service (SendGrid, SMTP, Mailgun, etc.) in
 `NewslettersService.cs` at the appropriate comment.
+
+## Screenshots
+
+The following screenshot shows the plugin in the Umbraco backoffice:
+
+![Umbraco backoffice screenshot](https://raw.githubusercontent.com/splatdevtech/SplatDev.Umbraco.Plugins/master/assets/screenshots/SplatDev.Umbraco.Plugins.Newsletters-dashboard.png)
