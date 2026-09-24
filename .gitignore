@@ -147,3 +147,20 @@ test-environments/**/*.db-wal
 # planner.
 __pycache__/
 *.py[cod]
+# ─── Agent workspace artefacts ────────────────────────────────────────────
+# An agent running `git add -A` inside its workspace swept all of this into
+# splatdevtech/derma-inova-web PR #48 on 2026-09-14: a dump of the container
+# environment holding 11 live secrets (including an encryption key and a
+# base64 SSH private key), four Terraform release archives, a bare terraform
+# binary, and 50 agent skill files — +9067 lines. None of it reached a default
+# branch, but the objects stayed reachable through the open PR for ten days.
+# These rules exist so the accident cannot repeat, in any repo an agent works in.
+environment_variables.txt
+environment_variables*.txt
+/terraform
+/terraform.rc
+terraform_*_linux_amd64.zip
+.terraform/
+*.tfstate
+*.tfstate.*
+.paperclip/
