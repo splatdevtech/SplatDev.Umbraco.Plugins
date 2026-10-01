@@ -80,7 +80,7 @@ jobs:
           mkdir -p ctx/local-packages
           packed=0; failed=0
           for csproj in $(find . -maxdepth 3 -name "SplatDev.*.csproj" \
-            | grep -v "Tests\|BackupManager\|FormsClone\|obj\|bin\|PdfCurator\|/customers/\|test-environments" \
+            | grep -v "Tests\|BackupManager\|FormsClone\|obj\|bin\|/customers/\|test-environments" \
             | sort); do
             if dotnet build "$csproj" -c Release --no-restore 2>&1 | grep -q "Build succeeded"; then
               dotnet pack "$csproj" --no-build -c Release -o ctx/local-packages >/dev/null 2>&1 || true
