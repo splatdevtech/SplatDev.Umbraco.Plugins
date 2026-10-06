@@ -46,3 +46,11 @@ The retained run visited 21 exposed routes. It proves route exposure/navigation,
 ## What remains
 
 Re-run the table after SPL-4419 on a clean console/network capture. For each route record whether its own element mounted, whether its dashboard bundle returned 200, and the exact plugin-specific text. Do not treat the existing generic shell result as proof that the plugin UI is absent: the global duplicate-registration defect occurs on every route.
+
+## SPL-4419 follow-up capture (2026-10-06)
+
+The available post-fix capture does **not** provide the clean run required to classify the 21 routes. `qa-runs/SPL-4419-2026-10-06/console/console-fresh-2026-10-06.log` still contains all four duplicate-alias errors. It also records a `400` token request and `ERR_ABORTED` on the back-office login endpoint; the scripted login returned to `/umbraco` with an empty body, and direct navigation resolved to `/umbraco/section/content`. Consequently, no authenticated plugin route could be re-run with trustworthy console/network evidence.
+
+This is a confirmed revalidation failure, not evidence that the dashboards are empty or missing. SPL-4419 must first deploy the corrected asset/registration path and obtain a successful authenticated capture with zero duplicate-alias errors. Then rerun each route and record its own element, dashboard bundle HTTP status, and plugin-specific text.
+
+Evidence: `qa-runs/SPL-4419-2026-10-06/report.md`, `qa-runs/SPL-4419-2026-10-06/qa-post-fix-run.txt`, and `qa-runs/SPL-4419-2026-10-06/console/console-fresh-2026-10-06.log`.
