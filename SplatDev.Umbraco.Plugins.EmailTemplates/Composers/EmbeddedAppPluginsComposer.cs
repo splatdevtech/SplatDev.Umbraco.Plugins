@@ -215,7 +215,17 @@ internal sealed class EmbeddedPackageManifestReader : IPackageManifestReader
     {
         try
         {
-            var root = _environment.ContentRootPath;
+            // App_Plugins is served from the web root in an Umbraco site. Probing the
+            // content root misses the physical folder created by older package releases
+            // (wwwroot/App_Plugins/...), so the embedded manifest is then returned as well
+            // and every alias is registered twice. Keep a content-root fallback for hosts
+            // that deliberately do not configure a separate web root.
+            var root = _environment.WebRootPath;
+            if (string.IsNullOrEmpty(root))
+            {
+                root = _environment.ContentRootPath;
+            }
+
             return !string.IsNullOrEmpty(root)
                 && File.Exists(Path.Combine(root, "App_Plugins", folder, "umbraco-package.json"));
         }
