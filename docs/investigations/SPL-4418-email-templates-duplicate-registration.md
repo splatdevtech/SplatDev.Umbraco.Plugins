@@ -9,7 +9,7 @@ The duplicate registration is caused by two delivery paths for the same manifest
 
 The assembly is therefore loaded with an embedded manifest while the host also has the physical manifest. The four aliases in the source manifest are declared only once; the duplication is delivery-time, not duplicate declarations.
 
-The existing `EmbeddedPackageManifestReader` correctly avoids adding its embedded manifest when the physical copy exists, which protects upgrades that retain a stale copied folder. It does not make the copy safe for a fresh install, because Umbraco independently discovers the physical manifest and the embedded/static-assets path can still enumerate it twice.
+The existing `EmbeddedPackageManifestReader` is intended to avoid adding its embedded manifest when the physical copy exists, which protects upgrades that retain a stale copied folder. The original probe checked only the content root, but Umbraco serves `App_Plugins` from the web root (`wwwroot/App_Plugins`); therefore it missed stale folders in deployed hosts and returned the embedded manifest as well. The probe now checks `WebRootPath` first, with a content-root fallback for hosts without a separate web root.
 
 The generated embedded resource manifest (`obj/Release/net10.0/Microsoft.Extensions.FileProviders.Embedded.Manifest.xml`) contains:
 
