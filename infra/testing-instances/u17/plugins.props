@@ -108,6 +108,7 @@
     <PackageReference Include="SplatDev.Umbraco.Plugins.Payments.BancoInter" />
     <PackageReference Include="SplatDev.Umbraco.Plugins.Payments.MercadoPago" />
     <PackageReference Include="SplatDev.Umbraco.Plugins.Payments.PagSeguro" />
+    <PackageReference Include="SplatDev.Umbraco.Plugins.PdfCurator" />
     <PackageReference Include="SplatDev.Umbraco.Plugins.PhotoGallery" />
     <PackageReference Include="SplatDev.Umbraco.Plugins.PropertiesReport" />
     <PackageReference Include="SplatDev.Umbraco.Plugins.QuickPoll" />
@@ -202,7 +203,7 @@
     <PackageVersion Include="SplatDev.Umbraco.NPoco" Version="2.0.5" />
     <PackageVersion Include="SplatDev.Umbraco.Pagination" Version="2.0.5" />
     <PackageVersion Include="SplatDev.Umbraco.Plugins.2fa" Version="3.2.2" />
-    <PackageVersion Include="SplatDev.Umbraco.Plugins.AdPreview" Version="1.0.1" />
+    <PackageVersion Include="SplatDev.Umbraco.Plugins.AdPreview" Version="1.0.4" />
     <PackageVersion Include="SplatDev.Umbraco.Plugins.AdminBar" Version="2.3.3" />
     <PackageVersion Include="SplatDev.Umbraco.Plugins.Analytics" Version="3.0.2" />
     <PackageVersion Include="SplatDev.Umbraco.Plugins.Backups" Version="3.3.5" />
@@ -219,14 +220,14 @@
     <PackageVersion Include="SplatDev.Umbraco.Plugins.Dropzone" Version="1.2.9" />
     <PackageVersion Include="SplatDev.Umbraco.Plugins.ENotAssina" Version="1.2.6" />
     <PackageVersion Include="SplatDev.Umbraco.Plugins.EmailNotifications" Version="1.3.5" />
-    <PackageVersion Include="SplatDev.Umbraco.Plugins.EmailTemplates" Version="1.3.4" />
+    <PackageVersion Include="SplatDev.Umbraco.Plugins.EmailTemplates" Version="1.3.5" />
     <PackageVersion Include="SplatDev.Umbraco.Plugins.ExamineExtensions" Version="1.2.6" />
     <PackageVersion Include="SplatDev.Umbraco.Plugins.ExceptionManager" Version="2.1.11" />
     <PackageVersion Include="SplatDev.Umbraco.Plugins.Exif" Version="1.3.1" />
     <PackageVersion Include="SplatDev.Umbraco.Plugins.Faqs" Version="2.4.3" />
     <PackageVersion Include="SplatDev.Umbraco.Plugins.Forums" Version="2.2.7" />
     <PackageVersion Include="SplatDev.Umbraco.Plugins.Gdrp" Version="2.4.5" />
-    <PackageVersion Include="SplatDev.Umbraco.Plugins.Getnet" Version="1.1.3" />
+    <PackageVersion Include="SplatDev.Umbraco.Plugins.Getnet" Version="1.2.0" />
     <PackageVersion Include="SplatDev.Umbraco.Plugins.GoogleAnalytics" Version="2.2.2" />
     <PackageVersion Include="SplatDev.Umbraco.Plugins.HiddenContent" Version="2.5.4" />
     <PackageVersion Include="SplatDev.Umbraco.Plugins.IspServices" Version="2.0.4" />
@@ -237,12 +238,12 @@
     <PackageVersion Include="SplatDev.Umbraco.Plugins.Mailer" Version="2.1.12" />
     <PackageVersion Include="SplatDev.Umbraco.Plugins.MemberGroups" Version="2.3.2" />
     <PackageVersion Include="SplatDev.Umbraco.Plugins.MemberLogin" Version="2.2.3" />
-    <PackageVersion Include="SplatDev.Umbraco.Plugins.MemberNotifications" Version="1.2.4" />
+    <PackageVersion Include="SplatDev.Umbraco.Plugins.MemberNotifications" Version="1.3.0" />
     <PackageVersion Include="SplatDev.Umbraco.Plugins.MemberRegistration" Version="2.3.3" />
     <PackageVersion Include="SplatDev.Umbraco.Plugins.MemberTypes" Version="2.3.2" />
     <PackageVersion Include="SplatDev.Umbraco.Plugins.MostViewed" Version="2.2.2" />
     <PackageVersion Include="SplatDev.Umbraco.Plugins.NewsTicker" Version="2.3.3" />
-    <PackageVersion Include="SplatDev.Umbraco.Plugins.Newsletter" Version="1.3.7" />
+    <PackageVersion Include="SplatDev.Umbraco.Plugins.Newsletter" Version="1.3.8" />
     <PackageVersion Include="SplatDev.Umbraco.Plugins.Newsletters" Version="2.3.3" />
     <PackageVersion Include="SplatDev.Umbraco.Plugins.NuGetCatalog" Version="1.2.2" />
     <PackageVersion Include="SplatDev.Umbraco.Plugins.OAuth" Version="2.2.4" />
@@ -251,6 +252,7 @@
     <PackageVersion Include="SplatDev.Umbraco.Plugins.Payments.BancoInter" Version="1.3.2" />
     <PackageVersion Include="SplatDev.Umbraco.Plugins.Payments.MercadoPago" Version="2.2.4" />
     <PackageVersion Include="SplatDev.Umbraco.Plugins.Payments.PagSeguro" Version="2.2.2" />
+    <PackageVersion Include="SplatDev.Umbraco.Plugins.PdfCurator" Version="3.0.1" />
     <PackageVersion Include="SplatDev.Umbraco.Plugins.PhotoGallery" Version="1.4.3" />
     <PackageVersion Include="SplatDev.Umbraco.Plugins.PropertiesReport" Version="2.3.2" />
     <PackageVersion Include="SplatDev.Umbraco.Plugins.QuickPoll" Version="2.4.3" />
@@ -290,8 +292,8 @@
     <PackageVersion Include="SplatDev.Umbraco.Themes.Landing" Version="1.0.6" />
     <PackageVersion Include="SplatDev.Umbraco.Themes.Portfolio" Version="1.0.5" />
     <PackageVersion Include="SplatDev.Umbraco.Tools.PackageActions" Version="1.0.4" />
-    <PackageVersion Include="SplatDev.Umbraco.Plugins.Schema2Yaml" Version="2.1.3" />
-    <PackageVersion Include="SplatDev.Umbraco.Plugins.Yaml2Schema" Version="1.1.4" />
+    <PackageVersion Include="SplatDev.Umbraco.Plugins.Schema2Yaml" Version="2.1.4" />
+    <PackageVersion Include="SplatDev.Umbraco.Plugins.Yaml2Schema" Version="1.1.5" />
   </ItemGroup>
 
 </Project>

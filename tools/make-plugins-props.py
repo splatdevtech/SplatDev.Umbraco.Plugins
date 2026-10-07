@@ -14,7 +14,7 @@ import argparse, pathlib, re, subprocess, sys
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 # Same rule as publish.yml's discovery, kept in one place so the two cannot drift.
-EXCLUDE = re.compile(r"Tests|BackupManager|FormsClone|obj|bin|PdfCurator|/customers/|test-environments")
+EXCLUDE = re.compile(r"Tests|BackupManager|FormsClone|obj|bin|/customers/|test-environments")
 
 
 def expand(value, text, fallback):
