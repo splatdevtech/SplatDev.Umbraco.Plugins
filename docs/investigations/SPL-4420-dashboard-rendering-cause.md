@@ -54,5 +54,3 @@ The available post-fix capture does **not** provide the clean run required to cl
 This is a confirmed revalidation failure, not evidence that the dashboards are empty or missing. SPL-4419 must first deploy the corrected asset/registration path and obtain a successful authenticated capture with zero duplicate-alias errors. Then rerun each route and record its own element, dashboard bundle HTTP status, and plugin-specific text.
 
 Evidence: `qa-runs/SPL-4419-2026-10-06/report.md`, `qa-runs/SPL-4419-2026-10-06/qa-post-fix-run.txt`, and `qa-runs/SPL-4419-2026-10-06/console/console-fresh-2026-10-06.log`.
-
-<!-- gate verification 2026-10-07T18:48:37Z -->
