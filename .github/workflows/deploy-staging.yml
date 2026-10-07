@@ -25,6 +25,11 @@ on:
         required: false
         default: true
         type: boolean
+      target_url:
+        description: "HTTPS base URL to verify after deployment"
+        required: false
+        default: https://staging-umbraco.splatdev.tech
+        type: string
 
 permissions:
   contents: read
@@ -80,7 +85,7 @@ jobs:
           mkdir -p ctx/local-packages
           packed=0; failed=0
           for csproj in $(find . -maxdepth 3 -name "SplatDev.*.csproj" \
-            | grep -v "Tests\|BackupManager\|FormsClone\|obj\|bin\|PdfCurator\|/customers/\|test-environments" \
+            | grep -v "Tests\|BackupManager\|FormsClone\|obj\|bin\|/customers/\|test-environments" \
             | sort); do
             if dotnet build "$csproj" -c Release --no-restore 2>&1 | grep -q "Build succeeded"; then
               dotnet pack "$csproj" --no-build -c Release -o ctx/local-packages >/dev/null 2>&1 || true
@@ -151,7 +156,7 @@ jobs:
       - name: Wait for the site to answer
         if: ${{ !inputs.dry_run }}
         run: |
-          url="${{ vars.STAGING_URL || 'https://staging-umbraco.splatdev.tech' }}/umbraco"
+          url="${{ inputs.target_url || vars.STAGING_URL || 'https://staging-umbraco.splatdev.tech' }}/umbraco"
           for i in $(seq 1 40); do
             code=$(curl -s -o /dev/null -w '%{http_code}' --max-time 10 "$url" || true)
             if [ "$code" = "200" ]; then echo "up after ~$((i*10))s"; exit 0; fi
@@ -165,7 +170,7 @@ jobs:
       - name: Report the extension manifest
         if: ${{ !inputs.dry_run }}
         run: |
-          url="${{ vars.STAGING_URL || 'https://staging-umbraco.splatdev.tech' }}"
+          url="${{ inputs.target_url || vars.STAGING_URL || 'https://staging-umbraco.splatdev.tech' }}"
           code=$(curl -s -o /dev/null -w '%{http_code}' --max-time 20 \
             "$url/umbraco/management/api/v1/manifest/manifest/private" || true)
           echo "manifest endpoint answered $code (401 is expected unauthenticated; 404 is not)"
