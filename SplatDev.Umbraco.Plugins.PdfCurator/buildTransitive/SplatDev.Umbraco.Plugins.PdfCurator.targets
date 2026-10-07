@@ -7,6 +7,6 @@
     <ItemGroup>
       <SplatDevUmbracoPluginsPdfCuratorContentFiles Include="$(SplatDevUmbracoPluginsPdfCuratorContentFilesPath)" />
     </ItemGroup>
-    <Copy SourceFiles="@(SplatDevUmbracoPluginsPdfCuratorContentFiles)" DestinationFiles="@(SplatDevUmbracoPluginsPdfCuratorContentFiles-&gt;'$(MSBuildProjectDirectory)\App_Plugins\%(RecursiveDir)%(Filename)%(Extension)')" SkipUnchangedFiles="true" />
+    <Copy SourceFiles="@(SplatDevUmbracoPluginsPdfCuratorContentFiles)" DestinationFiles="@(SplatDevUmbracoPluginsPdfCuratorContentFiles-&gt;'$(MSBuildProjectDirectory)\wwwroot\App_Plugins\%(RecursiveDir)%(Filename)%(Extension)')" SkipUnchangedFiles="true" />
   </Target>
 </Project>
