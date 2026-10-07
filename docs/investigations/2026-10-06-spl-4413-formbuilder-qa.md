@@ -14,7 +14,7 @@ A direct request to the exact backoffice URL returned HTTP 200 with the Umbraco 
 - Observed title: `Umbraco`
 - Observed shell marker: `<base href="/umbraco/">`
 
-The returned page was unauthenticated and did not expose a FormBuilder section, route, or plugin UI. Per the issue evidence rules, this generic shell is disqualified as feature evidence.
+A browser recheck (2026-10-07) redirected to the Umbraco login route and exposed username/password inputs, but no authenticated session was established. Submitting the injected staging credentials resulted in HTTP 400 token requests and the browser remained on the generic Umbraco shell. No FormBuilder section, route, or plugin UI was reachable. Per the issue evidence rules, this generic shell/login UI is disqualified as feature evidence.
 
 ## Required artefacts / stop reason
 
