@@ -54,3 +54,16 @@ The available post-fix capture does **not** provide the clean run required to cl
 This is a confirmed revalidation failure, not evidence that the dashboards are empty or missing. SPL-4419 must first deploy the corrected asset/registration path and obtain a successful authenticated capture with zero duplicate-alias errors. Then rerun each route and record its own element, dashboard bundle HTTP status, and plugin-specific text.
 
 Evidence: `qa-runs/SPL-4419-2026-10-06/report.md`, `qa-runs/SPL-4419-2026-10-06/qa-post-fix-run.txt`, and `qa-runs/SPL-4419-2026-10-06/console/console-fresh-2026-10-06.log`.
+
+## Fresh staging recheck (2026-10-07)
+
+A new Playwright run against `https://u17-sandbox.splatdev.tech` successfully completed the login flow and reached `/umbraco/section/content`. It then visited all 21 inventory paths. The run is still **inconclusive**, because direct section navigation rendered no body text for the routes and did not prove that each dashboard mounted. The earlier authenticated Email Templates deep-link run did load the section URL and exposed the expected exact labels (`Email Templates`, `Templates`, and `Style Settings`), but its `umb-app` body was empty and two 401 resource failures occurred; it therefore cannot serve as a clean rendering verdict.
+
+The fresh run did not capture duplicate-alias console errors on the visited paths, but this is not sufficient to declare the global registration fix verified: the route shell itself did not render route content, and the run did not establish each dashboard bundle's HTTP 200 response or plugin-specific element. Artifacts: `qa-runs/SPL-4420-simple-2026-10-07.jsonl`, `qa-spl4419-console-final.log`, and `qa-spl4419-email-templates-final.png`.
+
+**Conclusion unchanged:** SPL-4419 still needs a clean authenticated capture that demonstrates zero duplicate-alias errors, successful dashboard bundle responses, mounted plugin elements, and plugin-specific text before the 21-route matrix can be classified.
+
+## Evidence handling note
+
+The temporary Playwright scripts used for this recheck remain untracked workspace artifacts; only this investigation document is part of the deliverable.
+
