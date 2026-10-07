@@ -99,6 +99,18 @@ jobs:
           if [ "$count" = "0" ]; then echo "::error::nothing packed"; exit 1; fi
           if [ "$failed" != "0" ]; then echo "::error::$failed project(s) failed to build"; exit 1; fi
 
+      # PdfCurator is a private package dependency of the plugin. The host restore can use
+      # nuget.config + GITHUB_TOKEN, but the Docker build restores from the shipped local
+      # feed only. Copy the exact private dependencies into that feed so the image build
+      # is hermetic and does not need credentials or a secret-bearing Docker layer.
+      - name: Add private PdfCurator dependencies to local feed
+        run: |
+          for package in PdfCurator.Core PdfCurator.Web; do
+            url="https://nuget.pkg.github.com/splatdevtech/download/${package}/0.2.38/${package}.0.2.38.nupkg"
+            curl --fail --location --retry 3 --user "${GITHUB_ACTOR}:${GITHUB_TOKEN}" \
+              --output "ctx/local-packages/${package}.0.2.38.nupkg" "$url"
+          done
+
       # --packages-dir makes this fail when a plugin the props file lists has no .nupkg,
       # rather than letting the instance quietly test fewer plugins than it claims to.
       - name: Generate plugins.props
