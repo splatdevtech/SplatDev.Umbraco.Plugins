@@ -1,0 +1,25 @@
+@model SplatDev.Umbraco.Plugins.PdfCurator.Controllers.Member.MemberSurfaceModel
+@{
+    Layout = null;
+    var pageTitle = Model.Route == "dashboard" ? "Member Dashboard" : "Member Library";
+}
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" /><title>@pageTitle</title></head>
+<body>
+<main class="pdfc-member-area">
+    <h1>@pageTitle</h1>
+    @if (!Model.IsAuthenticated)
+    {
+        <p>Sign in to access your member library and reading progress.</p>
+        <a href="/member/login?returnUrl=/member">Log in</a>
+    }
+    else
+    {
+        <p data-member-content="true">Welcome, @(Model.MemberName ?? "member"). Your member library is ready.</p>
+        <nav><a href="/member">Library</a> <a href="/member/dashboard">Dashboard</a></nav>
+        <partial name="~/Views/Partials/PdfCuratorLibrary.cshtml" />
+    }
+</main>
+</body>
+</html>
