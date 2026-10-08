@@ -56,7 +56,7 @@
 
 	<ItemGroup>
 		<EmbeddedResource Include="App_Plugins\**\*" />
-		<None Include="Views\**\*">
+		<None Include="Views\**\*" Pack="true" PackagePath="Views">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</None>
 	</ItemGroup>
