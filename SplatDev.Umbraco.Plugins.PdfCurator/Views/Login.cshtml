@@ -1,4 +1,4 @@
-@model SplatDev.Umbraco.Plugins.PdfCurator.Controllers.Member.MemberSurfaceModel
+@model SplatDev.Umbraco.Plugins.PdfCurator.Controllers.Member.MemberLoginModel
 @{ Layout = null; }
 <!doctype html>
 <html lang="en">
@@ -6,8 +6,17 @@
 <body>
 <main class="pdfc-member-area">
     <h1>Member Login</h1>
-    <p>Member authentication is provided by the host site.</p>
-    <a href="/login?returnUrl=/member">Continue to login</a>
+    @if (!string.IsNullOrWhiteSpace(Model.Error)) { <p role="alert">@Model.Error</p> }
+    <form method="post" action="/member/login">
+        @Html.AntiForgeryToken()
+        <input type="hidden" name="ReturnUrl" value="@Model.ReturnUrl" />
+        <label for="email">Email</label>
+        <input id="email" name="Email" type="email" autocomplete="username" required />
+        <label for="password">Password</label>
+        <input id="password" name="Password" type="password" autocomplete="current-password" required />
+        <label><input name="RememberMe" type="checkbox" value="true" /> Remember me</label>
+        <button type="submit">Sign in</button>
+    </form>
 </main>
 </body>
 </html>

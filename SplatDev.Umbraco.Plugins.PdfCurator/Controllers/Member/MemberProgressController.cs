@@ -1,6 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
+using PdfCurator.Core.Data;
+using PdfCurator.Core.Entities;
+
 using SplatDev.Umbraco.Plugins.PdfCurator.Authorization;
 using SplatDev.Umbraco.Plugins.PdfCurator.Entities;
 using SplatDev.Umbraco.Plugins.PdfCurator.Migrations;
@@ -25,6 +28,25 @@ public class MemberProgressController : ControllerBase
         _memberManager = memberManager;
     }
 
+    [HttpGet]
+    public async Task<IActionResult> GetProgress(CancellationToken ct = default)
+    {
+        var memberKey = await GetMemberKeyAsync();
+        if (memberKey is null)
+        {
+            return Unauthorized();
+        }
+
+        await using var db = await _dbFactory.CreateDbContextAsync(ct);
+        var progress = await db.Progress
+            .Where(p => p.MemberKey == memberKey.Value)
+            .OrderByDescending(p => p.UpdatedAt)
+            .Select(p => new { p.BookId, p.Page, p.PageCount, p.UpdatedAt })
+            .ToListAsync(ct);
+
+        return Ok(progress);
+    }
+
     [HttpGet("{bookId:int}")]
     public async Task<IActionResult> GetProgress(int bookId, CancellationToken ct = default)
     {
@@ -40,10 +62,10 @@ public class MemberProgressController : ControllerBase
 
         if (progress is null)
         {
-            return Ok(new { page = 0, pageCount = 0 });
+            return Ok(new { bookId, page = 0, pageCount = 0 });
         }
 
-        return Ok(new { progress.Page, progress.PageCount, progress.UpdatedAt });
+        return Ok(new { progress.BookId, progress.Page, progress.PageCount, progress.UpdatedAt });
     }
 
     [HttpPut("{bookId:int}")]

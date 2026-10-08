@@ -1,6 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
+using PdfCurator.Core.Data;
+using PdfCurator.Core.Entities;
+
 using SplatDev.Umbraco.Plugins.PdfCurator.Authorization;
 using SplatDev.Umbraco.Plugins.PdfCurator.Entities;
 using SplatDev.Umbraco.Plugins.PdfCurator.Migrations;
@@ -35,11 +38,18 @@ public class MemberFavoritesController : ControllerBase
         }
 
         await using var db = await _dbFactory.CreateDbContextAsync(ct);
-        var favs = await db.Favorites
-            .Where(f => f.MemberKey == memberKey.Value)
-            .OrderByDescending(f => f.CreatedAt)
-            .Select(f => new { f.BookId, f.CreatedAt })
-            .ToListAsync(ct);
+        var favs = await (
+            from favorite in db.Favorites
+            join book in db.Set<Book>() on favorite.BookId equals book.Id
+            where favorite.MemberKey == memberKey.Value && book.Status == BookStatus.Filed
+            orderby favorite.CreatedAt descending
+            select new
+            {
+                favorite.BookId,
+                bookTitle = book.Title,
+                bookAuthor = book.Author,
+                favorite.CreatedAt,
+            }).ToListAsync(ct);
 
         return Ok(favs);
     }
