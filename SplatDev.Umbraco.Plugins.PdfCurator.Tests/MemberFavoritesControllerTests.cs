@@ -3,6 +3,9 @@ using Microsoft.EntityFrameworkCore;
 
 using Moq;
 
+using PdfCurator.Core.Data;
+using PdfCurator.Core.Entities;
+
 using SplatDev.Umbraco.Plugins.PdfCurator.Controllers.Member;
 using SplatDev.Umbraco.Plugins.PdfCurator.Entities;
 using SplatDev.Umbraco.Plugins.PdfCurator.Migrations;
@@ -24,9 +27,17 @@ public class MemberFavoritesControllerTests
 
     private static readonly Guid MemberKey = Guid.NewGuid();
 
-    private static Mock<IDbContextFactory<MemberDbContext>> CreateDbFactory(MemberDbContext db)
+    private static Mock<IDbContextFactory<MemberDbContext>> CreateMemberDbFactory(MemberDbContext db)
     {
         var factory = new Mock<IDbContextFactory<MemberDbContext>>();
+        factory.Setup(f => f.CreateDbContextAsync(It.IsAny<CancellationToken>()))
+            .ReturnsAsync(db);
+        return factory;
+    }
+
+    private static Mock<IDbContextFactory<CuratorDbContext>> CreateCuratorDbFactory(CuratorDbContext db)
+    {
+        var factory = new Mock<IDbContextFactory<CuratorDbContext>>();
         factory.Setup(f => f.CreateDbContextAsync(It.IsAny<CancellationToken>()))
             .ReturnsAsync(db);
         return factory;
@@ -40,10 +51,20 @@ public class MemberFavoritesControllerTests
         return new TestMemberDbContext(options);
     }
 
+    private static CuratorDbContext CreateInMemoryCuratorDb()
+    {
+        var options = new DbContextOptionsBuilder<CuratorDbContext>()
+            .UseInMemoryDatabase(Guid.NewGuid().ToString())
+            .Options;
+        return new CuratorDbContext(options);
+    }
+
     private static MemberFavoritesController CreateController(
         MemberDbContext db,
+        CuratorDbContext? curatorDb = null,
         bool authenticated = true)
     {
+        curatorDb ??= CreateInMemoryCuratorDb();
         var memberManagerMock = new Mock<IMemberManager>();
         if (authenticated)
         {
@@ -62,7 +83,8 @@ public class MemberFavoritesControllerTests
         }
 
         return new MemberFavoritesController(
-            CreateDbFactory(db).Object,
+            CreateMemberDbFactory(db).Object,
+            CreateCuratorDbFactory(curatorDb).Object,
             memberManagerMock.Object);
     }
 
@@ -93,9 +115,15 @@ public class MemberFavoritesControllerTests
     }
 
     [Fact]
+    [Trait("Category", "Regression")]
     public async Task GetFavorites_ReturnsFavoritesForCurrentMember()
     {
         await using var db = CreateInMemoryDb();
+        await using var curatorDb = CreateInMemoryCuratorDb();
+        curatorDb.Books.AddRange(
+            new Book { Id = 1, Title = "One", Author = "Author One", Status = BookStatus.Filed },
+            new Book { Id = 2, Title = "Two", Author = "Author Two", Status = BookStatus.Filed });
+        await curatorDb.SaveChangesAsync();
         db.Favorites.AddRange(
             new MemberFavorite { MemberKey = MemberKey, BookId = 1, CreatedAt = DateTime.UtcNow },
             new MemberFavorite { MemberKey = MemberKey, BookId = 2, CreatedAt = DateTime.UtcNow },
@@ -103,7 +131,7 @@ public class MemberFavoritesControllerTests
         );
         await db.SaveChangesAsync();
 
-        var controller = CreateController(db);
+        var controller = CreateController(db, curatorDb);
 
         var result = await controller.GetFavorites();
 
