@@ -1,6 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
+using PdfCurator.Core.Data;
+using PdfCurator.Core.Entities;
+
 using SplatDev.Umbraco.Plugins.PdfCurator.Authorization;
 using SplatDev.Umbraco.Plugins.PdfCurator.Entities;
 using SplatDev.Umbraco.Plugins.PdfCurator.Migrations;
@@ -14,14 +17,17 @@ namespace SplatDev.Umbraco.Plugins.PdfCurator.Controllers.Member;
 [Route("umbraco/pdfcurator/api/v1/member/favorites")]
 public class MemberFavoritesController : ControllerBase
 {
-    private readonly IDbContextFactory<MemberDbContext> _dbFactory;
+    private readonly IDbContextFactory<MemberDbContext> _memberDbFactory;
+    private readonly IDbContextFactory<CuratorDbContext> _curatorDbFactory;
     private readonly IMemberManager _memberManager;
 
     public MemberFavoritesController(
-        IDbContextFactory<MemberDbContext> dbFactory,
+        IDbContextFactory<MemberDbContext> memberDbFactory,
+        IDbContextFactory<CuratorDbContext> curatorDbFactory,
         IMemberManager memberManager)
     {
-        _dbFactory = dbFactory;
+        _memberDbFactory = memberDbFactory;
+        _curatorDbFactory = curatorDbFactory;
         _memberManager = memberManager;
     }
 
@@ -34,14 +40,40 @@ public class MemberFavoritesController : ControllerBase
             return Unauthorized();
         }
 
-        await using var db = await _dbFactory.CreateDbContextAsync(ct);
-        var favs = await db.Favorites
-            .Where(f => f.MemberKey == memberKey.Value)
-            .OrderByDescending(f => f.CreatedAt)
-            .Select(f => new { f.BookId, f.CreatedAt })
+        await using var memberDb = await _memberDbFactory.CreateDbContextAsync(ct);
+        var favorites = await memberDb.Favorites
+            .Where(favorite => favorite.MemberKey == memberKey.Value)
+            .OrderByDescending(favorite => favorite.CreatedAt)
+            .Select(favorite => new { favorite.BookId, favorite.CreatedAt })
             .ToListAsync(ct);
 
-        return Ok(favs);
+        if (favorites.Count == 0)
+        {
+            return Ok(Array.Empty<object>());
+        }
+
+        var bookIds = favorites.Select(favorite => favorite.BookId).ToArray();
+        await using var curatorDb = await _curatorDbFactory.CreateDbContextAsync(ct);
+        var books = await curatorDb.Books
+            .Where(book => bookIds.Contains(book.Id) && book.Status == BookStatus.Filed)
+            .Select(book => new { book.Id, book.Title, book.Author })
+            .ToDictionaryAsync(book => book.Id, ct);
+
+        var result = favorites
+            .Where(favorite => books.ContainsKey(favorite.BookId))
+            .Select(favorite =>
+            {
+                var book = books[favorite.BookId];
+                return new
+                {
+                    favorite.BookId,
+                    bookTitle = book.Title,
+                    bookAuthor = book.Author,
+                    favorite.CreatedAt,
+                };
+            });
+
+        return Ok(result);
     }
 
     [HttpPut("{bookId:int}")]
@@ -53,7 +85,7 @@ public class MemberFavoritesController : ControllerBase
             return Unauthorized();
         }
 
-        await using var db = await _dbFactory.CreateDbContextAsync(ct);
+        await using var db = await _memberDbFactory.CreateDbContextAsync(ct);
         var existing = await db.Favorites
             .FirstOrDefaultAsync(f => f.MemberKey == memberKey.Value && f.BookId == bookId, ct);
 
@@ -76,7 +108,7 @@ public class MemberFavoritesController : ControllerBase
             return Unauthorized();
         }
 
-        await using var db = await _dbFactory.CreateDbContextAsync(ct);
+        await using var db = await _memberDbFactory.CreateDbContextAsync(ct);
         var fav = await db.Favorites
             .FirstOrDefaultAsync(f => f.MemberKey == memberKey.Value && f.BookId == bookId, ct);
 
