@@ -7,6 +7,7 @@ using PdfCurator.Core.Entities;
 using SplatDev.Umbraco.Plugins.PdfCurator.Authorization;
 using SplatDev.Umbraco.Plugins.PdfCurator.Entities;
 using SplatDev.Umbraco.Plugins.PdfCurator.Migrations;
+using SplatDev.Umbraco.Plugins.PdfCurator.Services;
 
 using Umbraco.Cms.Core.Security;
 
@@ -20,15 +21,18 @@ public class MemberFavoritesController : ControllerBase
     private readonly IDbContextFactory<MemberDbContext> _memberDbFactory;
     private readonly IDbContextFactory<CuratorDbContext> _curatorDbFactory;
     private readonly IMemberManager _memberManager;
+    private readonly MemberGroupScopingService? _scopingService;
 
     public MemberFavoritesController(
         IDbContextFactory<MemberDbContext> memberDbFactory,
         IDbContextFactory<CuratorDbContext> curatorDbFactory,
-        IMemberManager memberManager)
+        IMemberManager memberManager,
+        MemberGroupScopingService? scopingService = null)
     {
         _memberDbFactory = memberDbFactory;
         _curatorDbFactory = curatorDbFactory;
         _memberManager = memberManager;
+        _scopingService = scopingService;
     }
 
     [HttpGet]
@@ -54,8 +58,16 @@ public class MemberFavoritesController : ControllerBase
 
         var bookIds = favorites.Select(favorite => favorite.BookId).ToArray();
         await using var curatorDb = await _curatorDbFactory.CreateDbContextAsync(ct);
-        var books = await curatorDb.Books
-            .Where(book => bookIds.Contains(book.Id) && book.Status == BookStatus.Filed)
+        var booksQuery = curatorDb.Books
+            .Where(book => bookIds.Contains(book.Id) && book.Status == BookStatus.Filed);
+
+        if (_scopingService is not null && _scopingService.IsConfigured())
+        {
+            var allowedCategories = (await _scopingService.GetAllowedCategoriesAsync()).ToList();
+            booksQuery = booksQuery.Where(book => book.Category != null && allowedCategories.Contains(book.Category));
+        }
+
+        var books = await booksQuery
             .Select(book => new { book.Id, book.Title, book.Author })
             .ToDictionaryAsync(book => book.Id, ct);
 
