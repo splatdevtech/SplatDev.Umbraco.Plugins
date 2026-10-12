@@ -30,22 +30,22 @@ function T(t) {
     return l;
   };
 }
-var A = Object.defineProperty, C = Object.getOwnPropertyDescriptor, g = (t) => {
+var A = Object.defineProperty, C = Object.getOwnPropertyDescriptor, _ = (t) => {
   throw TypeError(t);
 }, h = (t, e, s, n) => {
   for (var r = n > 1 ? void 0 : n ? C(e, s) : e, o = t.length - 1, a; o >= 0; o--)
     (a = t[o]) && (r = (n ? a(e, s, r) : a(r)) || r);
   return n && r && A(e, s, r), r;
-}, E = (t, e, s) => e.has(t) || g("Cannot " + s), _ = (t, e, s) => (E(t, e, "read from private field"), s ? s.call(t) : e.get(t)), F = (t, e, s) => e.has(t) ? g("Cannot add the same private member more than once") : e instanceof WeakSet ? e.add(t) : e.set(t, s), c;
+}, E = (t, e, s) => e.has(t) || _("Cannot " + s), g = (t, e, s) => (E(t, e, "read from private field"), s ? s.call(t) : e.get(t)), F = (t, e, s) => e.has(t) ? _("Cannot add the same private member more than once") : e instanceof WeakSet ? e.add(t) : e.set(t, s), c;
 let i = class extends x(w) {
   constructor() {
     super(...arguments), F(this, c, T(this)), this._member = [], this._memberName = "", this._status = null, this._loading = !1, this._message = null, this._api = "/umbraco/api/twofactor/admin";
   }
   async _checkStatus() {
-    if (this._memberId) {
+    if (this._member.length !== 0) {
       this._loading = !0, this._message = null;
       try {
-        const t = await _(this, c).call(this, `${this._api}/IsEnabled?member=${encodeURIComponent(this._member[0] ?? "")}`, { credentials: "same-origin" });
+        const t = await g(this, c).call(this, `${this._api}/IsEnabled?member=${encodeURIComponent(this._member[0] ?? "")}`, { credentials: "same-origin" });
         if (!t.ok) throw new Error(String(t.status));
         const e = await t.json();
         this._status = e.enabled, this._memberName = e.memberName ?? "";
@@ -60,7 +60,7 @@ let i = class extends x(w) {
     if (confirm("Revoke 2FA for this member? They will need to enrol again.")) {
       this._loading = !0;
       try {
-        const t = await _(this, c).call(this, `${this._api}/Disable?member=${encodeURIComponent(this._member[0] ?? "")}`, { method: "POST", credentials: "same-origin" });
+        const t = await g(this, c).call(this, `${this._api}/Disable?member=${encodeURIComponent(this._member[0] ?? "")}`, { method: "POST", credentials: "same-origin" });
         if (!t.ok) throw new Error(String(t.status));
         const e = await t.json();
         this._status = !1, this._message = { type: "success", text: e.message ?? "2FA revoked." };
@@ -152,8 +152,8 @@ h([
 i = h([
   v("twofactor-dashboard")
 ], i);
-const z = i;
+const D = i;
 export {
   i as TwoFactorDashboardElement,
-  z as default
+  D as default
 };
