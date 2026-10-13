@@ -42,7 +42,7 @@ export class TwoFactorDashboardElement extends UmbElementMixin(LitElement) {
   private readonly _api = "/umbraco/api/twofactor/admin";
 
   private async _checkStatus(): Promise<void> {
-    if (this._member.length === 0) return;
+    if (!this._member[0]) return;
     this._loading = true;
     this._message = null;
     try {
