@@ -110,6 +110,16 @@ jobs:
         run: |
           cp infra/testing-instances/u17/Dockerfile ctx/Dockerfile
           cp infra/testing-instances/docker-compose.yml ctx/docker-compose.yml
+          # The Umbraco template records are seeded in the database, but their
+          # Razor implementations must be present in the image or published
+          # routes return 404. Keep the physical templates in the deploy context.
+          mkdir -p ctx/Views
+          cp test-environments/Umbraco17.Baseline/Views/seedHome.cshtml ctx/Views/seedHome.cshtml
+          cp test-environments/Umbraco17.Baseline/Views/seedContentPage.cshtml ctx/Views/seedContentPage.cshtml
+          # PackageReference views are not guaranteed to be copied into the generated
+          # Umbraco app. Ship the member partial explicitly for the seeded routes.
+          mkdir -p ctx/Views/Partials
+          cp SplatDev.Umbraco.Plugins.PdfCurator/Views/Partials/PdfCuratorLibrary.cshtml ctx/Views/Partials/PdfCuratorLibrary.cshtml
           du -sh ctx | sed 's/^/context: /'
 
       - name: Install sshpass

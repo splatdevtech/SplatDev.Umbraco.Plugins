@@ -1,0 +1,35 @@
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@{
+    Layout = null;
+}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>@Model.Name</title>
+    <meta name="description" content="@Model.Value("metaDescription")" />
+</head>
+<body>
+    <main>
+        <h1>@Model.Name</h1>
+        <div>@Model.Value("bodyText")</div>
+        @if (Model.Name is "Library" or "Books" or "Favorites" or "Member")
+        {
+            @await Html.PartialAsync("~/Views/Partials/PdfCuratorLibrary.cshtml")
+        }
+        else if (Model.Name == "Login")
+        {
+            <h2>Member login</h2>
+            <p>Sign in to access your library.</p>
+            <form method="post" action="/umbraco/api/memberlogin/Login">
+                <label for="username">Username or email</label>
+                <input id="username" name="username" autocomplete="username" required />
+                <label for="password">Password</label>
+                <input id="password" name="password" type="password" autocomplete="current-password" required />
+                <button type="submit">Sign in</button>
+            </form>
+        }
+    </main>
+</body>
+</html>
