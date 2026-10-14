@@ -1,0 +1,20 @@
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@{
+    Layout = null;
+}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>@Model.Name</title>
+    <meta name="description" content="@Model.Value("metaDescription")" />
+</head>
+<body>
+    <main>
+        <h1>@Model.Name</h1>
+        @Model.Value("bodyText")
+        @RenderBody()
+    </main>
+</body>
+</html>
