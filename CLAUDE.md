@@ -206,7 +206,9 @@ One id is still deliberately left alone: `…Plugins.HideContent` (a `umbracoNav
 has no current equivalent to point anyone at — and is in any case no longer listed on
 nuget.org at all.
 
-**Private feed.** `nuget.config` maps `PdfCurator.*` to `https://nuget.pkg.github.com/splatdevtech/` and reads `%GITHUB_ACTOR%` / `%GITHUB_TOKEN%` from the environment. Restore of PdfCurator fails without those set.
+**Private feed.** `nuget.config` maps `PdfCurator.*` to `https://nuget.pkg.github.com/splatdevtech/` and reads `%GITHUB_ACTOR%` / `%GITHUB_TOKEN%` from the environment. Restore of PdfCurator fails without those set. The runner always provides `GITHUB_ACTOR`, so the one that goes missing is the token — and it is a *workflow-level* `env:`, not something `permissions: packages: read` supplies. `publish.yml` never set it, which is how **v2.13.0 published nothing at all**: the solution restore is the third step, it ended in `NU1301` for PdfCurator, PdfCurator.Tests and Umbraco17.Baseline, and the job died before packing a single package.
+
+What hid that is the NuGet cache step immediately before it, keyed on `hashFiles('**/*.csproj', …)`. With a warm cache `PdfCurator.Core`/`.Web` are already in `~/.nuget/packages` and restore never contacts the feed, so the missing credential is invisible. A release that bumps a lot of `<Version>`s changes that hash, misses the cache, and surfaces the break — on a tag, where it costs a release, rather than on a PR. Any workflow that restores the solution needs the token; `build.yml` and `deploy-staging.yml` always had it, and `publish.yml` now does too.
 
 **A package NuGet is still validating looks exactly like one it rejected.** Both answer
 404 from the flat container, the registration and the package page, and neither says why.
