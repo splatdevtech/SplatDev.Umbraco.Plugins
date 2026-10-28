@@ -12,8 +12,8 @@ Enhanced Examine/Lucene search library for Umbraco — extends the built-in Exam
 
 | .NET | Umbraco | Package Version |
 |------|---------|-----------------|
-| 8.0  | 13.12.0 | 2.0.5           |
-| 10.0 | 17.3.4  | 2.0.5           |
+| 8.0  | 13.12.0 | 2.0.6           |
+| 10.0 | 17.3.4  | 2.0.6           |
 
 ## Installation
 

@@ -16,8 +16,8 @@ Umbraco countries data plugin — seeds and maintains a `countries` database tab
 
 | Umbraco | .NET | Package Version |
 |---------|------|-----------------|
-| 13.x    | 8.0  | 2.2.2           |
-| 17.x    | 10.0 | 2.2.2           |
+| 13.x    | 8.0  | 2.2.3           |
+| 17.x    | 10.0 | 2.2.3           |
 
 ## Installation
 

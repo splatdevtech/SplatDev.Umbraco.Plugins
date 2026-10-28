@@ -15,8 +15,8 @@ Umbraco OAuth social login plugin — member authentication via Google, Facebook
 
 | Umbraco | .NET | Package Version |
 |---------|------|-----------------|
-| 13.x    | 8.0  | 2.2.4           |
-| 17.x    | 10.0 | 2.2.4           |
+| 13.x    | 8.0  | 2.2.5           |
+| 17.x    | 10.0 | 2.2.5           |
 
 ## Installation
 

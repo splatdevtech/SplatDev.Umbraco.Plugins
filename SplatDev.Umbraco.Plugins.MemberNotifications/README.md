@@ -11,7 +11,7 @@ Member-facing in-app notification system for Umbraco 17 (net10.0). Stores notifi
 
 | Umbraco | .NET | Package Version |
 |---------|------|-----------------|
-| 17.x    | 10.0 | 1.3.0           |
+| 17.x    | 10.0 | 1.3.1           |
 
 ## Installation
 

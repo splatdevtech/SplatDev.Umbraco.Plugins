@@ -17,8 +17,8 @@ Content restriction plugin for Umbraco — member-only content gates using Umbra
 
 | Umbraco | .NET | Package Version |
 |---------|------|-----------------|
-| 13.x    | 8.0  | 2.5.4           |
-| 17.x    | 10.0 | 2.5.4           |
+| 13.x    | 8.0  | 2.5.5           |
+| 17.x    | 10.0 | 2.5.5           |
 
 ## Installation
 

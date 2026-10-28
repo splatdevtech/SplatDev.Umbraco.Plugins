@@ -15,8 +15,8 @@ Document type properties report for Umbraco — generate a comprehensive report 
 
 | Umbraco | .NET | Package Version |
 |---------|------|-----------------|
-| 13.x    | 8.0  | 2.3.2           |
-| 17.x    | 10.0 | 2.3.2           |
+| 13.x    | 8.0  | 2.3.3           |
+| 17.x    | 10.0 | 2.3.3           |
 
 ## Installation
 

@@ -15,8 +15,8 @@ Toast / snackbar notification system for Umbraco — manage configurable notific
 
 | Umbraco | .NET | Package Version |
 |---------|------|-----------------|
-| 13.x    | 8.0  | 2.4.4           |
-| 17.x    | 10.0 | 2.4.4           |
+| 13.x    | 8.0  | 2.4.5           |
+| 17.x    | 10.0 | 2.4.5           |
 
 ## Installation
 

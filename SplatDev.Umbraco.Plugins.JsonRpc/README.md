@@ -15,8 +15,8 @@ JSON-RPC 2.0 API endpoint for Umbraco — expose content as JSON-RPC with API ke
 
 | Umbraco | .NET | Package Version | Dashboard |
 |---------|------|-----------------|-----------|
-| 13.x    | 8.0  | 2.2.7           | AngularJS |
-| 17.x    | 10.0 | 2.2.7           | Lit (Bellissima) |
+| 13.x    | 8.0  | 2.2.8           | AngularJS |
+| 17.x    | 10.0 | 2.2.8           | Lit (Bellissima) |
 
 ## Installation
 

@@ -15,8 +15,8 @@ Dropzone.js file upload integration for Umbraco — drag-and-drop upload straigh
 
 | Umbraco | .NET | Package Version |
 |---------|------|-----------------|
-| 13.x    | 8.0  | 1.2.9           |
-| 17.x    | 10.0 | 1.2.9           |
+| 13.x    | 8.0  | 1.2.10          |
+| 17.x    | 10.0 | 1.2.10          |
 
 ## Installation
 

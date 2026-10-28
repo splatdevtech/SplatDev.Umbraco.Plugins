@@ -15,8 +15,8 @@ Umbraco short URL plugin — generate, store, and resolve short URLs backed by a
 
 | Umbraco | .NET | Package Version |
 |---------|------|-----------------|
-| 13.x    | 8.0  | 2.1.13          |
-| 17.x    | 10.0 | 2.1.13          |
+| 13.x    | 8.0  | 2.1.14          |
+| 17.x    | 10.0 | 2.1.14          |
 
 ## Installation
 

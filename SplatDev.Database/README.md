@@ -12,8 +12,8 @@ Generic NPoco-based CRUD repository layer with automatic table creation and attr
 
 | .NET | Umbraco | Package Version |
 |------|---------|-----------------|
-| 8.0  | 13      | 1.0.2           |
-| 10.0 | 17      | 1.0.2           |
+| 8.0  | 13      | 1.0.3           |
+| 10.0 | 17      | 1.0.3           |
 
 ## Installation
 

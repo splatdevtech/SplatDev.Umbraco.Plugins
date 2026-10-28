@@ -21,8 +21,8 @@ Photo gallery plugin for Umbraco — stores gallery albums and photos with EF Co
 
 | Umbraco | .NET | Package Version | Dashboard |
 |---------|------|-----------------|-----------|
-| 13.x    | 8.0  | 1.4.3           | AngularJS |
-| 17.x    | 10.0 | 1.4.3           | Lit (Bellissima) |
+| 13.x    | 8.0  | 1.4.4           | AngularJS |
+| 17.x    | 10.0 | 1.4.4           | Lit (Bellissima) |
 
 ## Installation
 

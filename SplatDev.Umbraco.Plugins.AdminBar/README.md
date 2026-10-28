@@ -15,8 +15,8 @@ Fixed admin bar for Umbraco — injects a toolbar at the top of front-end pages 
 
 | Umbraco | .NET | Package Version |
 |---------|------|-----------------|
-| 13.x    | 8.0  | 2.3.3           |
-| 17.x    | 10.0 | 2.3.3           |
+| 13.x    | 8.0  | 2.3.4           |
+| 17.x    | 10.0 | 2.3.4           |
 
 ## Installation
 

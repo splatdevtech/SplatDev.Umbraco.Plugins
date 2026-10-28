@@ -15,8 +15,8 @@ Examine search extensions for Umbraco — query helpers, index inspection, and r
 
 | Umbraco | .NET | Package Version |
 |---------|------|-----------------|
-| 13.x    | 8.0  | 1.2.6           |
-| 17.x    | 10.0 | 1.2.6           |
+| 13.x    | 8.0  | 1.2.7           |
+| 17.x    | 10.0 | 1.2.7           |
 
 ## Installation
 

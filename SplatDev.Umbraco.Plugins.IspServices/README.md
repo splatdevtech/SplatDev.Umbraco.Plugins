@@ -11,8 +11,8 @@ Umbraco ISP / IP resolution service — resolves client IP addresses including X
 
 | Umbraco | .NET | Package Version |
 |---------|------|-----------------|
-| 13.x    | 8.0  | 2.0.4           |
-| 17.x    | 10.0 | 2.0.4           |
+| 13.x    | 8.0  | 2.0.5           |
+| 17.x    | 10.0 | 2.0.5           |
 
 ## Installation
 

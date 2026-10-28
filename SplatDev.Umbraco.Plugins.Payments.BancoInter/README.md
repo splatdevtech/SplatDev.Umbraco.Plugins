@@ -15,8 +15,8 @@ Banco Inter payment integration for Umbraco — supports Pix (immediate and due 
 
 | Umbraco | .NET | Package Version |
 |---------|------|-----------------|
-| 13.x    | 8.0  | 1.3.2           |
-| 17.x    | 10.0 | 1.3.2           |
+| 13.x    | 8.0  | 1.3.3           |
+| 17.x    | 10.0 | 1.3.3           |
 
 ## Installation
 

@@ -15,8 +15,8 @@ Import YAML document type definitions into Umbraco — creates and updates conte
 
 | Umbraco | .NET | Package Version |
 |---------|------|-----------------|
-| 13.x    | 8.0  | 1.1.5           |
-| 17.x    | 10.0 | 1.1.5           |
+| 13.x    | 8.0  | 1.1.6           |
+| 17.x    | 10.0 | 1.1.6           |
 
 ## Installation
 

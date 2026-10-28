@@ -12,8 +12,8 @@ SendGrid email provider for `SplatDev.Messaging` — sends emails via the SendGr
 
 | .NET | Umbraco | Package Version |
 |------|---------|-----------------|
-| 8.0  | 13      | 1.0.2           |
-| 10.0 | 17      | 1.0.2           |
+| 8.0  | 13      | 1.0.3           |
+| 10.0 | 17      | 1.0.3           |
 
 ## Installation
 

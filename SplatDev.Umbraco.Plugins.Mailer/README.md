@@ -15,8 +15,8 @@ Umbraco email integration plugin — send templated HTML emails from Umbraco usi
 
 | Umbraco | .NET | Package Version |
 |---------|------|-----------------|
-| 13.x    | 8.0  | 2.1.12          |
-| 17.x    | 10.0 | 2.1.12          |
+| 13.x    | 8.0  | 2.1.13          |
+| 17.x    | 10.0 | 2.1.13          |
 
 ## Installation
 

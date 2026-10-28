@@ -21,8 +21,8 @@ Image slider plugin for Umbraco — stores slide data with EF Core, managed from
 
 | Umbraco | .NET | Package Version |
 |---------|------|-----------------|
-| 13.x    | 8.0  | 1.4.3           |
-| 17.x    | 10.0 | 1.4.3           |
+| 13.x    | 8.0  | 1.4.4           |
+| 17.x    | 10.0 | 1.4.4           |
 
 ## Installation
 

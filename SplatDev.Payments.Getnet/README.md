@@ -13,8 +13,8 @@ Targets both `net8.0` (Umbraco 13) and `net10.0` (Umbraco 17). Transport-only; t
 
 | Umbraco | .NET | Package Version |
 |---------|------|-----------------|
-| 13.x    | 8.0  | 1.0.4           |
-| 17.x    | 10.0 | 1.0.4           |
+| 13.x    | 8.0  | 1.0.5           |
+| 17.x    | 10.0 | 1.0.5           |
 
 ## Installation
 

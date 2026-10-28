@@ -12,8 +12,8 @@ Task scheduler with EF Core persistence and reflection-based invocation — sche
 
 | .NET | Umbraco | Package Version |
 |------|---------|-----------------|
-| 8.0  | 13      | 1.0.3           |
-| 10.0 | 17      | 1.0.3           |
+| 8.0  | 13      | 1.0.4           |
+| 10.0 | 17      | 1.0.4           |
 
 ## Installation
 

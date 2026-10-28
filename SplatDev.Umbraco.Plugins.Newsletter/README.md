@@ -14,7 +14,7 @@ Newsletter subscriber lists, campaigns, Mailgun bulk send, and stats tracking fo
 
 | Umbraco | .NET | Package Version |
 |---------|------|-----------------|
-| 17.x    | 10.0 | 1.3.8           |
+| 17.x    | 10.0 | 1.3.9           |
 
 ## Installation
 

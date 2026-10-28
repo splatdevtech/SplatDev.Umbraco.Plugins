@@ -15,8 +15,8 @@ Umbraco exception handling middleware plugin — configures production error pag
 
 | Umbraco | .NET | Package Version |
 |---------|------|-----------------|
-| 13.x    | 8.0  | 2.1.11          |
-| 17.x    | 10.0 | 2.1.11          |
+| 13.x    | 8.0  | 2.1.12          |
+| 17.x    | 10.0 | 2.1.12          |
 
 ## Installation
 

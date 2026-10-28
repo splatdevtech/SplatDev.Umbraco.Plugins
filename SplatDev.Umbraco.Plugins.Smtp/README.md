@@ -15,8 +15,8 @@ SMTP email configuration UI for Umbraco backoffice — configure, test, and mana
 
 | Umbraco | .NET | Package Version |
 |---------|------|-----------------|
-| 13.x    | 8.0  | 2.4.5           |
-| 17.x    | 10.0 | 2.4.5           |
+| 13.x    | 8.0  | 2.4.6           |
+| 17.x    | 10.0 | 2.4.6           |
 
 ## Installation
 

@@ -12,8 +12,8 @@ Core pagination library for the SplatDev Umbraco ecosystem — provides `PagedRe
 
 | .NET | Umbraco | Package Version |
 |------|---------|-----------------|
-| 8.0  | N/A     | 2.0.5           |
-| 10.0 | N/A     | 2.0.5           |
+| 8.0  | N/A     | 2.0.6           |
+| 10.0 | N/A     | 2.0.6           |
 
 This package has no Umbraco dependency and works in any .NET 8+ or .NET 10+ application.
 

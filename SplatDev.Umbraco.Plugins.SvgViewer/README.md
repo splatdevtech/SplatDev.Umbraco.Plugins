@@ -17,8 +17,8 @@ SVG file viewer plugin for Umbraco — renders SVGs from the media library inlin
 
 | Umbraco | .NET | Package Version |
 |---------|------|-----------------|
-| 13.x    | 8.0  | 1.2.4           |
-| 17.x    | 10.0 | 1.2.4           |
+| 13.x    | 8.0  | 1.2.5           |
+| 17.x    | 10.0 | 1.2.5           |
 
 ## Installation
 

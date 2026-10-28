@@ -29,8 +29,8 @@ Foundation theme package for Umbraco 13 / Umbraco 17. Provides reusable document
 
 | Umbraco Version | .NET Target | Package Version |
 |-----------------|-------------|-----------------|
-| 13.x            | net8.0      | 1.0.7           |
-| 17.x            | net10.0     | 1.0.7           |
+| 13.x            | net8.0      | 1.0.8           |
+| 17.x            | net10.0     | 1.0.8           |
 
 **NuGet dependency:** `SplatDev.Umbraco.Plugins.Yaml2Schema` 1.0.35+
 

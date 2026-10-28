@@ -12,8 +12,8 @@ StackExchange.Redis adapter for `SplatDev.Cache` abstractions — distributed ca
 
 | .NET | Umbraco | Package Version |
 |------|---------|-----------------|
-| 8.0  | 13      | 1.0.2           |
-| 10.0 | 17      | 1.0.2           |
+| 8.0  | 13      | 1.0.3           |
+| 10.0 | 17      | 1.0.3           |
 
 ## Installation
 

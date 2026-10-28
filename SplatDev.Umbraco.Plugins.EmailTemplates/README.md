@@ -15,7 +15,7 @@ Email template engine with variable substitution, preview, and singleton style s
 
 | Umbraco | .NET | Package Version |
 |---------|------|-----------------|
-| 17.x    | 10.0 | 1.3.5           |
+| 17.x    | 10.0 | 1.3.6           |
 
 ## Installation
 

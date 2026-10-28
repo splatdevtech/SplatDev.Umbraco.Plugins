@@ -12,8 +12,8 @@ HTML and markup helper extensions for Umbraco 13 (net8.0) and Umbraco 17 (net10.
 
 | .NET | Umbraco | Package Version |
 |------|---------|-----------------|
-| 8.0  | 13      | 2.0.3           |
-| 10.0 | 17      | 2.0.3           |
+| 8.0  | 13      | 2.0.4           |
+| 10.0 | 17      | 2.0.4           |
 
 ## Installation
 

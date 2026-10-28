@@ -29,8 +29,8 @@ A lightweight quick poll plugin for Umbraco 13 and Umbraco 17.
 
 | Framework | Umbraco | EF Core |
 |-----------|---------|---------|
-| net8.0    | 13.12.0 | 2.4.3   |
-| net10.0   | 17.3.4  | 2.4.3   |
+| net8.0    | 13.12.0 | 2.4.4   |
+| net10.0   | 17.3.4  | 2.4.4   |
 
 ## API Endpoints
 

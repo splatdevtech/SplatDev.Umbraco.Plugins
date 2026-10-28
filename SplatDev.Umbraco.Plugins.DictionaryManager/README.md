@@ -15,8 +15,8 @@ Dictionary import/export/CRUD manager for Umbraco — full rewrite of the Umbrac
 
 | Umbraco | .NET | Package Version |
 |---------|------|-----------------|
-| 13.x    | 8.0  | 2.2.6           |
-| 17.x    | 10.0 | 2.2.6           |
+| 13.x    | 8.0  | 2.2.7           |
+| 17.x    | 10.0 | 2.2.7           |
 
 ## Installation
 

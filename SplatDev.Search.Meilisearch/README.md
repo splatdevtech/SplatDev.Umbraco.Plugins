@@ -12,8 +12,8 @@ Meilisearch adapter for `SplatDev.Search` abstractions — lightweight, typo-tol
 
 | .NET | Umbraco | Package Version |
 |------|---------|-----------------|
-| 8.0  | 13      | 1.0.3           |
-| 10.0 | 17      | 1.0.3           |
+| 8.0  | 13      | 1.0.4           |
+| 10.0 | 17      | 1.0.4           |
 
 ## Installation
 

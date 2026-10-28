@@ -11,8 +11,8 @@ Umbraco Words API plugin — validate English word classification (noun detectio
 
 | Umbraco | .NET | Package Version |
 |---------|------|-----------------|
-| 13.x    | 8.0  | 2.0.5           |
-| 17.x    | 10.0 | 2.0.5           |
+| 13.x    | 8.0  | 2.0.6           |
+| 17.x    | 10.0 | 2.0.6           |
 
 ## Installation
 

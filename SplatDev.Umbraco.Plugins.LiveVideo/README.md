@@ -19,8 +19,8 @@ Live video embed for Umbraco — generate embed URLs for YouTube Live, Twitch, a
 
 | Umbraco | .NET | Package Version |
 |---------|------|-----------------|
-| 13.x    | 8.0  | 2.3.2           |
-| 17.x    | 10.0 | 2.3.2           |
+| 13.x    | 8.0  | 2.3.3           |
+| 17.x    | 10.0 | 2.3.3           |
 
 ## Installation
 

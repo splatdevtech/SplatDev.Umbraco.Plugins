@@ -15,8 +15,8 @@ Lazy loading plugin for Umbraco — defers `img.lazy` and `iframe.lazy` until th
 
 | Umbraco | .NET | Package Version |
 |---------|------|-----------------|
-| 13.x    | 8.0  | 1.2.5           |
-| 17.x    | 10.0 | 1.2.5           |
+| 13.x    | 8.0  | 1.2.6           |
+| 17.x    | 10.0 | 1.2.6           |
 
 ## Installation
 

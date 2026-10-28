@@ -15,8 +15,8 @@ EXIF metadata extractor for Umbraco media — reads camera, GPS, and image EXIF 
 
 | Umbraco | .NET | Package Version | Dashboard |
 |---------|------|-----------------|-----------|
-| 13.x    | 8.0  | 1.3.1           | AngularJS |
-| 17.x    | 10.0 | 1.3.1           | Lit (Bellissima) |
+| 13.x    | 8.0  | 1.3.2           | AngularJS |
+| 17.x    | 10.0 | 1.3.2           | Lit (Bellissima) |
 
 ## Installation
 

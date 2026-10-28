@@ -12,8 +12,8 @@ Banco Inter payment gateway integration for `SplatDev.Payments` — models, sett
 
 | .NET | Umbraco | Package Version |
 |------|---------|-----------------|
-| 8.0  | 13      | 1.0.5           |
-| 10.0 | 17      | 1.0.5           |
+| 8.0  | 13      | 1.0.6           |
+| 10.0 | 17      | 1.0.6           |
 
 ## Installation
 

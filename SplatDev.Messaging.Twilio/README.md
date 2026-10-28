@@ -12,8 +12,8 @@ Twilio SMS provider for `SplatDev.Messaging` — sends SMS messages via the Twil
 
 | .NET | Umbraco | Package Version |
 |------|---------|-----------------|
-| 8.0  | 13      | 2.0.0           |
-| 10.0 | 17      | 2.0.0           |
+| 8.0  | 13      | 2.0.1           |
+| 10.0 | 17      | 2.0.1           |
 
 ## Installation
 

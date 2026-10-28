@@ -17,8 +17,8 @@ Character limit property editor for Umbraco — enforces max length on text prop
 
 | Umbraco | .NET | Package Version |
 |---------|------|-----------------|
-| 13.x    | 8.0  | 1.5.2           |
-| 17.x    | 10.0 | 1.5.2           |
+| 13.x    | 8.0  | 1.5.3           |
+| 17.x    | 10.0 | 1.5.3           |
 
 ## Installation
 

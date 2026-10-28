@@ -15,8 +15,8 @@ e-Not Assina electronic signature integration for Umbraco. Supports document cre
 
 | Umbraco | .NET | Package Version |
 |---------|------|-----------------|
-| 13.x    | 8.0  | 1.2.6           |
-| 17.x    | 10.0 | 1.2.6           |
+| 13.x    | 8.0  | 1.2.7           |
+| 17.x    | 10.0 | 1.2.7           |
 
 ## Installation
 

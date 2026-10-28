@@ -19,8 +19,8 @@ FAQ management plugin for Umbraco 13 (net8.0) and Umbraco 17 (net10.0).
 
 | Umbraco | .NET | Package Version |
 |---------|------|-----------------|
-| 13.x    | 8.0  | 2.4.3           |
-| 17.x    | 10.0 | 2.4.3           |
+| 13.x    | 8.0  | 2.4.4           |
+| 17.x    | 10.0 | 2.4.4           |
 
 ## Installation
 

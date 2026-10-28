@@ -15,8 +15,8 @@ Email template engine, Mailgun mail provider, newsletter campaigns, and member n
 
 | Umbraco | .NET | Package Version |
 |---------|------|-----------------|
-| 13.x    | 8.0  | 1.3.5           |
-| 17.x    | 10.0 | 1.3.5           |
+| 13.x    | 8.0  | 1.3.6           |
+| 17.x    | 10.0 | 1.3.6           |
 
 ## Installation
 

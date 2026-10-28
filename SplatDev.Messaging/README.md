@@ -11,8 +11,8 @@ Core messaging abstractions for the SplatDev Umbraco Plugins ecosystem. Provides
 
 | .NET | Umbraco | Package Version |
 |------|---------|-----------------|
-| 8.0  | 13      | 1.1.0           |
-| 10.0 | 17      | 1.1.0           |
+| 8.0  | 13      | 1.1.1           |
+| 10.0 | 17      | 1.1.1           |
 
 ## Installation
 

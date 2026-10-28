@@ -15,8 +15,8 @@ Fully customizable Umbraco login page with branding support, SSO integration hoo
 
 | Umbraco | .NET | Package Version |
 |---------|------|-----------------|
-| 13.x    | 8.0  | 2.3.3           |
-| 17.x    | 10.0 | 2.3.3           |
+| 13.x    | 8.0  | 2.3.4           |
+| 17.x    | 10.0 | 2.3.4           |
 
 ## Installation
 
