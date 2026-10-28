@@ -69,8 +69,16 @@ For Umbraco plugin routes, implement `IUmbracoPluginRoute : IRoute` instead.
 
 ## Changelog
 
+### 2.0.1 — 2026-10-28
+
+Documentation only: the README now carries a bug-report link. No code changes.
+
 ### 2.0.0 — 2026-08-25
 
 **Breaking.** `RootId`, `RootAlias` and `IsPluginController` move off `IRoute` and onto a new `IUmbracoPluginRoute : IRoute`. They only ever meant anything for routes served by an Umbraco plugin controller, but sat on the base interface, so every route had to implement three members it did not use. A route that needs them now implements `IUmbracoPluginRoute`; one that does not is unchanged apart from dropping the three stubs.
 
 Route discovery is unaffected — `MapSplatDevRoutes` scans for `IRoute`, and `IUmbracoPluginRoute` derives from it, so both kinds are still found.
+
+---
+
+📎 Found a bug? [Report it](https://mybusiness.splatdev.tech/report?project=umbraco)

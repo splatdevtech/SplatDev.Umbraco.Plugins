@@ -7,3 +7,7 @@ Visit the [Project Page](https://our.umbraco.org/projects/backoffice-extensions/
 
 Feedback is appreciated
 [Carlos Casalicchio](mailto:carlos.casalicchio@gmail.com)
+
+---
+
+📎 Found a bug? [Report it](https://mybusiness.splatdev.tech/report?project=umbraco)

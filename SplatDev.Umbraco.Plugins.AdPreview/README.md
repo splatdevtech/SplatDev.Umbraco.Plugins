@@ -21,6 +21,10 @@ The persisted value is JSON with the stable original field names. `overlay` cont
 
 ## Changelog
 
+### 1.0.5 — 2026-10-28
+
+Maintenance release. The backoffice client is now built with Vite 6.4.5 and freshly resolved dependencies, closing published npm security advisories against the previous build chain. The README also gained a bug-report link. No functional changes.
+
 ### 1.0.4 — 2026-08-27
 
 Adds the umbraco-marketplace tag. Without it the package never appears on the Umbraco Marketplace at all, however complete its listing is - and this was the only package in the estate with a marketplace manifest and backoffice assets that was missing the tag.
@@ -42,3 +46,7 @@ Fixes a duplicate registration on sites that still have a physical App_Plugins f
 ## License
 
 MIT
+
+---
+
+📎 Found a bug? [Report it](https://mybusiness.splatdev.tech/report?project=umbraco)

@@ -15,7 +15,7 @@ Email template engine with variable substitution, preview, and singleton style s
 
 | Umbraco | .NET | Package Version |
 |---------|------|-----------------|
-| 17.x    | 10.0 | 1.3.5           |
+| 17.x    | 10.0 | 1.3.6           |
 
 ## Installation
 
@@ -41,6 +41,10 @@ Add to `appsettings.json`:
 ```
 
 ## Changelog
+
+### 1.3.6 — 2026-10-28
+
+Maintenance release. The backoffice client is now built with Vite 6.4.5 and freshly resolved dependencies, closing published npm security advisories against the previous build chain. The README also gained a bug-report link. No functional changes.
 
 ### 1.3.5 — 2026-08-26
 
@@ -80,3 +84,7 @@ The Umbraco Marketplace listing now carries this plugin's screenshots. The listi
 ## License
 
 MIT © [SplatDev](https://github.com/SplatDev-Ltda)
+
+---
+
+📎 Found a bug? [Report it](https://mybusiness.splatdev.tech/report?project=umbraco)

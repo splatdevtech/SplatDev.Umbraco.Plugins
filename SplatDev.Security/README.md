@@ -12,8 +12,8 @@ Security utilities for .NET applications — phishing detection via CheckPhish.a
 
 | .NET | Umbraco | Package Version |
 |------|---------|-----------------|
-| 8.0  | 13      | 1.0.3           |
-| 10.0 | 17      | 1.0.3           |
+| 8.0  | 13      | 1.0.4           |
+| 10.0 | 17      | 1.0.4           |
 
 ## Installation
 
@@ -160,6 +160,10 @@ bool blocked = await db.IpBlacklist.AnyAsync(x => x.Ip == candidate && x.Release
 
 ## Changelog
 
+### 1.0.4 — 2026-10-28
+
+Documentation only: the README now carries a bug-report link. No code changes.
+
 ### 1.0.3 — 2026-08-25
 
 Documentation only, no code change. The README's usage section did not contain a single call that compiled: it constructed `Tools`, which is static, and named eight methods that do not exist. Every example is now the real API, checked by compiling it. It also documents two traps this package genuinely ships with — the response models live in namespace `SplatDev.UrlShortening.Models` rather than `SplatDev.Security.Models`, and the IP blacklist and whitelist types are entity definitions with no lookup methods behind them.
@@ -176,3 +180,6 @@ Package metadata only: the listing now carries an icon and search tags, and the 
 
 This package now keeps a changelog. Earlier releases predate it and are not reconstructed here — consult the repository history for those. From this version on, every release records what changed for someone using it.
 
+---
+
+📎 Found a bug? [Report it](https://mybusiness.splatdev.tech/report?project=umbraco)

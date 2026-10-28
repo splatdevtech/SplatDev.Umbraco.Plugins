@@ -12,8 +12,8 @@ SMSTools SMS provider for the `SplatDev.Messaging` framework. Sends SMS messages
 
 | .NET | Umbraco | Package Version |
 |------|---------|-----------------|
-| 8.0  | 13      | 1.1.0           |
-| 10.0 | 17      | 1.1.0           |
+| 8.0  | 13      | 1.1.1           |
+| 10.0 | 17      | 1.1.1           |
 
 ## Installation
 
@@ -112,6 +112,10 @@ No additional SMS SDK required — uses SMSTools REST API directly.
 
 ## Changelog
 
+### 1.1.1 — 2026-10-28
+
+Documentation only: the README now carries a bug-report link. No code changes.
+
 ### 1.1.0 — 2026-08-25
 
 This package has shipped since 1.0.0 with a csproj, a README, an icon and no code at all — every release was an empty assembly. It now contains the SMSTools client it always claimed to: `SmsToolsController`, implementing `ISmsMessagingController<Sms, SmsToolsResult>` from SplatDev.Messaging, with `SmsToolsOptions` bound from `SplatDev:Messaging:SMSTools` and an `AddSplatDevSmsTools(configuration)` registration. The README documented a constructor and class name that did not exist; every example in it is now compiled against the real API.
@@ -128,3 +132,6 @@ Package metadata only: the listing now carries an icon and search tags, and the 
 
 This package now keeps a changelog. Earlier releases predate it and are not reconstructed here — consult the repository history for those. From this version on, every release records what changed for someone using it.
 
+---
+
+📎 Found a bug? [Report it](https://mybusiness.splatdev.tech/report?project=umbraco)

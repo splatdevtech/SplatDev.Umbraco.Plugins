@@ -12,8 +12,8 @@ Task scheduler with EF Core persistence and reflection-based invocation — sche
 
 | .NET | Umbraco | Package Version |
 |------|---------|-----------------|
-| 8.0  | 13      | 1.0.3           |
-| 10.0 | 17      | 1.0.3           |
+| 8.0  | 13      | 1.0.4           |
+| 10.0 | 17      | 1.0.4           |
 
 ## Installation
 
@@ -217,6 +217,10 @@ is already running is only stopped by `Dispose()`.
 
 ## Changelog
 
+### 1.0.4 — 2026-10-28
+
+Documentation only: the README now carries a bug-report link. No code changes.
+
 ### 1.0.3 — 2026-08-25
 
 Documentation only, no code change. The README's usage section could not run: it called `AddTask`, `StartAsync`, `GetTasksAsync` and `CancelTaskAsync`, none of which exist, and its task class used constructor injection where the scheduler builds the type by reflection through a parameterless constructor. It now describes the real mechanism, including that `TaskScheduler` schedules in its constructor, that it is `IDisposable`, and that its name collides with `System.Threading.Tasks.TaskScheduler` so it needs an alias.
@@ -233,3 +237,6 @@ Package metadata only: the listing now carries an icon and search tags, and the 
 
 This package now keeps a changelog. Earlier releases predate it and are not reconstructed here — consult the repository history for those. From this version on, every release records what changed for someone using it.
 
+---
+
+📎 Found a bug? [Report it](https://mybusiness.splatdev.tech/report?project=umbraco)

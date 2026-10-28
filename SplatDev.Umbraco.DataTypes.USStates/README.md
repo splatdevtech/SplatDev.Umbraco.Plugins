@@ -54,6 +54,10 @@ The data type uses the `Umbraco.DropDownListFlexible` property editor with pre-p
 
 ## Changelog
 
+### 2.2.3 — 2026-10-28
+
+Documentation only: the README now carries a bug-report link. No code changes.
+
 ### 2.2.2 — 2026-08-24
 
 Removes a dashboard screenshot that showed an error toast. It was captured against a site where this plugin's API was unreachable, so it advertised a broken dashboard. No screenshot is better than a misleading one; a replacement will be taken against a working install.
@@ -74,3 +78,6 @@ Adds screenshots of the data type this package installs, on the README and on th
 ### 2.0.2 — 2026-08-22
 - This package's README now reaches NuGet. The publish workflow discovered packages by a list of name patterns, and this one matched none of them, so it was never built or pushed by CI — the version on NuGet was placed there by hand before the README was wired up, and no release could refresh it. Discovery is now by prefix, so the package ships whenever the repo is tagged.
 
+---
+
+📎 Found a bug? [Report it](https://mybusiness.splatdev.tech/report?project=umbraco)

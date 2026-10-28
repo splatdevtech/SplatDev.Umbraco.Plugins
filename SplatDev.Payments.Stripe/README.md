@@ -172,6 +172,10 @@ MIT — SplatDev Ltda
 
 ## Changelog
 
+### 1.1.1 — 2026-10-28
+
+Documentation only: the README now carries a bug-report link. No code changes.
+
 ### 1.1.0 — 2026-08-25
 
 Adds the checkout and webhook layer this package's README has always described but never contained. Until now it held four source files — an options class, a thin `StripeService` and its registration — while the README documented `IStripeCheckoutService`, webhook idempotency and a `PaymentRecords` table that did not exist.
@@ -179,3 +183,7 @@ Adds the checkout and webhook layer this package's README has always described b
 `IStripeCheckoutService` creates Checkout sessions; `IStripeWebhookHandler` verifies the `Stripe-Signature` header through Stripe's own `EventUtility.ConstructEvent` and refuses a request without one; `IPaymentIntentRepository` and `StripePaymentDbContext` persist a `PaymentRecord` per event. Replay is handled twice over — `IsEventProcessedAsync` short-circuits a repeat, and a unique index on `StripeEventId` closes the race between two concurrent deliveries of the same event. `StripeAuditInterceptor` logs every save.
 
 `checkout.session.completed`, `payment_intent.succeeded` and `payment_intent.payment_failed` are handled. `DevMock` still works offline without API keys. `AddSplatDevStripe(configuration)` registers all of it.
+
+---
+
+📎 Found a bug? [Report it](https://mybusiness.splatdev.tech/report?project=umbraco)

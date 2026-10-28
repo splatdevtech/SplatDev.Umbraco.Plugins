@@ -12,8 +12,8 @@ HTML and markup helper extensions for Umbraco 13 (net8.0) and Umbraco 17 (net10.
 
 | .NET | Umbraco | Package Version |
 |------|---------|-----------------|
-| 8.0  | 13      | 2.0.3           |
-| 10.0 | 17      | 2.0.3           |
+| 8.0  | 13      | 2.0.4           |
+| 10.0 | 17      | 2.0.4           |
 
 ## Installation
 
@@ -175,6 +175,10 @@ public async Task<IActionResult> Invoice(int orderId)
 
 ## Changelog
 
+### 2.0.4 — 2026-10-28
+
+Documentation only: the README now carries a bug-report link. No code changes.
+
 ### 2.0.3 — 2026-08-24
 
 Removes a dashboard screenshot that showed an error toast. It was captured against a site where this plugin's API was unreachable, so it advertised a broken dashboard. No screenshot is better than a misleading one; a replacement will be taken against a working install.
@@ -187,3 +191,6 @@ Package metadata only: the listing now carries an icon and search tags, and the 
 
 This package now keeps a changelog. Earlier releases predate it and are not reconstructed here — consult the repository history for those. From this version on, every release records what changed for someone using it.
 
+---
+
+📎 Found a bug? [Report it](https://mybusiness.splatdev.tech/report?project=umbraco)

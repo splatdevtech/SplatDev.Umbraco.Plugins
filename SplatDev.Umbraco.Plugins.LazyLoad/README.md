@@ -15,8 +15,8 @@ Lazy loading plugin for Umbraco — defers `img.lazy` and `iframe.lazy` until th
 
 | Umbraco | .NET | Package Version |
 |---------|------|-----------------|
-| 13.x    | 8.0  | 1.2.5           |
-| 17.x    | 10.0 | 1.2.5           |
+| 13.x    | 8.0  | 1.2.6           |
+| 17.x    | 10.0 | 1.2.6           |
 
 ## Installation
 
@@ -29,6 +29,10 @@ dotnet add package SplatDev.Umbraco.Plugins.LazyLoad
 No registration call is needed. The package ships Umbraco composers, so the `AddComposers()` already in the default `Program.cs` picks the plugin up as soon as the package is referenced.
 
 ## Changelog
+
+### 1.2.6 — 2026-10-28
+
+Maintenance release. The backoffice client is now built with Vite 6.4.5 and freshly resolved dependencies, closing published npm security advisories against the previous build chain. The README also gained a bug-report link. No functional changes.
 
 ### 1.2.5 — 2026-08-26
 
@@ -49,3 +53,7 @@ Package metadata only: the listing now carries an icon and search tags, and the 
 ## License
 
 MIT © [SplatDev](https://github.com/SplatDev-Ltda)
+
+---
+
+📎 Found a bug? [Report it](https://mybusiness.splatdev.tech/report?project=umbraco)

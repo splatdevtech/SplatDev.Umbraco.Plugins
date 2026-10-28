@@ -15,7 +15,7 @@ Umbraco 17 (net10.0) plugin for the **Santander Open Banking** suite. Wires up
 
 | Umbraco | .NET | Package Version |
 |---------|------|-----------------|
-| 17.x    | 10.0 | 1.3.6           |
+| 17.x    | 10.0 | 1.3.7           |
 
 ## Installation
 
@@ -48,6 +48,10 @@ dotnet add package SplatDev.Umbraco.Plugins.Santander
 
 ## Changelog
 
+### 1.3.7 — 2026-10-28
+
+Maintenance release. The backoffice client is now built with Vite 6.4.5 and freshly resolved dependencies, closing published npm security advisories against the previous build chain. The README also gained a bug-report link. No functional changes.
+
 ### 1.3.6 — 2026-08-26
 
 The NuGet listing now shows the dashboard. It had no screenshot before, so the listing gave no picture of what the plugin looks like in the backoffice.
@@ -75,3 +79,7 @@ MIT © [SplatDev](https://github.com/SplatDev-Ltda)
 ## Architecture
 
 This is a **headless API plugin** — no standalone backoffice dashboard, property editors, or UI components. It operates as an API service (banking integration), registered via DI composition. The banking backoffice surface is intentionally left in the consuming application.
+
+---
+
+📎 Found a bug? [Report it](https://mybusiness.splatdev.tech/report?project=umbraco)

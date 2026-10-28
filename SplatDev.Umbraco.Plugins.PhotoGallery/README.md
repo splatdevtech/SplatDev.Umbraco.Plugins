@@ -21,8 +21,8 @@ Photo gallery plugin for Umbraco — stores gallery albums and photos with EF Co
 
 | Umbraco | .NET | Package Version | Dashboard |
 |---------|------|-----------------|-----------|
-| 13.x    | 8.0  | 1.4.3           | AngularJS |
-| 17.x    | 10.0 | 1.4.3           | Lit (Bellissima) |
+| 13.x    | 8.0  | 1.4.4           | AngularJS |
+| 17.x    | 10.0 | 1.4.4           | Lit (Bellissima) |
 
 ## Installation
 
@@ -77,6 +77,10 @@ the full image; photos below the fold load lazily.
 
 ## Changelog
 
+### 1.4.4 — 2026-10-28
+
+Maintenance release. The backoffice client is now built with Vite 6.4.5 and freshly resolved dependencies, closing published npm security advisories against the previous build chain. The README also gained a bug-report link. No functional changes.
+
 ### 1.4.3 — 2026-08-26
 
 Fixes a duplicate registration on sites that still have a physical App_Plugins folder for this plugin, left behind by an older release that copied content into the site. Umbraco registered those extensions twice - once from its own scan of the folder, once from this package's embedded manifest - and logged "Extension with alias ... is already registered". The embedded manifest now yields to the physical copy.
@@ -111,3 +115,7 @@ Adds a view component so the album chosen with the property editor can actually 
 ## License
 
 MIT © [SplatDev](https://github.com/SplatDev-Ltda)
+
+---
+
+📎 Found a bug? [Report it](https://mybusiness.splatdev.tech/report?project=umbraco)

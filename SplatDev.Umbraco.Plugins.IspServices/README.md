@@ -11,8 +11,8 @@ Umbraco ISP / IP resolution service — resolves client IP addresses including X
 
 | Umbraco | .NET | Package Version |
 |---------|------|-----------------|
-| 13.x    | 8.0  | 2.0.4           |
-| 17.x    | 10.0 | 2.0.4           |
+| 13.x    | 8.0  | 2.0.5           |
+| 17.x    | 10.0 | 2.0.5           |
 
 ## Installation
 
@@ -57,6 +57,10 @@ public class MyController : SurfaceController
 
 ## Changelog
 
+### 2.0.5 — 2026-10-28
+
+Documentation only: the README now carries a bug-report link. No code changes.
+
 ### 2.0.4 — 2026-08-24
 
 Removes a dashboard screenshot that showed an error toast. It was captured against a site where this plugin's API was unreachable, so it advertised a broken dashboard. No screenshot is better than a misleading one; a replacement will be taken against a working install.
@@ -72,3 +76,7 @@ This package now keeps a changelog. Earlier releases predate it and are not reco
 ## License
 
 MIT © [SplatDev](https://github.com/SplatDev-Ltda)
+
+---
+
+📎 Found a bug? [Report it](https://mybusiness.splatdev.tech/report?project=umbraco)

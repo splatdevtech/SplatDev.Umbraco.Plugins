@@ -15,8 +15,8 @@ Umbraco email integration plugin — send templated HTML emails from Umbraco usi
 
 | Umbraco | .NET | Package Version |
 |---------|------|-----------------|
-| 13.x    | 8.0  | 2.1.12          |
-| 17.x    | 10.0 | 2.1.12          |
+| 13.x    | 8.0  | 2.1.13          |
+| 17.x    | 10.0 | 2.1.13          |
 
 ## Installation
 
@@ -99,6 +99,10 @@ The `MailerApiController` exposes a test endpoint at `/umbraco/backoffice/api/Ma
 
 ## Changelog
 
+### 2.1.13 — 2026-10-28
+
+Maintenance release. The backoffice client is now built with Vite 6.4.5 and freshly resolved dependencies, closing published npm security advisories against the previous build chain. The README also gained a bug-report link. No functional changes.
+
 ### 2.1.12 — 2026-08-26
 
 The NuGet listing now shows the dashboard. It had no screenshot before, so the listing gave no picture of what the plugin looks like in the backoffice.
@@ -133,3 +137,5 @@ MIT © [SplatDev](https://github.com/splatdevtech)
 ---
 
 [Feedback](mailto:feedback@splatdev.com)
+
+📎 Found a bug? [Report it](https://mybusiness.splatdev.tech/report?project=umbraco)

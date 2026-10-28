@@ -12,8 +12,8 @@ A .NET CLI tool for creating Umbraco NuGet packages — generates `package.manif
 
 | .NET | Umbraco | Package Version |
 |------|---------|-----------------|
-| 8.0  | 13      | 1.0.4           |
-| 10.0 | 17      | 1.0.4           |
+| 8.0  | 13      | 1.0.5           |
+| 10.0 | 17      | 1.0.5           |
 
 ## Installation
 
@@ -129,6 +129,10 @@ No other NuGet dependencies — the tool leverages the .NET SDK build infrastruc
 
 ## Changelog
 
+### 1.0.5 — 2026-10-28
+
+Documentation only: the README now carries a bug-report link. No code changes.
+
 ### 1.0.4 — 2026-08-24
 
 Removes a dashboard screenshot that showed an error toast. It was captured against a site where this plugin's API was unreachable, so it advertised a broken dashboard. No screenshot is better than a misleading one; a replacement will be taken against a working install.
@@ -140,3 +144,6 @@ Package metadata only: the listing now carries an icon and search tags, and the 
 ### 1.0.2 — 2026-08-22
 - This package's README now reaches NuGet. The publish workflow discovered packages by a list of name patterns, and this one matched none of them, so it was never built or pushed by CI — the version on NuGet was placed there by hand before the README was wired up, and no release could refresh it. Discovery is now by prefix, so the package ships whenever the repo is tagged.
 
+---
+
+📎 Found a bug? [Report it](https://mybusiness.splatdev.tech/report?project=umbraco)

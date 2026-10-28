@@ -15,8 +15,8 @@ Export Umbraco document types to YAML format — reverse operation of Yaml2Schem
 
 | Umbraco | .NET | Package Version |
 |---------|------|-----------------|
-| 13.x    | 8.0  | 2.1.4           |
-| 17.x    | 10.0 | 2.1.4           |
+| 13.x    | 8.0  | 2.1.5           |
+| 17.x    | 10.0 | 2.1.5           |
 
 ## Installation
 
@@ -64,6 +64,10 @@ Access the Schema2Yaml dashboard from the Umbraco Settings section. Select the e
 
 ## Changelog
 
+### 2.1.5 — 2026-10-28
+
+Maintenance release. The backoffice client is now built with Vite 6.4.5 and freshly resolved dependencies, closing published npm security advisories against the previous build chain. The README also gained a bug-report link. No functional changes.
+
 ### 2.1.4 — 2026-08-27
 
 The package icon was the wrong one. Both YAML plugins shipped a single shared image lettered "YAML2SCHEMA", so this package - which exports the other way - advertised its sibling. It is now the house-style icon with an export glyph.
@@ -91,3 +95,7 @@ Fixes the Umbraco Marketplace listing, which pointed its screenshot at a differe
 ## License
 
 MIT © [SplatDev](https://github.com/SplatDev-Ltda)
+
+---
+
+📎 Found a bug? [Report it](https://mybusiness.splatdev.tech/report?project=umbraco)

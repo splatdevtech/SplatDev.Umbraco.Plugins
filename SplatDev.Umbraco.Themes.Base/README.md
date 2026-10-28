@@ -29,8 +29,8 @@ Foundation theme package for Umbraco 13 / Umbraco 17. Provides reusable document
 
 | Umbraco Version | .NET Target | Package Version |
 |-----------------|-------------|-----------------|
-| 13.x            | net8.0      | 1.0.7           |
-| 17.x            | net10.0     | 1.0.7           |
+| 13.x            | net8.0      | 1.0.8           |
+| 17.x            | net10.0     | 1.0.8           |
 
 **NuGet dependency:** `SplatDev.Umbraco.Plugins.Yaml2Schema` 1.0.35+
 
@@ -194,6 +194,10 @@ Other UmbracoCms themes depend on this package and override or extend:
 
 ## Changelog
 
+### 1.0.8 — 2026-10-28
+
+Documentation only: the README now carries a bug-report link. No code changes.
+
 ### 1.0.7 — 2026-08-26
 
 The Marketplace listing declared the category "Website Themes", which is not in the Marketplace's taxonomy, so the whole listing failed validation and the theme showed only its bare NuGet metadata. It is now "Themes & Starter Kits", and the listing carries its screenshots.
@@ -212,3 +216,7 @@ Package metadata only: the listing now carries an icon and search tags, and the 
 ## License
 
 MIT — Copyright © 2026 SplatDev
+
+---
+
+📎 Found a bug? [Report it](https://mybusiness.splatdev.tech/report?project=umbraco)

@@ -63,3 +63,7 @@ Umbraco assigns the pages URLs (`/home/`, `/about/`, `/blog/washed-vs-natural/`)
 backoffice plugins read them, but **the baseline does not serve them over HTTP** — that is
 true of the content it already shipped with too, not something this introduces. Everything
 here is aimed at what the backoffice can see.
+
+---
+
+📎 Found a bug? [Report it](https://mybusiness.splatdev.tech/report?project=umbraco)

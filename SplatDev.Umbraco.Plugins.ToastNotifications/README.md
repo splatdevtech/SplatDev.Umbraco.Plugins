@@ -15,8 +15,8 @@ Toast / snackbar notification system for Umbraco — manage configurable notific
 
 | Umbraco | .NET | Package Version |
 |---------|------|-----------------|
-| 13.x    | 8.0  | 2.4.4           |
-| 17.x    | 10.0 | 2.4.4           |
+| 13.x    | 8.0  | 2.4.5           |
+| 17.x    | 10.0 | 2.4.5           |
 
 ## Installation
 
@@ -75,6 +75,10 @@ Supported notification types: `info`, `success`, `warning`, `error`.
 
 ## Changelog
 
+### 2.4.5 — 2026-10-28
+
+Maintenance release. The backoffice client is now built with Vite 6.4.5 and freshly resolved dependencies, closing published npm security advisories against the previous build chain. The README also gained a bug-report link. No functional changes.
+
 ### 2.4.4 — 2026-08-26
 
 The NuGet listing now shows the dashboard. It had no screenshot before, so the listing gave no picture of what the plugin looks like in the backoffice.
@@ -106,3 +110,7 @@ The Umbraco Marketplace listing now carries this plugin's screenshots. The listi
 ## License
 
 MIT © [SplatDev](https://github.com/SplatDev-Ltda)
+
+---
+
+📎 Found a bug? [Report it](https://mybusiness.splatdev.tech/report?project=umbraco)

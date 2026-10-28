@@ -12,8 +12,8 @@ Pure payment abstractions for .NET — defines interfaces for payments, transact
 
 | .NET | Umbraco | Package Version |
 |------|---------|-----------------|
-| 8.0  | 13      | 1.0.3           |
-| 10.0 | 17      | 1.0.3           |
+| 8.0  | 13      | 1.0.4           |
+| 10.0 | 17      | 1.0.4           |
 
 ## Installation
 
@@ -148,6 +148,10 @@ None — this is a pure abstractions package with no external dependencies.
 
 ## Changelog
 
+### 1.0.4 — 2026-10-28
+
+Documentation only: the README now carries a bug-report link. No code changes.
+
 ### 1.0.3 — 2026-08-25
 
 Documentation only, no code change. The README's Abstractions and Usage sections described an API this package does not have: it showed `IPayment` being implemented with async methods, when `IPayment` is a data interface with four properties and no methods at all, and it named `PaymentResult`, `Transaction` and `StripeConfig`, none of which exist. The operations live on `IPayment<T>`, whose four methods have quite different signatures. Both interfaces are now documented as they are, along with the fact that `IOrder`, `IPayer`, `IPaymentMethod`, `IShipment` and `ISubscription` are deliberately empty marker interfaces — and that `ConfirmTransationAsync` is spelled that way in the shipped interface.
@@ -164,3 +168,6 @@ Package metadata only: the listing now carries an icon and search tags, and the 
 
 This package now keeps a changelog. Earlier releases predate it and are not reconstructed here — consult the repository history for those. From this version on, every release records what changed for someone using it.
 
+---
+
+📎 Found a bug? [Report it](https://mybusiness.splatdev.tech/report?project=umbraco)

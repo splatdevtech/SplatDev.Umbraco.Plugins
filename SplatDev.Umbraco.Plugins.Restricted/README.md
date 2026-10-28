@@ -17,8 +17,8 @@ Content restriction plugin for Umbraco — member-only content gates using Umbra
 
 | Umbraco | .NET | Package Version |
 |---------|------|-----------------|
-| 13.x    | 8.0  | 2.5.4           |
-| 17.x    | 10.0 | 2.5.4           |
+| 13.x    | 8.0  | 2.5.5           |
+| 17.x    | 10.0 | 2.5.5           |
 
 ## Installation
 
@@ -66,6 +66,10 @@ This plugin uses Umbraco's own public access infrastructure — no additional da
 
 ## Changelog
 
+### 2.5.5 — 2026-10-28
+
+Maintenance release. The backoffice client is now built with Vite 6.4.5 and freshly resolved dependencies, closing published npm security advisories against the previous build chain. The README also gained a bug-report link. No functional changes.
+
 ### 2.5.4 — 2026-08-26
 
 Fixes a duplicate registration on sites that still have a physical App_Plugins folder for this plugin, left behind by an older release that copied content into the site. Umbraco registered those extensions twice - once from its own scan of the folder, once from this package's embedded manifest - and logged "Extension with alias ... is already registered". The embedded manifest now yields to the physical copy.
@@ -98,3 +102,7 @@ The Razor view behind `@await Component.InvokeAsync(...)` is now compiled into t
 ## License
 
 MIT © [SplatDev](https://github.com/SplatDev-Ltda)
+
+---
+
+📎 Found a bug? [Report it](https://mybusiness.splatdev.tech/report?project=umbraco)
