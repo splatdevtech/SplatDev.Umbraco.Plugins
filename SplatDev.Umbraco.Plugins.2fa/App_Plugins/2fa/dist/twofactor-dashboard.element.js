@@ -42,7 +42,7 @@ let i = class extends x(w) {
     super(...arguments), F(this, c, T(this)), this._member = [], this._memberName = "", this._status = null, this._loading = !1, this._message = null, this._api = "/umbraco/api/twofactor/admin";
   }
   async _checkStatus() {
-    if (this._memberId) {
+    if (this._member[0]) {
       this._loading = !0, this._message = null;
       try {
         const t = await _(this, c).call(this, `${this._api}/IsEnabled?member=${encodeURIComponent(this._member[0] ?? "")}`, { credentials: "same-origin" });
@@ -152,8 +152,8 @@ h([
 i = h([
   v("twofactor-dashboard")
 ], i);
-const z = i;
+const D = i;
 export {
   i as TwoFactorDashboardElement,
-  z as default
+  D as default
 };

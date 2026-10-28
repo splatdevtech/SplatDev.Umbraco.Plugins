@@ -35,6 +35,10 @@ FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS runtime
 WORKDIR /app
 RUN apt-get update && apt-get install -y curl && rm -rf /var/lib/apt/lists/*
 COPY --from=build /app/publish ./
+# Seeded templates are runtime content, not source-only test fixtures.
+COPY Views/seedHome.cshtml /app/Views/seedHome.cshtml
+COPY Views/seedContentPage.cshtml /app/Views/seedContentPage.cshtml
+COPY Views/Partials/PdfCuratorLibrary.cshtml /app/Views/Partials/PdfCuratorLibrary.cshtml
 RUN mkdir -p /app/umbraco /app/App_Data /app/wwwroot/App_Plugins && chown -R app:app /app
 EXPOSE 8080
 ENV ASPNETCORE_URLS=http://+:8080
