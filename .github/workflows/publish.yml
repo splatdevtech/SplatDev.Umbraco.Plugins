@@ -7,6 +7,12 @@ on:
 
 env:
   DOTNET_SYSTEM_GLOBALIZATION_INVARIANT: 1
+  # nuget.config resolves the github-splatdevtech feed credentials from GITHUB_ACTOR
+  # (set by the runner) and this. Without it %GITHUB_TOKEN% expands to nothing, the
+  # PdfCurator.* feed answers 401, and `dotnet restore SplatDev.Core.sln` fails with
+  # NU1301 — which killed the whole v2.13.0 publish before a single package was packed.
+  # build.yml and deploy-staging.yml have always set it; this job never did.
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 jobs:
   publish:
