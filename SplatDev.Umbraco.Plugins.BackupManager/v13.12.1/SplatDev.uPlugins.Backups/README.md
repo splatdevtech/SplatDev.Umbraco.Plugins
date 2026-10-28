@@ -26,3 +26,7 @@ A simple backup tool for Umbraco. Allows backing up files and database directly 
   - System.IO.Compression.FileSystem
 
 [Feedback](mailto:feedback@splatdev.com) is appreciated
+
+---
+
+📎 Found a bug? [Report it](https://mybusiness.splatdev.tech/report?project=umbraco)

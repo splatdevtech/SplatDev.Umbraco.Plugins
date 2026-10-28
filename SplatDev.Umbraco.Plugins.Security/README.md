@@ -68,6 +68,10 @@ Add to `appsettings.json`:
 
 ## Changelog
 
+### 2.0.6 — 2026-10-28
+
+Documentation only: the README now carries a bug-report link. No code changes.
+
 ### 2.0.5 — 2026-08-25
 
 Documentation only, no code change. The README's Quick Start told you to call a registration method that does not exist in this package — following it produced a compile error on the first build. There is nothing to register: the package ships Umbraco composers and the `AddComposers()` already in the default `Program.cs` finds it. The Compatibility table also now shows the version actually being shipped instead of the one it was written at.
@@ -91,3 +95,7 @@ MIT © [SplatDev](https://github.com/SplatDev-Ltda)
 ## Architecture
 
 This is a **headless middleware plugin** — no backoffice dashboard, property editors, or UI components. It operates as HTTP middleware (security headers + Data Protection configuration), registered via DI composition.
+
+---
+
+📎 Found a bug? [Report it](https://mybusiness.splatdev.tech/report?project=umbraco)

@@ -110,6 +110,10 @@ No additional HTTP client library required — the Twilio SDK handles transport.
 
 ## Changelog
 
+### 2.0.1 — 2026-10-28
+
+Documentation only: the README now carries a bug-report link. No code changes.
+
 ### 2.0.0 — 2026-08-25
 
 **Breaking.** `SplatDev.Messaging.Twilio.Models.Sms` is removed. Use `SplatDev.Messaging.Models.Sms` instead — the same three properties, with `From` and `To` as plain strings rather than Twilio's `PhoneNumber`, so the calling code no longer needs a Twilio type to describe a message. `TwilioSmsController` now implements the shared `ISmsMessagingController<Sms, MessageResource>` contract and gains `(from, to, body)` overloads. Also adds `TwilioOptions` and `AddSplatDevTwilio(configuration)` for configuration-based registration.
@@ -126,3 +130,6 @@ Package metadata only: the listing now carries an icon and search tags, and the 
 
 This package now keeps a changelog. Earlier releases predate it and are not reconstructed here — consult the repository history for those. From this version on, every release records what changed for someone using it.
 
+---
+
+📎 Found a bug? [Report it](https://mybusiness.splatdev.tech/report?project=umbraco)

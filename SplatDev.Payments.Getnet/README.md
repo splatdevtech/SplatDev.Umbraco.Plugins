@@ -58,6 +58,10 @@ Configure `appsettings.json`:
 
 ## Changelog
 
+### 1.0.5 — 2026-10-28
+
+Documentation only: the README now carries a bug-report link. No code changes.
+
 ### 1.0.4 — 2026-08-25
 
 Fixes two defects in the Getnet client. Escaping a seller or order id that contains a control character produced a request body that was not valid JSON, so the call failed; the whole character set is escaped properly now. And the API client is registered as a singleton rather than per request, so the OAuth token it caches survives to be reused instead of every call re-authenticating.
@@ -77,3 +81,7 @@ This package now keeps a changelog. Earlier releases predate it and are not reco
 ## License
 
 MIT © [SplatDev](https://github.com/SplatDev-Ltda)
+
+---
+
+📎 Found a bug? [Report it](https://mybusiness.splatdev.tech/report?project=umbraco)

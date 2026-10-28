@@ -58,6 +58,10 @@ siblings) do not exist before Umbraco 17.4, which is why the package now require
 
 ## Changelog
 
+### 1.3.1 — 2026-10-28
+
+Maintenance release. The backoffice client is now built with Vite 6.4.5 and freshly resolved dependencies, closing published npm security advisories against the previous build chain. The README also gained a bug-report link. No functional changes.
+
 ### 1.3.0 — 2026-08-27
 
 Adds a configuration screen under Members. Fourteen security events — member and backoffice sign-ins, failed sign-ins, password changes and resets, two-factor requests, account lock and unlock, and member role changes — can each be switched on, addressed to the person concerned or to member groups, and worded with tokens. Retention is configurable. Requires Umbraco 17.4, because the member sign-in notifications it listens to do not exist before that.
@@ -89,3 +93,7 @@ MIT © [SplatDev](https://github.com/SplatDev-Ltda)
 ## Architecture
 
 This is a **headless plugin** — no backoffice dashboard, property editors, or UI components. It operates as a notification handler triggered by Umbraco member events, registered via DI composition.
+
+---
+
+📎 Found a bug? [Report it](https://mybusiness.splatdev.tech/report?project=umbraco)

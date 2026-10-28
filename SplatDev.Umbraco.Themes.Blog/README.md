@@ -78,6 +78,10 @@ Blog Root (blogRoot)
 
 ## Changelog
 
+### 1.0.7 — 2026-10-28
+
+Documentation only: the README now carries a bug-report link. No code changes.
+
 ### 1.0.6 — 2026-08-26
 
 The Marketplace listing declared the category "Website Themes", which is not in the Marketplace's taxonomy, so the whole listing failed validation and the theme showed only its bare NuGet metadata. It is now "Themes & Starter Kits", and the listing carries its screenshots.
@@ -93,3 +97,6 @@ Package metadata only: the listing now carries an icon and search tags, and the 
 ### 1.0.2 — 2026-08-22
 - This package's README now reaches NuGet. The publish workflow discovered packages by a list of name patterns, and this one matched none of them, so it was never built or pushed by CI — the version on NuGet was placed there by hand before the README was wired up, and no release could refresh it. Discovery is now by prefix, so the package ships whenever the repo is tagged.
 
+---
+
+📎 Found a bug? [Report it](https://mybusiness.splatdev.tech/report?project=umbraco)

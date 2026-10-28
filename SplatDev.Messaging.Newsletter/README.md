@@ -114,6 +114,10 @@ No other dependencies. No MediatR, no HTTP client, no third-party SDKs. Provider
 
 ## Changelog
 
+### 1.0.4 — 2026-10-28
+
+Documentation only: the README now carries a bug-report link. No code changes.
+
 ### 1.0.3 — 2026-08-25
 
 Documentation only, no code change. The README showed `AddMailchimp(...)`. There is no such method and no Mailchimp provider — this package is contracts only, and now says so.
@@ -130,3 +134,6 @@ Package metadata only: the listing now carries an icon and search tags, and the 
 
 This package now keeps a changelog. Earlier releases predate it and are not reconstructed here — consult the repository history for those. From this version on, every release records what changed for someone using it.
 
+---
+
+📎 Found a bug? [Report it](https://mybusiness.splatdev.tech/report?project=umbraco)

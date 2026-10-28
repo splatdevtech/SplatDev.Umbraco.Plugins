@@ -30,6 +30,10 @@ No registration call is needed. The package ships Umbraco composers, so the `Add
 
 ## Changelog
 
+### 2.2.7 — 2026-10-28
+
+Maintenance release. The backoffice client is now built with Vite 6.4.5 and freshly resolved dependencies, closing published npm security advisories against the previous build chain. The README also gained a bug-report link. No functional changes.
+
 ### 2.2.6 — 2026-08-26
 
 The NuGet listing now shows the dashboard. It had no screenshot before, so the listing gave no picture of what the plugin looks like in the backoffice.
@@ -58,3 +62,7 @@ Package metadata only: the listing now carries an icon and search tags, and the 
 ## License
 
 MIT © [SplatDev](https://github.com/SplatDev-Ltda)
+
+---
+
+📎 Found a bug? [Report it](https://mybusiness.splatdev.tech/report?project=umbraco)

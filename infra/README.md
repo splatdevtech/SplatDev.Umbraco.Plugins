@@ -50,3 +50,7 @@ Works with Azure CLI 2.60+ and Bicep CLI 0.28+. The templates target the Azure R
 ## License
 
 MIT © [SplatDev](https://github.com/SplatDev-Ltda)
+
+---
+
+📎 Found a bug? [Report it](https://mybusiness.splatdev.tech/report?project=umbraco)

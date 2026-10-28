@@ -172,6 +172,10 @@ Issues and PRs welcome at [github.com/SplatDev-Ltda/SplatDev.Umbraco.Plugins](ht
 
 ## Changelog
 
+### 3.3.6 — 2026-10-28
+
+Maintenance release. The backoffice client is now built with Vite 6.4.5 and freshly resolved dependencies, closing published npm security advisories against the previous build chain. The README also gained a bug-report link. No functional changes.
+
 ### 3.3.5 — 2026-08-26
 
 Fixes a duplicate registration on sites that still have a physical App_Plugins folder for this plugin, left behind by an older release that copied content into the site. Umbraco registered those extensions twice - once from its own scan of the folder, once from this package's embedded manifest - and logged "Extension with alias ... is already registered". The embedded manifest now yields to the physical copy.
@@ -196,3 +200,7 @@ Package metadata only: the listing now carries an icon and search tags, and the 
 - Restore from any listed backup, choosing scope, whether to overwrite existing items, and supplying the decryption key when the archive is encrypted.
 - Delete backups, and test a cloud provider's credentials before relying on it.
 - Four endpoints moved: CreateAdvanced, Restore, GetCloudProviders and TestProvider had action-level route templates that appended to the controller prefix, so they lived at URLs like /umbraco/api/backups/GetCloudProviders/providers. They now sit at /umbraco/api/backups/<Action> with the rest. No shipped UI called them, so nothing that worked before stops working.
+
+---
+
+📎 Found a bug? [Report it](https://mybusiness.splatdev.tech/report?project=umbraco)

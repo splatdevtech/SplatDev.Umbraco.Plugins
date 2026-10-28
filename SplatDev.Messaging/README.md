@@ -122,6 +122,10 @@ None. This package has zero NuGet dependencies — it defines pure abstractions 
 
 ## Changelog
 
+### 1.1.1 — 2026-10-28
+
+Documentation only: the README now carries a bug-report link. No code changes.
+
 ### 1.1.0 — 2026-08-25
 
 Adds the two contracts the SMS providers now share. `ISmsMessagingController<TMessage, TResult>` declares synchronous and async `SendMessage`, both taking either a message object or a plain `(from, to, body)` triple, and `Sms` is a provider-neutral message with string addresses. Calling code can now depend on this package instead of on a particular provider. Additive only — nothing existing changed.
@@ -138,3 +142,6 @@ Package metadata only: the listing now carries an icon and search tags, and the 
 
 This package now keeps a changelog. Earlier releases predate it and are not reconstructed here — consult the repository history for those. From this version on, every release records what changed for someone using it.
 
+---
+
+📎 Found a bug? [Report it](https://mybusiness.splatdev.tech/report?project=umbraco)

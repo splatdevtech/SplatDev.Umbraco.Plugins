@@ -36,3 +36,7 @@ All queries use NPoco parameterized SQL (`@0`, `@1`, ...) — no string concaten
 ## Integration
 
 See the [integration guide](../../docs/integration-guide.md) for setup instructions.
+
+---
+
+📎 Found a bug? [Report it](https://mybusiness.splatdev.tech/report?project=umbraco)

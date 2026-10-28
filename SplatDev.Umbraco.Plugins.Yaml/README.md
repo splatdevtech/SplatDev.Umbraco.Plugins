@@ -98,3 +98,7 @@ Issues and pull requests welcome at <https://github.com/SplatDev-Ltda/umbraco-ya
 ## License
 
 MIT © 2026 SplatDev
+
+---
+
+📎 Found a bug? [Report it](https://mybusiness.splatdev.tech/report?project=umbraco)

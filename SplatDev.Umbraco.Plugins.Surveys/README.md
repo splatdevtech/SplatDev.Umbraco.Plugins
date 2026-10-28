@@ -80,6 +80,10 @@ to run by hand.
 
 ## Changelog
 
+### 2.4.4 — 2026-10-28
+
+Maintenance release. The backoffice client is now built with Vite 6.4.5 and freshly resolved dependencies, closing published npm security advisories against the previous build chain. The README also gained a bug-report link. No functional changes.
+
 ### 2.4.3 — 2026-08-26
 
 Fixes a duplicate registration on sites that still have a physical App_Plugins folder for this plugin, left behind by an older release that copied content into the site. Umbraco registered those extensions twice - once from its own scan of the folder, once from this package's embedded manifest - and logged "Extension with alias ... is already registered". The embedded manifest now yields to the physical copy.
@@ -114,3 +118,7 @@ The view also still referenced the package's pre-rename namespace, so it would n
 - A failed request now raises a notification instead of leaving the dashboard looking like there is simply no data.
 - The plugin's tables are created on startup. They were never created before, so anything touching them failed on a fresh install.
 - Runs on SQLite as well as SQL Server. It previously assumed SQL Server and failed with "Keyword not supported: 'cache'" on the database Umbraco's installer offers by default.
+
+---
+
+📎 Found a bug? [Report it](https://mybusiness.splatdev.tech/report?project=umbraco)

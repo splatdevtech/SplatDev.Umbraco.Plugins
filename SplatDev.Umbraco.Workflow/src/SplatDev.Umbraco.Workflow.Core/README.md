@@ -21,3 +21,7 @@ See the [integration guide](../../docs/integration-guide.md) for host setup.
 | `IWorkflowEventStore` | Append-only event log for a workflow instance |
 | `IWorkflowInstanceStore` | Persistence boundary for workflow instances |
 | `IWorkflowResolver` | Resolves a workflow definition by key + version |
+
+---
+
+📎 Found a bug? [Report it](https://mybusiness.splatdev.tech/report?project=umbraco)

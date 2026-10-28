@@ -82,3 +82,7 @@ dotnet test tests/SplatDev.Umbraco.Workflow.E2E.Tests/
 ## License
 
 Proprietary. Copyright SplatDev.
+
+---
+
+📎 Found a bug? [Report it](https://mybusiness.splatdev.tech/report?project=umbraco)

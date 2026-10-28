@@ -26,3 +26,7 @@ Screenshots are saved as:
 Hardcoded per the Docker test environment defaults:
 - Admin username: `admin@splatdev.local`
 - Admin password: `SplatDev2024!`
+
+---
+
+📎 Found a bug? [Report it](https://mybusiness.splatdev.tech/report?project=umbraco)

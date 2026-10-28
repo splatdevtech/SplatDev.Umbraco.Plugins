@@ -1,114 +1,106 @@
-var R = Object.create;
-var O = Object.defineProperty;
-var W = Object.getOwnPropertyDescriptor;
-var F = (t, a) => (a = Symbol[t]) ? a : Symbol.for("Symbol." + t), g = (t) => {
-  throw TypeError(t);
-};
-var Y = (t, a, e) => a in t ? O(t, a, { enumerable: !0, configurable: !0, writable: !0, value: e }) : t[a] = e;
-var q = (t, a) => O(t, "name", { value: a, configurable: !0 });
-var H = (t) => [, , , R((t == null ? void 0 : t[F("metadata")]) ?? null)], L = ["class", "method", "getter", "setter", "accessor", "field", "value", "get", "set"], w = (t) => t !== void 0 && typeof t != "function" ? g("Function expected") : t, Z = (t, a, e, i, o) => ({ kind: L[t], name: a, metadata: i, addInitializer: (n) => e._ ? g("Already initialized") : o.push(w(n || null)) }), E = (t, a) => Y(a, F("metadata"), t[3]), U = (t, a, e, i) => {
-  for (var o = 0, n = t[a >> 1], l = n && n.length; o < l; o++) a & 1 ? n[o].call(e) : i = n[o].call(e, i);
-  return i;
-}, z = (t, a, e, i, o, n) => {
-  var l, r, c, f, v, s = a & 7, x = !!(a & 8), d = !!(a & 16), C = s > 3 ? t.length + 1 : s ? x ? 1 : 2 : 0, M = L[s + 5], j = s > 3 && (t[C - 1] = []), Q = t[C] || (t[C] = []), h = s && (!d && !x && (o = o.prototype), s < 5 && (s > 3 || !d) && W(s < 4 ? o : { get [e]() {
-    return $(this, n);
-  }, set [e](u) {
-    return k(this, n, u);
-  } }, e));
-  s ? d && s < 4 && q(n, (s > 2 ? "set " : s > 1 ? "get " : "") + e) : q(o, e);
-  for (var A = i.length - 1; A >= 0; A--)
-    f = Z(s, e, c = {}, t[3], Q), s && (f.static = x, f.private = d, v = f.access = { has: d ? (u) => P(o, u) : (u) => e in u }, s ^ 3 && (v.get = d ? (u) => (s ^ 1 ? $ : b)(u, o, s ^ 4 ? n : h.get) : (u) => u[e]), s > 2 && (v.set = d ? (u, N) => k(u, o, N, s ^ 4 ? n : h.set) : (u, N) => u[e] = N)), r = (0, i[A])(s ? s < 4 ? d ? n : h[M] : s > 4 ? void 0 : { get: h.get, set: h.set } : o, f), c._ = 1, s ^ 4 || r === void 0 ? w(r) && (s > 4 ? j.unshift(r) : s ? d ? n = r : h[M] = r : o = r) : typeof r != "object" || r === null ? g("Object expected") : (w(l = r.get) && (h.get = l), w(l = r.set) && (h.set = l), w(l = r.init) && j.unshift(l));
-  return s || E(t, o), h && O(o, e, h), d ? s ^ 4 ? n : h : o;
-};
-var B = (t, a, e) => a.has(t) || g("Cannot " + e), P = (t, a) => Object(a) !== a ? g('Cannot use the "in" operator on this value') : t.has(a), $ = (t, a, e) => (B(t, a, "read from private field"), e ? e.call(t) : a.get(t)), I = (t, a, e) => a.has(t) ? g("Cannot add the same private member more than once") : a instanceof WeakSet ? a.add(t) : a.set(t, e), k = (t, a, e, i) => (B(t, a, "write to private field"), i ? i.call(t, e) : a.set(t, e), e), b = (t, a, e) => (B(t, a, "access private method"), e);
-import { LitElement as ee, css as te, property as ae, html as T, nothing as se, customElement as ie } from "@umbraco-cms/backoffice/external/lit";
-import { UmbElementMixin as ne } from "@umbraco-cms/backoffice/element-api";
-import { UmbChangeEvent as oe } from "@umbraco-cms/backoffice/event";
-import { UMB_AUTH_CONTEXT as re } from "@umbraco-cms/backoffice/auth";
-import { UMB_NOTIFICATION_CONTEXT as le } from "@umbraco-cms/backoffice/notification";
-function ue(t) {
-  let a = null, e = null;
-  const i = t.consumeContext.bind(t), o = new Promise((n) => {
-    i(re, async (l) => {
-      var r;
+import { customElement as ee, LitElement as te, property as P, state as E, html as k, nothing as ie, css as re } from "@umbraco-cms/backoffice/external/lit";
+import { UmbElementMixin as ae } from "@umbraco-cms/backoffice/element-api";
+import { UmbChangeEvent as se } from "@umbraco-cms/backoffice/event";
+import { UMB_AUTH_CONTEXT as oe } from "@umbraco-cms/backoffice/auth";
+import { UMB_NOTIFICATION_CONTEXT as ne } from "@umbraco-cms/backoffice/notification";
+function le(e) {
+  let t = null, i = null;
+  const c = e.consumeContext.bind(e), o = new Promise((a) => {
+    c(oe, async (l) => {
+      var n;
       try {
-        a = await ((r = l == null ? void 0 : l.getLatestToken) == null ? void 0 : r.call(l)) ?? null;
+        t = await ((n = l == null ? void 0 : l.getLatestToken) == null ? void 0 : n.call(l)) ?? null;
       } catch {
-        a = null;
+        t = null;
       }
-      n();
-    }), setTimeout(n, 3e3);
+      a();
+    }), setTimeout(a, 3e3);
   });
-  return i(le, (n) => {
-    e = n;
-  }), async (n, l = {}) => {
+  return c(ne, (a) => {
+    i = a;
+  }), async (a, l = {}) => {
     await o;
-    const r = new Headers(l.headers);
-    a && !r.has("Authorization") && r.set("Authorization", `Bearer ${a}`);
-    const c = await fetch(n, { ...l, credentials: "same-origin", headers: r });
-    if (!c.ok) {
-      const f = c.status === 401 || c.status === 403, v = f ? "Not authorised" : "Could not load data", s = f ? `The backoffice token was ${a ? "sent but rejected" : "not available"} (${c.status}). Anything shown below may be empty because the request was refused, not because there is nothing to show.` : `The request failed with ${c.status}. Anything shown below may be incomplete.`;
-      console.error(`[SplatDev] ${c.status} from ${String(n)} — ${s}`), e == null || e.peek("danger", { data: { headline: v, message: s } });
+    const n = new Headers(l.headers);
+    t && !n.has("Authorization") && n.set("Authorization", `Bearer ${t}`);
+    const p = await fetch(a, { ...l, credentials: "same-origin", headers: n });
+    if (!p.ok) {
+      const v = p.status === 401 || p.status === 403, w = v ? "Not authorised" : "Could not load data", r = v ? `The backoffice token was ${t ? "sent but rejected" : "not available"} (${p.status}). Anything shown below may be empty because the request was refused, not because there is nothing to show.` : `The request failed with ${p.status}. Anything shown below may be incomplete.`;
+      console.error(`[SplatDev] ${p.status} from ${String(a)} — ${r}`), i == null || i.peek("danger", { data: { headline: w, message: r } });
     }
-    return c;
+    return p;
   };
 }
-var X, D, G, _, y, m, J, S, K;
-G = [ie("countries-property-editor")];
-let p = class p extends (D = ne(ee), X = [ae({ attribute: !1 })], D) {
+var ce = Object.create, I = Object.defineProperty, ue = Object.getOwnPropertyDescriptor, q = (e, t) => (t = Symbol[e]) ? t : Symbol.for("Symbol." + e), g = (e) => {
+  throw TypeError(e);
+}, de = (e, t, i) => t in e ? I(e, t, { enumerable: !0, configurable: !0, writable: !0, value: i }) : e[t] = i, F = (e, t) => I(e, "name", { value: t, configurable: !0 }), he = (e) => [, , , ce((e == null ? void 0 : e[q("metadata")]) ?? null)], G = ["class", "method", "getter", "setter", "accessor", "field", "value", "get", "set"], C = (e) => e !== void 0 && typeof e != "function" ? g("Function expected") : e, _e = (e, t, i, c, o) => ({ kind: G[e], name: t, metadata: c, addInitializer: (a) => i._ ? g("Already initialized") : o.push(C(a || null)) }), pe = (e, t) => de(t, q("metadata"), e[3]), u = (e, t, i, c) => {
+  for (var o = 0, a = e[t >> 1], l = a && a.length; o < l; o++) t & 1 ? a[o].call(i) : c = a[o].call(i, c);
+  return c;
+}, m = (e, t, i, c, o, a) => {
+  var l, n, p, v, w, r = t & 7, $ = !!(t & 8), f = !!(t & 16), S = r > 3 ? e.length + 1 : r ? $ ? 1 : 2 : 0, B = G[r + 5], U = r > 3 && (e[S - 1] = []), j = e[S] || (e[S] = []), _ = r && (!f && !$ && (o = o.prototype), r < 5 && (r > 3 || !f) && ue(r < 4 ? o : { get [i]() {
+    return A(this, a);
+  }, set [i](d) {
+    return W(this, a, d);
+  } }, i));
+  r ? f && r < 4 && F(a, (r > 2 ? "set " : r > 1 ? "get " : "") + i) : F(o, i);
+  for (var T = c.length - 1; T >= 0; T--)
+    v = _e(r, i, p = {}, e[3], j), r && (v.static = $, v.private = f, w = v.access = { has: f ? (d) => fe(o, d) : (d) => i in d }, r ^ 3 && (w.get = f ? (d) => (r ^ 1 ? A : b)(d, o, r ^ 4 ? a : _.get) : (d) => d[i]), r > 2 && (w.set = f ? (d, O) => W(d, o, O, r ^ 4 ? a : _.set) : (d, O) => d[i] = O)), n = (0, c[T])(r ? r < 4 ? f ? a : _[B] : r > 4 ? void 0 : { get: _.get, set: _.set } : o, v), p._ = 1, r ^ 4 || n === void 0 ? C(n) && (r > 4 ? U.unshift(n) : r ? f ? a = n : _[B] = n : o = n) : typeof n != "object" || n === null ? g("Object expected") : (C(l = n.get) && (_.get = l), C(l = n.set) && (_.set = l), C(l = n.init) && U.unshift(l));
+  return r || pe(e, o), _ && I(o, i, _), f ? r ^ 4 ? a : _ : o;
+}, M = (e, t, i) => t.has(e) || g("Cannot " + i), fe = (e, t) => Object(t) !== t ? g('Cannot use the "in" operator on this value') : e.has(t), A = (e, t, i) => (M(e, t, "read from private field"), i ? i.call(e) : t.get(e)), D = (e, t, i) => t.has(e) ? g("Cannot add the same private member more than once") : t instanceof WeakSet ? t.add(e) : t.set(e, i), W = (e, t, i, c) => (M(e, t, "write to private field"), c ? c.call(e, i) : t.set(e, i), i), b = (e, t, i) => (M(e, t, "access private method"), i), H, L, V, X, J, K, Q, z, R, s, N, y, Y, x, Z;
+R = [ee("countries-property-editor")];
+class h extends (z = ae(te), Q = [P({ type: String })], K = [P({ type: Boolean })], J = [E()], X = [E()], V = [E()], L = [E()], H = [P({ attribute: !1 })], z) {
   constructor() {
-    super(...arguments);
-    U(y, 5, this);
-    I(this, m);
-    I(this, _);
-    this.value = "", this.readonly = !1, k(this, _, ue(this)), this._countries = [], this._loaded = !1, this._failed = !1, this._store = "alpha2";
+    super(...arguments), u(s, 5, this), D(this, y), this.value = u(s, 8, this, ""), u(s, 11, this), this.readonly = u(s, 12, this, !1), u(s, 15, this), D(this, N, le(this)), this._countries = u(s, 16, this, []), u(s, 19, this), this._loaded = u(s, 20, this, !1), u(s, 23, this), this._failed = u(s, 24, this, !1), u(s, 27, this), this._store = u(s, 28, this, "alpha2"), u(s, 31, this);
   }
-  set config(e) {
-    if (!e) return;
-    const i = e.getValueByAlias("storeValue");
+  set config(t) {
+    if (!t) return;
+    const i = t.getValueByAlias("storeValue");
     (i === "alpha3" || i === "name" || i === "numeric" || i === "alpha2") && (this._store = i);
   }
   connectedCallback() {
-    super.connectedCallback(), b(this, m, J).call(this);
+    super.connectedCallback(), b(this, y, Y).call(this);
   }
   render() {
-    return this._loaded ? this._failed || this._countries.length === 0 ? T`
+    return this._loaded ? this._failed || this._countries.length === 0 ? k`
         <div class="warn">
           The country list is empty. It is filled by this plugin's migration on start-up —
           if it stayed empty, check the log for the countries migration.
         </div>
-        ${this.value ? T`<p class="hint">Currently holding <code>${this.value}</code>.</p>` : se}
-      ` : T`
+        ${this.value ? k`<p class="hint">Currently holding <code>${this.value}</code>.</p>` : ie}
+      ` : k`
       <uui-select
         label="Country"
         ?disabled=${this.readonly}
         .value=${this.value ?? ""}
-        @change=${b(this, m, K)}
+        @change=${b(this, y, Z)}
         .options=${[
       { name: "— none —", value: "", selected: !this.value },
-      ...this._countries.map((e) => ({
-        name: e.name,
-        value: b(this, m, S).call(this, e),
-        selected: b(this, m, S).call(this, e) === this.value
+      ...this._countries.map((t) => ({
+        name: t.name,
+        value: b(this, y, x).call(this, t),
+        selected: b(this, y, x).call(this, t) === this.value
       }))
     ]}
       ></uui-select>
       <p class="hint">
         Stores the ${this._store === "name" ? "country name" : this._store === "numeric" ? "numeric code" : `${this._store === "alpha3" ? "three" : "two"}-letter code`}.
       </p>
-    ` : T`<uui-loader></uui-loader>`;
+    ` : k`<uui-loader></uui-loader>`;
   }
-};
-y = H(D), _ = new WeakMap(), m = new WeakSet(), J = async function() {
+}
+s = he(z);
+N = /* @__PURE__ */ new WeakMap();
+y = /* @__PURE__ */ new WeakSet();
+Y = async function() {
   try {
-    const e = await $(this, _).call(this, "/umbraco/api/countries/GetCountries");
+    const e = await A(this, N).call(this, "/umbraco/api/countries/GetCountries");
     e.ok ? this._countries = await e.json() : this._failed = !0;
   } catch {
     this._failed = !0;
   } finally {
     this._loaded = !0;
   }
-}, S = function(e) {
+};
+x = function(e) {
   switch (this._store) {
     case "alpha3":
       return e.alpha3Code;
@@ -119,10 +111,20 @@ y = H(D), _ = new WeakMap(), m = new WeakSet(), J = async function() {
     default:
       return e.alpha2Code;
   }
-}, K = function(e) {
-  const i = e.target.value;
-  i !== this.value && (this.value = i, this.dispatchEvent(new oe()));
-}, z(y, 3, "config", X, p), p = z(y, 0, "CountriesPropertyEditorElement", G, p), p.styles = te`
+};
+Z = function(e) {
+  const t = e.target.value;
+  t !== this.value && (this.value = t, this.dispatchEvent(new se()));
+};
+m(s, 3, "config", H, h);
+m(s, 5, "value", Q, h);
+m(s, 5, "readonly", K, h);
+m(s, 5, "_countries", J, h);
+m(s, 5, "_loaded", X, h);
+m(s, 5, "_failed", V, h);
+m(s, 5, "_store", L, h);
+h = m(s, 0, "CountriesPropertyEditorElement", R, h);
+h.styles = re`
     :host { display: block; }
     uui-select { width: 100%; max-width: 420px; }
     .hint { margin: 6px 0 0; font-size: 0.83rem; color: var(--uui-color-text-alt, #6b7280); }
@@ -135,9 +137,10 @@ y = H(D), _ = new WeakMap(), m = new WeakSet(), J = async function() {
       font-family: var(--uui-font-monospace, monospace);
       background: var(--uui-color-surface-alt, #f3f4f6); padding: 1px 5px; border-radius: 3px;
     }
-  `, U(y, 1, p);
-let V = p;
+  `;
+u(s, 1, h);
+const Ce = h;
 export {
-  V as CountriesPropertyEditorElement,
-  V as default
+  h as CountriesPropertyEditorElement,
+  Ce as default
 };

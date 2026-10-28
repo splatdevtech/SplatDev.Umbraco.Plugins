@@ -84,6 +84,10 @@ payment — so a site that never calls `RecordAsync` will show an empty dashboar
 
 ## Changelog
 
+### 1.2.1 — 2026-10-28
+
+Maintenance release. The backoffice client is now built with Vite 6.4.5 and freshly resolved dependencies, closing published npm security advisories against the previous build chain. The README also gained a bug-report link. No functional changes.
+
 ### 1.2.0 — 2026-08-27
 
 Adds a backoffice dashboard under Settings: settled volume against the previous period, approval rate, average ticket and refunds, a per-day volume chart, breakdowns by status and payment method, a filterable transactions table, and a connection panel showing whether the gateway credentials are configured without revealing them. The figures come from a local ledger the plugin now keeps, because Getnet's API offers no payment history to page through.
@@ -104,3 +108,6 @@ Package metadata only: the listing now carries an icon and search tags, and the 
 
 This package now keeps a changelog. Earlier releases predate it and are not reconstructed here — consult the repository history for those. From this version on, every release records what changed for someone using it.
 
+---
+
+📎 Found a bug? [Report it](https://mybusiness.splatdev.tech/report?project=umbraco)

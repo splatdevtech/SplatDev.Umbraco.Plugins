@@ -44,6 +44,10 @@ Add to `appsettings.json`:
 
 ## Changelog
 
+### 1.3.6 — 2026-10-28
+
+Maintenance release. The backoffice client is now built with Vite 6.4.5 and freshly resolved dependencies, closing published npm security advisories against the previous build chain. The README also gained a bug-report link. No functional changes.
+
 ### 1.3.5 — 2026-08-26
 
 The NuGet listing now shows the dashboard. It had no screenshot before, so the listing gave no picture of what the plugin looks like in the backoffice.
@@ -81,3 +85,7 @@ MIT © [SplatDev](https://github.com/SplatDev-Ltda)
 ## Architecture
 
 This is a **headless plugin** — no backoffice dashboard, property editors, or UI components. It operates as a notification service triggered by Umbraco events, registered via DI composition.
+
+---
+
+📎 Found a bug? [Report it](https://mybusiness.splatdev.tech/report?project=umbraco)

@@ -86,6 +86,10 @@ Trigger manually from the backoffice dashboard or let the background service run
 
 ## Changelog
 
+### 2.1.12 — 2026-10-28
+
+Maintenance release. The backoffice client is now built with Vite 6.4.5 and freshly resolved dependencies, closing published npm security advisories against the previous build chain. The README also gained a bug-report link. No functional changes.
+
 ### 2.1.11 — 2026-08-26
 
 Fixes a duplicate registration on sites that still have a physical App_Plugins folder for this plugin, left behind by an older release that copied content into the site. Umbraco registered those extensions twice - once from its own scan of the folder, once from this package's embedded manifest - and logged "Extension with alias ... is already registered". The embedded manifest now yields to the physical copy.
@@ -117,3 +121,5 @@ MIT © [SplatDev](https://github.com/splatdevtech)
 ---
 
 [Feedback](mailto:feedback@splatdev.com)
+
+📎 Found a bug? [Report it](https://mybusiness.splatdev.tech/report?project=umbraco)

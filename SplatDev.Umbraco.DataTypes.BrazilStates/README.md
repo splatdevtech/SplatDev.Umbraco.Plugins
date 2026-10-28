@@ -68,6 +68,10 @@ storing the code while displaying the name needs a different property editor.
 
 ## Changelog
 
+### 1.2.1 — 2026-10-28
+
+Documentation only: the README now carries a bug-report link. No code changes.
+
 ### 1.2.0 — 2026-08-23
 
 Adds screenshots of the data type this package installs, on the README and on the Umbraco Marketplace listing. The listing keeps its own screenshot list rather than reading the README, and this one was empty.
@@ -83,3 +87,7 @@ Adds screenshots of the data type this package installs, on the README and on th
 ## License
 
 MIT © SplatDev
+
+---
+
+📎 Found a bug? [Report it](https://mybusiness.splatdev.tech/report?project=umbraco)

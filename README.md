@@ -315,3 +315,7 @@ This project is licensed under the MIT License — see the [LICENSE](LICENSE) fi
 ## About SplatDev
 
 [SplatDev Ltda](https://github.com/SplatDev-Ltda) is a software development company specializing in Umbraco CMS solutions and .NET plugins.
+
+---
+
+📎 Found a bug? [Report it](https://mybusiness.splatdev.tech/report?project=umbraco)

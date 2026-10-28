@@ -201,3 +201,7 @@ Deploy by referencing the plugin from the host and republishing:
 3. Verify: `/App_Plugins/PdfCurator/umbraco-package.json` 200, anonymous
    `/umbraco/pdfcurator/api/v1/ping` 401, backoffice shows the Book Library
    section. Rollback snapshot: `/root/stg1-umbraco-staging.pre-pdfc.tar.gz`.
+
+---
+
+📎 Found a bug? [Report it](https://mybusiness.splatdev.tech/report?project=umbraco)

@@ -36,3 +36,7 @@ umbracoBuilder.Services.AddSplatDevWorkflowJsonProvider(options =>
 ```
 
 See the [integration guide](../../docs/integration-guide.md) for full setup instructions.
+
+---
+
+📎 Found a bug? [Report it](https://mybusiness.splatdev.tech/report?project=umbraco)

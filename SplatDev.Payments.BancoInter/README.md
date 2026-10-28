@@ -153,6 +153,10 @@ No third-party SDK dependencies — this is a model/contracts library. HTTP call
 
 ## Changelog
 
+### 1.0.6 — 2026-10-28
+
+Documentation only: the README now carries a bug-report link. No code changes.
+
 ### 1.0.5 — 2026-08-25
 
 Documentation only, no code change. The README's example used `InterPixCharge` and `InterBoleto`; the real types are `InterPixChargeRequest` and `InterBoletoRequest`. Three further errors in the same snippet: `DataVencimento` is a string in `yyyy-MM-dd` form rather than a `DateTime`, `Pagador.Endereco` is the street line with `Cidade` and `Uf` as its siblings rather than nested inside it, and the `using` omitted `SplatDev.Payments.BancoInter.Models`, where every `Inter*` type actually lives. The example is now compiled against the assembly.
@@ -169,3 +173,6 @@ Package metadata only: the listing now carries an icon and search tags, and the 
 
 This package now keeps a changelog. Earlier releases predate it and are not reconstructed here — consult the repository history for those. From this version on, every release records what changed for someone using it.
 
+---
+
+📎 Found a bug? [Report it](https://mybusiness.splatdev.tech/report?project=umbraco)

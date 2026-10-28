@@ -86,6 +86,10 @@ Authentication happens via browser redirects — the OAuth flow is handled by AS
 
 ## Changelog
 
+### 2.2.5 — 2026-10-28
+
+Maintenance release. The backoffice client is now built with Vite 6.4.5 and freshly resolved dependencies, closing published npm security advisories against the previous build chain. The README also gained a bug-report link. No functional changes.
+
 ### 2.2.4 — 2026-08-26
 
 Fixes a duplicate registration on sites that still have a physical App_Plugins folder for this plugin, left behind by an older release that copied content into the site. Umbraco registered those extensions twice - once from its own scan of the folder, once from this package's embedded manifest - and logged "Extension with alias ... is already registered". The embedded manifest now yields to the physical copy.
@@ -109,3 +113,7 @@ Rebuilds the backoffice bundle so the shipped JavaScript matches the source it i
 ## License
 
 MIT © [SplatDev](https://github.com/SplatDev-Ltda)
+
+---
+
+📎 Found a bug? [Report it](https://mybusiness.splatdev.tech/report?project=umbraco)
